@@ -1,0 +1,2972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Radar: Elite Edition</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase SDK (Compat Version for smooth Single-File HTML runtime integration) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #05070f;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        .heading-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        /* Custom Glowing Effects */
+        .glow-common { box-shadow: 0 0 15px rgba(156, 163, 175, 0.15); }
+        .glow-rare { box-shadow: 0 0 15px rgba(59, 130, 246, 0.35); }
+        .glow-epic { box-shadow: 0 0 20px rgba(168, 85, 247, 0.45); }
+        .glow-legendary { box-shadow: 0 0 25px rgba(234, 179, 8, 0.65); animation: goldPulse 2s infinite; }
+        .glow-shiny { box-shadow: 0 0 30px rgba(236, 72, 153, 0.75); animation: pinkPulse 2s infinite; }
+
+        @keyframes goldPulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(234, 179, 8, 0.85); }
+        }
+        @keyframes pinkPulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(236, 72, 153, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(236, 72, 153, 0.85); }
+        }
+
+        /* Scanline Overlay for Retro Radar Vibe */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.015), rgba(0, 255, 0, 0.008), rgba(0, 0, 255, 0.015));
+            background-size: 100% 4px, 6px 100%;
+            z-index: 999;
+            pointer-events: none;
+            opacity: 0.15;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #f43f5e;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Hide Scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090e1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white pb-16 md:pb-0">
+    <div class="scanlines"></div>
+
+    <!-- AUDIO TOGGLE, GOOGLE SIGN IN BAR & NOTIFICATIONS -->
+    <div class="fixed top-4 right-4 z-50 flex flex-row gap-2 items-center">
+        <!-- Google Account Sync Button -->
+        <button id="googleLoginBtn" onclick="handleGoogleSignIn()" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 px-4 py-2.5 rounded-full hover:bg-slate-800 transition duration-200 text-xs font-bold text-white flex items-center gap-2 shadow-xl">
+            <i class="fab fa-google text-rose-500"></i>
+            <span id="googleLoginText">Sync Account</span>
+        </button>
+        <button id="soundToggleBtn" onclick="toggleMute()" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-full hover:bg-slate-800 transition duration-200 text-yellow-400 focus:outline-none shadow-lg">
+            <i id="soundIcon" class="fas fa-volume-up text-lg"></i>
+        </button>
+    </div>
+
+    <!-- CUSTOM NOTIFICATION MODAL -->
+    <div id="customToast" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 bg-slate-900/95 border-2 border-slate-850 px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 transition-all duration-300 opacity-0 translate-y-[-50px] pointer-events-none max-w-md w-[90%]">
+        <div id="toastIconContainer" class="p-3 rounded-xl bg-blue-500/20 text-blue-400">
+            <i id="toastIcon" class="fas fa-info-circle text-xl"></i>
+        </div>
+        <div>
+            <h4 id="toastTitle" class="font-bold text-white text-sm uppercase tracking-wide">System Alert</h4>
+            <p id="toastMessage" class="text-slate-300 text-xs mt-0.5">Notification description.</p>
+        </div>
+    </div>
+
+    <!-- HEADER / DASHBOARD STATUS -->
+    <header class="bg-slate-950/85 backdrop-blur-md border-b border-slate-900 sticky top-0 z-40 py-3 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <!-- Brand -->
+            <div class="flex items-center gap-3">
+                <div class="relative">
+                    <div class="w-10 h-10 bg-rose-600 rounded-full border-4 border-slate-950 flex items-center justify-center shadow-lg">
+                        <div class="w-10 h-1 bg-slate-950 absolute top-[15px]"></div>
+                        <div class="w-3 h-3 bg-white rounded-full border border-slate-950 z-10"></div>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="heading-font text-xl md:text-2xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400">
+                        POKÉMON RADAR
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="flex items-center gap-3 md:gap-6 bg-slate-950/85 px-4 py-2 rounded-2xl border border-slate-900 w-full md:w-auto justify-around md:justify-end">
+                <!-- Coins -->
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center text-yellow-400">
+                        <i class="fas fa-coins text-xs"></i>
+                    </div>
+                    <div>
+                        <span class="text-[9px] text-slate-400 block uppercase font-bold">Coins</span>
+                        <span id="playerCoins" class="font-bold text-xs md:text-sm text-yellow-400 tracking-wide">100</span>
+                    </div>
+                </div>
+
+                <!-- Trainer Level & XP -->
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 font-bold text-xs">
+                        <span id="trainerLevelBadge">1</span>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-baseline gap-2">
+                            <span class="text-[9px] text-slate-400 block uppercase font-bold">Trainer LVL <span id="trainerLevelText">1</span></span>
+                        </div>
+                        <div class="w-20 md:w-28 bg-slate-900 rounded-full h-1.5 overflow-hidden mt-0.5">
+                            <div id="xpBar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-full rounded-full transition-all duration-300" style="width: 10%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ball Inventory Summary -->
+                <div id="ballSelectorMini" class="flex gap-2 border-l border-slate-850 pl-4">
+                    <div class="flex flex-col items-center">
+                        <div class="w-4 h-4 bg-red-500 rounded-full border border-slate-950 relative" title="Poke Balls">
+                            <div class="w-4 h-0.5 bg-slate-950 absolute top-[7px]"></div>
+                        </div>
+                        <span id="miniCount-poke" class="text-[9px] font-bold mt-0.5">5</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-4 h-4 bg-blue-500 rounded-full border border-slate-950 relative" title="Great Balls">
+                            <div class="w-4 h-0.5 bg-slate-950 absolute top-[7px]"></div>
+                        </div>
+                        <span id="miniCount-great" class="text-[9px] font-bold mt-0.5">0</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-4 h-4 bg-purple-500 rounded-full border border-slate-950 relative" title="Ultra Balls">
+                            <div class="w-4 h-0.5 bg-slate-950 absolute top-[7px]"></div>
+                        </div>
+                        <span id="miniCount-ultra" class="text-[9px] font-bold mt-0.5">0</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-4 h-4 bg-yellow-500 rounded-full border border-slate-950 relative" title="Master Balls">
+                            <div class="w-4 h-0.5 bg-slate-950 absolute top-[7px]"></div>
+                        </div>
+                        <span id="miniCount-master" class="text-[9px] font-bold mt-0.5">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN INTERACTIVE LAYOUT -->
+    <main class="max-w-7xl mx-auto px-4 py-6 w-full flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- NAVIGATION PANEL -->
+        <nav class="lg:col-span-3 flex lg:flex-col gap-2 w-full overflow-x-auto lg:overflow-visible py-1 sticky top-[72px] z-30 bg-[#05070f] lg:bg-transparent">
+            <button onclick="switchView('roulette')" id="nav-roulette" class="nav-btn active flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-gradient-to-r from-rose-600 to-pink-600 text-white border-transparent shadow-lg shadow-rose-600/10">
+                <i class="fas fa-radar animate-pulse"></i>
+                <span>Quantum Scanner</span>
+            </button>
+            <button onclick="switchView('battle')" id="nav-battle" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
+                <i class="fas fa-compass text-rose-500 animate-spin-slow"></i>
+                <span>Journey Arena</span>
+            </button>
+            <button onclick="switchView('pokedex')" id="nav-pokedex" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
+                <i class="fas fa-book text-blue-400"></i>
+                <span>Registered Pokédex <span id="dexProgressBadge" class="ml-auto text-[10px] bg-slate-900 px-2 py-0.5 rounded-full">0/1025</span></span>
+            </button>
+            <button onclick="switchView('pc')" id="nav-pc" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
+                <i class="fas fa-box text-emerald-400"></i>
+                <span>PC Box <span id="pcCountBadge" class="ml-auto text-[10px] bg-slate-900 px-2 py-0.5 rounded-full">0</span></span>
+            </button>
+            <button onclick="switchView('shop')" id="nav-shop" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
+                <i class="fas fa-shopping-cart text-yellow-400"></i>
+                <span>Gear & Item Mart</span>
+            </button>
+        </nav>
+
+        <!-- VIEWS WRAPPER -->
+        <section class="lg:col-span-9 w-full min-h-[500px]">
+            
+            <!-- RADAR VIEW -->
+            <div id="view-roulette" class="view-panel grid grid-cols-1 md:grid-cols-12 gap-6">
+                <!-- SPIN CONTROL PANEL -->
+                <div class="md:col-span-7 bg-slate-955/40 border border-slate-900 p-6 rounded-3xl flex flex-col items-center justify-center relative overflow-hidden shadow-2xl min-h-[500px]">
+                    <div class="absolute -top-12 -left-12 w-40 h-40 bg-pink-500/5 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-12 -right-12 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl"></div>
+
+                    <!-- Region Scanner HUD (Tied to dynamic roadmap/generation state) -->
+                    <div class="mb-4 text-center z-10">
+                        <span id="regionBadge" class="bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block mb-1">KANTO CHANNEL (GEN 1)</span>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold block">Reflex Precision Locking Radar</p>
+                    </div>
+
+                    <!-- RADAR SCANNER WHEEL CANVAS -->
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center z-10">
+                        <div class="absolute inset-0 rounded-full border-4 border-slate-900 shadow-[0_0_20px_rgba(244,63,94,0.05)] pointer-events-none"></div>
+                        <canvas id="wheelCanvas" width="320" height="320" class="w-full h-full transition-transform duration-75"></canvas>
+                        
+                        <!-- Central Pointer / Hub -->
+                        <div class="absolute z-20 w-12 h-12 bg-slate-950 rounded-full border-4 border-slate-800 flex items-center justify-center shadow-2xl">
+                            <div class="w-3 h-3 bg-rose-500 rounded-full animate-ping"></div>
+                        </div>
+
+                        <!-- Pointer Indicator -->
+                        <div class="absolute top-[-10px] left-1/2 transform -translate-x-1/2 z-30">
+                            <i class="fas fa-caret-down text-3xl text-rose-500 filter drop-shadow-[0_2px_4px_rgba(244,63,94,0.5)]"></i>
+                        </div>
+                    </div>
+
+                    <!-- BALL TIER SELECTION -->
+                    <div class="mt-6 w-full z-10">
+                        <label class="text-[10px] text-slate-400 uppercase tracking-widest font-bold text-center block mb-2">Select Device Grade (Modifies Scan Zones)</label>
+                        <div class="grid grid-cols-4 gap-2">
+                            <!-- Pokéball -->
+                            <button id="ballBtn-poke" onclick="selectBall('poke')" class="ball-selector-btn bg-slate-950 border-2 border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
+                                <div class="w-8 h-8 bg-red-500 rounded-full border-2 border-slate-950 relative shadow-md">
+                                    <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
+                                    <div class="w-2.5 h-2.5 bg-white rounded-full border border-slate-950 absolute top-[11px] left-[11px] z-10"></div>
+                                </div>
+                                <span class="text-xs font-bold mt-1.5">Standard</span>
+                                <span id="count-poke" class="text-[10px] text-slate-400">5</span>
+                            </button>
+                            <!-- Great Ball -->
+                            <button id="ballBtn-great" onclick="selectBall('great')" class="ball-selector-btn bg-slate-950 border border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
+                                <div class="w-8 h-8 bg-blue-500 rounded-full border-2 border-slate-950 relative shadow-md">
+                                    <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
+                                    <div class="w-2.5 h-2.5 bg-white rounded-full border border-slate-950 absolute top-[11px] left-[11px] z-10"></div>
+                                </div>
+                                <span class="text-xs font-bold mt-1.5 text-blue-400">Great</span>
+                                <span id="count-great" class="text-[10px] text-slate-400">0</span>
+                            </button>
+                            <!-- Ultra Ball -->
+                            <button id="ballBtn-ultra" onclick="selectBall('ultra')" class="ball-selector-btn bg-slate-950 border border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
+                                <div class="w-8 h-8 bg-yellow-500 rounded-full border-2 border-slate-950 relative shadow-md">
+                                    <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
+                                    <div class="w-2.5 h-2.5 bg-white rounded-full border border-slate-950 absolute top-[11px] left-[11px] z-10"></div>
+                                </div>
+                                <span class="text-xs font-bold mt-1.5 text-yellow-500">Ultra</span>
+                                <span id="count-ultra" class="text-[10px] text-slate-400">0</span>
+                            </button>
+                            <!-- Master Ball -->
+                            <button id="ballBtn-master" onclick="selectBall('master')" class="ball-selector-btn bg-slate-950 border border-purple-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
+                                <div class="w-8 h-8 bg-purple-600 rounded-full border-2 border-slate-950 relative shadow-md">
+                                    <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
+                                    <div class="w-2.5 h-2.5 bg-white rounded-full border border-slate-950 absolute top-[11px] left-[11px] z-10"></div>
+                                </div>
+                                <span class="text-xs font-bold mt-1.5 text-purple-400">Master</span>
+                                <span id="count-master" class="text-[10px] text-slate-400">0</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- CRITICAL BUTTON CONTROLS -->
+                    <div class="mt-6 flex gap-3 w-full z-10">
+                        <button id="spinBtn" onclick="triggerSpin()" class="flex-1 py-4 px-6 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-black uppercase rounded-2xl shadow-xl transition duration-150 tracking-wider">
+                            <i class="fas fa-radar mr-2"></i> Initialise Scan
+                        </button>
+                        <button id="stopBtn" onclick="triggerPrecisionStop()" class="flex-1 py-4 px-6 bg-slate-900 text-slate-500 font-black uppercase rounded-2xl cursor-not-allowed transition duration-150 tracking-wider border border-slate-800" disabled>
+                            <i class="fas fa-stop mr-2"></i> Lock Radar!
+                        </button>
+                    </div>
+                </div>
+
+                <!-- DYNAMIC CAPTURE ACTION SCREEN -->
+                <div class="md:col-span-5 bg-slate-955/40 border border-slate-900 p-6 rounded-3xl flex flex-col justify-between shadow-2xl min-h-[500px]">
+                    <!-- Wild encounter header -->
+                    <div class="text-center">
+                        <span id="encounterStatus" class="bg-slate-900 text-slate-400 border border-slate-800 text-[10px] px-3 py-1 rounded-full uppercase tracking-wider font-bold inline-block">Scanner Offline</span>
+                    </div>
+
+                    <!-- Captured/Wild Display -->
+                    <div class="my-6 flex flex-col items-center justify-center flex-grow">
+                        <div id="wildDisplayBox" class="relative w-48 h-48 flex items-center justify-center rounded-full bg-slate-950 border border-slate-900 shadow-[inset_0_0_20px_rgba(0,0,0,0.8)] overflow-hidden">
+                            <!-- Background Element -->
+                            <div class="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-40"></div>
+                            
+                            <!-- Shaded glowing shadow for Pokemon -->
+                            <div id="pokemonPlatform" class="absolute bottom-6 w-32 h-6 bg-slate-900 rounded-full blur-sm transition-all duration-300"></div>
+
+                            <!-- Pokemon Visual Target -->
+                            <div id="wildPokemonLoading" class="hidden absolute z-20"><div class="spinner"></div></div>
+                            <img id="wildPokemonGraphic" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Wild Pokemon" class="w-36 h-36 object-contain z-10 transform translate-y-2 transition-all duration-300 opacity-20" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
+
+                            <!-- ACTIVE SKING TIMING RING OVERLAY -->
+                            <div id="timingRingContainer" class="absolute inset-0 flex items-center justify-center pointer-events-none hidden z-20">
+                                <!-- Static Target Outer Limit -->
+                                <div class="w-40 h-40 rounded-full border-2 border-white/20 absolute"></div>
+                                <!-- Dynamic Capture Ring (contracts) -->
+                                <div id="timingRing" class="w-40 h-40 rounded-full border-4 border-green-500 absolute transition-all duration-75 animate-pulse"></div>
+                            </div>
+                        </div>
+
+                        <!-- Name & Stats -->
+                        <div class="text-center mt-4 w-full">
+                            <h3 id="wildPokemonName" class="text-lg font-extrabold tracking-wide text-slate-400">Ready to Scan...</h3>
+                            <p id="wildPokemonDetails" class="text-xs text-slate-500 font-mono mt-1">Acquire precision radar lock to find target signature.</p>
+                        </div>
+                    </div>
+
+                    <!-- PASSIVE/ACTIVE CATCH ACTION BUTTON -->
+                    <div class="w-full">
+                        <button id="catchBtn" onclick="triggerCatchMinigame()" class="w-full py-4 bg-slate-900 text-slate-500 font-extrabold uppercase rounded-2xl border border-slate-800 tracking-wider flex items-center justify-center gap-2 cursor-not-allowed" disabled>
+                            <i class="fas fa-crosshairs text-lg"></i>
+                            <span>Awaiting Encounter...</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JOURNEY ARENA VIEW (ROADMAP & ENDLESS ARENA) -->
+            <div id="view-battle" class="view-panel hidden bg-slate-955/40 border border-slate-900 p-6 rounded-3xl shadow-2xl min-h-[500px]">
+                
+                <!-- SELECT MODE VIEW (UNLIMITED / ROADMAP) -->
+                <div id="battleSelector" class="space-y-6">
+                    <div class="text-center">
+                        <span class="bg-rose-500/10 text-rose-400 border border-rose-500/20 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-bold">Journey Tab</span>
+                        <h2 class="heading-font text-2xl font-black mt-2 text-white">THE ADVENTURE ARENA</h2>
+                        <p class="text-xs text-slate-400 max-w-xl mx-auto mt-1">Choose your combat engagement! Clear structural boss challenges across regions, or test your partners in the scaled Unlimited Arena.</p>
+                    </div>
+
+                    <!-- Mode Toggle Buttons -->
+                    <div class="flex justify-center border-b border-slate-900 pb-4">
+                        <div class="inline-flex bg-slate-950 p-1.5 rounded-xl border border-slate-900">
+                            <button onclick="toggleJourneySubMode('campaign')" id="btn-journey-campaign" class="px-5 py-2 rounded-lg text-xs font-bold transition duration-150 bg-rose-600 text-white">
+                                <i class="fas fa-route mr-1.5"></i>Regional Campaign
+                            </button>
+                            <button onclick="toggleJourneySubMode('unlimited')" id="btn-journey-unlimited" class="px-5 py-2 rounded-lg text-xs font-bold transition duration-150 text-slate-400 hover:text-white">
+                                <i class="fas fa-infinity mr-1.5"></i>Unlimited Arena
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- CAMPAIGN MODE (ROADMAP) -->
+                    <div id="journey-campaign-panel" class="space-y-4">
+                        <div class="text-center md:text-left">
+                            <h3 class="text-sm font-bold text-slate-300 uppercase tracking-widest">Regional Boss Roadmap</h3>
+                            <p class="text-xs text-slate-500">Defeating chapters unlocks new generations in your Quantum Scanner!</p>
+                        </div>
+                        <div id="roadmapCampaignGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 pt-2">
+                            <!-- Populated dynamically via roadmap list in JS -->
+                        </div>
+                    </div>
+
+                    <!-- UNLIMITED ARENA PANEL -->
+                    <div id="journey-unlimited-panel" class="hidden space-y-6">
+                        <div class="bg-gradient-to-r from-purple-950/30 to-slate-950/30 border border-slate-850 p-6 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4">
+                            <div class="text-center md:text-left">
+                                <h3 class="text-md font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 uppercase tracking-widest">Endless Battle Simulation</h3>
+                                <p class="text-xs text-slate-400 mt-1 max-w-md">Deploy your partner against dynamically scaled, generation-appropriate adversaries. Rewards scale continuously according to your partner's level!</p>
+                            </div>
+                            <button onclick="startUnlimitedMatch()" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition shadow-lg shrink-0">
+                                Enter Simulation (50 Coins)
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                            <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-900">
+                                <div class="text-xl text-purple-400 mb-1"><i class="fas fa-arrows-up-to-line"></i></div>
+                                <h4 class="text-xs font-bold text-slate-300">Dynamic scaling</h4>
+                                <p class="text-[10px] text-slate-500 mt-1">Opponents match your exact deployed level. Guaranteed tough combat.</p>
+                            </div>
+                            <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-900">
+                                <div class="text-xl text-yellow-400 mb-1"><i class="fas fa-coins"></i></div>
+                                <h4 class="text-xs font-bold text-slate-300">Bonus Coin Payouts</h4>
+                                <p class="text-[10px] text-slate-500 mt-1">Higher combat levels reward greater gold sums upon successful clears.</p>
+                            </div>
+                            <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-900">
+                                <div class="text-xl text-green-400 mb-1"><i class="fas fa-star-exclamation"></i></div>
+                                <h4 class="text-xs font-bold text-slate-300">Maximize Partner XP</h4>
+                                <p class="text-[10px] text-slate-500 mt-1">Acquire immense partner experience points to trigger powerful stat boosts.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- SELECT FIGHTER STEP -->
+                <div id="fighterSelector" class="hidden space-y-6">
+                    <button onclick="cancelBattlePrep()" class="text-xs text-slate-400 hover:text-white"><i class="fas fa-arrow-left mr-1"></i> Back to Arena</button>
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold">Deploy Your Partner</h3>
+                        <p class="text-xs text-slate-400">Select one of your registered dex Pokémon to battle in this stage.</p>
+                    </div>
+
+                    <div id="fighterSelectionGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-[350px] overflow-y-auto p-1">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+
+                <!-- ACTIVE COMBAT HUD -->
+                <div id="battleArenaActive" class="hidden grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+                    
+                    <!-- Enemy Side -->
+                    <div class="md:col-span-5 bg-slate-950 border border-slate-900 rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden">
+                        <div class="absolute top-2 left-2 text-[9px] font-bold text-slate-500 uppercase tracking-widest">Enemy Combatant</div>
+                        <div class="absolute top-2 right-2 flex gap-1 text-[10px]" id="bossHeldItemBadge"></div>
+                        
+                        <div class="flex flex-col items-center justify-center flex-grow py-6">
+                            <img id="bossSprite" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Enemy" class="h-32 w-32 object-contain mb-4 transform scale-110">
+                            <h4 id="bossName" class="text-md font-extrabold text-white">Opponent</h4>
+                            <span id="bossLevelBadge" class="text-[10px] bg-slate-900 text-slate-400 px-2 py-0.5 rounded font-bold mt-1">LVL 5</span>
+                            <div class="w-full mt-4">
+                                <div class="flex justify-between text-[11px] font-mono mb-1 text-slate-400">
+                                    <span>HP Status</span>
+                                    <span id="bossHPText">300/300</span>
+                                </div>
+                                <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+                                    <div id="bossHPBar" class="bg-red-500 h-full transition-all duration-300" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clash Status -->
+                    <div class="md:col-span-2 flex flex-col justify-center items-center gap-4 py-4 min-h-[140px]">
+                        <div class="text-center font-bold text-slate-500 text-xs uppercase tracking-wider">VS</div>
+                        <div class="w-12 h-12 rounded-full border border-slate-800 bg-slate-950 flex items-center justify-center shadow-lg">
+                            <i class="fas fa-bolt text-red-500 animate-pulse text-lg"></i>
+                        </div>
+                        <div id="effectivenessIndicator" class="text-[10px] font-bold text-center text-yellow-500 font-mono tracking-wide"></div>
+                    </div>
+
+                    <!-- Player Fighter Side -->
+                    <div class="md:col-span-5 bg-slate-950 border border-slate-900 rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden">
+                        <div class="absolute top-2 right-2 text-[9px] font-bold text-slate-500 uppercase tracking-widest">Deployed Partner</div>
+                        <div class="absolute top-2 left-2 flex gap-1 text-[10px]" id="playerHeldItemBadge"></div>
+                        
+                        <div class="flex flex-col items-center justify-center flex-grow py-6">
+                            <img id="playerFighterSprite" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Player Partner" class="h-32 w-32 object-contain mb-4 transform scale-110">
+                            <h4 id="playerFighterName" class="text-md font-extrabold text-white">Partner</h4>
+                            <span id="playerFighterLevelBadge" class="text-[10px] bg-slate-900 text-slate-400 px-2 py-0.5 rounded font-bold mt-1">LVL 1</span>
+                            <div class="w-full mt-4">
+                                <div class="flex justify-between text-[11px] font-mono mb-1 text-slate-400">
+                                    <span>HP Status</span>
+                                    <span id="playerFighterHPText">200/200</span>
+                                </div>
+                                <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+                                    <div id="playerFighterHPBar" class="bg-green-500 h-full transition-all duration-300" style="width: 10%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COMBAT MOVES DECISION INTERFACE -->
+                    <div class="md:col-span-12 bg-slate-950 border border-slate-900 p-6 rounded-2xl flex flex-col gap-4">
+                        <div class="text-xs text-slate-400 uppercase tracking-widest font-bold">Select Strategy / STAB Action Moves</div>
+                        
+                        <!-- Moves Button Grid -->
+                        <div id="battleMovesGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <!-- Populated in JS dynamically -->
+                        </div>
+
+                        <!-- Battle Logs feed -->
+                        <div id="battleLog" class="w-full bg-slate-955 border border-slate-900 rounded-xl p-3 text-xs font-mono h-28 overflow-y-auto text-slate-400">
+                            <div>Battle stage configured. Ready to strike first based on speed.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- POKEDEX VIEW -->
+            <div id="view-pokedex" class="view-panel hidden bg-slate-955/40 border border-slate-900 p-6 rounded-3xl shadow-2xl min-h-[500px]">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-6 border-b border-slate-900">
+                    <div>
+                        <h2 class="heading-font text-2xl font-black text-white">REGISTERED PARTNERS</h2>
+                        <p class="text-xs text-slate-400 font-medium font-mono">View statistics, levels, XP metrics, and equip held items below!</p>
+                    </div>
+
+                    <!-- Search Filters -->
+                    <div class="flex gap-2 w-full md:w-auto">
+                        <input type="text" id="dexSearchInput" oninput="triggerDexSearch()" placeholder="Search Species..." class="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs text-white focus:outline-none focus:border-rose-500 flex-grow md:w-48">
+                        <select id="rarityFilterSelect" onchange="triggerDexSearch()" class="bg-slate-900 border border-slate-800 px-3 py-2 rounded-xl text-xs text-white focus:outline-none">
+                            <option value="all">All Grades</option>
+                            <option value="Common">Standard</option>
+                            <option value="Rare">Rare</option>
+                            <option value="Epic">Epic</option>
+                            <option value="Legendary">Legendary</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Dex Grid list -->
+                <div id="pokedexGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <!-- Pagination controls -->
+                <div id="dexPagination" class="flex justify-between items-center mt-6 pt-4 border-t border-slate-900 text-xs">
+                    <button id="prevPageBtn" onclick="changeDexPage(-1)" class="px-4 py-2 bg-slate-900 hover:bg-slate-850 rounded-xl font-bold">Previous Page</button>
+                    <span id="pageInfoText" class="text-slate-400">Page 1 of 1</span>
+                    <button id="nextPageBtn" onclick="changeDexPage(1)" class="px-4 py-2 bg-slate-900 hover:bg-slate-850 rounded-xl font-bold">Next Page</button>
+                </div>
+            </div>
+
+            <!-- PC BOX VIEW -->
+            <div id="view-pc" class="view-panel hidden bg-slate-955/40 border border-slate-900 p-6 rounded-3xl shadow-2xl min-h-[500px]">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-6 border-b border-slate-900">
+                    <div>
+                        <h2 class="heading-font text-2xl font-black text-white">PC STORAGE BOX</h2>
+                        <p class="text-xs text-slate-400 font-medium font-mono">All your caught Pok&eacute;mon are stored here. Each catch is unique!</p>
+                    </div>
+                    <div class="flex gap-2 w-full md:w-auto">
+                        <input type="text" id="pcSearchInput" oninput="triggerPCSearch()" placeholder="Search by name or #..." class="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500 flex-grow md:w-48">
+                        <select id="pcSortSelect" onchange="triggerPCSearch()" class="bg-slate-900 border border-slate-800 px-3 py-2 rounded-xl text-xs text-white focus:outline-none">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="level-desc">Highest Level</option>
+                            <option value="level-asc">Lowest Level</option>
+                            <option value="name">Name A-Z</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="pcGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+                <div id="pcPagination" class="flex justify-between items-center mt-6 pt-4 border-t border-slate-900 text-xs">
+                    <button id="pcPrevPageBtn" onclick="changePCPage(-1)" class="px-4 py-2 bg-slate-900 hover:bg-slate-850 rounded-xl font-bold">Previous</button>
+                    <span id="pcPageInfoText" class="text-slate-400">Page 1 of 1</span>
+                    <button id="pcNextPageBtn" onclick="changePCPage(1)" class="px-4 py-2 bg-slate-900 hover:bg-slate-850 rounded-xl font-bold">Next</button>
+                </div>
+            </div>
+
+            <!-- MART SHOP VIEW -->
+            <div id="view-shop" class="view-panel hidden bg-slate-955/40 border border-slate-900 p-6 rounded-3xl shadow-2xl min-h-[500px]">
+                <div class="text-center mb-6">
+                    <span class="bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-bold">SILPH CO. STRATEGY MART</span>
+                    <h2 class="heading-font text-2xl font-black text-white mt-2">RADAR & STRATEGIC EQUIPMENT</h2>
+                    <p class="text-xs text-slate-400">Purchase scanner gear, balls, and equippable passive Hold Items to power up your roadmap campaign!</p>
+                </div>
+
+                <!-- Products Sections -->
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Scanning Devices (radar wedge & capture modifiers)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <!-- Great Ball -->
+                            <div class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-blue-500/50 transition">
+                                <div class="flex justify-between items-start">
+                                    <div class="w-8 h-8 bg-blue-500 rounded-full border-2 border-slate-950 relative shadow">
+                                        <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
+                                    </div>
+                                    <span class="text-[9px] font-mono text-slate-400 uppercase">Qty Owned: <span id="shopCount-great" class="font-bold">0</span></span>
+                                </div>
+                                <h4 class="text-sm font-extrabold mt-3 text-white">Great Scanning Lens</h4>
+                                <p class="text-[11px] text-slate-400 mt-1">Slows scanner speed slightly and increases rare signature wedges on the dial.</p>
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> 50 Coins</span>
+                                    <button onclick="buyBall('great')" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-[11px] uppercase font-bold rounded-lg transition">Buy 1</button>
+                                </div>
+                            </div>
+                            <!-- Ultra Ball -->
+                            <div class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-yellow-500/50 transition">
+                                <div class="flex justify-between items-start">
+                                    <div class="w-8 h-8 bg-yellow-500 rounded-full border-2 border-slate-950 relative shadow">
+                                        <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
+                                    </div>
+                                    <span class="text-[9px] font-mono text-slate-400 uppercase">Qty Owned: <span id="shopCount-ultra" class="font-bold">0</span></span>
+                                </div>
+                                <h4 class="text-sm font-extrabold mt-3 text-white">Ultra Tracking Core</h4>
+                                <p class="text-[11px] text-slate-400 mt-1">Slows scanning rate by 35% and increases probability of hitting targeted legendary scanning wedges.</p>
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> 150 Coins</span>
+                                    <button onclick="buyBall('ultra')" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-[11px] uppercase font-black rounded-lg transition">Buy 1</button>
+                                </div>
+                            </div>
+                            <!-- Master Ball -->
+                            <div class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-purple-500/50 transition">
+                                <div class="flex justify-between items-start">
+                                    <div class="w-8 h-8 bg-purple-600 rounded-full border-2 border-slate-950 relative shadow">
+                                        <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
+                                    </div>
+                                    <span class="text-[9px] font-mono text-slate-400 uppercase">Qty Owned: <span id="shopCount-master" class="font-bold">0</span></span>
+                                </div>
+                                <h4 class="text-sm font-extrabold mt-3 text-white">Quantum Master Link</h4>
+                                <p class="text-[11px] text-slate-400 mt-1">Extremely easy slow spin. Captures targets instantly without needing the ring accuracy game.</p>
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> 500 Coins</span>
+                                    <button onclick="buyBall('master')" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-[11px] uppercase font-bold rounded-lg transition">Buy 1</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Hold Items (Equip to your partners to boost stats!)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="heldItemsShopList">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- FOOTER MOBILE NAV -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-2 fixed bottom-0 left-0 right-0 z-40 block lg:hidden">
+        <div class="flex justify-around items-center">
+            <button onclick="switchView('roulette')" class="mobile-nav-btn text-center text-rose-500">
+                <i class="fas fa-crosshairs text-lg"></i>
+                <span class="block text-[10px] font-bold">Radar</span>
+            </button>
+            <button onclick="switchView('battle')" class="mobile-nav-btn text-center text-slate-400">
+                <i class="fas fa-route text-lg"></i>
+                <span class="block text-[10px] font-bold">Journey</span>
+            </button>
+            <button onclick="switchView('pokedex')" class="mobile-nav-btn text-center text-slate-400">
+                <i class="fas fa-book text-lg"></i>
+                <span class="block text-[10px] font-bold">Dex</span>
+            </button>
+            <button onclick="switchView('pc')" class="mobile-nav-btn text-center text-slate-400">
+                <i class="fas fa-box text-lg"></i>
+                <span class="block text-[10px] font-bold">PC</span>
+            </button>
+            <button onclick="switchView('shop')" class="mobile-nav-btn text-center text-slate-400">
+                <i class="fas fa-shopping-cart text-lg"></i>
+                <span class="block text-[10px] font-bold">Mart</span>
+            </button>
+        </div>
+    </footer>
+
+    <!-- LOGIC SYSTEM -->
+    <script>
+        // WEB AUDIO SYNTHESIZER UTILITIES
+        let audioMuted = false;
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+            }
+        }
+
+        function playSynthSound(freq, type, duration, gainStart) {
+            if (audioMuted) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                
+                gainNode.gain.setValueAtTime(gainStart, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
+                
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                // Protect audio thread
+            }
+        }
+
+        function playBeep() { playSynthSound(440, 'sine', 0.1, 0.1); }
+        function playPrecisionTick() { playSynthSound(600, 'triangle', 0.04, 0.15); }
+        function playConfirmSound() { playSynthSound(880, 'sine', 0.15, 0.1); }
+        function playSuccessCapture() {
+            setTimeout(() => playSynthSound(523, 'sine', 0.1, 0.15), 0);
+            setTimeout(() => playSynthSound(659, 'sine', 0.1, 0.15), 80);
+            setTimeout(() => playSynthSound(784, 'sine', 0.1, 0.15), 160);
+            setTimeout(() => playSynthSound(1046, 'sine', 0.3, 0.2), 240);
+        }
+        function playFailCapture() {
+            setTimeout(() => playSynthSound(220, 'triangle', 0.2, 0.15), 0);
+            setTimeout(() => playSynthSound(130, 'triangle', 0.3, 0.15), 150);
+        }
+        function playCritStrike() {
+            playSynthSound(1200, 'sawtooth', 0.2, 0.2);
+        }
+        function playNormalHit() {
+            playSynthSound(220, 'sawtooth', 0.15, 0.15);
+        }
+
+        function toggleMute() {
+            audioMuted = !audioMuted;
+            const soundIcon = document.getElementById('soundIcon');
+            const soundToggleBtn = document.getElementById('soundToggleBtn');
+            if (audioMuted) {
+                soundIcon.className = "fas fa-volume-mute text-lg text-slate-400";
+                soundToggleBtn.classList.remove('text-yellow-400');
+                soundToggleBtn.classList.add('text-slate-400');
+            } else {
+                soundIcon.className = "fas fa-volume-up text-lg text-yellow-400";
+                soundToggleBtn.classList.remove('text-slate-400');
+                soundToggleBtn.classList.add('text-yellow-400');
+            }
+        }
+
+        // NAVIGATION VIEW SWITCHER
+        function switchView(viewName) {
+            playConfirmSound();
+            document.querySelectorAll('.view-panel').forEach(panel => panel.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-950 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900";
+            });
+            
+            document.querySelectorAll('.mobile-nav-btn').forEach(mBtn => {
+                mBtn.className = "mobile-nav-btn text-center text-slate-400";
+            });
+
+            const activePanel = document.getElementById(`view-${viewName}`);
+            if (activePanel) {
+                activePanel.classList.remove('hidden');
+            }
+            const targetNav = document.getElementById(`nav-${viewName}`);
+            
+            if (targetNav) {
+                targetNav.className = "nav-btn active flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-gradient-to-r from-rose-600 to-pink-600 text-white border-transparent shadow-lg shadow-rose-600/10";
+            }
+
+            if (viewName === 'pokedex') {
+                renderPokedex();
+            } else if (viewName === 'battle') {
+                resetBattleScreen();
+                renderRoadmap();
+            } else if (viewName === 'shop') {
+                renderHeldItemsShop();
+            } else if (viewName === 'pc') {
+                renderPCBox();
+            }
+        }
+
+        // FULL 18 TYPE EFFECTIVENESS TABLE
+        const TYPES = ["normal", "fire", "water", "grass", "electric", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel", "fairy"];
+        const TYPE_MATCHUPS = {
+            normal: { rock: 0.5, ghost: 0, steel: 0.5 },
+            fire: { fire: 0.5, water: 0.5, grass: 2.0, ice: 2.0, bug: 2.0, rock: 0.5, dragon: 0.5, steel: 2.0 },
+            water: { fire: 2.0, water: 0.5, grass: 0.5, ground: 2.0, rock: 2.0, dragon: 0.5 },
+            electric: { water: 2.0, electric: 0.5, grass: 0.5, ground: 0, flying: 2.0, dragon: 0.5 },
+            grass: { fire: 0.5, water: 2.0, grass: 0.5, poison: 0.5, ground: 2.0, flying: 0.5, bug: 0.5, rock: 2.0, dragon: 0.5, steel: 0.5 },
+            ice: { fire: 0.5, water: 0.5, grass: 2.0, ice: 0.5, ground: 2.0, flying: 2.0, dragon: 2.0, steel: 0.5 },
+            fighting: { normal: 2.0, ice: 2.0, poison: 0.5, flying: 0.5, psychic: 0.5, bug: 0.5, rock: 2.0, ghost: 0, dark: 2.0, steel: 2.0, fairy: 0.5 },
+            poison: { grass: 2.0, poison: 0.5, ground: 0.5, rock: 0.5, ghost: 0.5, steel: 0, fairy: 2.0 },
+            ground: { fire: 2.0, electric: 2.0, grass: 0.5, poison: 2.0, flying: 0, bug: 0.5, rock: 2.0, steel: 2.0 },
+            flying: { electric: 0.5, grass: 2.0, fighting: 2.0, bug: 2.0, rock: 0.5, steel: 0.5 },
+            psychic: { fighting: 2.0, poison: 2.0, psychic: 0.5, dark: 0, steel: 0.5 },
+            bug: { fire: 0.5, grass: 2.0, fighting: 0.5, poison: 0.5, flying: 0.5, psychic: 2.0, ghost: 0.5, dark: 2.0, steel: 0.5, fairy: 0.5 },
+            rock: { fire: 2.0, ice: 2.0, fighting: 0.5, ground: 0.5, flying: 2.0, bug: 2.0, steel: 0.5 },
+            ghost: { normal: 0, psychic: 2.0, ghost: 2.0, dark: 0.5 },
+            dragon: { dragon: 2.0, steel: 0.5, fairy: 0 },
+            dark: { fighting: 0.5, psychic: 2.0, ghost: 2.0, dark: 0.5, fairy: 0.5 },
+            steel: { fire: 0.5, water: 0.5, electric: 0.5, ice: 2.0, rock: 2.0, steel: 0.5, fairy: 2.0 },
+            fairy: { fire: 0.5, fighting: 2.0, poison: 0.5, dragon: 2.0, dark: 2.0, steel: 0.5 }
+        };
+
+        // MOVE CLASSIFICATIONS
+        const MOVES_DB = {
+            tackle: { type: "normal", power: 40, category: "physical" },
+            scratch: { type: "normal", power: 40, category: "physical" },
+            "quick-attack": { type: "normal", power: 40, category: "physical" },
+            bite: { type: "dark", power: 60, category: "physical" },
+            "flamethrower": { type: "fire", power: 90, category: "special" },
+            "ember": { type: "fire", power: 40, category: "special" },
+            "hydro-pump": { type: "water", power: 110, category: "special" },
+            "water-gun": { type: "water", power: 40, category: "special" },
+            "surf": { type: "water", power: 90, category: "special" },
+            "solar-beam": { type: "grass", power: 120, category: "special" },
+            "vine-whip": { type: "grass", power: 45, category: "physical" },
+            "thunderbolt": { type: "electric", power: 90, category: "special" },
+            "spark": { type: "electric", power: 65, category: "physical" },
+            "ice-beam": { type: "ice", power: 90, category: "special" },
+            "psychic": { type: "psychic", power: 90, category: "special" },
+            "earthquake": { type: "ground", power: 100, category: "physical" },
+            "rock-slide": { type: "rock", power: 75, category: "physical" },
+            "wing-attack": { type: "flying", power: 60, category: "physical" },
+            "shadow-ball": { type: "ghost", power: 80, category: "special" },
+            "dragon-claw": { type: "dragon", power: 80, category: "physical" },
+            "outrage": { type: "dragon", power: 120, category: "physical" },
+            "iron-tail": { type: "steel", power: 100, category: "physical" },
+            "dazzling-gleam": { type: "fairy", power: 80, category: "special" },
+            "hyper-beam": { type: "normal", power: 150, category: "special" },
+            "razor-leaf": { type: "grass", power: 55, category: "physical" },
+            "sleep-powder": { type: "grass", power: 0, category: "status" },
+            "leech-seed": { type: "grass", power: 0, category: "status" },
+            "growl": { type: "normal", power: 0, category: "status" },
+            "tail-whip": { type: "normal", power: 0, category: "status" },
+            "bubble": { type: "water", power: 40, category: "special" },
+            "withdraw": { type: "water", power: 0, category: "status" },
+            "rapid-spin": { type: "normal", power: 50, category: "physical" },
+            "metal-claw": { type: "steel", power: 50, category: "physical" },
+            "leer": { type: "normal", power: 0, category: "status" },
+            "smokescreen": { type: "normal", power: 0, category: "status" },
+            "dragon-rage": { type: "dragon", power: 40, category: "special" },
+            "slash": { type: "normal", power: 70, category: "physical" },
+            "thunder-shock": { type: "electric", power: 40, category: "special" },
+            "thunder-wave": { type: "electric", power: 0, category: "status" },
+            "double-kick": { type: "fighting", power: 60, category: "physical" },
+            "poison-sting": { type: "poison", power: 15, category: "physical" },
+            "fury-attack": { type: "normal", power: 45, category: "physical" },
+            "peck": { type: "flying", power: 35, category: "physical" },
+            "gust": { type: "flying", power: 40, category: "special" },
+            "sand-attack": { type: "ground", power: 0, category: "status" },
+            "confusion": { type: "psychic", power: 50, category: "special" },
+            "string-shot": { type: "bug", power: 0, category: "status" },
+            "bug-bite": { type: "bug", power: 60, category: "physical" },
+            "harden": { type: "normal", power: 0, category: "status" },
+            "mud-slap": { type: "ground", power: 20, category: "special" },
+            "water-pulse": { type: "water", power: 60, category: "special" },
+            "flame-wheel": { type: "fire", power: 60, category: "physical" },
+            "rollout": { type: "rock", power: 30, category: "physical" },
+            "defense-curl": { type: "normal", power: 0, category: "status" },
+            "magnitude": { type: "ground", power: 50, category: "physical" },
+            "body-slam": { type: "normal", power: 85, category: "physical" },
+            "take-down": { type: "normal", power: 90, category: "physical" },
+            "wrap": { type: "normal", power: 15, category: "physical" },
+            "acid": { type: "poison", power: 40, category: "special" },
+            "sludge-bomb": { type: "poison", power: 90, category: "special" },
+            "mega-drain": { type: "grass", power: 40, category: "special" },
+            "stun-spore": { type: "grass", power: 0, category: "status" },
+            "absorb": { type: "grass", power: 20, category: "special" },
+            "zen-headbutt": { type: "psychic", power: 80, category: "physical" },
+            "aerial-ace": { type: "flying", power: 60, category: "physical" },
+            "crunch": { type: "dark", power: 80, category: "physical" },
+            "twister": { type: "dragon", power: 40, category: "special" },
+            "aqua-tail": { type: "water", power: 90, category: "physical" },
+            "headbutt": { type: "normal", power: 70, category: "physical" },
+            "disable": { type: "normal", power: 0, category: "status" },
+            "hypnosis": { type: "psychic", power: 0, category: "status" },
+            "lick": { type: "ghost", power: 30, category: "physical" },
+            "low-kick": { type: "fighting", power: 50, category: "physical" },
+            "karate-chop": { type: "fighting", power: 50, category: "physical" },
+            "seismic-toss": { type: "fighting", power: 60, category: "physical" },
+            "rest": { type: "psychic", power: 0, category: "status" },
+            "amnesia": { type: "psychic", power: 0, category: "status" },
+            "pound": { type: "normal", power: 40, category: "physical" },
+            "sing": { type: "normal", power: 0, category: "status" },
+            "double-slap": { type: "normal", power: 45, category: "physical" },
+            "covet": { type: "normal", power: 60, category: "physical" },
+            "swift": { type: "normal", power: 60, category: "special" },
+            "charm": { type: "fairy", power: 0, category: "status" },
+            "moonblast": { type: "fairy", power: 95, category: "special" },
+            "disarming-voice": { type: "fairy", power: 40, category: "special" },
+            "power-gem": { type: "rock", power: 80, category: "special" },
+            "ancient-power": { type: "rock", power: 60, category: "special" },
+            "night-shade": { type: "ghost", power: 50, category: "special" },
+            "hex": { type: "ghost", power: 65, category: "special" },
+            "sucker-punch": { type: "dark", power: 70, category: "physical" },
+            "play-rough": { type: "fairy", power: 90, category: "physical" },
+            "iron-head": { type: "steel", power: 80, category: "physical" },
+            "flash-cannon": { type: "steel", power: 80, category: "special" },
+            "poison-jab": { type: "poison", power: 80, category: "physical" },
+            "cross-poison": { type: "poison", power: 70, category: "physical" },
+            "x-scissor": { type: "bug", power: 80, category: "physical" },
+            "signal-beam": { type: "bug", power: 75, category: "special" },
+            "fly": { type: "flying", power: 90, category: "physical" },
+            "brave-bird": { type: "flying", power: 120, category: "physical" },
+            "drill-peck": { type: "flying", power: 80, category: "physical" },
+            "dig": { type: "ground", power: 80, category: "physical" },
+            "bulldoze": { type: "ground", power: 60, category: "physical" },
+            "bone-rush": { type: "ground", power: 50, category: "physical" },
+            "rock-throw": { type: "rock", power: 50, category: "physical" },
+            "rock-blast": { type: "rock", power: 50, category: "physical" },
+            "psybeam": { type: "psychic", power: 65, category: "special" },
+            "aurora-beam": { type: "ice", power: 65, category: "special" },
+            "icy-wind": { type: "ice", power: 55, category: "special" },
+            "ice-shard": { type: "ice", power: 40, category: "physical" },
+            "blizzard": { type: "ice", power: 110, category: "special" },
+            "fire-spin": { type: "fire", power: 35, category: "special" },
+            "fire-fang": { type: "fire", power: 65, category: "physical" },
+            "fire-punch": { type: "fire", power: 75, category: "physical" },
+            "flame-charge": { type: "fire", power: 50, category: "physical" },
+            "thunder-fang": { type: "fire", power: 65, category: "physical" },
+            "thunder": { type: "electric", power: 110, category: "special" },
+            "discharge": { type: "electric", power: 80, category: "special" },
+            "electro-ball": { type: "electric", power: 60, category: "special" },
+            "nuzzle": { type: "electric", power: 20, category: "physical" },
+            "feint-attack": { type: "dark", power: 60, category: "physical" },
+            "fury-swipes": { type: "normal", power: 36, category: "physical" },
+            "pay-day": { type: "normal", power: 40, category: "physical" },
+            "power-whip": { type: "grass", power: 120, category: "physical" },
+            "seed-bomb": { type: "grass", power: 80, category: "physical" },
+            "giga-drain": { type: "grass", power: 75, category: "special" },
+            "energy-ball": { type: "grass", power: 90, category: "special" },
+            "sludge": { type: "poison", power: 65, category: "special" },
+            "mud-bomb": { type: "ground", power: 65, category: "special" }
+        };
+
+        // BASIC (UNEVOLVED) POKEMON POOLS PER RARITY (only first-stage Pokemon)
+        const BASIC_POKEMON_POOLS = {
+            Common: {
+                gen1: [1,4,7,10,13,16,19,21,23,27,29,32,35,37,39,41,43,46,48,50,52,54,56,58,60,63,66,69,72,74,77,79,81,84,86,88,90,92,96,98,100,102,104,108,109,111,114,116,118,120,129,147],
+                gen2: [152,155,158,161,163,165,167,170,172,173,174,175,177,179,183,187,190,191,193,194,198,200,204,206,207,209,211,213,214,215,216,218,220,222,223,225,226,228,231,234,235,236,238,239,240,241,246],
+                gen3: [252,255,258,261,263,265,270,273,276,278,280,283,285,287,290,293,296,298,299,300,304,307,309,311,312,314,315,316,318,320,322,325,328,331,333,335,336,337,338,339,341,343,345,347,349,351,352,353,355,357,358,359,360,361,363,366],
+                gen4: [387,390,393,396,399,401,403,406,408,410,412,415,417,418,420,422,425,427,431,434,436,438,439,440,441,442,443,446,447,449,451,453,455,456,458,459],
+                gen5: [495,498,501,504,506,509,511,513,515,517,519,522,524,527,529,531,532,535,538,539,540,543,546,548,550,551,554,556,557,559,561,562,564,566,568,570,572,574,577,580,582,585,587,588,590,592,594,595,597,599,602,605,607,610,613,615,616,618,619,621,622,624,626,627,629,631,632,633],
+                gen6: [650,653,656,659,661,664,667,669,672,674,676,677,679,682,684,686,688,690,692,694,696,698,701,702,703,704,707,708,710,712,714],
+                gen7: [722,725,728,731,734,736,739,741,742,744,746,747,749,751,753,755,757,759,761,764,765,766,767,769,771,774,775,776,778,779,780,781,782],
+                gen8: [810,813,816,819,821,824,827,829,831,833,835,837,840,843,845,846,848,850,852,854,856,859,868,870,871,872,874,875,876,877,878,884,885],
+                gen9: [906,909,912,915,917,919,921,924,926,928,931,932,934,935,938,940,941,942,943,944,945,946,947,948,949,950,951,952,953,954,955,956,957]
+            },
+            Rare: {
+                gen1: [1,4,7,25,37,39,58,63,66,79,111,116,133,147],
+                gen2: [152,155,158,175,179,194,215,228,246],
+                gen3: [252,255,258,280,304,328,349,361,363],
+                gen4: [387,390,393,403,443,447,459],
+                gen5: [495,498,501,532,610,633],
+                gen6: [650,653,656,704],
+                gen7: [722,725,728,782],
+                gen8: [810,813,816,885],
+                gen9: [906,909,912]
+            },
+            Epic: {
+                gen1: [1,4,7,58,63,66,111,131,133,137,142,147],
+                gen2: [152,155,158,175,246],
+                gen3: [252,255,258,280,304,328,349,371,374],
+                gen4: [387,390,393,443,447],
+                gen5: [495,498,501,633],
+                gen6: [650,653,656,704],
+                gen7: [722,725,728,782],
+                gen8: [810,813,816,885],
+                gen9: [906,909,912]
+            },
+            Legendary: {
+                gen1: [1,4,7,131,137,142,147],
+                gen2: [152,155,158,246],
+                gen3: [252,255,258,371,374],
+                gen4: [387,390,393,443],
+                gen5: [495,498,501,633],
+                gen6: [650,653,656],
+                gen7: [722,725,728],
+                gen8: [810,813,816],
+                gen9: [906,909,912]
+            }
+        };
+
+        // LEVEL-UP MOVESETS: Pokémon learn moves at specific levels (accurate to main games)
+        const LEVELUP_MOVES = {
+            1: {1:["tackle","growl"],3:["vine-whip"],6:["growl"],9:["leech-seed"],12:["razor-leaf"],15:["sleep-powder"],20:["seed-bomb"],25:["take-down"],32:["solar-beam"]},
+            4: {1:["scratch","growl"],4:["ember"],8:["smokescreen"],12:["dragon-rage"],17:["fire-fang"],21:["slash"],25:["flamethrower"],30:["fire-spin"],36:["dragon-claw"]},
+            7: {1:["tackle","tail-whip"],3:["water-gun"],6:["withdraw"],9:["bubble"],12:["bite"],15:["rapid-spin"],20:["water-pulse"],25:["aqua-tail"],30:["hydro-pump"]},
+            10: {1:["tackle","string-shot"],9:["bug-bite"]},
+            13: {1:["poison-sting","string-shot"],9:["bug-bite"],12:["confusion"]},
+            16: {1:["tackle","gust"],9:["quick-attack"],13:["twister"],17:["wing-attack"],25:["aerial-ace"],33:["fly"]},
+            19: {1:["tackle","tail-whip"],4:["quick-attack"],7:["bite"],10:["fury-swipes"],16:["crunch"],20:["take-down"],24:["sucker-punch"]},
+            21: {1:["peck","leer"],5:["fury-attack"],9:["aerial-ace"],13:["quick-attack"],21:["drill-peck"]},
+            23: {1:["wrap","leer"],4:["poison-sting"],9:["bite"],12:["acid"],17:["sludge"],20:["crunch"],25:["sludge-bomb"]},
+            25: {1:["thunder-shock","growl","tail-whip"],4:["thunder-wave"],8:["nuzzle"],12:["quick-attack"],15:["electro-ball"],20:["spark"],25:["discharge"],30:["thunderbolt"],35:["thunder"]},
+            27: {1:["scratch","defense-curl"],3:["sand-attack"],7:["poison-sting"],9:["rollout"],13:["fury-swipes"],17:["slash"],21:["dig"],25:["earthquake"]},
+            29: {1:["scratch","growl"],5:["poison-sting"],9:["tail-whip"],13:["double-kick"],17:["bite"],21:["crunch"],25:["poison-jab"]},
+            32: {1:["leer","peck"],5:["poison-sting"],9:["double-kick"],13:["fury-attack"],17:["headbutt"],21:["crunch"],25:["poison-jab"]},
+            35: {1:["pound","growl"],4:["sing"],8:["double-slap"],12:["disarming-voice"],16:["defense-curl"],20:["take-down"],24:["moonblast"]},
+            37: {1:["ember","tail-whip"],4:["quick-attack"],7:["fire-spin"],12:["confuse-ray"],15:["flame-wheel"],20:["flamethrower"]},
+            39: {1:["pound","sing"],3:["defense-curl"],5:["disarming-voice"],9:["double-slap"],13:["charm"],17:["body-slam"],21:["play-rough"]},
+            41: {1:["absorb","leer"],5:["bite"],9:["wing-attack"],13:["confusion"],17:["swift"],21:["aerial-ace"],25:["crunch"]},
+            43: {1:["absorb","growl"],5:["acid"],9:["sleep-powder"],13:["mega-drain"],17:["sludge"],21:["giga-drain"],25:["sludge-bomb"]},
+            46: {1:["scratch","absorb"],6:["stun-spore"],11:["fury-swipes"],17:["leech-seed"],22:["slash"],27:["x-scissor"]},
+            48: {1:["tackle","disable"],5:["confusion"],9:["absorb"],13:["stun-spore"],17:["psybeam"],21:["sleep-powder"],25:["psychic","signal-beam"]},
+            50: {1:["scratch","sand-attack"],4:["growl"],7:["mud-slap"],12:["bulldoze"],15:["slash"],18:["dig"],21:["earthquake"]},
+            52: {1:["scratch","growl"],6:["bite"],9:["pay-day"],14:["fury-swipes"],17:["feint-attack"],22:["slash"],25:["play-rough"]},
+            54: {1:["scratch","tail-whip"],5:["water-gun"],9:["confusion"],13:["disable"],17:["water-pulse"],21:["zen-headbutt"],25:["aqua-tail"],29:["hydro-pump"]},
+            56: {1:["scratch","leer"],5:["low-kick"],9:["fury-swipes"],13:["karate-chop"],17:["seismic-toss"],21:["cross-poison"],25:["take-down"]},
+            58: {1:["ember","leer"],4:["bite"],8:["fire-fang"],12:["take-down"],16:["flame-wheel"],20:["crunch"],24:["flamethrower"],28:["play-rough"]},
+            60: {1:["water-gun","hypnosis"],5:["bubble"],9:["mud-slap"],13:["body-slam"],17:["water-pulse"],21:["mud-bomb"],25:["hydro-pump"]},
+            63: {1:["confusion"],16:["psybeam"],21:["confusion"],26:["psychic"]},
+            66: {1:["low-kick","leer"],5:["karate-chop"],9:["seismic-toss"],13:["headbutt"],17:["take-down"],21:["body-slam"],25:["cross-poison"]},
+            69: {1:["vine-whip","growl"],7:["wrap"],11:["sleep-powder"],15:["acid"],17:["razor-leaf"],21:["poison-jab"],25:["power-whip"]},
+            72: {1:["poison-sting","acid"],5:["wrap"],9:["water-pulse"],13:["acid"],17:["sludge"],21:["hydro-pump"]},
+            74: {1:["tackle","defense-curl"],4:["mud-slap"],8:["rock-throw"],12:["magnitude"],16:["rollout"],20:["bulldoze"],24:["rock-slide"],28:["earthquake"]},
+            77: {1:["tackle","growl"],4:["ember"],8:["flame-charge"],12:["take-down"],16:["flame-wheel"],20:["fire-spin"],24:["fire-fang"],28:["flamethrower"]},
+            79: {1:["tackle","growl"],5:["water-gun"],9:["confusion"],13:["headbutt"],17:["water-pulse"],21:["zen-headbutt"],25:["psychic"],29:["surf"]},
+            81: {1:["tackle","thunder-shock"],5:["thunder-wave"],9:["spark"],13:["electro-ball"],17:["flash-cannon"],21:["discharge"],25:["thunderbolt"]},
+            84: {1:["peck","growl"],5:["quick-attack"],9:["fury-attack"],13:["aerial-ace"],17:["drill-peck"],21:["take-down"],25:["fly"]},
+            86: {1:["headbutt","growl"],5:["icy-wind"],9:["aqua-tail"],13:["ice-shard"],17:["aurora-beam"],21:["take-down"],25:["ice-beam"]},
+            88: {1:["pound","poison-sting"],4:["mud-slap"],8:["sludge"],12:["disable"],16:["acid"],20:["sludge-bomb"],24:["crunch"]},
+            90: {1:["tackle","withdraw"],8:["icy-wind"],13:["ice-shard"],20:["aurora-beam"],25:["ice-beam"]},
+            92: {1:["lick","hypnosis"],5:["confusion"],8:["night-shade"],12:["sucker-punch"],16:["hex"],20:["shadow-ball"],25:["psychic"]},
+            96: {1:["pound","hypnosis"],5:["confusion"],9:["headbutt"],13:["psybeam"],17:["zen-headbutt"],21:["psychic"]},
+            98: {1:["bubble","leer"],5:["mud-slap"],9:["water-gun"],13:["metal-claw"],17:["water-pulse"],21:["crunch"],25:["aqua-tail"]},
+            100: {1:["tackle","thunder-shock"],5:["spark"],9:["electro-ball"],13:["swift"],17:["discharge"],21:["thunderbolt"],25:["thunder"]},
+            102: {1:["absorb","hypnosis"],5:["confusion"],9:["stun-spore"],13:["mega-drain"],17:["psybeam"],21:["energy-ball"],25:["solar-beam"]},
+            104: {1:["growl","tail-whip"],3:["bone-rush"],7:["headbutt"],11:["leer"],13:["take-down"],17:["dig"],21:["body-slam"],25:["earthquake"]},
+            108: {1:["lick","tackle"],5:["wrap"],9:["slam","body-slam"],13:["headbutt"],17:["take-down"],21:["power-whip"]},
+            109: {1:["tackle","smokescreen"],4:["poison-sting"],8:["sludge"],12:["fire-spin"],16:["sludge-bomb"],20:["flamethrower"]},
+            111: {1:["tackle","tail-whip"],5:["fury-attack"],9:["rock-throw"],13:["bulldoze"],17:["take-down"],21:["rock-slide"],25:["dig"],29:["earthquake"]},
+            114: {1:["absorb","vine-whip"],4:["sleep-powder"],8:["mega-drain"],12:["stun-spore"],16:["giga-drain"],20:["seed-bomb"],24:["power-whip"]},
+            116: {1:["water-gun","leer"],5:["bubble"],9:["smokescreen"],13:["water-pulse"],17:["twister"],21:["hydro-pump","dragon-claw"]},
+            118: {1:["peck","tail-whip"],5:["water-gun"],9:["horn-attack"],13:["fury-attack"],17:["aqua-tail"],21:["waterfall","surf"]},
+            120: {1:["tackle","harden"],4:["water-gun"],8:["rapid-spin"],12:["swift"],16:["water-pulse"],20:["power-gem"],24:["psychic"],28:["hydro-pump"]},
+            129: {1:["tackle"],15:["tackle"]},
+            131: {1:["water-gun","growl"],5:["sing"],9:["ice-shard"],13:["water-pulse"],17:["body-slam"],21:["ice-beam"],25:["surf"],29:["hydro-pump"]},
+            133: {1:["tackle","tail-whip","growl"],5:["sand-attack"],9:["quick-attack"],13:["bite"],17:["swift"],20:["take-down"],25:["charm"]},
+            137: {1:["tackle","confusion"],5:["psybeam"],9:["swift"],13:["discharge"],17:["psychic"],21:["flash-cannon"]},
+            142: {1:["bite","wing-attack"],5:["aerial-ace"],9:["ancient-power"],13:["crunch"],17:["rock-slide"],21:["take-down"],25:["brave-bird"]},
+            147: {1:["wrap","leer"],5:["twister"],9:["thunder-wave"],13:["dragon-rage"],17:["slam","body-slam"],21:["aqua-tail"],25:["dragon-claw"],30:["outrage"]},
+            152: {1:["tackle","growl"],6:["razor-leaf"],9:["vine-whip"],12:["body-slam"],18:["seed-bomb"],22:["energy-ball"],26:["solar-beam"]},
+            155: {1:["tackle","leer"],4:["ember"],8:["smokescreen"],12:["quick-attack"],17:["flame-wheel"],21:["flamethrower"],25:["swift"]},
+            158: {1:["scratch","leer"],4:["water-gun"],8:["bite"],12:["ice-fang","ice-shard"],17:["slash"],21:["crunch"],25:["aqua-tail"],29:["hydro-pump"]},
+            175: {1:["growl","charm"],5:["pound"],9:["swift"],13:["ancient-power"],17:["dazzling-gleam"],21:["moonblast"]},
+            179: {1:["tackle","growl"],4:["thunder-shock"],8:["thunder-wave"],12:["electro-ball"],16:["take-down"],20:["discharge"],24:["thunderbolt"],28:["thunder"]},
+            246: {1:["bite","leer"],5:["rock-throw"],9:["mud-slap"],13:["headbutt"],17:["rock-slide"],21:["crunch"],25:["earthquake"]},
+            252: {1:["pound","leer"],5:["absorb"],9:["quick-attack"],13:["mega-drain"],17:["slam","body-slam"],21:["energy-ball"],25:["seed-bomb"]},
+            255: {1:["scratch","growl"],5:["ember"],9:["sand-attack"],13:["peck"],17:["flame-charge"],21:["slash"],25:["flamethrower"],29:["brave-bird"]},
+            258: {1:["tackle","growl"],5:["water-gun"],9:["mud-slap"],13:["headbutt"],17:["take-down"],21:["bulldoze"],25:["surf"],29:["hydro-pump"]},
+            280: {1:["growl","confusion"],5:["double-slap"],9:["disarming-voice"],13:["psybeam"],17:["charm"],21:["psychic"],25:["dazzling-gleam"],29:["moonblast"]},
+            304: {1:["tackle","harden"],4:["headbutt"],8:["metal-claw"],12:["rock-throw"],16:["iron-head"],20:["take-down"],24:["rock-slide"],28:["iron-tail"]},
+            328: {1:["bite","sand-attack"],5:["mud-slap"],9:["bulldoze"],13:["dig"],17:["crunch"],21:["rock-slide"],25:["earthquake"],29:["outrage"]},
+            349: {1:["tackle"],15:["tackle"],20:["water-gun"],25:["water-pulse"]},
+            371: {1:["ember","bite"],5:["leer"],9:["headbutt"],13:["dragon-rage"],17:["crunch"],21:["dragon-claw"],25:["flamethrower"],30:["outrage"]},
+            374: {1:["tackle","confusion"],5:["metal-claw"],9:["take-down"],13:["zen-headbutt"],17:["iron-head"],21:["psychic"],25:["flash-cannon"]},
+            387: {1:["tackle","withdraw"],5:["absorb"],9:["razor-leaf"],13:["headbutt"],17:["mega-drain"],21:["leech-seed"],25:["seed-bomb"],29:["earthquake"]},
+            390: {1:["scratch","leer"],5:["ember"],9:["fury-swipes"],13:["flame-wheel"],17:["slash"],21:["flamethrower"],25:["fire-spin"]},
+            393: {1:["pound","growl"],5:["bubble"],9:["water-gun"],13:["peck"],17:["drill-peck"],21:["water-pulse"],25:["surf"],29:["hydro-pump"]},
+            443: {1:["tackle","sand-attack"],5:["dragon-rage"],9:["bulldoze"],13:["take-down"],17:["dig"],21:["slash"],25:["dragon-claw"],29:["earthquake"],33:["outrage"]},
+            447: {1:["quick-attack","leer"],5:["low-kick"],9:["metal-claw"],13:["karate-chop"],17:["headbutt"],21:["seismic-toss"],25:["bone-rush"]},
+            495: {1:["tackle","leer"],5:["vine-whip"],9:["wrap"],13:["mega-drain"],17:["leech-seed"],21:["razor-leaf"],25:["energy-ball"],29:["seed-bomb"]},
+            498: {1:["tackle","tail-whip"],5:["ember"],9:["take-down"],13:["flame-charge"],17:["headbutt"],21:["flamethrower"]},
+            501: {1:["tackle","tail-whip"],5:["water-gun"],9:["fury-swipes"],13:["water-pulse"],17:["slash"],21:["aqua-tail"],25:["surf"]},
+            633: {1:["tackle","bite"],5:["dragon-rage"],9:["headbutt"],13:["crunch"],17:["dragon-claw"],21:["body-slam"],25:["outrage"]},
+            650: {1:["tackle","growl"],5:["vine-whip"],9:["rollout"],13:["bite"],17:["razor-leaf"],21:["seed-bomb"],25:["body-slam"]},
+            653: {1:["scratch","tail-whip"],5:["ember"],9:["howl","growl"],13:["flame-charge"],17:["psybeam"],21:["fire-spin"],25:["flamethrower"]},
+            656: {1:["pound","growl"],5:["bubble"],9:["quick-attack"],13:["lick"],17:["water-pulse"],21:["acrobatics","aerial-ace"],25:["surf"]},
+            704: {1:["tackle","absorb"],5:["bubble"],9:["water-gun"],13:["mud-slap"],17:["dragon-rage"],21:["body-slam"],25:["muddy-water","water-pulse"]},
+            722: {1:["tackle","growl"],4:["peck"],8:["razor-leaf"],11:["aerial-ace"],15:["seed-bomb"],19:["fly"],23:["energy-ball"],27:["brave-bird"]},
+            725: {1:["scratch","ember"],4:["growl"],8:["lick"],11:["fire-fang"],15:["bite"],19:["flamethrower"],23:["crunch"]},
+            728: {1:["pound","water-gun"],4:["growl"],8:["disarming-voice"],11:["aqua-tail"],15:["charm"],19:["bubble"],23:["moonblast"],27:["hydro-pump"]},
+            782: {1:["tackle","leer"],5:["headbutt"],9:["iron-head"],13:["dragon-claw"],17:["take-down"],21:["outrage"]},
+            810: {1:["tackle","growl"],5:["vine-whip"],9:["razor-leaf"],13:["headbutt"],17:["seed-bomb"],21:["body-slam"],25:["energy-ball"]},
+            813: {1:["tackle","growl"],5:["ember"],9:["quick-attack"],13:["flame-charge"],17:["headbutt"],21:["flamethrower"],25:["fire-spin"]},
+            816: {1:["pound","growl"],5:["water-gun"],9:["water-pulse"],13:["swift"],17:["aqua-tail"],21:["surf"],25:["hydro-pump"]},
+            885: {1:["tackle","quick-attack"],5:["bite"],9:["dragon-rage"],13:["twister"],17:["dragon-claw"],21:["take-down"],25:["outrage"]},
+            906: {1:["scratch","growl"],5:["vine-whip"],9:["razor-leaf"],13:["bite"],17:["seed-bomb"],21:["body-slam"],25:["energy-ball"]},
+            909: {1:["tackle","leer"],5:["ember"],9:["bite"],13:["flame-charge"],17:["headbutt"],21:["flamethrower"],25:["crunch"]},
+            912: {1:["pound","growl"],5:["water-gun"],9:["quick-attack"],13:["water-pulse"],17:["icy-wind"],21:["aqua-tail"],25:["ice-beam"]}
+        };
+
+        let nextCatchUid = 1;
+
+        // CORE HOLD ITEMS DATABASE
+        const HOLD_ITEMS_DB = {
+            oran_berry: { name: "Oran Berry", cost: 40, desc: "Restores 30 HP once during battle when health falls below 30%", effect: "heal_low_hp", value: 30 },
+            leftovers: { name: "Leftovers", cost: 120, desc: "Gradually restores 1/16th of maximum HP at the end of every combat turn", effect: "heal_turn", value: 0.0625 },
+            choice_band: { name: "Choice Band", cost: 180, desc: "Boosts Physical move power by 50% continuously", effect: "boost_physical", value: 1.5 },
+            wise_glasses: { name: "Wise Glasses", cost: 180, desc: "Boosts Special move power by 25% continuously", effect: "boost_special", value: 1.25 }
+        };
+
+        // CAMPAIGN ADVENTURE ROADMAP STAGES
+        const CAMPAIGN_ROADMAP = [
+            { stageId: 1, name: "Viridian Forest", trainer: "Bug Catcher Rick", pokemonId: 10, bossName: "Caterpie", level: 5, reward: 60, icon: "🐛" },
+            { stageId: 2, name: "Pewter Gym", trainer: "Gym Leader Brock", pokemonId: 95, bossName: "Onix", level: 12, reward: 120, icon: "🪨" },
+            { stageId: 3, name: "Cerulean Route", trainer: "Lass Haley", pokemonId: 39, bossName: "Jigglypuff", level: 18, reward: 150, icon: "🎈" },
+            { stageId: 4, name: "Cerulean Gym", trainer: "Gym Leader Misty", pokemonId: 120, bossName: "Staryu", level: 24, reward: 180, icon: "⭐" },
+            { stageId: 5, name: "Vermilion Gym", trainer: "Gym Leader Lt. Surge", pokemonId: 26, bossName: "Raichu", level: 32, reward: 220, icon: "⚡" },
+            { stageId: 6, name: "Lavender Tower", trainer: "Channeler Patricia", pokemonId: 93, bossName: "Haunter", level: 40, reward: 260, icon: "👻" },
+            { stageId: 7, name: "Celadon Gym", trainer: "Gym Leader Erika", pokemonId: 45, bossName: "Vileplume", level: 48, reward: 300, icon: "🌸" },
+            { stageId: 8, name: "Saffron Gym", trainer: "Gym Leader Sabrina", pokemonId: 65, bossName: "Alakazam", level: 55, reward: 350, icon: "🥄" },
+            { stageId: 9, name: "Seafoam Caverns", trainer: "Feral Articuno", pokemonId: 144, bossName: "Articuno", level: 70, reward: 500, icon: "❄️" },
+            { stageId: 10, name: "Indigo Plateau", trainer: "Champion Lance", pokemonId: 149, bossName: "Dragonite", level: 85, reward: 800, icon: "🐉" }
+        ];
+
+        // GAME INITIAL STATE - Balanced Starting Balance (5 Standard, 0 others)
+        let gameState = {
+            coins: 100,
+            xp: 0,
+            level: 1,
+            balls: {
+                poke: 5,
+                great: 0,
+                ultra: 0,
+                master: 0
+            },
+            pokedex: [],
+            pcBox: [],
+            selectedBall: 'poke',
+            wheel: {
+                spinning: false,
+                currentAngle: 0,
+                spinSpeed: 0,
+                targetRarity: 'Common',
+                pointerPos: 0,
+                lastWedgeAudio: -1
+            },
+            currentEncounter: null,
+            encounterShiny: false,
+            catchMinigame: {
+                active: false,
+                ringScale: 1.0,
+                contracting: true,
+                score: 0
+            },
+            inventoryItems: {
+                oran_berry: 0,
+                leftovers: 0,
+                choice_band: 0,
+                wise_glasses: 0
+            },
+            unlockedStages: 1, 
+            activeBattleStage: null,
+            battleType: 'campaign', // 'campaign' or 'unlimited'
+            battle: {
+                active: false,
+                bossPokemon: null,
+                fighterPokemon: null,
+                fighterHP: 0,
+                bossHP: 0,
+                fighterMaxHP: 0,
+                bossMaxHP: 0,
+                oranUsed: false,
+                bossOranUsed: false
+            },
+            dexUI: {
+                page: 1,
+                pageSize: 9,
+                total: 1025,
+                search: "",
+                rarity: "all"
+            }
+        };
+
+        // FIREBASE GLOBAL APP INITIALIZATION
+        let db = null;
+        let auth = null;
+        let currentUser = null;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'pokemon-radar-elite';
+
+        if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+            try {
+                const firebaseConfig = JSON.parse(__firebase_config);
+                firebase.initializeApp(firebaseConfig);
+                auth = firebase.auth();
+                db = firebase.firestore();
+
+                // Setup seamless Auth listener
+                auth.onAuthStateChanged(user => {
+                    if (user) {
+                        currentUser = user;
+                        document.getElementById('googleLoginText').textContent = user.displayName || "Linked";
+                        document.getElementById('googleLoginBtn').classList.add('bg-emerald-950/80', 'border-emerald-700/60', 'text-emerald-300');
+                        loadFromCloud();
+                    } else {
+                        currentUser = null;
+                        document.getElementById('googleLoginText').textContent = "Sync Account";
+                        document.getElementById('googleLoginBtn').classList.remove('bg-emerald-950/80', 'border-emerald-700/60', 'text-emerald-300');
+                    }
+                });
+            } catch(e) {
+                console.warn("Firebase Auth Configuration missed. Auto-fallback active.");
+            }
+        }
+
+        // GOOGLE SIGN IN POPUP TRIGGER
+        function handleGoogleSignIn() {
+            initAudio();
+            playConfirmSound();
+            if (!auth) {
+                showNotification("No Cloud Config", "Local browser memory is currently storing your profile perfectly.", "info");
+                return;
+            }
+
+            if (auth.currentUser) {
+                // If already signed in, confirm backup status
+                showNotification("Synced Safe", "All scanning profiles backed up on Google Cloud.", "success");
+                return;
+            }
+
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).then(result => {
+                showNotification("Google Connected!", "Transferred backup files successfully.", "success");
+            }).catch(err => {
+                showNotification("Sync Failed", "Using local-first data saving safely.", "error");
+            });
+        }
+
+        // CLOUD SAVE STORAGE SYNC
+        function loadFromCloud() {
+            if (!db || !currentUser) return;
+            const docPath = db.doc(`artifacts/${appId}/users/${currentUser.uid}/trainer_progress/current`);
+            docPath.get().then(doc => {
+                if (doc.exists) {
+                    const cloudData = doc.data();
+                    if (cloudData && cloudData.pokedex) {
+                        // Merge or override states cleanly
+                        gameState = Object.assign({}, gameState, cloudData);
+                        updateUI();
+                        saveProgressLocal();
+                        showNotification("Cloud Profile Loaded", "Successfully restored your progress!", "success");
+                        renderRoadmap();
+                    }
+                } else {
+                    // Seed initial cloud document
+                    saveProgressCloud();
+                }
+            }).catch(err => {
+                console.error("Firestore loading error:", err);
+            });
+        }
+
+        function saveProgressCloud() {
+            if (!db || !currentUser) return;
+            const docPath = db.doc(`artifacts/${appId}/users/${currentUser.uid}/trainer_progress/current`);
+            docPath.set(gameState).catch(err => {
+                console.warn("Cloud save issue:", err);
+            });
+        }
+
+        // SETUP CANVAS ROULETTE WHEEL
+        const canvas = document.getElementById('wheelCanvas');
+        const ctx = canvas.getContext('2d');
+        const wheelRadius = canvas.width / 2;
+
+        const WHEEL_CONFIGS = {
+            poke: [
+                { rarity: "Common", ratio: 0.65, color: "#2d3748" },
+                { rarity: "Rare", ratio: 0.25, color: "#1d4ed8" },
+                { rarity: "Epic", ratio: 0.09, color: "#7e22ce" },
+                { rarity: "Legendary", ratio: 0.01, color: "#b45309" }
+            ],
+            great: [
+                { rarity: "Common", ratio: 0.40, color: "#2d3748" },
+                { rarity: "Rare", ratio: 0.40, color: "#1d4ed8" },
+                { rarity: "Epic", ratio: 0.18, color: "#7e22ce" },
+                { rarity: "Legendary", ratio: 0.02, color: "#b45309" }
+            ],
+            ultra: [
+                { rarity: "Common", ratio: 0.15, color: "#2d3748" },
+                { rarity: "Rare", ratio: 0.35, color: "#1d4ed8" },
+                { rarity: "Epic", ratio: 0.40, color: "#7e22ce" },
+                { rarity: "Legendary", ratio: 0.10, color: "#b45309" }
+            ],
+            master: [
+                { rarity: "Common", ratio: 0.00, color: "#2d3748" },
+                { rarity: "Rare", ratio: 0.10, color: "#1d4ed8" },
+                { rarity: "Epic", ratio: 0.60, color: "#7e22ce" },
+                { rarity: "Legendary", ratio: 0.30, color: "#b45309" }
+            ]
+        };
+
+        let currentSectors = [];
+
+        function buildWheelSectors() {
+            const config = WHEEL_CONFIGS[gameState.selectedBall];
+            currentSectors = [];
+            
+            const wedges = 12;
+            let currentPool = [];
+            
+            config.forEach(cfg => {
+                const count = Math.max(0, Math.round(cfg.ratio * wedges));
+                for(let i=0; i < count; i++) {
+                    currentPool.push({ rarity: cfg.rarity, color: cfg.color });
+                }
+            });
+
+            while(currentPool.length < wedges) {
+                currentPool.push({ rarity: "Common", color: "#2d3748" });
+            }
+            if(currentPool.length > wedges) {
+                currentPool.splice(wedges);
+            }
+
+            const anglePerWedge = (Math.PI * 2) / wedges;
+            for(let i = 0; i < wedges; i++) {
+                currentSectors.push({
+                    startAngle: i * anglePerWedge,
+                    endAngle: (i + 1) * anglePerWedge,
+                    rarity: currentPool[i].rarity,
+                    color: currentPool[i].color
+                });
+            }
+        }
+
+        function drawWheel() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.save();
+            ctx.translate(wheelRadius, wheelRadius);
+            ctx.rotate(gameState.wheel.currentAngle);
+
+            const wedges = currentSectors.length;
+            
+            currentSectors.forEach((sector, index) => {
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.arc(0, 0, wheelRadius - 12, sector.startAngle, sector.endAngle);
+                ctx.closePath();
+                
+                ctx.fillStyle = sector.color;
+                ctx.fill();
+                
+                ctx.strokeStyle = '#060913';
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+                ctx.save();
+                ctx.rotate(sector.startAngle + (sector.endAngle - sector.startAngle) / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 10px 'Space Grotesk', sans-serif";
+                
+                let txt = sector.rarity.substring(0, 3).toUpperCase();
+                ctx.fillText(txt, wheelRadius - 30, 4);
+                ctx.restore();
+            });
+
+            ctx.beginPath();
+            ctx.arc(0, 0, wheelRadius - 6, 0, Math.PI * 2);
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        // TOAST NOTIFICATIONS
+        function showNotification(title, msg, type = 'info') {
+            const toast = document.getElementById('customToast');
+            const tTitle = document.getElementById('toastTitle');
+            const tMsg = document.getElementById('toastMessage');
+            const tIconContainer = document.getElementById('toastIconContainer');
+            const tIcon = document.getElementById('toastIcon');
+
+            tTitle.textContent = title;
+            tMsg.textContent = msg;
+
+            if (type === 'success') {
+                tIconContainer.className = "p-3 rounded-xl bg-green-500/20 text-green-400";
+                tIcon.className = "fas fa-check-circle text-xl";
+            } else if (type === 'error') {
+                tIconContainer.className = "p-3 rounded-xl bg-red-500/20 text-red-400";
+                tIcon.className = "fas fa-times-circle text-xl";
+            } else if (type === 'shiny') {
+                tIconContainer.className = "p-3 rounded-xl bg-pink-500/20 text-pink-400 animate-pulse";
+                tIcon.className = "fas fa-sparkles text-xl";
+            } else {
+                tIconContainer.className = "p-3 rounded-xl bg-blue-500/20 text-blue-400";
+                tIcon.className = "fas fa-info-circle text-xl";
+            }
+
+            toast.style.opacity = "1";
+            toast.style.transform = "translate(-50%, 0px)";
+            
+            setTimeout(() => {
+                toast.style.opacity = "0";
+                toast.style.transform = "translate(-50%, -50px)";
+            }, 3500);
+        }
+
+        // BALANCES, COINS & TRAINER XP
+        function addCoins(amount) {
+            gameState.coins += amount;
+            updateUI();
+            saveProgress();
+        }
+
+        function spendCoins(amount) {
+            if (gameState.coins >= amount) {
+                gameState.coins -= amount;
+                updateUI();
+                saveProgress();
+                return true;
+            }
+            return false;
+        }
+
+        function addXP(amount) {
+            gameState.xp += amount;
+            let needed = gameState.level * 100;
+            if (gameState.xp >= needed) {
+                gameState.xp -= needed;
+                gameState.level += 1;
+                showNotification("Rank Up!", `Trainer level promoted to ${gameState.level}!`, 'success');
+                playSuccessCapture();
+            }
+            updateUI();
+            saveProgress();
+        }
+
+        // NAVIGATION VIEW SWITCHER
+        function switchView(viewName) {
+            playConfirmSound();
+            document.querySelectorAll('.view-panel').forEach(panel => panel.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-950 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900";
+            });
+            
+            document.querySelectorAll('.mobile-nav-btn').forEach(mBtn => {
+                mBtn.className = "mobile-nav-btn text-center text-slate-400";
+            });
+
+            const activePanel = document.getElementById(`view-${viewName}`);
+            if (activePanel) {
+                activePanel.classList.remove('hidden');
+            }
+            const targetNav = document.getElementById(`nav-${viewName}`);
+            
+            if (targetNav) {
+                targetNav.className = "nav-btn active flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-gradient-to-r from-rose-600 to-pink-600 text-white border-transparent shadow-lg shadow-rose-600/10";
+            }
+
+            if (viewName === 'pokedex') {
+                renderPokedex();
+            } else if (viewName === 'battle') {
+                resetBattleScreen();
+                renderRoadmap();
+            } else if (viewName === 'shop') {
+                renderHeldItemsShop();
+            } else if (viewName === 'pc') {
+                renderPCBox();
+            }
+        }
+
+        function getMovesForLevel(pokemonId, level) {
+            const moveData = LEVELUP_MOVES[pokemonId];
+            if (!moveData) return ["tackle", "quick-attack"];
+            const learned = [];
+            const sortedLevels = Object.keys(moveData).map(Number).sort((a, b) => a - b);
+            for (const lvl of sortedLevels) {
+                if (lvl <= level) {
+                    for (const move of moveData[lvl]) {
+                        if (!learned.includes(move)) learned.push(move);
+                    }
+                }
+            }
+            // Keep only the last 4 moves (most recent learned)
+            const finalMoves = learned.slice(-4);
+            while (finalMoves.length < 2) finalMoves.push("tackle");
+            return finalMoves;
+        }
+
+        function checkLevelUpMoves(pokemon) {
+            const moveData = LEVELUP_MOVES[pokemon.id];
+            if (!moveData) return [];
+            const level = pokemon.level || 1;
+            const newMoves = [];
+            if (moveData[level]) {
+                for (const move of moveData[level]) {
+                    if (!pokemon.moves.includes(move)) {
+                        newMoves.push(move);
+                    }
+                }
+            }
+            return newMoves;
+        }
+
+        function applyLevelUpMoves(pokemon) {
+            const newMoves = checkLevelUpMoves(pokemon);
+            for (const move of newMoves) {
+                if (pokemon.moves.length < 4) {
+                    pokemon.moves.push(move);
+                } else {
+                    // Replace oldest move
+                    pokemon.moves.shift();
+                    pokemon.moves.push(move);
+                }
+            }
+            return newMoves;
+        }
+
+        // POKEAPI RETRIEVER LOGICS
+        async function fetchPokemonData(id) {
+            try {
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+                const data = await response.json();
+                
+                // Use accurate level-up moves from our database, defaulting to level 1
+                const startMoves = getMovesForLevel(id, 1);
+                
+                return {
+                    id: data.id,
+                    name: data.name.charAt(0).toUpperCase() + data.name.slice(1),
+                    type1: data.types[0].type.name,
+                    type2: data.types[1]?.type.name || null,
+                    sprite: data.sprites.other['official-artwork'].front_default || data.sprites.front_default,
+                    hp: data.stats[0].base_stat,
+                    atk: data.stats[1].base_stat,
+                    def: data.stats[2].base_stat,
+                    spAtk: data.stats[3].base_stat,
+                    spDef: data.stats[4].base_stat,
+                    speed: data.stats[5].base_stat,
+                    moves: startMoves,
+                    heldItem: null
+                };
+            } catch (error) {
+                return {
+                    id: id,
+                    name: `MissingNo`,
+                    type1: "normal",
+                    type2: null,
+                    sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png",
+                    hp: 100,
+                    atk: 60,
+                    def: 60,
+                    spAtk: 60,
+                    spDef: 60,
+                    speed: 60,
+                    moves: ["tackle", "quick-attack"],
+                    heldItem: null
+                };
+            }
+        }
+
+        // SCANNING DEVICES GRADE SELECTOR
+        function selectBall(ballType) {
+            if (gameState.wheel.spinning) return;
+            if (gameState.balls[ballType] <= 0) {
+                showNotification("No Supplies", `Purchase additional ${ballType} cores from Mart!`, 'error');
+                return;
+            }
+            playConfirmSound();
+            gameState.selectedBall = ballType;
+            buildWheelSectors();
+            drawWheel();
+            updateUI();
+            updateTargetRarityObjective();
+        }
+
+        function updateTargetRarityObjective() {
+            const cfg = WHEEL_CONFIGS[gameState.selectedBall];
+            let list = cfg.filter(c => c.ratio > 0).map(c => c.rarity);
+            
+            if(list.includes("Legendary")) {
+                gameState.wheel.targetRarity = "Legendary";
+            } else if(list.includes("Epic")) {
+                gameState.wheel.targetRarity = "Epic";
+            } else {
+                gameState.wheel.targetRarity = "Rare";
+            }
+
+            const hud = document.getElementById('targetRarityHUD');
+            if (hud) {
+                hud.textContent = `🎯 Focus Target: ${gameState.wheel.targetRarity}`;
+                if(gameState.wheel.targetRarity === "Legendary") {
+                    hud.className = "text-md font-black tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-amber-500 uppercase mt-1 animate-pulse";
+                } else if(gameState.wheel.targetRarity === "Epic") {
+                    hud.className = "text-md font-black tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 uppercase mt-1";
+                } else {
+                    hud.className = "text-md font-black tracking-wide text-blue-400 uppercase mt-1";
+                }
+            }
+        }
+
+        // DINAMIC POKÉMON RANGE SYSTEM (KANTO TO PALDEA DEPENDING ON PROGRESSION)
+        function getRadarGenRange() {
+            const stages = gameState.unlockedStages;
+            if (stages <= 2) {
+                return { min: 1, max: 151, name: "KANTO REGION (GEN 1)" };
+            } else if (stages <= 4) {
+                return { min: 1, max: 251, name: "JOHTO REGION (GEN 1-2)" };
+            } else if (stages <= 6) {
+                return { min: 1, max: 386, name: "HOENN REGION (GEN 1-3)" };
+            } else if (stages <= 8) {
+                return { min: 1, max: 649, name: "SINNOH/UNOVA (GEN 1-5)" };
+            } else if (stages <= 9) {
+                return { min: 1, max: 809, name: "KALOS/ALOLA (GEN 1-7)" };
+            } else {
+                return { min: 1, max: 1025, name: "GALAR/PALDEA (ALL GEN 1-9)" };
+            }
+        }
+
+        // RE-CALIBRATE SCANNING HUD REGIONS
+        function updateScanningRegionUI() {
+            const range = getRadarGenRange();
+            const badge = document.getElementById('regionBadge');
+            if (badge) {
+                badge.textContent = range.name;
+                // Add custom styling per region
+                if (gameState.unlockedStages <= 2) {
+                    badge.className = "bg-green-500/10 text-green-400 border border-green-500/30 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block mb-1";
+                } else if (gameState.unlockedStages <= 4) {
+                    badge.className = "bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block mb-1";
+                } else if (gameState.unlockedStages <= 6) {
+                    badge.className = "bg-red-500/10 text-red-400 border border-red-500/30 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block mb-1";
+                } else if (gameState.unlockedStages <= 8) {
+                    badge.className = "bg-purple-500/10 text-purple-400 border border-purple-500/30 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block mb-1";
+                } else {
+                    badge.className = "bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block mb-1";
+                }
+            }
+        }
+
+        function getActiveGens() {
+            const stages = gameState.unlockedStages;
+            const gens = ['gen1'];
+            if (stages > 2) gens.push('gen2');
+            if (stages > 4) gens.push('gen3');
+            if (stages > 6) gens.push('gen4');
+            if (stages > 7) gens.push('gen5');
+            if (stages > 8) gens.push('gen6', 'gen7');
+            if (stages > 9) gens.push('gen8', 'gen9');
+            return gens;
+        }
+
+        // GENERATE BASIC POKEMON ACCORDING TO GRADE AND REGION (only unevolved forms)
+        function getWedgePokemonId(rarity) {
+            const genRange = getRadarGenRange();
+            const activeGens = getActiveGens();
+            const rarityPool = BASIC_POKEMON_POOLS[rarity] || BASIC_POKEMON_POOLS['Common'];
+
+            let pool = [];
+            for (const gen of activeGens) {
+                if (rarityPool[gen]) {
+                    pool = pool.concat(rarityPool[gen]);
+                }
+            }
+
+            // Filter to gen range
+            pool = pool.filter(id => id <= genRange.max);
+
+            if (pool.length === 0) {
+                // Fallback to gen1 common basics
+                pool = BASIC_POKEMON_POOLS.Common.gen1;
+            }
+            return pool[Math.floor(Math.random() * pool.length)];
+        }
+
+        // REAL-TIME ANIMATION LOOP
+        let lastTick = 0;
+        function gameLoop(timestamp) {
+            if(!lastTick) lastTick = timestamp;
+            let delta = timestamp - lastTick;
+            lastTick = timestamp;
+
+            // 1. Scanner Spin
+            if (gameState.wheel.spinning) {
+                gameState.wheel.currentAngle += gameState.wheel.spinSpeed;
+                if (gameState.wheel.currentAngle >= Math.PI * 2) {
+                    gameState.wheel.currentAngle -= Math.PI * 2;
+                }
+                
+                let wedgeCount = currentSectors.length;
+                let currentWedge = Math.floor(((gameState.wheel.currentAngle + Math.PI/2) % (Math.PI * 2)) / ((Math.PI * 2) / wedgeCount));
+                if (currentWedge !== gameState.wheel.lastWedgeAudio) {
+                    playPrecisionTick();
+                    gameState.wheel.lastWedgeAudio = currentWedge;
+                }
+
+                drawWheel();
+            }
+
+            // 2. Capture Ring Game Mechanics
+            if (gameState.catchMinigame.active) {
+                const step = 0.015; // smooth speed
+                if (gameState.catchMinigame.contracting) {
+                    gameState.catchMinigame.ringScale -= step;
+                    if (gameState.catchMinigame.ringScale <= 0.15) {
+                        gameState.catchMinigame.contracting = false;
+                    }
+                } else {
+                    gameState.catchMinigame.ringScale += step;
+                    if (gameState.catchMinigame.ringScale >= 1.0) {
+                        gameState.catchMinigame.contracting = true;
+                    }
+                }
+
+                const ringEl = document.getElementById('timingRing');
+                if (ringEl) {
+                    const widthPercent = gameState.catchMinigame.ringScale * 100;
+                    ringEl.style.width = `${widthPercent}%`;
+                    ringEl.style.height = `${widthPercent}%`;
+
+                    if (gameState.catchMinigame.ringScale > 0.7) {
+                        ringEl.style.borderColor = "#f43f5e"; // Pink/Red
+                    } else if (gameState.catchMinigame.ringScale > 0.35) {
+                        ringEl.style.borderColor = "#eab308"; // Yellow
+                    } else {
+                        ringEl.style.borderColor = "#10b981"; // Emerald/Green
+                    }
+                }
+            }
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        // RADAR SPIN CONTROLLER
+        function triggerSpin() {
+            if (gameState.wheel.spinning) return;
+            
+            const selected = gameState.selectedBall;
+            if (gameState.balls[selected] <= 0) {
+                showNotification("Out of stock", "Purchase additional scanning devices!", "error");
+                return;
+            }
+
+            gameState.balls[selected] -= 1;
+            updateUI();
+            saveProgress();
+            playConfirmSound();
+            
+            document.getElementById('spinBtn').disabled = true;
+            document.getElementById('spinBtn').className = "flex-1 py-4 px-6 bg-slate-900 text-slate-600 font-black uppercase rounded-2xl cursor-not-allowed transition duration-150 tracking-wider border border-slate-800";
+            
+            const stopBtn = document.getElementById('stopBtn');
+            stopBtn.disabled = false;
+            stopBtn.className = "flex-1 py-4 px-6 bg-rose-600 hover:bg-rose-500 text-white font-black uppercase rounded-2xl shadow-xl transition duration-150 tracking-wider cursor-pointer";
+
+            let baseSpeed = 0.15;
+            if (selected === 'great') baseSpeed = 0.12;
+            if (selected === 'ultra') baseSpeed = 0.09;
+            if (selected === 'master') baseSpeed = 0.05;
+
+            gameState.wheel.spinSpeed = baseSpeed + (Math.random() * 0.01);
+            gameState.wheel.spinning = true;
+            gameState.wheel.lastWedgeAudio = -1;
+
+            document.getElementById('encounterStatus').className = "bg-rose-600/15 text-rose-500 border border-rose-500/20 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-bold inline-block animate-pulse";
+            document.getElementById('encounterStatus').textContent = "Scanning Quantum Channels...";
+            document.getElementById('wildPokemonName').textContent = "Radar scanning frequencies...";
+            document.getElementById('wildPokemonGraphic').style.opacity = "0.1";
+        }
+
+        // RADAR LOCK ACTION
+        function triggerPrecisionStop() {
+            if (!gameState.wheel.spinning) return;
+
+            gameState.wheel.spinning = false;
+            playConfirmSound();
+
+            document.getElementById('spinBtn').disabled = false;
+            document.getElementById('spinBtn').className = "flex-1 py-4 px-6 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-black uppercase rounded-2xl shadow-xl transition duration-150 tracking-wider";
+            
+            const stopBtn = document.getElementById('stopBtn');
+            stopBtn.disabled = true;
+            stopBtn.className = "flex-1 py-4 px-6 bg-slate-900 text-slate-600 font-black uppercase rounded-2xl cursor-not-allowed transition duration-150 tracking-wider border border-slate-800";
+
+            const wedgeCount = currentSectors.length;
+            const anglePerWedge = (Math.PI * 2) / wedgeCount;
+
+            let stopAngle = ( -gameState.wheel.currentAngle - (Math.PI / 2) ) % (Math.PI * 2);
+            if (stopAngle < 0) stopAngle += (Math.PI * 2);
+
+            let landedSectorIndex = Math.floor(stopAngle / anglePerWedge);
+            let landedSector = currentSectors[landedSectorIndex];
+
+            processEncounterResult(landedSector);
+        }
+
+        // ENCOUNTER INITIATION
+        async function processEncounterResult(sector) {
+            const rarity = sector.rarity;
+            
+            document.getElementById('wildPokemonLoading').classList.remove('hidden');
+            document.getElementById('wildPokemonGraphic').classList.add('hidden');
+            
+            // Generate basic Pokemon ID from rarity-appropriate pool
+            const basicId = getWedgePokemonId(rarity);
+
+            const pokemon = await fetchPokemonData(basicId);
+
+            document.getElementById('wildPokemonLoading').classList.add('hidden');
+            document.getElementById('wildPokemonGraphic').classList.remove('hidden');
+
+            pokemon.rarity = rarity;
+            gameState.currentEncounter = pokemon;
+            
+            gameState.encounterShiny = (Math.random() < 0.05);
+
+            const encounterTag = document.getElementById('encounterStatus');
+            encounterTag.className = `border text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block animate-bounce`;
+            
+            const graphicEl = document.getElementById('wildPokemonGraphic');
+            const nameEl = document.getElementById('wildPokemonName');
+            const detailsEl = document.getElementById('wildPokemonDetails');
+            const platformEl = document.getElementById('pokemonPlatform');
+
+            if (rarity === 'Legendary') {
+                encounterTag.classList.add('bg-yellow-500/10', 'text-yellow-400', 'border-yellow-500/30');
+                platformEl.className = "absolute bottom-6 w-32 h-6 bg-yellow-500/20 rounded-full blur-md animate-pulse";
+            } else if (rarity === 'Epic') {
+                encounterTag.classList.add('bg-purple-500/10', 'text-purple-400', 'border-purple-500/30');
+                platformEl.className = "absolute bottom-6 w-32 h-6 bg-purple-500/20 rounded-full blur-md";
+            } else if (rarity === 'Rare') {
+                encounterTag.classList.add('bg-blue-500/10', 'text-blue-400', 'border-blue-500/30');
+                platformEl.className = "absolute bottom-6 w-32 h-6 bg-blue-500/10 rounded-full blur-sm";
+            } else {
+                encounterTag.classList.add('bg-slate-900', 'text-slate-300', 'border-slate-800');
+                platformEl.className = "absolute bottom-6 w-32 h-6 bg-slate-900 rounded-full blur-sm";
+            }
+
+            let targetStruck = (rarity === gameState.wheel.targetRarity);
+            let targetBonusMessage = targetStruck ? "⚡ TARGET FOCUS MATCHED (+100% Coins!) ⚡" : "";
+
+            encounterTag.innerHTML = `<i class="fas fa-satellite-dish mr-1"></i> Radar Locked: ${rarity}`;
+            
+            if (gameState.encounterShiny) {
+                nameEl.innerHTML = `<i class="fas fa-sparkles text-pink-500 animate-spin"></i> SHINY ${pokemon.name.toUpperCase()} <i class="fas fa-sparkles text-pink-500"></i>`;
+                graphicEl.className = "w-36 h-36 object-contain z-10 transform translate-y-2 transition-all duration-300 filter drop-shadow-[0_0_15px_rgba(236,72,153,0.8)] opacity-100";
+                graphicEl.style.filter = "hue-rotate(120deg) saturate(1.5)";
+            } else {
+                nameEl.textContent = pokemon.name;
+                graphicEl.className = "w-36 h-36 object-contain z-10 transform translate-y-2 transition-all duration-300 opacity-100";
+                graphicEl.style.filter = "none";
+            }
+            
+            graphicEl.src = pokemon.sprite;
+            detailsEl.innerHTML = `<span class="text-slate-300 font-bold">Type:</span> ${pokemon.type1.toUpperCase()}${pokemon.type2 ? ' / ' + pokemon.type2.toUpperCase() : ''} | <span class="text-slate-300 font-bold">HP:</span> ${pokemon.hp}<br><span class="text-yellow-400 font-extrabold text-[9px]">${targetBonusMessage}</span>`;
+
+            // Setup active accuracy capture ring mechanics
+            const catchBtn = document.getElementById('catchBtn');
+            catchBtn.disabled = false;
+            catchBtn.className = "w-full py-4 bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-slate-950 font-black uppercase rounded-2xl shadow-xl transition duration-150 flex items-center justify-center gap-2 cursor-pointer";
+            catchBtn.innerHTML = `<i class="fas fa-crosshairs text-lg"></i> <span>LOCK SIGNATURE (Click Ring)</span>`;
+
+            document.getElementById('timingRingContainer').classList.remove('hidden');
+            gameState.catchMinigame.active = true;
+            gameState.catchMinigame.ringScale = 1.0;
+            gameState.catchMinigame.contracting = true;
+        }
+
+        // RESOLVE ACCURACY CAPTURE
+        function triggerCatchMinigame() {
+            if (!gameState.catchMinigame.active || !gameState.currentEncounter) return;
+
+            gameState.catchMinigame.active = false;
+            document.getElementById('timingRingContainer').classList.add('hidden');
+
+            const scoreScale = gameState.catchMinigame.ringScale;
+            let catchPhrase = "Scanned";
+            let accuracyModifier = 1.0;
+
+            if (scoreScale <= 0.35) {
+                catchPhrase = "EXCELLENT TIMING LOCK!";
+                accuracyModifier = 2.5;
+                playSuccessCapture();
+            } else if (scoreScale <= 0.7) {
+                catchPhrase = "GREAT TIMING LOCK!";
+                accuracyModifier = 1.6;
+                playBeep();
+            } else {
+                catchPhrase = "GOOD LOCK";
+                accuracyModifier = 1.0;
+                playBeep();
+            }
+
+            const pokemon = gameState.currentEncounter;
+            let baseRate = 0.50; 
+            if (pokemon.rarity === 'Rare') baseRate = 0.35;
+            if (pokemon.rarity === 'Epic') baseRate = 0.18;
+            if (pokemon.rarity === 'Legendary') baseRate = 0.05; 
+
+            let coreModifier = 1.0;
+            if (gameState.selectedBall === 'great') coreModifier = 1.5;
+            if (gameState.selectedBall === 'ultra') coreModifier = 2.2;
+            if (gameState.selectedBall === 'master') coreModifier = 12.0; 
+
+            const finalProbability = baseRate * coreModifier * accuracyModifier;
+            const rollChance = Math.random();
+
+            const isCaptured = (rollChance <= finalProbability);
+            
+            const nameEl = document.getElementById('wildPokemonName');
+            const graphicEl = document.getElementById('wildPokemonGraphic');
+            const detailsEl = document.getElementById('wildPokemonDetails');
+
+            if (isCaptured) {
+                playSuccessCapture();
+                
+                // Every catch creates a unique Pok\u00e9mon instance (like the real games)
+                const catchUid = nextCatchUid++;
+                const startMoves = getMovesForLevel(pokemon.id, 1);
+                const caughtPokemon = {
+                    uid: catchUid,
+                    id: pokemon.id,
+                    name: pokemon.name,
+                    type1: pokemon.type1,
+                    type2: pokemon.type2,
+                    sprite: pokemon.sprite,
+                    hp: pokemon.hp,
+                    atk: pokemon.atk,
+                    def: pokemon.def,
+                    spAtk: pokemon.spAtk || 60,
+                    spDef: pokemon.spDef || 60,
+                    speed: pokemon.speed || 60,
+                    moves: startMoves,
+                    isShiny: gameState.encounterShiny,
+                    heldItem: null,
+                    level: 1,
+                    xp: 0,
+                    caughtAt: Date.now(),
+                    rarity: pokemon.rarity || 'Common'
+                };
+                gameState.pcBox.push(caughtPokemon);
+
+                // Register in Pok\u00e9dex for tracking (no duplicates in dex)
+                const alreadyRegistered = gameState.pokedex.find(p => p.id === pokemon.id && p.isShiny === gameState.encounterShiny);
+                if (!alreadyRegistered) {
+                    gameState.pokedex.push(caughtPokemon);
+                }
+
+                let coinGain = 20;
+                if (pokemon.rarity === 'Rare') coinGain = 50;
+                if (pokemon.rarity === 'Epic') coinGain = 120;
+                if (pokemon.rarity === 'Legendary') coinGain = 300;
+
+                let matchedBonus = false;
+                if(pokemon.rarity === gameState.wheel.targetRarity) {
+                    coinGain *= 2;
+                    matchedBonus = true;
+                }
+
+                addCoins(coinGain);
+                addXP(coinGain / 2);
+
+                showNotification(
+                    "CAPTURED!",
+                    `${pokemon.name} registered. Gained +${coinGain} Coins.`,
+                    gameState.encounterShiny ? 'shiny' : 'success'
+                );
+
+                graphicEl.className = "w-36 h-36 object-contain z-10 transform scale-50 opacity-30 transition-all duration-300 rotate-12";
+                nameEl.innerHTML = `<span class="text-green-400">REGISTERED!</span> ${pokemon.name.toUpperCase()}`;
+                detailsEl.innerHTML = `<span class="text-slate-400">Captured with ${catchPhrase}!</span><br><span class="text-yellow-400 font-bold">+${coinGain} Coins | +${coinGain/2} XP</span> ${matchedBonus ? '(Perfect Match Bonus!)' : ''}`;
+
+            } else {
+                playFailCapture();
+                showNotification("LOCK LOST!", `Encounter signature resolved. Signal faded.`, 'error');
+
+                graphicEl.className = "w-36 h-36 object-contain z-10 transform translate-x-20 opacity-0 transition-all duration-500";
+                nameEl.innerHTML = `<span class="text-red-500">SIGNAL LOST</span> ${pokemon.name}`;
+                detailsEl.innerHTML = `<span class="text-slate-500">Target escaped radar tracking. Hit green Excellent circle zone for maximum success.</span>`;
+            }
+
+            const catchBtn = document.getElementById('catchBtn');
+            catchBtn.disabled = true;
+            catchBtn.className = "w-full py-4 bg-slate-900 text-slate-500 font-extrabold uppercase rounded-2xl border border-slate-800 tracking-wider flex items-center justify-center gap-2 cursor-not-allowed";
+            catchBtn.innerHTML = `<i class="fas fa-radar text-lg"></i> <span>Scan Completed</span>`;
+            
+            gameState.currentEncounter = null;
+            updateTargetRarityObjective();
+        }
+
+        // JOURNEY ARENA SWITCH SUB-MODE
+        function toggleJourneySubMode(mode) {
+            playConfirmSound();
+            gameState.battleType = mode;
+            
+            const btnCampaign = document.getElementById('btn-journey-campaign');
+            const btnUnlimited = document.getElementById('btn-journey-unlimited');
+            const panelCampaign = document.getElementById('journey-campaign-panel');
+            const panelUnlimited = document.getElementById('journey-unlimited-panel');
+
+            if (mode === 'campaign') {
+                if (btnCampaign) btnCampaign.className = "px-5 py-2 rounded-lg text-xs font-bold transition duration-150 bg-rose-600 text-white";
+                if (btnUnlimited) btnUnlimited.className = "px-5 py-2 rounded-lg text-xs font-bold transition duration-150 text-slate-400 hover:text-white";
+                if (panelCampaign) panelCampaign.classList.remove('hidden');
+                if (panelUnlimited) panelUnlimited.classList.add('hidden');
+            } else {
+                if (btnCampaign) btnCampaign.className = "px-5 py-2 rounded-lg text-xs font-bold transition duration-150 text-slate-400 hover:text-white";
+                if (btnUnlimited) btnUnlimited.className = "px-5 py-2 rounded-lg text-xs font-bold transition duration-150 bg-rose-600 text-white";
+                if (panelCampaign) panelCampaign.classList.add('hidden');
+                if (panelUnlimited) panelUnlimited.classList.remove('hidden');
+            }
+        }
+
+        // UNLIMITED MATCH MAKER Inits
+        function startUnlimitedMatch() {
+            if (gameState.coins < 50) {
+                showNotification("No Entry Fee", "Requires 50 Coins to play simulation.", "error");
+                return;
+            }
+            if (gameState.pcBox.length === 0) {
+                showNotification("No Combat Partners", "Catch partners using scanner first!", "error");
+                return;
+            }
+
+            spendCoins(50);
+            playConfirmSound();
+
+            gameState.activeBattleStage = null; // Denotes unlimited battle
+            document.getElementById('battleSelector').classList.add('hidden');
+            document.getElementById('fighterSelector').classList.remove('hidden');
+            renderFighterSelectionGrid();
+        }
+
+        // PROGRESS ROADMAP RENDERER
+        function renderRoadmap() {
+            const grid = document.getElementById('roadmapCampaignGrid');
+            if (!grid) return;
+            grid.innerHTML = "";
+
+            CAMPAIGN_ROADMAP.forEach(stage => {
+                const isUnlocked = stage.stageId <= gameState.unlockedStages;
+                const isCleared = stage.stageId < gameState.unlockedStages;
+
+                const card = document.createElement('div');
+                
+                if (isUnlocked) {
+                    let cardStyle = isCleared 
+                        ? "border-emerald-600/50 bg-slate-900/60 hover:bg-slate-900/90 text-slate-200" 
+                        : "border-rose-500 bg-slate-900 text-white shadow-lg shadow-rose-950/20 animate-pulse";
+                    
+                    card.className = `p-4 rounded-2xl border cursor-pointer transition flex flex-col justify-between h-44 ${cardStyle}`;
+                    card.onclick = () => launchStagePrep(stage);
+                    
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start">
+                            <span class="text-[9px] font-mono tracking-wide text-slate-400 uppercase">Stage ${stage.stageId}</span>
+                            <span class="text-xs">${stage.icon}</span>
+                        </div>
+                        <div class="my-2">
+                            <h4 class="text-xs font-black truncate">${stage.name}</h4>
+                            <p class="text-[10px] text-slate-400 mt-0.5 truncate">${stage.trainer}</p>
+                        </div>
+                        <div class="pt-2 border-t border-slate-850 flex justify-between items-center">
+                            <span class="text-[9px] bg-slate-950 px-2 py-0.5 rounded font-bold">LVL ${stage.level}</span>
+                            <span class="text-[10px] text-emerald-400 font-extrabold">${isCleared ? 'Cleared ✓' : 'FIGHT ⚔️'}</span>
+                        </div>
+                    `;
+                } else {
+                    card.className = "p-4 rounded-2xl border border-slate-950 bg-slate-950/20 text-slate-600 flex flex-col justify-center items-center h-44 opacity-25 select-none";
+                    card.innerHTML = `
+                        <i class="fas fa-lock text-xl mb-2"></i>
+                        <span class="text-[10px] font-bold font-mono">Stage ${stage.stageId} Locked</span>
+                    `;
+                }
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function launchStagePrep(stage) {
+            playConfirmSound();
+            gameState.activeBattleStage = stage;
+
+            document.getElementById('battleSelector').classList.add('hidden');
+            document.getElementById('fighterSelector').classList.remove('hidden');
+            renderFighterSelectionGrid();
+        }
+
+        function renderFighterSelectionGrid() {
+            const grid = document.getElementById('fighterSelectionGrid');
+            grid.innerHTML = "";
+
+            gameState.pcBox.forEach((pk, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-2xl p-4 text-center cursor-pointer transition duration-150 relative flex flex-col justify-between";
+                card.onclick = () => selectFighterAndBegin(pk);
+
+                let itemStr = pk.heldItem ? HOLD_ITEMS_DB[pk.heldItem].name : "No Item";
+                let currentLevel = pk.level || 1;
+
+                card.innerHTML = `
+                    <div class="flex justify-center mb-2">
+                        <img src="${pk.sprite}" alt="${pk.name}" class="h-16 w-16 object-contain" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold text-white truncate">${pk.name}</div>
+                        <div class="text-[9px] text-slate-400 font-mono mt-1">Level ${currentLevel} | Item: <span class="text-cyan-400 font-bold">${itemStr}</span></div>
+                    </div>
+                    ${pk.isShiny ? '<span class="absolute top-2 right-2 text-[7px] bg-pink-500 text-white px-1 rounded uppercase font-black tracking-widest">Shiny</span>' : ''}
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // BATTLE SETUP (DIFFERENTIATES CAMPAIGN & SCALED UNLIMITED ARENA)
+        async function selectFighterAndBegin(pokemon) {
+            playConfirmSound();
+            
+            const stage = gameState.activeBattleStage;
+            let enemyProfile = null;
+
+            document.getElementById('wildPokemonLoading').classList.remove('hidden');
+
+            if (stage) {
+                // CAMPAIGN ROUTE
+                enemyProfile = await fetchPokemonData(stage.pokemonId);
+                // Scale Boss stats to battle standard matching stage Level
+                enemyProfile.hp = enemyProfile.hp + (stage.level * 3);
+                enemyProfile.atk = enemyProfile.atk + (stage.level * 1.2);
+                enemyProfile.def = enemyProfile.def + (stage.level * 1);
+                enemyProfile.spAtk = enemyProfile.spAtk + (stage.level * 1.2);
+                enemyProfile.spDef = enemyProfile.spDef + (stage.level * 1);
+                enemyProfile.name = stage.trainer + "'s " + stage.bossName;
+                enemyProfile.level = stage.level;
+
+                if (stage.level >= 20) {
+                    enemyProfile.heldItem = "oran_berry";
+                }
+            } else {
+                // UNLIMITED SCALED ARENA
+                const fighterLevel = pokemon.level || 1;
+                // Generate a random wild species from unlocked radar range
+                const genRange = getRadarGenRange();
+                const idDiff = genRange.max - genRange.min;
+                const randomEnemyId = Math.floor(Math.random() * (idDiff + 1)) + genRange.min;
+                
+                enemyProfile = await fetchPokemonData(randomEnemyId);
+
+                // Match and scale to deployed fighter's level + slightly scaled variations
+                const finalEnemyLvl = Math.max(1, fighterLevel + Math.floor(Math.random() * 3) - 1);
+                enemyProfile.hp = enemyProfile.hp + (finalEnemyLvl * 3);
+                enemyProfile.atk = enemyProfile.atk + (finalEnemyLvl * 1.2);
+                enemyProfile.def = enemyProfile.def + (finalEnemyLvl * 1);
+                enemyProfile.spAtk = enemyProfile.spAtk + (finalEnemyLvl * 1.2);
+                enemyProfile.spDef = enemyProfile.spDef + (finalEnemyLvl * 1);
+                enemyProfile.name = "Simulated " + enemyProfile.name;
+                enemyProfile.level = finalEnemyLvl;
+
+                if (finalEnemyLvl >= 20) {
+                    enemyProfile.heldItem = "oran_berry";
+                }
+            }
+
+            document.getElementById('wildPokemonLoading').classList.add('hidden');
+
+            gameState.battle.bossPokemon = enemyProfile;
+            gameState.battle.fighterPokemon = pokemon;
+            
+            // Adjust Player base HP according to Level multipliers (5% per level)
+            const levelMultiplier = 1 + ((pokemon.level - 1) * 0.05);
+            const scaledHP = Math.round(pokemon.hp * levelMultiplier);
+
+            gameState.battle.fighterHP = scaledHP;
+            gameState.battle.fighterMaxHP = scaledHP;
+            gameState.battle.bossHP = enemyProfile.hp;
+            gameState.battle.bossMaxHP = enemyProfile.hp;
+            
+            gameState.battle.oranUsed = false;
+            gameState.battle.bossOranUsed = false;
+
+            document.getElementById('fighterSelector').classList.add('hidden');
+            document.getElementById('battleArenaActive').classList.remove('hidden');
+
+            // UI setups
+            document.getElementById('bossSprite').src = enemyProfile.sprite;
+            document.getElementById('bossName').textContent = enemyProfile.name;
+            document.getElementById('bossLevelBadge').textContent = `LVL ${enemyProfile.level}`;
+            document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossHP}`;
+            document.getElementById('bossHPBar').style.width = "100%";
+
+            document.getElementById('playerFighterSprite').src = pokemon.sprite;
+            document.getElementById('playerFighterName').textContent = `${pokemon.isShiny ? '✨ ' : ''}${pokemon.name}`;
+            document.getElementById('playerFighterLevelBadge').textContent = `LVL ${pokemon.level || 1}`;
+            document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${scaledHP}`;
+            document.getElementById('playerFighterHPBar').style.width = "100%";
+
+            // Held items Badges
+            document.getElementById('playerHeldItemBadge').innerHTML = pokemon.heldItem 
+                ? `<span class="bg-cyan-900/80 border border-cyan-700 text-cyan-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase"><i class="fas fa-briefcase"></i> ${HOLD_ITEMS_DB[pokemon.heldItem].name}</span>`
+                : "";
+            document.getElementById('bossHeldItemBadge').innerHTML = enemyProfile.heldItem 
+                ? `<span class="bg-yellow-900/80 border border-yellow-700 text-yellow-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase">${HOLD_ITEMS_DB[enemyProfile.heldItem].name}</span>`
+                : "";
+
+            document.getElementById('battleLog').innerHTML = `<div class="text-cyan-400">Combat initiated: Engagement vs <span class="font-bold text-white">${enemyProfile.name}</span>!</div>`;
+            document.getElementById('effectivenessIndicator').textContent = "";
+
+            gameState.battle.active = true;
+            renderBattleMoves(pokemon);
+        }
+
+        function renderBattleMoves(pokemon) {
+            const grid = document.getElementById('battleMovesGrid');
+            grid.innerHTML = "";
+
+            const moves = pokemon.moves && pokemon.moves.length ? pokemon.moves : ["tackle", "quick-attack"];
+
+            moves.forEach(move => {
+                const spec = MOVES_DB[move] || { type: "normal", power: 40, category: "physical" },
+                    moveBtn = document.createElement('button');
+                moveBtn.className = "py-3 px-4 bg-slate-900 hover:bg-slate-850 border border-slate-800 rounded-xl text-xs font-bold text-slate-200 capitalize hover:border-blue-500 transition duration-150 flex flex-col justify-center items-center gap-0.5";
+                
+                moveBtn.onclick = () => executeBattleTurn(move);
+                moveBtn.innerHTML = `
+                    <span>${move.replace("-", " ")}</span>
+                    <span class="text-[8px] text-slate-500 font-mono">${spec.type.toUpperCase()} | PWR ${spec.power}</span>
+                `;
+                grid.appendChild(moveBtn);
+            });
+        }
+
+        // BATTLE DAMAGE EXECUTION ENGINE (FIXED TYPO IN TYPE EFFECTIVENESS CHECK)
+        function resolveMoveAttack(attacker, defender, moveName, isPlayerAttacker) {
+            if (!gameState.battle.active) return;
+
+            const moveSpec = MOVES_DB[moveName] || { type: "normal", power: 40, category: "physical" };
+            const logBox = document.getElementById('battleLog');
+            const effIndicator = document.getElementById('effectivenessIndicator');
+
+            // 1. Calculate Type Matchups
+            let typeMod = 1.0;
+            const defType1 = defender.type1;
+            const defType2 = defender.type2;
+
+            if (TYPE_MATCHUPS[moveSpec.type]) {
+                if (TYPE_MATCHUPS[moveSpec.type][defType1] !== undefined) {
+                    typeMod *= TYPE_MATCHUPS[moveSpec.type][defType1];
+                }
+                if (defType2 && TYPE_MATCHUPS[moveSpec.type][defType2] !== undefined) {
+                    typeMod *= TYPE_MATCHUPS[moveSpec.type][defType2];
+                }
+            }
+
+            // 2. STAB Boost (1.5x)
+            let stabMod = 1.0;
+            if (moveSpec.type === attacker.type1 || moveSpec.type === attacker.type2) {
+                stabMod = 1.5;
+            }
+
+            // 3. Held Item Modifiers
+            let itemMod = 1.0;
+            if (attacker.heldItem) {
+                const holdItemSpec = HOLD_ITEMS_DB[attacker.heldItem];
+                if (holdItemSpec) {
+                    if (holdItemSpec.effect === "boost_physical" && moveSpec.category === "physical") {
+                        itemMod = holdItemSpec.value;
+                    }
+                    if (holdItemSpec.effect === "boost_special" && moveSpec.category === "special") {
+                        itemMod = holdItemSpec.value;
+                    }
+                }
+            }
+
+            // 4. Attack/Defense Stat Scaling
+            const attackerLvl = attacker.level || 1;
+            const levelMultiplier = 1 + ((attackerLvl - 1) * 0.05);
+
+            let attackStat = 1.0;
+            let defenseStat = 1.0;
+
+            if (moveSpec.category === "special") {
+                attackStat = (attacker.spAtk || attacker.atk || 50) * levelMultiplier;
+                defenseStat = (defender.spDef || defender.def || 50);
+            } else {
+                attackStat = (attacker.atk || 50) * levelMultiplier;
+                defenseStat = (defender.def || 50);
+            }
+
+            // Standardized damage formula
+            let calculatedDamage = Math.round(
+                (((2 * attackerLvl / 5 + 2) * moveSpec.power * (attackStat / defenseStat)) / 50 + 2) *
+                stabMod *
+                typeMod *
+                itemMod *
+                (0.85 + Math.random() * 0.15)
+            );
+            if (calculatedDamage < 3) calculatedDamage = 3;
+
+            // Deduct HP
+            if (isPlayerAttacker) {
+                gameState.battle.bossHP -= calculatedDamage;
+                if (gameState.battle.bossHP < 0) gameState.battle.bossHP = 0;
+                
+                if (typeMod > 1.0) {
+                    playCritStrike();
+                    effIndicator.textContent = "It's super effective! 💥";
+                } else if (typeMod < 1.0 && typeMod > 0) {
+                    playNormalHit();
+                    effIndicator.textContent = "It's not very effective... 🛡️";
+                } else if (typeMod === 0) {
+                    playBeep();
+                    effIndicator.textContent = "Immune! No effect.";
+                } else {
+                    playNormalHit();
+                }
+
+                logBox.innerHTML += `<div class="text-blue-400 mt-1">⚔️ ${attacker.name} used <span class="text-white capitalize font-bold">${moveName}</span>! Dealt ${calculatedDamage} Damage.</div>`;
+                
+                const bossHpPercent = (gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100;
+                document.getElementById('bossHPBar').style.width = `${bossHpPercent}%`;
+                document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossMaxHP}`;
+                
+                // Boss Oran berry triggers
+                if (defender.heldItem === "oran_berry" && !gameState.battle.bossOranUsed && gameState.battle.bossHP <= (gameState.battle.bossMaxHP * 0.3) && gameState.battle.bossHP > 0) {
+                    gameState.battle.bossHP += 30;
+                    if (gameState.battle.bossHP > gameState.battle.bossMaxHP) gameState.battle.bossHP = gameState.battle.bossMaxHP;
+                    gameState.battle.bossOranUsed = true;
+                    logBox.innerHTML += `<div class="text-yellow-400 mt-1">🎒 Opponent consumed equipped <span class="font-bold">Oran Berry</span> and restored 30 HP!</div>`;
+                }
+
+                if (gameState.battle.bossHP <= 0) {
+                    handleBattleVictory();
+                }
+            } else {
+                gameState.battle.fighterHP -= calculatedDamage;
+                if (gameState.battle.fighterHP < 0) gameState.battle.fighterHP = 0;
+
+                playNormalHit();
+                logBox.innerHTML += `<div class="text-rose-400 mt-1">💥 Opponent countered with <span class="text-white capitalize font-bold">${moveName}</span>! Dealt ${calculatedDamage} Damage.</div>`;
+
+                const playerHpPercent = (gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100;
+                document.getElementById('playerFighterHPBar').style.width = `${playerHpPercent}%`;
+                document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
+
+                // Player Oran Berry
+                if (defender.heldItem === "oran_berry" && !gameState.battle.oranUsed && gameState.battle.fighterHP <= (gameState.battle.fighterMaxHP * 0.3) && gameState.battle.fighterHP > 0) {
+                    gameState.battle.fighterHP += 30;
+                    if (gameState.battle.fighterHP > gameState.battle.fighterMaxHP) gameState.battle.fighterHP = gameState.battle.fighterMaxHP;
+                    gameState.battle.oranUsed = true;
+                    logBox.innerHTML += `<div class="text-green-400 mt-1">🎒 Your Pokémon automatically consumed equipped <span class="font-bold">Oran Berry</span> and restored 30 HP!</div>`;
+                }
+
+                // Leftovers heal
+                if (defender.heldItem === "leftovers" && gameState.battle.fighterHP > 0) {
+                    let healVal = Math.round(gameState.battle.fighterMaxHP * 0.0625);
+                    gameState.battle.fighterHP += healVal;
+                    if (gameState.battle.fighterHP > gameState.battle.fighterMaxHP) gameState.battle.fighterHP = gameState.battle.fighterMaxHP;
+                    logBox.innerHTML += `<div class="text-emerald-400 mt-1">✨ Leftovers active! Restored ${healVal} HP.</div>`;
+                }
+
+                if (gameState.battle.fighterHP <= 0) {
+                    handleBattleDefeat();
+                }
+            }
+
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        // BATTLE TURNS HANDLING
+        function executeBattleTurn(moveName) {
+            if (!gameState.battle.active) return;
+
+            const fighter = gameState.battle.fighterPokemon;
+            const boss = gameState.battle.bossPokemon;
+
+            // RPG stats checking
+            const playerSpeed = fighter.speed;
+            const bossSpeed = boss.speed;
+
+            if (playerSpeed >= bossSpeed) {
+                resolveMoveAttack(fighter, boss, moveName, true);
+                if (gameState.battle.bossHP > 0) {
+                    setTimeout(() => {
+                        const bossMove = boss.moves[Math.floor(Math.random() * boss.moves.length)];
+                        resolveMoveAttack(boss, fighter, bossMove, false);
+                    }, 800);
+                }
+            } else {
+                disableMoveButtons(true);
+                const bossMove = boss.moves[Math.floor(Math.random() * boss.moves.length)];
+                resolveMoveAttack(boss, fighter, bossMove, false);
+                
+                if (gameState.battle.fighterHP > 0) {
+                    setTimeout(() => {
+                        resolveMoveAttack(fighter, boss, moveName, true);
+                        disableMoveButtons(false);
+                    }, 800);
+                } else {
+                    disableMoveButtons(false);
+                }
+            }
+        }
+
+        function disableMoveButtons(state) {
+            const btns = document.getElementById('battleMovesGrid').getElementsByTagName('button');
+            for (let btn of btns) {
+                btn.disabled = state;
+                if (state) btn.classList.add('opacity-40');
+                else btn.classList.remove('opacity-40');
+            }
+        }
+
+        // BATTLE SUCCESS & XP GAIN CALCULATOR
+        function handleBattleVictory() {
+            gameState.battle.active = false;
+            playSuccessCapture();
+
+            const stage = gameState.activeBattleStage;
+            const fighter = gameState.battle.fighterPokemon;
+            let rewardCoins = 40;
+            let enemyLvl = 5;
+
+            if (stage) {
+                // CAMPAIGN MODE CLEAR
+                rewardCoins = stage.reward;
+                enemyLvl = stage.level;
+
+                if (gameState.unlockedStages === stage.stageId) {
+                    gameState.unlockedStages += 1;
+                }
+                showNotification("STAGE CLEARED!", `Defeated ${stage.trainer}! Unlocked next sector channel!`, 'success');
+            } else {
+                // UNLIMITED ARENA CLEAR
+                enemyLvl = gameState.battle.bossPokemon.level;
+                // Rewards scale directly with the cleared difficulty level
+                rewardCoins = 30 + (enemyLvl * 8);
+                showNotification("SIMULATION CLEARED!", `Defeated simulated foe! Claimed +${rewardCoins} Coins.`, 'success');
+            }
+
+            // Award Fighter RPG XP (Formula: Opponent Level * 18)
+            const xpAward = enemyLvl * 18;
+            fighter.xp = (fighter.xp || 0) + xpAward;
+            
+            // Check if Level Up
+            let nextLevelXp = (fighter.level || 1) * 100;
+            let didLevelUp = false;
+
+            while (fighter.xp >= nextLevelXp) {
+                fighter.xp -= nextLevelXp;
+                fighter.level = (fighter.level || 1) + 1;
+                nextLevelXp = fighter.level * 100;
+                didLevelUp = true;
+                // Check for new moves at this level
+                const newMoves = applyLevelUpMoves(fighter);
+                if (newMoves.length > 0) {
+                    const logBox2 = document.getElementById('battleLog');
+                    newMoves.forEach(m => {
+                        logBox2.innerHTML += `<div class="text-cyan-400 font-bold mt-1">📖 ${fighter.name} learned <span class="text-white capitalize">${m.replace('-', ' ')}</span>!</div>`;
+                    });
+                }
+            }
+
+            addCoins(rewardCoins);
+            addXP(Math.round(rewardCoins / 2)); // Trainer rank XP
+
+            const logBox = document.getElementById('battleLog');
+            logBox.innerHTML += `<div class="text-emerald-400 font-bold mt-2">🏆 VICTORY! Deployed partner gained +${xpAward} XP!</div>`;
+            if (didLevelUp) {
+                logBox.innerHTML += `<div class="text-pink-400 font-black animate-pulse mt-1">⭐ LEVEL UP! ${fighter.name} reached Level ${fighter.level}! Base stats increased by 5%!</div>`;
+            }
+            logBox.scrollTop = logBox.scrollHeight;
+
+            // Sync with Firestore Cloud safely
+            saveProgress();
+
+            setTimeout(() => {
+                resetBattleScreen();
+                renderRoadmap();
+                updateUI();
+                updateScanningRegionUI();
+            }, 3500);
+        }
+
+        function handleBattleDefeat() {
+            gameState.battle.active = false;
+            playFailCapture();
+
+            showNotification("DEFEATED", "Your partner fainted. Purchase held items or train in Unlimited mode to gain stats!", "error");
+
+            const logBox = document.getElementById('battleLog');
+            logBox.innerHTML += `<div class="text-red-500 font-bold mt-2">💀 CHALLENGE FAILED. Returning to base...</div>`;
+            logBox.scrollTop = logBox.scrollHeight;
+
+            setTimeout(() => {
+                resetBattleScreen();
+            }, 3000);
+        }
+
+        function resetBattleScreen() {
+            document.getElementById('battleSelector').classList.remove('hidden');
+            document.getElementById('fighterSelector').classList.add('hidden');
+            document.getElementById('battleArenaActive').classList.add('hidden');
+            gameState.battle.active = false;
+        }
+
+        function cancelBattlePrep() {
+            playConfirmSound();
+            resetBattleScreen();
+        }
+
+        // POKEDEX VIEW LOGICS (SHOWS LEVEL, REAL STATS, AND XP progression)
+        function triggerDexSearch() {
+            gameState.dexUI.search = document.getElementById('dexSearchInput').value.toLowerCase();
+            gameState.dexUI.rarity = document.getElementById('rarityFilterSelect').value;
+            gameState.dexUI.page = 1;
+            renderPokedex();
+        }
+
+        function changeDexPage(dir) {
+            playConfirmSound();
+            gameState.dexUI.page += dir;
+            renderPokedex();
+        }
+
+        function renderPokedex() {
+            const grid = document.getElementById('pokedexGrid');
+            grid.innerHTML = "";
+
+            let filteredList = [];
+            for (let id = 1; id <= 1025; id++) {
+                let rarity = "Common";
+                if ([150, 151, 249, 250, 382, 383, 384, 483, 484, 487].includes(id)) rarity = "Legendary";
+                else if ([3, 6, 9, 149, 130, 94, 68, 143].includes(id)) rarity = "Epic";
+                else if ([2, 5, 8, 25, 26, 39, 133, 134, 135].includes(id)) rarity = "Rare";
+
+                if (gameState.dexUI.rarity !== 'all' && rarity !== gameState.dexUI.rarity) continue;
+
+                const caughtNormal = gameState.pokedex.some(p => p.id === id && !p.isShiny);
+                const caughtShiny = gameState.pokedex.some(p => p.id === id && p.isShiny);
+                const registered = caughtNormal || caughtShiny;
+
+                let nameStr = `No. ${id}`;
+                if (registered) {
+                    const found = gameState.pokedex.find(p => p.id === id);
+                    nameStr = found.name.toLowerCase();
+                }
+
+                if (gameState.dexUI.search !== "" && !nameStr.includes(gameState.dexUI.search) && !id.toString().includes(gameState.dexUI.search)) {
+                    continue;
+                }
+
+                filteredList.push({ id, rarity, caughtNormal, caughtShiny, registered });
+            }
+
+            const totalItems = filteredList.length;
+            const maxPage = Math.max(1, Math.ceil(totalItems / gameState.dexUI.pageSize));
+            if (gameState.dexUI.page > maxPage) gameState.dexUI.page = maxPage;
+
+            document.getElementById('pageInfoText').textContent = `Page ${gameState.dexUI.page} of ${maxPage}`;
+            document.getElementById('prevPageBtn').disabled = gameState.dexUI.page === 1;
+            document.getElementById('nextPageBtn').disabled = gameState.dexUI.page === maxPage;
+
+            const startIndex = (gameState.dexUI.page - 1) * gameState.dexUI.pageSize;
+            const paginatedList = filteredList.slice(startIndex, startIndex + gameState.dexUI.pageSize);
+
+            paginatedList.forEach(item => {
+                const card = document.createElement('div');
+                
+                if (item.registered) {
+                    const cached = gameState.pokedex.find(p => p.id === item.id);
+                    let borderClass = "border-slate-800 bg-slate-950";
+                    let glowClass = "";
+                    if (item.rarity === 'Legendary') { borderClass = "border-yellow-600/50"; glowClass = "glow-legendary"; }
+                    else if (item.rarity === 'Epic') { borderClass = "border-purple-600/50"; glowClass = "glow-epic"; }
+                    else if (item.rarity === 'Rare') { borderClass = "border-blue-600/50"; glowClass = "glow-rare"; }
+
+                    // Level and XP indicators
+                    const level = cached.level || 1;
+                    const xp = cached.xp || 0;
+                    const nextLevelReq = level * 100;
+                    const xpPercent = Math.min(100, Math.max(5, (xp / nextLevelReq) * 100));
+
+                    // Base RPG core scaling stats representation
+                    const levelMultiplier = 1 + ((level - 1) * 0.05);
+                    const currentHP = Math.round(cached.hp * levelMultiplier);
+                    const currentATK = Math.round(cached.atk * levelMultiplier);
+                    const currentDEF = Math.round(cached.def * levelMultiplier);
+                    const currentSPATK = Math.round((cached.spAtk || cached.atk) * levelMultiplier);
+                    const currentSPDEF = Math.round((cached.spDef || cached.def) * levelMultiplier);
+                    const currentSPD = Math.round((cached.speed || 60) * levelMultiplier);
+
+                    card.className = `p-4 rounded-2xl border flex flex-col justify-between relative overflow-hidden transition ${borderClass} ${glowClass}`;
+                    card.innerHTML = `
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-[8px] uppercase tracking-wider px-1.5 py-0.5 rounded font-extrabold bg-slate-900 text-slate-400">${item.rarity}</span>
+                                <span class="text-[10px] font-bold text-pink-400 font-mono">LVL ${level}</span>
+                            </div>
+                            <div class="flex justify-center my-2">
+                                <img src="${cached.sprite}" alt="${cached.name}" class="h-16 w-16 object-contain" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
+                            </div>
+                            <h4 class="font-extrabold text-white text-xs tracking-wide text-center truncate w-full">${cached.name}</h4>
+                            
+                            <!-- Partner XP Bar -->
+                            <div class="mt-1.5">
+                                <div class="flex justify-between text-[8px] font-mono text-slate-500 mb-0.5">
+                                    <span>XP PROGRESS</span>
+                                    <span>${xp}/${nextLevelReq}</span>
+                                </div>
+                                <div class="w-full bg-slate-900 rounded-full h-1 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-pink-500 to-rose-400 h-full transition-all duration-300" style="width: ${xpPercent}%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- RPG Core Detailed Stats -->
+                            <div class="grid grid-cols-3 gap-1 w-full mt-3 pt-2 border-t border-slate-900 text-[8px] font-mono text-slate-500 text-center">
+                                <div>HP: <span class="font-bold text-slate-300">${currentHP}</span></div>
+                                <div>ATK: <span class="font-bold text-slate-300">${currentATK}</span></div>
+                                <div>DEF: <span class="font-bold text-slate-300">${currentDEF}</span></div>
+                                <div>SATK: <span class="font-bold text-slate-300">${currentSPATK}</span></div>
+                                <div>SDEF: <span class="font-bold text-slate-300">${currentSPDEF}</span></div>
+                                <div>SPD: <span class="font-bold text-slate-300">${currentSPD}</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Caught count from PC -->
+                        <div class="mt-3 pt-2 border-t border-slate-900 text-center">
+                            <span class="text-[8px] font-mono text-slate-500">Owned: <span class="font-bold text-emerald-400">${gameState.pcBox.filter(p => p.id === item.id).length}x</span></span>
+                        </div>
+
+                        <div class="absolute bottom-2 right-2 flex gap-1">
+                            ${item.caughtNormal ? '<span class="text-[7px] font-bold bg-slate-800 text-slate-300 px-1 rounded">N</span>' : ''}
+                            ${item.caughtShiny ? '<span class="text-[7px] font-bold bg-pink-500 text-white px-1 rounded animate-pulse">S</span>' : ''}
+                        </div>
+                    `;
+                } else {
+                    card.className = "p-4 rounded-2xl border border-slate-950 bg-slate-950/40 flex flex-col items-center justify-center min-h-[170px] opacity-30";
+                    card.innerHTML = `
+                        <div class="text-3xl text-slate-800 mb-2"><i class="fas fa-satellite"></i></div>
+                        <h4 class="text-[10px] font-bold text-slate-500 font-mono">Signal Lost</h4>
+                        <span class="text-[8px] text-slate-600 font-mono mt-0.5">No. ${item.id}</span>
+                    `;
+                }
+                grid.appendChild(card);
+            });
+        }
+
+        // PC BOX RENDERING
+        let pcUI = { page: 1, pageSize: 9, search: "", sort: "newest" };
+
+        function triggerPCSearch() {
+            pcUI.search = (document.getElementById('pcSearchInput')?.value || "").toLowerCase();
+            pcUI.sort = document.getElementById('pcSortSelect')?.value || "newest";
+            pcUI.page = 1;
+            renderPCBox();
+        }
+
+        function changePCPage(dir) {
+            playConfirmSound();
+            pcUI.page += dir;
+            renderPCBox();
+        }
+
+        function renderPCBox() {
+            const grid = document.getElementById('pcGrid');
+            if (!grid) return;
+            grid.innerHTML = "";
+
+            let list = [...gameState.pcBox];
+
+            // Search filter
+            if (pcUI.search) {
+                list = list.filter(p =>
+                    p.name.toLowerCase().includes(pcUI.search) ||
+                    p.id.toString().includes(pcUI.search)
+                );
+            }
+
+            // Sort
+            if (pcUI.sort === 'newest') list.sort((a, b) => (b.caughtAt || 0) - (a.caughtAt || 0));
+            else if (pcUI.sort === 'oldest') list.sort((a, b) => (a.caughtAt || 0) - (b.caughtAt || 0));
+            else if (pcUI.sort === 'level-desc') list.sort((a, b) => (b.level || 1) - (a.level || 1));
+            else if (pcUI.sort === 'level-asc') list.sort((a, b) => (a.level || 1) - (b.level || 1));
+            else if (pcUI.sort === 'name') list.sort((a, b) => a.name.localeCompare(b.name));
+
+            const totalItems = list.length;
+            const maxPage = Math.max(1, Math.ceil(totalItems / pcUI.pageSize));
+            if (pcUI.page > maxPage) pcUI.page = maxPage;
+
+            document.getElementById('pcPageInfoText').textContent = `Page ${pcUI.page} of ${maxPage} (${totalItems} Pok\u00e9mon)`;
+            document.getElementById('pcPrevPageBtn').disabled = pcUI.page === 1;
+            document.getElementById('pcNextPageBtn').disabled = pcUI.page === maxPage;
+            document.getElementById('pcCountBadge').textContent = gameState.pcBox.length;
+
+            const startIdx = (pcUI.page - 1) * pcUI.pageSize;
+            const page = list.slice(startIdx, startIdx + pcUI.pageSize);
+
+            if (totalItems === 0) {
+                grid.innerHTML = '<div class="col-span-3 text-center py-12 text-slate-500"><i class="fas fa-box-open text-4xl mb-3"></i><p class="text-sm font-bold">No Pok\u00e9mon in PC</p><p class="text-xs mt-1">Catch some Pok\u00e9mon using the Quantum Scanner!</p></div>';
+                return;
+            }
+
+            page.forEach(pk => {
+                const card = document.createElement('div');
+                const level = pk.level || 1;
+                const xp = pk.xp || 0;
+                const nextLevelReq = level * 100;
+                const xpPercent = Math.min(100, Math.max(5, (xp / nextLevelReq) * 100));
+                const levelMultiplier = 1 + ((level - 1) * 0.05);
+                const currentHP = Math.round(pk.hp * levelMultiplier);
+                const currentATK = Math.round(pk.atk * levelMultiplier);
+                const currentDEF = Math.round(pk.def * levelMultiplier);
+                const currentSPATK = Math.round((pk.spAtk || pk.atk) * levelMultiplier);
+                const currentSPDEF = Math.round((pk.spDef || pk.def) * levelMultiplier);
+                const currentSPD = Math.round((pk.speed || 60) * levelMultiplier);
+
+                let borderClass = "border-slate-800 bg-slate-950";
+                let glowClass = "";
+                const rarity = pk.rarity || 'Common';
+                if (rarity === 'Legendary') { borderClass = "border-yellow-600/50"; glowClass = "glow-legendary"; }
+                else if (rarity === 'Epic') { borderClass = "border-purple-600/50"; glowClass = "glow-epic"; }
+                else if (rarity === 'Rare') { borderClass = "border-blue-600/50"; glowClass = "glow-rare"; }
+
+                let optionsMarkup = '<option value="">None</option>';
+                Object.keys(HOLD_ITEMS_DB).forEach(key => {
+                    let count = gameState.inventoryItems[key] || 0;
+                    if (count > 0 || pk.heldItem === key) {
+                        optionsMarkup += `<option value="${key}" ${pk.heldItem === key ? 'selected' : ''}>${HOLD_ITEMS_DB[key].name} (${count + (pk.heldItem === key ? 1 : 0)})</option>`;
+                    }
+                });
+
+                const movesHtml = (pk.moves || []).map(m => {
+                    const spec = MOVES_DB[m] || { type: "normal", power: 0 };
+                    return `<span class="text-[7px] bg-slate-900 px-1.5 py-0.5 rounded capitalize">${m.replace(/-/g, ' ')} <span class="text-slate-500">${spec.power > 0 ? spec.power : '-'}</span></span>`;
+                }).join(' ');
+
+                card.className = `p-4 rounded-2xl border flex flex-col justify-between relative overflow-hidden transition ${borderClass} ${glowClass}`;
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-[8px] uppercase tracking-wider px-1.5 py-0.5 rounded font-extrabold bg-slate-900 text-slate-400">#${pk.id} ${rarity}</span>
+                            <span class="text-[10px] font-bold text-pink-400 font-mono">LVL ${level}</span>
+                        </div>
+                        <div class="flex justify-center my-2">
+                            <img src="${pk.sprite}" alt="${pk.name}" class="h-16 w-16 object-contain ${pk.isShiny ? 'drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]' : ''}" style="${pk.isShiny ? 'filter: hue-rotate(120deg) saturate(1.5)' : ''}" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
+                        </div>
+                        <h4 class="font-extrabold text-white text-xs tracking-wide text-center truncate w-full">${pk.isShiny ? '✨ ' : ''}${pk.name}</h4>
+                        <div class="text-center mt-1 text-[9px] text-slate-400">${pk.type1.toUpperCase()}${pk.type2 ? ' / ' + pk.type2.toUpperCase() : ''}</div>
+
+                        <!-- XP Bar -->
+                        <div class="mt-1.5">
+                            <div class="flex justify-between text-[8px] font-mono text-slate-500 mb-0.5">
+                                <span>XP</span>
+                                <span>${xp}/${nextLevelReq}</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-1 overflow-hidden">
+                                <div class="bg-gradient-to-r from-emerald-500 to-cyan-400 h-full transition-all duration-300" style="width: ${xpPercent}%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Moves -->
+                        <div class="mt-2 pt-2 border-t border-slate-900">
+                            <div class="text-[7px] text-slate-500 uppercase font-bold mb-1">Moves</div>
+                            <div class="flex flex-wrap gap-1">${movesHtml}</div>
+                        </div>
+
+                        <!-- Stats -->
+                        <div class="grid grid-cols-3 gap-1 w-full mt-2 pt-2 border-t border-slate-900 text-[8px] font-mono text-slate-500 text-center">
+                            <div>HP: <span class="font-bold text-slate-300">${currentHP}</span></div>
+                            <div>ATK: <span class="font-bold text-slate-300">${currentATK}</span></div>
+                            <div>DEF: <span class="font-bold text-slate-300">${currentDEF}</span></div>
+                            <div>SATK: <span class="font-bold text-slate-300">${currentSPATK}</span></div>
+                            <div>SDEF: <span class="font-bold text-slate-300">${currentSPDEF}</span></div>
+                            <div>SPD: <span class="font-bold text-slate-300">${currentSPD}</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Item Equip -->
+                    <div class="mt-3 pt-2 border-t border-slate-900">
+                        <label class="block text-[8px] uppercase tracking-wider text-slate-400 font-bold mb-1">Hold Item</label>
+                        <select onchange="equipItem(${pk.uid}, this.value)" class="w-full bg-slate-900 border border-slate-800 text-[10px] rounded p-1 text-slate-300 focus:outline-none focus:border-cyan-500">
+                            ${optionsMarkup}
+                        </select>
+                    </div>
+
+                    ${pk.isShiny ? '<span class="absolute top-2 right-2 text-[7px] bg-pink-500 text-white px-1 rounded uppercase font-black">Shiny</span>' : ''}
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function equipItem(pokemonUid, itemKey) {
+            playConfirmSound();
+            const pokemon = gameState.pcBox.find(p => p.uid === pokemonUid);
+            if (!pokemon) return;
+
+            const oldItem = pokemon.heldItem;
+
+            if (oldItem) {
+                gameState.inventoryItems[oldItem] = (gameState.inventoryItems[oldItem] || 0) + 1;
+            }
+
+            if (itemKey) {
+                gameState.inventoryItems[itemKey] = (gameState.inventoryItems[itemKey] || 1) - 1;
+            }
+
+            pokemon.heldItem = itemKey || null;
+
+            saveProgress();
+            renderPokedex();
+            showNotification("Item Equipped", `Updated hold item on ${pokemon.name}!`, "success");
+        }
+
+        // MART SHOP ITEMS
+        function renderHeldItemsShop() {
+            const container = document.getElementById('heldItemsShopList');
+            if (!container) return;
+            container.innerHTML = "";
+
+            Object.keys(HOLD_ITEMS_DB).forEach(key => {
+                const item = HOLD_ITEMS_DB[key];
+                const count = gameState.inventoryItems[key] || 0;
+
+                const card = document.createElement('div');
+                card.className = "bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-cyan-500/50 transition";
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start">
+                            <span class="p-2 bg-cyan-950/40 rounded-lg text-cyan-400 text-xs"><i class="fas fa-toolbox"></i></span>
+                            <span class="text-[9px] font-mono text-slate-400">Owned: <span class="font-bold">${count}</span></span>
+                        </div>
+                        <h4 class="text-xs font-extrabold mt-3 text-white">${item.name}</h4>
+                        <p class="text-[10px] text-slate-400 mt-1 h-12 overflow-hidden">${item.desc}</p>
+                    </div>
+                    <div class="mt-4 flex items-center justify-between">
+                        <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> ${item.cost}</span>
+                        <button onclick="buyHeldItem('${key}')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white text-[10px] uppercase font-bold rounded-lg transition">Buy</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function buyHeldItem(itemKey) {
+            const item = HOLD_ITEMS_DB[itemKey];
+            if (!item) return;
+
+            if (gameState.coins < item.cost) {
+                showNotification("No Funds Available", `Requires ${item.cost} Coins. Beat roadmap chapters to earn payouts!`, 'error');
+                return;
+            }
+
+            spendCoins(item.cost);
+            gameState.inventoryItems[itemKey] = (gameState.inventoryItems[itemKey] || 0) + 1;
+            
+            playConfirmSound();
+            showNotification("Hold Item Purchased", `Added ${item.name} to inventory. Equip it via your registered Pokédex menu!`, 'success');
+            
+            updateUI();
+            renderHeldItemsShop();
+            saveProgress();
+        }
+
+        // MART DEVICES PURCHASING
+        function buyBall(ballType) {
+            let cost = 50;
+            if (ballType === 'ultra') cost = 150;
+            if (ballType === 'master') cost = 500;
+
+            if (gameState.coins < cost) {
+                showNotification("No Funds Available", `Requires ${cost} Coins.`, 'error');
+                return;
+            }
+
+            spendCoins(cost);
+            gameState.balls[ballType] += 1;
+            
+            playConfirmSound();
+            showNotification("Cores Purchased", `Acquired 1x ${ballType.toUpperCase()} Core!`, 'success');
+            
+            updateUI();
+            saveProgress();
+        }
+
+        // HUD REFRESH
+        function updateUI() {
+            document.getElementById('playerCoins').textContent = gameState.coins.toLocaleString();
+            document.getElementById('trainerLevelBadge').textContent = gameState.level;
+            document.getElementById('trainerLevelText').textContent = gameState.level;
+            
+            const neededXp = gameState.level * 100;
+            const xpPercent = Math.min(100, Math.max(5, (gameState.xp / neededXp) * 100));
+            document.getElementById('xpBar').style.width = `${xpPercent}%`;
+
+            const list = ['poke', 'great', 'ultra', 'master'];
+            list.forEach(type => {
+                const qty = gameState.balls[type] || 0;
+                document.getElementById(`count-${type}`).textContent = qty;
+                document.getElementById(`miniCount-${type}`).textContent = qty;
+
+                const shopIndicator = document.getElementById(`shopCount-${type}`);
+                if (shopIndicator) shopIndicator.textContent = qty;
+
+                const btn = document.getElementById(`ballBtn-${type}`);
+                if (btn) {
+                    if (qty <= 0) {
+                        btn.classList.add('opacity-40');
+                        if (gameState.selectedBall === type) {
+                            gameState.selectedBall = 'poke';
+                        }
+                    } else {
+                        btn.classList.remove('opacity-40');
+                    }
+                }
+            });
+
+            list.forEach(type => {
+                const btn = document.getElementById(`ballBtn-${type}`);
+                if (btn) {
+                    if (gameState.selectedBall === type) {
+                        btn.className = `ball-selector-btn bg-slate-900 border-2 border-rose-500 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-850 transition duration-150 scale-105 shadow-lg shadow-rose-500/10`;
+                    } else {
+                        btn.className = `ball-selector-btn bg-slate-950 border border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150`;
+                    }
+                }
+            });
+
+            const uniqueSpecies = new Set(gameState.pokedex.map(p => p.id)).size;
+            document.getElementById('dexProgressBadge').textContent = `${uniqueSpecies}/1025`;
+            const pcBadge = document.getElementById('pcCountBadge');
+            if (pcBadge) pcBadge.textContent = gameState.pcBox.length;
+            updateScanningRegionUI();
+        }
+
+        // UNIFIED AUTO-SAVE MANAGEMENT
+        function saveProgress() {
+            saveProgressLocal();
+            saveProgressCloud();
+        }
+
+        function saveProgressLocal() {
+            try {
+                localStorage.setItem('pokemon_radar_roadmap_save', JSON.stringify(gameState));
+            } catch (e) {
+                // Safeguard storage capacity errors
+            }
+        }
+
+        function loadSavedProgress() {
+            try {
+                const raw = localStorage.getItem('pokemon_radar_roadmap_save');
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (parsed.pokedex && parsed.balls) {
+                        // Ensure inventory fallback exists
+                        if (!parsed.inventoryItems) {
+                            parsed.inventoryItems = { oran_berry: 0, leftovers: 0, choice_band: 0, wise_glasses: 0 };
+                        }
+                        if (!parsed.unlockedStages) {
+                            parsed.unlockedStages = 1;
+                        }
+                        // Robust property merge
+                        gameState.pokedex = parsed.pokedex;
+                        gameState.pcBox = parsed.pcBox || [];
+                        gameState.coins = parsed.coins ?? 100;
+                        gameState.xp = parsed.xp ?? 0;
+                        gameState.level = parsed.level ?? 1;
+                        gameState.unlockedStages = parsed.unlockedStages ?? 1;
+                        gameState.balls = parsed.balls;
+                        gameState.inventoryItems = parsed.inventoryItems;
+
+                        // Ensure all pcBox entries have uid
+                        if (gameState.pcBox.length > 0) {
+                            let maxUid = 0;
+                            gameState.pcBox.forEach(p => {
+                                if (p.uid && p.uid > maxUid) maxUid = p.uid;
+                            });
+                            nextCatchUid = maxUid + 1;
+                            gameState.pcBox.forEach(p => {
+                                if (!p.uid) p.uid = nextCatchUid++;
+                            });
+                        }
+                    }
+                }
+            } catch (e) {
+                // Returns default configurations
+            }
+        }
+
+        // INITIALISATION
+        window.onload = function() {
+            loadSavedProgress();
+            buildWheelSectors();
+            drawWheel();
+            updateUI();
+            updateTargetRarityObjective();
+            renderRoadmap();
+            renderHeldItemsShop();
+            requestAnimationFrame(gameLoop);
+        };
+    </script>
+</body>
+</html>
