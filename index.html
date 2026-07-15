@@ -626,8 +626,14 @@
                         </div>
 
                         <div>
-                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Hold Items (Equip to your partners to boost stats!)</h3>
+                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Held Items (Equip to your partners for passive boosts)</h3>
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="heldItemsShopList">
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Consumables & Evolution Stones (Use directly in your PC)</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="consumablesShopList">
                             </div>
                         </div>
                     </div>
@@ -1035,16 +1041,16 @@
 
 
                 const CAMPAIGN_ROADMAP = [
-                    { stageId: 1, name: "Viridian Forest", trainer: "Bug Catcher Rick", pokemonId: 10, bossName: "Caterpie", level: 5, reward: 60, icon: "🐛" },
-                    { stageId: 2, name: "Pewter Gym", trainer: "Gym Leader Brock", pokemonId: 95, bossName: "Onix", level: 12, reward: 120, icon: "🪨" },
-                    { stageId: 3, name: "Cerulean Route", trainer: "Lass Haley", pokemonId: 39, bossName: "Jigglypuff", level: 18, reward: 150, icon: "🎈" },
-                    { stageId: 4, name: "Cerulean Gym", trainer: "Gym Leader Misty", pokemonId: 120, bossName: "Staryu", level: 24, reward: 180, icon: "⭐" },
-                    { stageId: 5, name: "Vermilion Gym", trainer: "Gym Leader Lt. Surge", pokemonId: 26, bossName: "Raichu", level: 32, reward: 220, icon: "⚡" },
-                    { stageId: 6, name: "Lavender Tower", trainer: "Channeler Patricia", pokemonId: 93, bossName: "Haunter", level: 40, reward: 260, icon: "👻" },
-                    { stageId: 7, name: "Celadon Gym", trainer: "Gym Leader Erika", pokemonId: 45, bossName: "Vileplume", level: 48, reward: 300, icon: "🌸" },
-                    { stageId: 8, name: "Saffron Gym", trainer: "Gym Leader Sabrina", pokemonId: 65, bossName: "Alakazam", level: 55, reward: 350, icon: "🥄" },
-                    { stageId: 9, name: "Seafoam Caverns", trainer: "Feral Articuno", pokemonId: 144, bossName: "Articuno", level: 70, reward: 500, icon: "❄️" },
-                    { stageId: 10, name: "Indigo Plateau", trainer: "Champion Lance", pokemonId: 149, bossName: "Dragonite", level: 85, reward: 800, icon: "🐉" }
+                    { stageId: 1, name: "Viridian Forest", trainer: "Bug Catcher Rick", pokemonId: 10, bossName: "Caterpie", level: 5, reward: 60, icon: "🐛", teamSize: 1 },
+                    { stageId: 2, name: "Pewter Gym", trainer: "Gym Leader Brock", pokemonId: 95, bossName: "Onix", level: 12, reward: 120, icon: "🪨", teamSize: 2 },
+                    { stageId: 3, name: "Cerulean Route", trainer: "Lass Haley", pokemonId: 39, bossName: "Jigglypuff", level: 18, reward: 150, icon: "🎈", teamSize: 2 },
+                    { stageId: 4, name: "Cerulean Gym", trainer: "Gym Leader Misty", pokemonId: 120, bossName: "Staryu", level: 24, reward: 180, icon: "⭐", teamSize: 2 },
+                    { stageId: 5, name: "Vermilion Gym", trainer: "Gym Leader Lt. Surge", pokemonId: 26, bossName: "Raichu", level: 32, reward: 220, icon: "⚡", teamSize: 3 },
+                    { stageId: 6, name: "Lavender Tower", trainer: "Channeler Patricia", pokemonId: 93, bossName: "Haunter", level: 40, reward: 260, icon: "👻", teamSize: 3 },
+                    { stageId: 7, name: "Celadon Gym", trainer: "Gym Leader Erika", pokemonId: 45, bossName: "Vileplume", level: 48, reward: 300, icon: "🌸", teamSize: 3 },
+                    { stageId: 8, name: "Saffron Gym", trainer: "Gym Leader Sabrina", pokemonId: 65, bossName: "Alakazam", level: 55, reward: 350, icon: "🥄", teamSize: 4 },
+                    { stageId: 9, name: "Seafoam Caverns", trainer: "Feral Articuno", pokemonId: 144, bossName: "Articuno", level: 70, reward: 500, icon: "❄️", teamSize: 4 },
+                    { stageId: 10, name: "Indigo Plateau", trainer: "Champion Lance", pokemonId: 149, bossName: "Dragonite", level: 85, reward: 800, icon: "🐉", teamSize: 4 }
                 ];
 
                 let gameState = {
@@ -1898,6 +1904,16 @@
                     return finalMoves;
                 }
 
+                function getLearnableMovesForPokemon(pokemon) {
+                    const moves = new Set(["tackle", "quick-attack", "scratch", "ember", "water-gun", "vine-whip", "thunder-shock", "ice-beam", "psychic", "earthquake", "shadow-ball", "dragon-claw", "outrage", "iron-tail", "dazzling-gleam", "hyper-beam", "razor-leaf", "growl", "tail-whip", "bubble", "withdraw", "rapid-spin", "metal-claw", "leer", "smokescreen", "slash", "double-kick", "poison-sting", "peck", "gust", "sand-attack", "confusion", "string-shot", "bug-bite", "harden", "mud-slap", "water-pulse", "flame-wheel", "rollout", "defense-curl", "magnitude", "body-slam", "take-down", "wrap", "acid", "sludge-bomb", "mega-drain", "stun-spore", "absorb", "zen-headbutt", "aerial-ace", "crunch", "twister", "aqua-tail", "headbutt", "disable", "hypnosis", "lick", "low-kick", "karate-chop", "seismic-toss", "rest", "amnesia", "pound", "sing", "double-slap", "covet", "swift", "charm", "moonblast", "disarming-voice", "power-gem", "ancient-power", "night-shade", "hex", "sucker-punch", "play-rough", "iron-head", "flash-cannon", "poison-jab", "cross-poison", "x-scissor", "signal-beam", "fly", "brave-bird", "drill-peck", "dig", "bulldoze", "bone-rush", "rock-throw", "rock-blast", "psybeam", "aurora-beam", "icy-wind", "ice-shard", "blizzard", "fire-spin", "fire-fang", "fire-punch", "flame-charge", "thunder-fang", "thunder", "discharge", "electro-ball", "nuzzle", "feint-attack", "fury-swipes", "pay-day", "power-whip", "seed-bomb", "giga-drain", "energy-ball", "sludge", "mud-bomb"]);
+                    const moveData = LEVELUP_MOVES[pokemon.id];
+                    if (moveData) {
+                        Object.values(moveData).forEach(list => list.forEach(move => moves.add(move)));
+                    }
+                    if (pokemon.moves) pokemon.moves.forEach(move => moves.add(move));
+                    return Array.from(moves).filter(move => MOVES_DB[move]).sort();
+                }
+
                 function applyLevelUpMoves(pokemon) {
                     const moveData = LEVELUP_MOVES[pokemon.id];
                     if (!moveData) return [];
@@ -1979,6 +1995,7 @@
                                 <div class="my-2">
                                     <h4 class="text-xs font-black truncate">${stage.name}</h4>
                                     <p class="text-[10px] text-slate-400 mt-0.5 truncate">${stage.trainer}</p>
+                                    <p class="text-[9px] text-slate-500 mt-1">Team size: ${stage.teamSize || 1}</p>
                                 </div>
                                 <div class="pt-2 border-t border-slate-850 flex justify-between items-center">
                                     <span class="text-[9px] bg-slate-950 px-2 py-0.5 rounded font-bold">LVL ${stage.level}</span>
@@ -2032,18 +2049,26 @@
                     playConfirmSound();
                     const stage = gameState.activeBattleStage;
                     let enemyProfile = null;
+                    let enemyTeam = [];
                     document.getElementById('wildPokemonLoading').classList.remove('hidden');
 
                     if (stage) {
-                        enemyProfile = await fetchPokemonData(stage.pokemonId);
-                        enemyProfile.hp = enemyProfile.hp + (stage.level * 3);
-                        enemyProfile.atk = enemyProfile.atk + (stage.level * 1.2);
-                        enemyProfile.def = enemyProfile.def + (stage.level * 1);
-                        enemyProfile.spAtk = enemyProfile.spAtk + (stage.level * 1.2);
-                        enemyProfile.spDef = enemyProfile.spDef + (stage.level * 1);
-                        enemyProfile.name = stage.trainer + "'s " + stage.bossName;
-                        enemyProfile.level = stage.level;
-                        if (stage.level >= 20) enemyProfile.heldItem = "oran_berry";
+                        const teamSize = Math.max(1, Math.min(4, stage.teamSize || 1));
+                        for (let index = 0; index < teamSize; index += 1) {
+                            const teamMemberId = Math.min(1025, stage.pokemonId + (index * 5));
+                            const member = await fetchPokemonData(teamMemberId);
+                            const memberLevel = stage.level + (index * 4);
+                            member.hp = member.hp + (memberLevel * 3);
+                            member.atk = member.atk + (memberLevel * 1.2);
+                            member.def = member.def + (memberLevel * 1);
+                            member.spAtk = member.spAtk + (memberLevel * 1.2);
+                            member.spDef = member.spDef + (memberLevel * 1);
+                            member.name = index === 0 ? `${stage.trainer}'s ${stage.bossName}` : `${stage.trainer}'s ${member.name}`;
+                            member.level = memberLevel;
+                            if (memberLevel >= 20) member.heldItem = "oran_berry";
+                            enemyTeam.push(member);
+                        }
+                        enemyProfile = enemyTeam[0];
                     } else {
                         const fighterLevel = pokemon.level || 1;
                         const genRange = getRadarGenRange();
@@ -2060,14 +2085,17 @@
                         enemyProfile.name = "Simulated " + enemyProfile.name;
                         enemyProfile.level = finalEnemyLvl;
                         if (finalEnemyLvl >= 20) enemyProfile.heldItem = "oran_berry";
+                        enemyTeam = [enemyProfile];
                     }
 
                     document.getElementById('wildPokemonLoading').classList.add('hidden');
                     gameState.battle.bossPokemon = enemyProfile;
                     gameState.battle.fighterPokemon = pokemon;
+                    gameState.battle.enemyTeam = enemyTeam;
+                    gameState.battle.enemyTeamIndex = 0;
                     
                     const levelMultiplier = 1 + ((pokemon.level - 1) * 0.05);
-                    const scaledHP = Math.round(pokemon.hp * levelMultiplier);
+                    const scaledHP = Math.max(1, Math.round((pokemon.hp + (pokemon.hpBonus || 0)) * levelMultiplier));
 
                     gameState.battle.fighterHP = scaledHP;
                     gameState.battle.fighterMaxHP = scaledHP;
@@ -2250,11 +2278,38 @@
                 }
 
                 function handleBattleVictory() {
+                    const stage = gameState.activeBattleStage;
+                    const fighter = gameState.battle.fighterPokemon;
+                    const team = gameState.battle.enemyTeam || [gameState.battle.bossPokemon];
+                    const currentIndex = gameState.battle.enemyTeamIndex || 0;
+
+                    if (team.length > 1 && currentIndex + 1 < team.length) {
+                        const nextIndex = currentIndex + 1;
+                        const nextEnemy = team[nextIndex];
+                        const nextLevel = nextEnemy.level || 1;
+                        const nextMaxHP = Math.max(1, Math.round(nextEnemy.hp + (nextLevel * 3)));
+                        gameState.battle.enemyTeamIndex = nextIndex;
+                        gameState.battle.bossPokemon = nextEnemy;
+                        gameState.battle.bossHP = nextMaxHP;
+                        gameState.battle.bossMaxHP = nextMaxHP;
+                        gameState.battle.bossOranUsed = false;
+                        gameState.battle.fighterHP = gameState.battle.fighterMaxHP;
+                        document.getElementById('bossSprite').src = nextEnemy.sprite;
+                        document.getElementById('bossName').textContent = nextEnemy.name;
+                        document.getElementById('bossLevelBadge').textContent = `LVL ${nextEnemy.level}`;
+                        document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossHP}`;
+                        document.getElementById('bossHPBar').style.width = "100%";
+                        document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
+                        document.getElementById('playerFighterHPBar').style.width = "100%";
+                        document.getElementById('battleLog').innerHTML += `<div class="text-amber-400 font-bold mt-2">🎯 ${stage ? stage.trainer : 'Trainer'} sent out ${nextEnemy.name}!</div>`;
+                        document.getElementById('battleLog').scrollTop = document.getElementById('battleLog').scrollHeight;
+                        renderBattleMoves(fighter);
+                        return;
+                    }
+
                     gameState.battle.active = false;
                     playSuccessCapture();
 
-                    const stage = gameState.activeBattleStage;
-                    const fighter = gameState.battle.fighterPokemon;
                     let rewardCoins = 40;
                     let enemyLvl = 5;
 
@@ -2506,7 +2561,7 @@
                         const nextLevelReq = level * 100;
                         const xpPercent = Math.min(100, Math.max(5, (xp / nextLevelReq) * 100));
                         const levelMultiplier = 1 + ((level - 1) * 0.05);
-                        const currentHP = Math.round(pk.hp * levelMultiplier);
+                        const currentHP = Math.max(1, Math.round((pk.hp + (pk.hpBonus || 0)) * levelMultiplier));
                         const currentATK = Math.round(pk.atk * levelMultiplier);
                         const currentDEF = Math.round(pk.def * levelMultiplier);
                         const currentSPATK = Math.round((pk.spAtk || pk.atk) * levelMultiplier);
@@ -2521,9 +2576,11 @@
 
                         let optionsMarkup = '<option value="">None</option>';
                         Object.keys(HOLD_ITEMS_DB).forEach(key => {
+                            const item = HOLD_ITEMS_DB[key];
+                            if (item.type !== 'held_item') return;
                             let count = gameState.inventoryItems[key] || 0;
                             if (count > 0 || pk.heldItem === key) {
-                                optionsMarkup += `<option value="${key}" ${pk.heldItem === key ? 'selected' : ''}>${HOLD_ITEMS_DB[key].name} (${count + (pk.heldItem === key ? 1 : 0)})</option>`;
+                                optionsMarkup += `<option value="${key}" ${pk.heldItem === key ? 'selected' : ''}>${item.name}${count > 0 ? ` (${count})` : ''}</option>`;
                             }
                         });
 
@@ -2531,6 +2588,30 @@
                             const spec = MOVES_DB[m] || { type: "normal", power: 0 };
                             return `<span class="text-[7px] bg-slate-900 px-1.5 py-0.5 rounded capitalize">${m.replace(/-/g, ' ')} <span class="text-slate-500">${spec.power > 0 ? spec.power : '-'}</span></span>`;
                         }).join(' ');
+
+                        const moveSlotsMarkup = [0, 1, 2, 3].map(slotIndex => {
+                            const currentMove = (pk.moves && pk.moves[slotIndex]) || (pk.moves && pk.moves[0]) || 'tackle';
+                            const slotOptions = getLearnableMovesForPokemon(pk).map(move => `<option value="${move}" ${move === currentMove ? 'selected' : ''}>${move.replace(/-/g, ' ')}</option>`).join('');
+                            return `
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[8px] uppercase font-bold text-slate-500 w-8">Slot ${slotIndex + 1}</span>
+                                    <select onchange="window.changePokemonMove(${pk.uid}, ${slotIndex}, this.value)" class="flex-1 bg-slate-900 border border-slate-800 text-[9px] rounded p-1 text-slate-300 focus:outline-none focus:border-cyan-500">
+                                        ${slotOptions}
+                                    </select>
+                                </div>`;
+                        }).join('');
+
+                        const consumableOptions = Object.keys(HOLD_ITEMS_DB).filter(key => {
+                            const item = HOLD_ITEMS_DB[key];
+                            return (item.type === 'consumable' || item.type === 'evolution_stone') && (gameState.inventoryItems[key] || 0) > 0;
+                        });
+                        const consumableMarkup = consumableOptions.length ? `
+                            <select id="pcConsumableSelect-${pk.uid}" class="flex-1 bg-slate-900 border border-slate-800 text-[9px] rounded p-1 text-slate-300 focus:outline-none focus:border-emerald-500">
+                                <option value="">Choose item</option>
+                                ${consumableOptions.map(key => `<option value="${key}">${HOLD_ITEMS_DB[key].name} (${gameState.inventoryItems[key] || 0})</option>`).join('')}
+                            </select>
+                            <button onclick="window.usePcConsumable(${pk.uid}, document.getElementById('pcConsumableSelect-${pk.uid}').value)" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-[9px] uppercase font-bold rounded">Use</button>
+                        ` : '<div class="text-[8px] text-slate-500">No one-time items owned.</div>';
 
                         card.className = `p-4 rounded-2xl border flex flex-col justify-between relative overflow-hidden transition ${borderClass} ${glowClass}`;
                         card.innerHTML = `
@@ -2569,6 +2650,14 @@
                                     ${optionsMarkup}
                                 </select>
                             </div>
+                            <div class="mt-2 pt-2 border-t border-slate-900">
+                                <div class="text-[7px] text-slate-500 uppercase font-bold mb-1">Move Relearn</div>
+                                <div class="grid grid-cols-1 gap-1">${moveSlotsMarkup}</div>
+                            </div>
+                            <div class="mt-2 pt-2 border-t border-slate-900">
+                                <div class="text-[7px] text-slate-500 uppercase font-bold mb-1">Consumables</div>
+                                <div class="flex flex-col gap-2">${consumableMarkup}</div>
+                            </div>
                             ${pk.isShiny ? '<span class="absolute top-2 right-2 text-[7px] bg-pink-500 text-white px-1 rounded uppercase font-black">Shiny</span>' : ''}
                         `;
                         grid.appendChild(card);
@@ -2581,34 +2670,84 @@
                     const pokemon = gameState.pcBox.find(p => p.uid === pokemonUid);
                     if (!pokemon) return;
 
-                    const oldItem = pokemon.heldItem;
-                    if (oldItem) gameState.inventoryItems[oldItem] = (gameState.inventoryItems[oldItem] || 0) + 1;
-                    if (itemKey) gameState.inventoryItems[itemKey] = (gameState.inventoryItems[itemKey] || 1) - 1;
+                    if (itemKey && HOLD_ITEMS_DB[itemKey] && HOLD_ITEMS_DB[itemKey].type !== 'held_item') {
+                        showNotification('Only held items', 'Use the consumables section to apply one-time-use items.', 'info');
+                        return;
+                    }
 
                     pokemon.heldItem = itemKey || null;
                     saveProgress();
                     renderPCBox();
                     renderPokedex();
-                    showNotification("Item Equipped", `Updated hold item on ${pokemon.name}!`, "success");
+                    showNotification('Hold Item Updated', `Updated ${pokemon.name}'s hold item.`, 'success');
+                };
+
+                window.changePokemonMove = function(pokemonUid, slotIndex, moveName) {
+                    initAudio();
+                    playConfirmSound();
+                    const pokemon = gameState.pcBox.find(p => p.uid === pokemonUid);
+                    if (!pokemon) return;
+                    const nextMoves = [...(pokemon.moves || [])];
+                    while (nextMoves.length < 4) nextMoves.push('tackle');
+                    nextMoves[slotIndex] = moveName || nextMoves[slotIndex] || 'tackle';
+                    pokemon.moves = nextMoves.slice(0, 4);
+                    saveProgress();
+                    renderPCBox();
+                    showNotification('Moves Updated', `${pokemon.name} now has a new move setup.`, 'success');
+                };
+
+                window.usePcConsumable = function(pokemonUid, itemKey) {
+                    initAudio();
+                    const pokemon = gameState.pcBox.find(p => p.uid === pokemonUid);
+                    const item = itemKey ? HOLD_ITEMS_DB[itemKey] : null;
+                    if (!pokemon || !item) return;
+
+                    const owned = gameState.inventoryItems[itemKey] || 0;
+                    if (owned <= 0) {
+                        showNotification('No Item', `You do not own ${item.name}.`, 'error');
+                        return;
+                    }
+
+                    gameState.inventoryItems[itemKey] = owned - 1;
+                    if (item.effect === 'heal_hp') {
+                        pokemon.hpBonus = (pokemon.hpBonus || 0) + (item.value || 20);
+                        showNotification('Consumed', `${pokemon.name} healed with ${item.name}.`, 'success');
+                    } else if (item.effect === 'full_restore') {
+                        pokemon.hpBonus = Math.max(pokemon.hpBonus || 0, 60);
+                        showNotification('Consumed', `${pokemon.name} was fully restored with ${item.name}.`, 'success');
+                    } else if (item.effect === 'evolution') {
+                        pokemon.evoStoneUsed = true;
+                        showNotification('Stone Used', `${item.name} was spent on ${pokemon.name}.`, 'success');
+                    } else {
+                        showNotification('Consumed', `${item.name} was used on ${pokemon.name}.`, 'success');
+                    }
+
+                    saveProgress();
+                    renderPCBox();
+                    renderPokedex();
                 };
 
                 // ==========================================
                 // MODULE 8: MART SHOP
                 // ==========================================
                 function renderHeldItemsShop() {
-                    const container = document.getElementById('heldItemsShopList');
-                    if (!container) return;
-                    container.innerHTML = "";
+                    const heldContainer = document.getElementById('heldItemsShopList');
+                    const consumablesContainer = document.getElementById('consumablesShopList');
+                    if (heldContainer) heldContainer.innerHTML = "";
+                    if (consumablesContainer) consumablesContainer.innerHTML = "";
 
                     Object.keys(HOLD_ITEMS_DB).forEach(key => {
                         const item = HOLD_ITEMS_DB[key];
                         const count = gameState.inventoryItems[key] || 0;
                         const card = document.createElement('div');
+                        const targetContainer = item.type === 'held_item' ? heldContainer : consumablesContainer;
+                        if (!targetContainer) return;
+
                         card.className = "bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-cyan-500/50 transition";
                         card.innerHTML = `
                             <div>
                                 <div class="flex justify-between items-start">
-                                    <span class="p-2 bg-cyan-950/40 rounded-lg text-cyan-400 text-xs"><i class="fas fa-toolbox"></i></span>
+                                    <span class="p-2 ${item.type === 'held_item' ? 'bg-cyan-950/40 text-cyan-400' : 'bg-emerald-950/40 text-emerald-400'} rounded-lg text-xs"><i class="${item.type === 'held_item' ? 'fas fa-toolbox' : 'fas fa-pills'}"></i></span>
                                     <span class="text-[9px] font-mono text-slate-400">Owned: <span class="font-bold">${count}</span></span>
                                 </div>
                                 <h4 class="text-xs font-extrabold mt-3 text-white">${item.name}</h4>
@@ -2616,20 +2755,20 @@
                             </div>
                             <div class="mt-4 flex items-center justify-between">
                                 <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> ${item.cost}</span>
-                                <button onclick="window.buyHeldItem('${key}')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white text-[10px] uppercase font-bold rounded-lg transition">Buy</button>
+                                <button onclick="window.buyShopItem('${key}')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white text-[10px] uppercase font-bold rounded-lg transition">Buy</button>
                             </div>
                         `;
-                        container.appendChild(card);
+                        targetContainer.appendChild(card);
                     });
                 }
 
-                window.buyHeldItem = function(itemKey) {
+                window.buyShopItem = function(itemKey) {
                     initAudio();
                     const item = HOLD_ITEMS_DB[itemKey];
                     if (!item) return;
 
                     if (gameState.coins < item.cost) {
-                        showNotification("No Funds Available", `Requires ${item.cost} Coins. Beat roadmap chapters to earn payouts!`, 'error');
+                        showNotification('No Funds Available', `Requires ${item.cost} Coins. Beat roadmap chapters to earn payouts!`, 'error');
                         return;
                     }
 
@@ -2637,11 +2776,16 @@
                     gameState.inventoryItems[itemKey] = (gameState.inventoryItems[itemKey] || 0) + 1;
                     
                     playConfirmSound();
-                    showNotification("Hold Item Purchased", `Added ${item.name} to inventory. Equip it via your registered Pokédex menu!`, 'success');
+                    const actionLabel = item.type === 'held_item' ? 'Hold Item Purchased' : 'Consumable Purchased';
+                    showNotification(actionLabel, `Added ${item.name} to inventory.`, 'success');
                     
                     updateUI();
                     renderHeldItemsShop();
                     saveProgress();
+                };
+
+                window.buyHeldItem = function(itemKey) {
+                    window.buyShopItem(itemKey);
                 };
 
                 window.buyBall = function(ballType) {
@@ -2681,4 +2825,4 @@
             })();
         </script>
     </body>
-    </html>
+    </html> 
