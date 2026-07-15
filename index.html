@@ -20,6 +20,9 @@
         <!-- Google AdSense -->
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4850555217888083" crossorigin="anonymous"></script>
 
+        <!-- Crypto-JS for encryption -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.0/crypto-js.min.js"></script>
+
         <style>
             body {
                 font-family: 'Outfit', sans-serif;
@@ -118,8 +121,8 @@
         </div>
 
         <!-- DATA TRANSFER MODAL -->
-        <div id="dataTransferModal" class="fixed inset-0 z-[60] bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4">
-            <div class="w-full max-w-2xl rounded-3xl border border-slate-800 bg-slate-950 p-5 shadow-2xl">
+        <div id="dataTransferModal" class="fixed inset-0 z-[70] bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+            <div class="w-full max-w-2xl rounded-3xl border border-slate-800 bg-slate-950 p-5 shadow-2xl my-8">
                 <div class="flex items-start justify-between gap-4">
                     <div>
                         <p class="text-[10px] uppercase tracking-[0.35em] text-slate-500">Local save transfer</p>
@@ -972,11 +975,64 @@
                 };
 
                 const HOLD_ITEMS_DB = {
-                    oran_berry: { name: "Oran Berry", cost: 40, desc: "Restores 30 HP once during battle when health falls below 30%", effect: "heal_low_hp", value: 30 },
-                    leftovers: { name: "Leftovers", cost: 120, desc: "Gradually restores 1/16th of maximum HP at the end of every combat turn", effect: "heal_turn", value: 0.0625 },
-                    choice_band: { name: "Choice Band", cost: 180, desc: "Boosts Physical move power by 50% continuously", effect: "boost_physical", value: 1.5 },
-                    wise_glasses: { name: "Wise Glasses", cost: 180, desc: "Boosts Special move power by 25% continuously", effect: "boost_special", value: 1.25 }
+                    oran_berry: { name: "Oran Berry", cost: 40, desc: "Restores 30 HP once during battle when health falls below 30%", effect: "heal_low_hp", value: 30, type: "consumable" },
+                    antidote: { name: "Antidote", cost: 30, desc: "Cures poison status condition", effect: "cure_poison", type: "consumable" },
+                    burn_heal: { name: "Burn Heal", cost: 30, desc: "Cures burn status condition", effect: "cure_burn", type: "consumable" },
+                    ice_heal: { name: "Ice Heal", cost: 30, desc: "Cures freeze status condition", effect: "cure_freeze", type: "consumable" },
+                    awakening: { name: "Awakening", cost: 30, desc: "Cures sleep status condition", effect: "cure_sleep", type: "consumable" },
+                    paralyze_heal: { name: "Paralyze Heal", cost: 30, desc: "Cures paralysis status condition", effect: "cure_paralyze", type: "consumable" },
+                    full_heal: { name: "Full Heal", cost: 60, desc: "Restores all HP and cures all status conditions", effect: "full_restore", value: 100, type: "consumable" },
+                    full_restore: { name: "Full Restore", cost: 150, desc: "Fully heals a Pokemon during battle", effect: "full_restore", value: 999, type: "consumable" },
+                    fire_stone: { name: "Fire Stone", cost: 200, desc: "Evolves certain Pokemon like Eevee to Flareon", effect: "evolution", type: "evolution_stone" },
+                    water_stone: { name: "Water Stone", cost: 200, desc: "Evolves certain Pokemon like Eevee to Vaporeon", effect: "evolution", type: "evolution_stone" },
+                    thunder_stone: { name: "Thunder Stone", cost: 200, desc: "Evolves certain Pokemon like Eevee to Jolteon", effect: "evolution", type: "evolution_stone" },
+                    leaf_stone: { name: "Leaf Stone", cost: 200, desc: "Evolves certain Pokemon like Oddish to Gloom", effect: "evolution", type: "evolution_stone" },
+                    ice_stone: { name: "Ice Stone", cost: 200, desc: "Evolves certain Pokemon like Seel to Dewgong", effect: "evolution", type: "evolution_stone" },
+                    dawn_stone: { name: "Dawn Stone", cost: 250, desc: "Evolves certain Pokemon like Kirlia to Gardevoir", effect: "evolution", type: "evolution_stone" },
+                    dusk_stone: { name: "Dusk Stone", cost: 250, desc: "Evolves certain Pokemon like Lampent to Chandelure", effect: "evolution", type: "evolution_stone" },
+                    moon_stone: { name: "Moon Stone", cost: 200, desc: "Evolves certain Pokemon like Jigglypuff to Wigglytuff", effect: "evolution", type: "evolution_stone" },
+                    shiny_stone: { name: "Shiny Stone", cost: 250, desc: "Evolves certain Pokemon like Togetic to Togekiss", effect: "evolution", type: "evolution_stone" },
+                    leftovers: { name: "Leftovers", cost: 120, desc: "Gradually restores 1/16th of maximum HP at the end of every combat turn", effect: "heal_turn", value: 0.0625, type: "held_item" },
+                    choice_band: { name: "Choice Band", cost: 180, desc: "Boosts Physical move power by 50% continuously", effect: "boost_physical", value: 1.5, type: "held_item" },
+                    wise_glasses: { name: "Wise Glasses", cost: 180, desc: "Boosts Special move power by 25% continuously", effect: "boost_special", value: 1.25, type: "held_item" },
+                    assault_vest: { name: "Assault Vest", cost: 200, desc: "Boosts Sp. Def by 50%", effect: "boost_spdef", value: 1.5, type: "held_item" },
+                    exp_share: { name: "Exp. Share", cost: 150, desc: "Holder gains 50% of battle experience", effect: "boost_exp", value: 1.5, type: "held_item" },
+                    scope_lens: { name: "Scope Lens", cost: 160, desc: "Boosts critical hit ratio by 25%", effect: "boost_crit", value: 1.25, type: "held_item" },
+                    weakness_policy: { name: "Weakness Policy", cost: 170, desc: "When hit by super-effective move, raise Atk and Sp. Atk by 50%", effect: "boost_on_hit", value: 1.5, type: "held_item" },
+                    life_orb: { name: "Life Orb", cost: 190, desc: "Boosts all damage by 30% but costs 10% max HP per turn", effect: "boost_damage_cost_hp", value: 1.3, type: "held_item" },
+                    potion: { name: "Potion", cost: 20, desc: "Restores 20 HP", effect: "heal_hp", value: 20, type: "consumable" },
+                    super_potion: { name: "Super Potion", cost: 50, desc: "Restores 50 HP", effect: "heal_hp", value: 50, type: "consumable" },
+                    hyper_potion: { name: "Hyper Potion", cost: 100, desc: "Restores 100 HP", effect: "heal_hp", value: 100, type: "consumable" },
+                    max_potion: { name: "Max Potion", cost: 200, desc: "Restores all HP", effect: "heal_hp", value: 999, type: "consumable" },
+                    ether: { name: "Ether", cost: 60, desc: "Restores 10 PP to one move", effect: "restore_pp", value: 10, type: "consumable" },
+                    max_ether: { name: "Max Ether", cost: 120, desc: "Restores all PP to one move", effect: "restore_pp", value: 999, type: "consumable" },
+                    elixir: { name: "Elixir", cost: 80, desc: "Restores 10 PP to all moves", effect: "restore_all_pp", value: 10, type: "consumable" },
+                    max_elixir: { name: "Max Elixir", cost: 150, desc: "Restores all PP to all moves", effect: "restore_all_pp", value: 999, type: "consumable" },
+                    attack_boost: { name: "Attack Boost", cost: 90, desc: "Raises Attack by 50% until end of battle", effect: "stat_boost", stat: "attack", value: 1.5, type: "consumable" },
+                    defense_boost: { name: "Defense Boost", cost: 90, desc: "Raises Defense by 50% until end of battle", effect: "stat_boost", stat: "defense", value: 1.5, type: "consumable" },
+                    speed_boost: { name: "Speed Boost", cost: 90, desc: "Raises Speed by 50% until end of battle", effect: "stat_boost", stat: "speed", value: 1.5, type: "consumable" },
+                    special_boost: { name: "Special Boost", cost: 90, desc: "Raises Sp. Atk by 50% until end of battle", effect: "stat_boost", stat: "spa", value: 1.5, type: "consumable" },
+                    ability_capsule: { name: "Ability Capsule", cost: 250, desc: "Swaps a Pokemon's Ability to its alternate Ability", effect: "swap_ability", type: "item" },
+                    nature_mint: { name: "Nature Mint", cost: 180, desc: "Adjusts Pokemon nature to optimize stats", effect: "adjust_nature", type: "item" },
+                    vitamin_a: { name: "HP Up", cost: 75, desc: "Raises maximum HP", effect: "stat_permanent", stat: "hp", value: 10, type: "consumable" },
+                    vitamin_b: { name: "Attack", cost: 75, desc: "Raises Attack stat", effect: "stat_permanent", stat: "attack", value: 10, type: "consumable" },
+                    vitamin_c: { name: "Defense", cost: 75, desc: "Raises Defense stat", effect: "stat_permanent", stat: "defense", value: 10, type: "consumable" },
+                    vitamin_d: { name: "Sp. Atk", cost: 75, desc: "Raises Sp. Atk stat", effect: "stat_permanent", stat: "spa", value: 10, type: "consumable" },
+                    vitamin_e: { name: "Sp. Def", cost: 75, desc: "Raises Sp. Def stat", effect: "stat_permanent", stat: "spd", value: 10, type: "consumable" },
+                    vitamin_f: { name: "Speed", cost: 75, desc: "Raises Speed stat", effect: "stat_permanent", stat: "speed", value: 10, type: "consumable" }
                 };
+                const STONE_EVO_POKEMON = new Set([
+                    26, 27, 35, 36, 37, 38, 39, 40, 41, 42, 50, 51, 52, 53, 54, 55, 56, 57,
+                    58, 59, 60, 61, 62, 63, 66, 67, 74, 75, 81, 82, 90, 91, 92, 93, 100, 101,
+                    102, 103, 104, 105, 109, 110, 116, 117, 118, 119, 120, 121, 122, 123,
+                    133, 138, 139, 140, 141, 142, 143, 147, 148, 152, 153, 155, 156, 158, 159,
+                    161, 163, 164, 173, 174, 175, 177, 178, 183, 184, 185, 194, 195, 231, 246, 247, 258, 259, 261, 265, 266
+                ]);
+
+                function shouldExcludeFromLevelUp(pokemonId) {
+                    return STONE_EVO_POKEMON.has(pokemonId);
+                }
+
 
                 const CAMPAIGN_ROADMAP = [
                     { stageId: 1, name: "Viridian Forest", trainer: "Bug Catcher Rick", pokemonId: 10, bossName: "Caterpie", level: 5, reward: 60, icon: "🐛" },
@@ -1003,7 +1059,7 @@
                     currentEncounter: null,
                     encounterShiny: false,
                     catchMinigame: { active: false, ringScale: 1.0, contracting: true, score: 0 },
-                    inventoryItems: { oran_berry: 0, leftovers: 0, choice_band: 0, wise_glasses: 0 },
+                    inventoryItems: { oran_berry: 0, leftovers: 0, choice_band: 0, wise_glasses: 0, antidote: 0, burn_heal: 0, ice_heal: 0, awakening: 0, paralyze_heal: 0, full_heal: 0, full_restore: 0, fire_stone: 0, water_stone: 0, thunder_stone: 0, leaf_stone: 0, ice_stone: 0, dawn_stone: 0, dusk_stone: 0, moon_stone: 0, shiny_stone: 0, assault_vest: 0, exp_share: 0, scope_lens: 0, weakness_policy: 0, life_orb: 0, potion: 0, super_potion: 0, hyper_potion: 0, max_potion: 0, ether: 0, max_ether: 0, elixir: 0, max_elixir: 0, attack_boost: 0, defense_boost: 0, speed_boost: 0, special_boost: 0, ability_capsule: 0, nature_mint: 0, vitamin_a: 0, vitamin_b: 0, vitamin_c: 0, vitamin_d: 0, vitamin_e: 0, vitamin_f: 0 },
                     unlockedStages: 1, 
                     activeBattleStage: null,
                     battleType: 'campaign',
@@ -1103,7 +1159,10 @@
                         if (raw) {
                             const parsed = JSON.parse(raw);
                             if (parsed.pokedex && parsed.balls) {
-                                if (!parsed.inventoryItems) parsed.inventoryItems = { oran_berry: 0, leftovers: 0, choice_band: 0, wise_glasses: 0 };
+                                if (!parsed.inventoryItems) {
+                                    const defaultItems = Object.keys(HOLD_ITEMS_DB).reduce((acc, key) => { acc[key] = 0; return acc; }, {});
+                                    parsed.inventoryItems = defaultItems;
+                                }
                                 if (!parsed.unlockedStages) parsed.unlockedStages = 1;
                                 
                                 gameState.pokedex = parsed.pokedex;
@@ -1129,12 +1188,16 @@
                 }
 
                 function getDataExportPayload() {
-                    return JSON.stringify({
+                    const dataObject = {
                         version: 1,
                         exportedAt: new Date().toISOString(),
                         data: gameState
-                    });
+                    };
+                    const jsonStr = JSON.stringify(dataObject);
+                    const encrypted = CryptoJS.AES.encrypt(jsonStr, 'pokemon-radar-secret-key-2024').toString();
+                    return 'PKMN_BACKUP:' + encrypted;
                 }
+
 
                 function openDataTransferModal() {
                     initAudio();
@@ -1146,22 +1209,25 @@
                     modal.classList.add('flex');
                 }
 
+
                 function closeDataTransferModal() {
                     const modal = document.getElementById('dataTransferModal');
                     modal.classList.add('hidden');
                     modal.classList.remove('flex');
                 }
 
+
                 async function copyExportedData() {
                     const textarea = document.getElementById('dataTransferText');
                     if (!textarea.value) return;
                     try {
                         await navigator.clipboard.writeText(textarea.value);
-                        showNotification('Backup copied', 'Your save data is ready to paste elsewhere.', 'success');
+                        showNotification('Backup copied', 'Your encrypted save data is ready to paste elsewhere.', 'success');
                     } catch (e) {
                         showNotification('Copy failed', 'Select the text manually and copy it.', 'info');
                     }
                 }
+
 
                 function importDataFromText() {
                     const textarea = document.getElementById('dataTransferText');
@@ -1172,13 +1238,21 @@
                     }
 
                     try {
-                        const parsed = JSON.parse(text);
-                        const importedData = parsed.data || parsed;
-                        if (!importedData || !importedData.pokedex || !importedData.balls) {
-                            throw new Error('Invalid save data');
+                        if (!text.startsWith('PKMN_BACKUP:')) {
+                            throw new Error('Invalid backup format');
                         }
 
-                        if (!importedData.inventoryItems) importedData.inventoryItems = { oran_berry: 0, leftovers: 0, choice_band: 0, wise_glasses: 0 };
+                        const encryptedData = text.replace('PKMN_BACKUP:', '');
+                        const decrypted = CryptoJS.AES.decrypt(encryptedData, 'pokemon-radar-secret-key-2024').toString(CryptoJS.enc.Utf8);
+                        const parsed = JSON.parse(decrypted);
+                        const importedData = parsed.data || parsed;
+                        
+                        if (!importedData || !importedData.pokedex || !importedData.balls) {
+                            throw new Error('Invalid save data structure');
+                        }
+
+                        const defaultItems = Object.keys(HOLD_ITEMS_DB).reduce((acc, key) => { acc[key] = 0; return acc; }, {});
+                        if (!importedData.inventoryItems) importedData.inventoryItems = defaultItems;
                         if (!importedData.unlockedStages) importedData.unlockedStages = 1;
 
                         gameState.pokedex = importedData.pokedex;
@@ -1201,8 +1275,9 @@
                         updateUI();
                         renderRoadmap();
                         showNotification('Data imported', 'Progress restored from your pasted backup.', 'success');
+                        showNotification('Data imported', 'Your encrypted backup has been restored successfully.', 'success');
                     } catch (e) {
-                        showNotification('Import failed', 'The pasted text is not a valid save export.', 'error');
+                        showNotification('Import failed', 'The pasted backup is corrupted or invalid: ' + e.message, 'error');
                     }
                 }
 
@@ -1745,7 +1820,7 @@
                             uid: catchUid, id: pokemon.id, name: pokemon.name, type1: pokemon.type1, type2: pokemon.type2,
                             sprite: pokemon.sprite, hp: pokemon.hp, atk: pokemon.atk, def: pokemon.def,
                             spAtk: pokemon.spAtk || 60, spDef: pokemon.spDef || 60, speed: pokemon.speed || 60,
-                            moves: startMoves, isShiny: gameState.encounterShiny, heldItem: null, level: 1, xp: 0,
+                            moves: startMoves, isShiny: gameState.encounterShiny, heldItem: null, level: 1, xp: 0, friendship: 50, battleCount: 0,
                             caughtAt: Date.now(), rarity: pokemon.rarity || 'Common'
                         };
                         gameState.pcBox.push(caughtPokemon);
@@ -2205,6 +2280,10 @@
                         nextLevelXp = fighter.level * 100;
                         didLevelUp = true;
                         const newMoves = applyLevelUpMoves(fighter);
+                        if (shouldExcludeFromLevelUp(fighter.id)) {
+                            const logBox2 = document.getElementById('battleLog');
+                            logBox2.innerHTML += `<div class="text-yellow-400 font-bold mt-1">⚠️ ${fighter.name} requires an evolution stone to evolve further!</div>`;
+                        }
                         if (newMoves.length > 0) {
                             const logBox2 = document.getElementById('battleLog');
                             newMoves.forEach(m => logBox2.innerHTML += `<div class="text-cyan-400 font-bold mt-1">📖 ${fighter.name} learned <span class="text-white capitalize">${m.replace('-', ' ')}</span>!</div>`);
@@ -2214,8 +2293,16 @@
                     addCoins(rewardCoins);
                     addXP(Math.round(rewardCoins / 2));
 
+                    if (gameState.battle.fighterPokemon) {
+                        gameState.battle.fighterPokemon.battleCount = (gameState.battle.fighterPokemon.battleCount || 0) + 1;
+                        gameState.battle.fighterPokemon.friendship = Math.min(255, (gameState.battle.fighterPokemon.friendship || 50) + 3);
+                    }
+
                     const logBox = document.getElementById('battleLog');
                     logBox.innerHTML += `<div class="text-emerald-400 font-bold mt-2">🏆 VICTORY! Deployed partner gained +${xpAward} XP!</div>`;
+                    if (gameState.battle.fighterPokemon) {
+                        logBox.innerHTML += `<div class="text-blue-400 mt-1">💕 Friendship increased! (${gameState.battle.fighterPokemon.friendship}/255)</div>`;
+                    }
                     if (didLevelUp) logBox.innerHTML += `<div class="text-pink-400 font-black animate-pulse mt-1">⭐ LEVEL UP! ${fighter.name} reached Level ${fighter.level}! Base stats increased by 5%!</div>`;
                     logBox.scrollTop = logBox.scrollHeight;
 
@@ -2323,14 +2410,16 @@
                             card.className = `p-4 rounded-2xl border flex flex-col justify-between relative overflow-hidden transition ${borderClass} ${glowClass}`;
                             card.innerHTML = `
                                 <div>
-                                    <div class="flex justify-between items-center mb-1">
+                                    <div class="flex justify-between items-center mb-1 gap-1">
                                         <span class="text-[8px] uppercase tracking-wider px-1.5 py-0.5 rounded font-extrabold bg-slate-900 text-slate-400">${item.rarity}</span>
                                         <span class="text-[10px] font-bold text-pink-400 font-mono">LVL ${level}</span>
+                                        <span class="text-[8px] font-bold text-red-400 font-mono" title="Friendship">💕 ${Math.round((cached.friendship || 50) * 100 / 255)}%</span>
                                     </div>
                                     <div class="flex justify-center my-2">
                                         <img src="${cached.sprite}" alt="${cached.name}" class="h-16 w-16 object-contain" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
                                     </div>
                                     <h4 class="font-extrabold text-white text-xs tracking-wide text-center truncate w-full">${cached.name}</h4>
+                                    <div class="text-[7px] text-slate-400 font-mono text-center mt-1">Battles: ${cached.battleCount || 0}</div>
                                     <div class="mt-1.5">
                                         <div class="flex justify-between text-[8px] font-mono text-slate-500 mb-0.5">
                                             <span>XP PROGRESS</span><span>${xp}/${nextLevelReq}</span>
