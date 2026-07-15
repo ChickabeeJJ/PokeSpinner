@@ -132,12 +132,13 @@
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
-                <p class="mt-2 text-xs text-slate-400">Copy the text below to keep a backup, or paste a saved string here to import it later.</p>
-                <textarea id="dataTransferText" rows="12" class="mt-4 w-full rounded-2xl border border-slate-800 bg-slate-900 p-3 text-[11px] text-slate-200 font-mono focus:outline-none focus:border-emerald-500"></textarea>
+                <p class="mt-2 text-xs text-slate-400">Use Export to generate an encrypted backup code for your current progress. Paste that code back here later and click Import to restore it.</p>
+                <textarea id="dataTransferText" rows="12" placeholder="Paste your exported backup code here..." class="mt-4 w-full rounded-2xl border border-slate-800 bg-slate-900 p-3 text-[11px] text-slate-200 font-mono focus:outline-none focus:border-emerald-500"></textarea>
                 <div class="mt-4 flex flex-wrap gap-3">
-                    <button onclick="copyExportedData()" class="rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-emerald-500">Copy Data</button>
-                    <button onclick="importDataFromText()" class="rounded-xl bg-rose-600 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-rose-500">Import Data</button>
-                    <button onclick="openDataTransferModal()" class="rounded-xl border border-slate-700 px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white">Refresh</button>
+                    <button onclick="exportDataToBackupCode()" class="rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-emerald-500">Export Current Save</button>
+                    <button onclick="copyExportedData()" class="rounded-xl border border-emerald-700 px-4 py-2 text-xs font-bold uppercase tracking-wider text-emerald-400 hover:text-white">Copy Export Code</button>
+                    <button onclick="importDataFromText()" class="rounded-xl bg-rose-600 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-rose-500">Import Backup</button>
+                    <button onclick="closeDataTransferModal()" class="rounded-xl border border-slate-700 px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white">Close</button>
                 </div>
             </div>
         </div>
@@ -227,6 +228,10 @@
                 <button onclick="switchView('battle')" id="nav-battle" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
                     <i class="fas fa-compass text-rose-500 animate-spin-slow"></i>
                     <span>Journey Arena</span>
+                </button>
+                <button onclick="switchView('team')" id="nav-team" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
+                    <i class="fas fa-users text-cyan-400"></i>
+                    <span>Team <span id="teamCountBadge" class="ml-auto text-[10px] bg-slate-900 px-2 py-0.5 rounded-full">0/6</span></span>
                 </button>
                 <button onclick="switchView('pokedex')" id="nav-pokedex" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
                     <i class="fas fa-book text-blue-400"></i>
@@ -489,6 +494,36 @@
                     </div>
                 </div>
 
+                <!-- TEAM VIEW -->
+                <div id="view-team" class="view-panel hidden bg-slate-955/40 border border-slate-900 p-6 rounded-3xl shadow-2xl min-h-[500px]">
+                    <div class="flex flex-col md:flex-row justify-between items-start gap-4 mb-6 pb-6 border-b border-slate-900">
+                        <div>
+                            <h2 class="heading-font text-2xl font-black text-white">TEAM DEPLOYMENT</h2>
+                            <p class="text-xs text-slate-400 font-medium font-mono">Build a party of up to 6 Pokémon from your PC. The first slot is your lead partner.</p>
+                        </div>
+                        <div class="text-xs text-slate-400 bg-slate-950 border border-slate-900 px-3 py-2 rounded-xl">
+                            <div class="font-bold text-slate-300">Lead order</div>
+                            <div>Slot 1 → Slot 2 → Slot 3 → ...</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-slate-950/70 border border-slate-900 rounded-2xl p-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-bold text-slate-300 uppercase tracking-widest">Team Slots</h3>
+                                <span id="teamCountBadgeInline" class="text-[10px] font-bold text-cyan-400">0/6 selected</span>
+                            </div>
+                            <div id="teamSlotsContainer" class="space-y-3"></div>
+                        </div>
+                        <div class="bg-slate-950/70 border border-slate-900 rounded-2xl p-4">
+                            <div class="mb-4">
+                                <h3 class="text-sm font-bold text-slate-300 uppercase tracking-widest">Choose from PC</h3>
+                                <p class="text-[10px] text-slate-500 mt-1">Select any caught Pokémon from your PC for each team slot.</p>
+                            </div>
+                            <div id="teamPcSummary" class="text-[10px] text-slate-400">Loading team roster...</div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- POKEDEX VIEW -->
                 <div id="view-pokedex" class="view-panel hidden bg-slate-955/40 border border-slate-900 p-6 rounded-3xl shadow-2xl min-h-[500px]">
                     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-6 border-b border-slate-900">
@@ -652,6 +687,10 @@
                 <button onclick="switchView('battle')" class="mobile-nav-btn text-center text-slate-400">
                     <i class="fas fa-route text-lg"></i>
                     <span class="block text-[10px] font-bold">Journey</span>
+                </button>
+                <button onclick="switchView('team')" class="mobile-nav-btn text-center text-slate-400">
+                    <i class="fas fa-users text-lg"></i>
+                    <span class="block text-[10px] font-bold">Team</span>
                 </button>
                 <button onclick="switchView('pokedex')" class="mobile-nav-btn text-center text-slate-400">
                     <i class="fas fa-book text-lg"></i>
@@ -1053,6 +1092,8 @@
                 }
 
                 function normalizeSaveState(rawState = {}) {
+                    const normalizedTeam = Array.isArray(rawState.team) ? rawState.team.slice(0, 6) : [];
+                    while (normalizedTeam.length < 6) normalizedTeam.push(null);
                     const normalized = {
                         ...rawState,
                         coins: rawState.coins ?? 100,
@@ -1061,6 +1102,7 @@
                         balls: rawState.balls || { poke: 5, great: 0, ultra: 0, master: 0 },
                         pokedex: Array.isArray(rawState.pokedex) ? rawState.pokedex : [],
                         pcBox: Array.isArray(rawState.pcBox) ? rawState.pcBox : [],
+                        team: normalizedTeam,
                         inventoryItems: {
                             ...getDefaultInventoryItems(),
                             ...(rawState.inventoryItems || {})
@@ -1069,6 +1111,7 @@
                         selectedBall: rawState.selectedBall || 'poke',
                         activeBattleStage: rawState.activeBattleStage || null,
                         battleType: rawState.battleType || 'campaign',
+                        endlessRunDefeats: rawState.endlessRunDefeats ?? 0,
                         battle: rawState.battle || { active: false, bossPokemon: null, fighterPokemon: null, fighterHP: 0, bossHP: 0, fighterMaxHP: 0, bossMaxHP: 0, oranUsed: false, bossOranUsed: false },
                         dexUI: rawState.dexUI || { page: 1, pageSize: 9, total: 1025, search: '', rarity: 'all' },
                         wheel: rawState.wheel || { spinning: false, currentAngle: 0, spinSpeed: 0, targetRarity: 'Common', pointerPos: 0, lastWedgeAudio: -1 },
@@ -1116,6 +1159,7 @@
                     balls: { poke: 5, great: 0, ultra: 0, master: 0 },
                     pokedex: [],
                     pcBox: [],
+                    team: [],
                     selectedBall: 'poke',
                     wheel: { spinning: false, currentAngle: 0, spinSpeed: 0, targetRarity: 'Common', pointerPos: 0, lastWedgeAudio: -1 },
                     currentEncounter: null,
@@ -1125,6 +1169,7 @@
                     unlockedStages: 1, 
                     activeBattleStage: null,
                     battleType: 'campaign',
+                    endlessRunDefeats: 0,
                     battle: { active: false, bossPokemon: null, fighterPokemon: null, fighterHP: 0, bossHP: 0, fighterMaxHP: 0, bossMaxHP: 0, oranUsed: false, bossOranUsed: false },
                     dexUI: { page: 1, pageSize: 9, total: 1025, search: "", rarity: "all" }
                 };
@@ -1243,12 +1288,21 @@
                 }
 
 
+                function exportDataToBackupCode() {
+                    const textarea = document.getElementById('dataTransferText');
+                    const payload = getDataExportPayload();
+                    textarea.value = payload;
+                    textarea.focus();
+                    textarea.select();
+                    showNotification('Export ready', 'A fresh encrypted backup code was generated for your current save.', 'success');
+                    return payload;
+                }
+
                 function openDataTransferModal() {
                     initAudio();
                     playConfirmSound();
                     const modal = document.getElementById('dataTransferModal');
-                    const textarea = document.getElementById('dataTransferText');
-                    textarea.value = getDataExportPayload();
+                    exportDataToBackupCode();
                     modal.classList.remove('hidden');
                     modal.classList.add('flex');
                 }
@@ -1263,10 +1317,12 @@
 
                 async function copyExportedData() {
                     const textarea = document.getElementById('dataTransferText');
-                    if (!textarea.value) return;
+                    if (!textarea.value) {
+                        exportDataToBackupCode();
+                    }
                     try {
                         await navigator.clipboard.writeText(textarea.value);
-                        showNotification('Backup copied', 'Your encrypted save data is ready to paste elsewhere.', 'success');
+                        showNotification('Backup copied', 'Your encrypted save code is ready to paste elsewhere.', 'success');
                     } catch (e) {
                         showNotification('Copy failed', 'Select the text manually and copy it.', 'info');
                     }
@@ -1313,6 +1369,7 @@
 
                 window.openDataTransferModal = openDataTransferModal;
                 window.closeDataTransferModal = closeDataTransferModal;
+                window.exportDataToBackupCode = exportDataToBackupCode;
                 window.copyExportedData = copyExportedData;
                 window.importDataFromText = importDataFromText;
 
@@ -1375,6 +1432,7 @@
                     else if (viewName === 'battle') { resetBattleScreen(); renderRoadmap(); }
                     else if (viewName === 'shop') renderHeldItemsShop();
                     else if (viewName === 'pc') renderPCBox();
+                    else if (viewName === 'team') renderTeamView();
                     else if (viewName === 'roulette' && !animationFrameId) {
                         // Make sure the wheel re-draws when coming back
                         drawWheel();
@@ -1425,6 +1483,10 @@
                     document.getElementById('dexProgressBadge').textContent = `${uniqueSpecies}/1025`;
                     const pcBadge = document.getElementById('pcCountBadge');
                     if (pcBadge) pcBadge.textContent = gameState.pcBox.length;
+                    const teamBadge = document.getElementById('teamCountBadge');
+                    if (teamBadge) teamBadge.textContent = `${gameState.team.filter(Boolean).length}/6`;
+                    const teamBadgeInline = document.getElementById('teamCountBadgeInline');
+                    if (teamBadgeInline) teamBadgeInline.textContent = `${gameState.team.filter(Boolean).length}/6 selected`;
                     updateScanningRegionUI();
                 }
 
@@ -1984,10 +2046,12 @@
                 window.startUnlimitedMatch = function() {
                     initAudio();
                     if (gameState.coins < 50) { showNotification("No Entry Fee", "Requires 50 Coins to play simulation.", "error"); return; }
-                    if (gameState.pcBox.length === 0) { showNotification("No Combat Partners", "Catch partners using scanner first!", "error"); return; }
+                    const teamFighters = getBattleFighterPool(true);
+                    if (teamFighters.length === 0) { showNotification("No Team Members", "Assign at least one Pokémon to your team before training in endless mode.", "error"); return; }
                     spendCoins(50);
                     playConfirmSound();
                     gameState.activeBattleStage = null;
+                    gameState.endlessRunDefeats = 0;
                     document.getElementById('battleSelector').classList.add('hidden');
                     document.getElementById('fighterSelector').classList.remove('hidden');
                     renderFighterSelectionGrid();
@@ -2043,17 +2107,48 @@
                     renderFighterSelectionGrid();
                 }
 
+                function getBattleFighterPool(forceTeamOnly = false) {
+                    const useTeamOnly = forceTeamOnly || !gameState.activeBattleStage;
+                    if (useTeamOnly) {
+                        return gameState.team
+                            .map(uid => gameState.pcBox.find(pk => pk.uid === uid))
+                            .filter(Boolean);
+                    }
+                    if (gameState.team && gameState.team.some(Boolean)) {
+                        const fromTeam = gameState.team
+                            .map(uid => gameState.pcBox.find(pk => pk.uid === uid))
+                            .filter(Boolean);
+                        if (fromTeam.length > 0) return fromTeam;
+                    }
+                    return [...gameState.pcBox];
+                }
+
                 function renderFighterSelectionGrid() {
                     const grid = document.getElementById('fighterSelectionGrid');
+                    if (!grid) return;
                     grid.innerHTML = "";
 
-                    gameState.pcBox.forEach((pk) => {
+                    const fighterPool = getBattleFighterPool();
+                    if (fighterPool.length === 0) {
+                        grid.innerHTML = `
+                            <div class="col-span-full rounded-2xl border border-slate-800 bg-slate-900/50 p-6 text-center text-sm text-slate-400">
+                                No team members are currently selected. Open the Team screen and assign at least one Pokémon to begin.
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    fighterPool.forEach((pk, index) => {
                         const card = document.createElement('div');
                         card.className = "bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-2xl p-4 text-center cursor-pointer transition duration-150 relative flex flex-col justify-between";
                         card.onclick = () => selectFighterAndBegin(pk);
 
                         let itemStr = pk.heldItem ? HOLD_ITEMS_DB[pk.heldItem].name : "No Item";
                         let currentLevel = pk.level || 1;
+                        let badge = '';
+                        if (gameState.team && gameState.team.some(Boolean) && index === 0) {
+                            badge = '<span class="absolute top-2 left-2 text-[7px] bg-cyan-500 text-white px-1 rounded uppercase font-black tracking-widest">Lead</span>';
+                        }
 
                         card.innerHTML = `
                             <div class="flex justify-center mb-2">
@@ -2063,6 +2158,7 @@
                                 <div class="text-xs font-bold text-white truncate">${pk.name}</div>
                                 <div class="text-[9px] text-slate-400 font-mono mt-1">Level ${currentLevel} | Item: <span class="text-cyan-400 font-bold">${itemStr}</span></div>
                             </div>
+                            ${badge}
                             ${pk.isShiny ? '<span class="absolute top-2 right-2 text-[7px] bg-pink-500 text-white px-1 rounded uppercase font-black tracking-widest">Shiny</span>' : ''}
                         `;
                         grid.appendChild(card);
@@ -2095,20 +2191,20 @@
                         enemyProfile = enemyTeam[0];
                     } else {
                         const fighterLevel = pokemon.level || 1;
+                        const endlessEnemyLevel = Math.max(1, Math.ceil((fighterLevel - 0.7) + ((gameState.endlessRunDefeats || 0) * 0.1)));
                         const genRange = getRadarGenRange();
                         const idDiff = genRange.max - genRange.min;
                         const randomEnemyId = Math.floor(Math.random() * (idDiff + 1)) + genRange.min;
                         
                         enemyProfile = await fetchPokemonData(randomEnemyId);
-                        const finalEnemyLvl = Math.max(1, fighterLevel + Math.floor(Math.random() * 3) - 1);
-                        enemyProfile.hp = enemyProfile.hp + (finalEnemyLvl * 3);
-                        enemyProfile.atk = enemyProfile.atk + (finalEnemyLvl * 1.2);
-                        enemyProfile.def = enemyProfile.def + (finalEnemyLvl * 1);
-                        enemyProfile.spAtk = enemyProfile.spAtk + (finalEnemyLvl * 1.2);
-                        enemyProfile.spDef = enemyProfile.spDef + (finalEnemyLvl * 1);
+                        enemyProfile.hp = enemyProfile.hp + (endlessEnemyLevel * 3);
+                        enemyProfile.atk = enemyProfile.atk + (endlessEnemyLevel * 1.2);
+                        enemyProfile.def = enemyProfile.def + (endlessEnemyLevel * 1);
+                        enemyProfile.spAtk = enemyProfile.spAtk + (endlessEnemyLevel * 1.2);
+                        enemyProfile.spDef = enemyProfile.spDef + (endlessEnemyLevel * 1);
                         enemyProfile.name = "Simulated " + enemyProfile.name;
-                        enemyProfile.level = finalEnemyLvl;
-                        if (finalEnemyLvl >= 20) enemyProfile.heldItem = "oran_berry";
+                        enemyProfile.level = endlessEnemyLevel;
+                        if (endlessEnemyLevel >= 20) enemyProfile.heldItem = "oran_berry";
                         enemyTeam = [enemyProfile];
                     }
 
@@ -2344,6 +2440,7 @@
                     } else {
                         enemyLvl = gameState.battle.bossPokemon.level;
                         rewardCoins = 30 + (enemyLvl * 8);
+                        gameState.endlessRunDefeats = (gameState.endlessRunDefeats || 0) + 1;
                         showNotification("SIMULATION CLEARED!", `Defeated simulated foe! Claimed +${rewardCoins} Coins.`, 'success');
                     }
 
@@ -2391,6 +2488,9 @@
 
                 function handleBattleDefeat() {
                     gameState.battle.active = false;
+                    if (!gameState.activeBattleStage) {
+                        gameState.endlessRunDefeats = 0;
+                    }
                     playFailCapture();
                     showNotification("DEFEATED", "Your partner fainted. Purchase held items or train in Unlimited mode to gain stats!", "error");
                     const logBox = document.getElementById('battleLog');
@@ -2546,6 +2646,72 @@
                     playConfirmSound();
                     pcUI.page += dir;
                     renderPCBox();
+                };
+
+                function renderTeamView() {
+                    const slotsContainer = document.getElementById('teamSlotsContainer');
+                    const summary = document.getElementById('teamPcSummary');
+                    if (!slotsContainer) return;
+
+                    slotsContainer.innerHTML = '';
+                    if (summary) {
+                        summary.innerHTML = gameState.pcBox.length
+                            ? '<div class="text-[10px] text-slate-400">Pick a Pokémon for each slot from the list below. Empty slots are fine.</div>'
+                            : '<div class="text-[10px] text-slate-500">Catch Pokémon in the scanner before building a team.</div>';
+                    }
+
+                    const teamSlots = Array.isArray(gameState.team) ? gameState.team : [];
+                    for (let slotIndex = 0; slotIndex < 6; slotIndex += 1) {
+                        const selectedUid = teamSlots[slotIndex] || null;
+                        const selectedPokemon = selectedUid ? gameState.pcBox.find(p => p.uid === selectedUid) : null;
+                        const card = document.createElement('div');
+                        card.className = 'rounded-xl border border-slate-900 bg-slate-950/80 p-3';
+                        const optionsMarkup = ['<option value="">— Empty Slot —</option>'].concat(gameState.pcBox.map(pk => `<option value="${pk.uid}" ${selectedUid === pk.uid ? 'selected' : ''}>${pk.name} (Lv ${pk.level || 1})</option>`)).join('');
+                        card.innerHTML = `
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <div>
+                                    <div class="text-[9px] uppercase tracking-widest text-slate-500">${slotIndex === 0 ? 'Lead' : `Slot ${slotIndex + 1}`}</div>
+                                    <div class="text-sm font-bold text-white">${selectedPokemon ? selectedPokemon.name : 'Open Slot'}</div>
+                                </div>
+                                ${selectedPokemon ? `<button onclick="window.clearTeamSlot(${slotIndex})" class="text-[10px] text-slate-400 hover:text-white">Clear</button>` : ''}
+                            </div>
+                            <select onchange="window.setTeamSlot(${slotIndex}, this.value)" class="w-full bg-slate-900 border border-slate-800 text-[11px] rounded-lg p-2 text-slate-200 focus:outline-none focus:border-cyan-500">
+                                ${optionsMarkup}
+                            </select>
+                        `;
+                        slotsContainer.appendChild(card);
+                    }
+
+                    const teamBadgeInline = document.getElementById('teamCountBadgeInline');
+                    if (teamBadgeInline) teamBadgeInline.textContent = `${teamSlots.filter(Boolean).length}/6 selected`;
+                    updateUI();
+                }
+
+                window.setTeamSlot = function(slotIndex, uid) {
+                    const normalizedUid = uid ? Number(uid) : null;
+                    if (!gameState.team || gameState.team.length < 6) {
+                        gameState.team = Array.from({ length: 6 }, (_, idx) => gameState.team?.[idx] || null);
+                    }
+                    const existingIndex = gameState.team.findIndex(existingUid => existingUid === normalizedUid);
+                    if (existingIndex !== -1 && existingIndex !== slotIndex) {
+                        gameState.team[existingIndex] = null;
+                    }
+                    gameState.team[slotIndex] = normalizedUid;
+                    while (gameState.team.length < 6) gameState.team.push(null);
+                    saveProgress();
+                    renderTeamView();
+                    renderFighterSelectionGrid();
+                    showNotification('Team updated', normalizedUid ? 'Your roster has been updated.' : 'The team slot was cleared.', 'success');
+                };
+
+                window.clearTeamSlot = function(slotIndex) {
+                    if (!gameState.team || gameState.team.length < 6) {
+                        gameState.team = Array.from({ length: 6 }, (_, idx) => gameState.team?.[idx] || null);
+                    }
+                    gameState.team[slotIndex] = null;
+                    saveProgress();
+                    renderTeamView();
+                    renderFighterSelectionGrid();
                 };
 
                 function renderPCBox() {
