@@ -1034,9 +1034,65 @@
                     133, 138, 139, 140, 141, 142, 143, 147, 148, 152, 153, 155, 156, 158, 159,
                     161, 163, 164, 173, 174, 175, 177, 178, 183, 184, 185, 194, 195, 231, 246, 247, 258, 259, 261, 265, 266
                 ]);
+                const STONE_EVOLUTION_MAP = {
+                    fire_stone: [{ from: 37, to: 38 }, { from: 58, to: 59 }, { from: 77, to: 78 }, { from: 133, to: 136 }],
+                    water_stone: [{ from: 60, to: 62 }, { from: 61, to: 62 }, { from: 90, to: 91 }, { from: 120, to: 121 }, { from: 133, to: 134 }],
+                    thunder_stone: [{ from: 25, to: 26 }, { from: 100, to: 101 }, { from: 133, to: 135 }],
+                    leaf_stone: [{ from: 43, to: 44 }, { from: 44, to: 45 }],
+                    ice_stone: [{ from: 86, to: 87 }, { from: 133, to: 87 }],
+                    moon_stone: [{ from: 35, to: 36 }, { from: 39, to: 40 }, { from: 174, to: 175 }],
+                    shiny_stone: [{ from: 175, to: 468 }, { from: 280, to: 281 }]
+                };
 
                 function shouldExcludeFromLevelUp(pokemonId) {
                     return STONE_EVO_POKEMON.has(pokemonId);
+                }
+
+                function getDefaultInventoryItems() {
+                    return Object.keys(HOLD_ITEMS_DB).reduce((acc, key) => { acc[key] = 0; return acc; }, {});
+                }
+
+                function normalizeSaveState(rawState = {}) {
+                    const normalized = {
+                        ...rawState,
+                        coins: rawState.coins ?? 100,
+                        xp: rawState.xp ?? 0,
+                        level: rawState.level ?? 1,
+                        balls: rawState.balls || { poke: 5, great: 0, ultra: 0, master: 0 },
+                        pokedex: Array.isArray(rawState.pokedex) ? rawState.pokedex : [],
+                        pcBox: Array.isArray(rawState.pcBox) ? rawState.pcBox : [],
+                        inventoryItems: {
+                            ...getDefaultInventoryItems(),
+                            ...(rawState.inventoryItems || {})
+                        },
+                        unlockedStages: rawState.unlockedStages ?? 1,
+                        selectedBall: rawState.selectedBall || 'poke',
+                        activeBattleStage: rawState.activeBattleStage || null,
+                        battleType: rawState.battleType || 'campaign',
+                        battle: rawState.battle || { active: false, bossPokemon: null, fighterPokemon: null, fighterHP: 0, bossHP: 0, fighterMaxHP: 0, bossMaxHP: 0, oranUsed: false, bossOranUsed: false },
+                        dexUI: rawState.dexUI || { page: 1, pageSize: 9, total: 1025, search: '', rarity: 'all' },
+                        wheel: rawState.wheel || { spinning: false, currentAngle: 0, spinSpeed: 0, targetRarity: 'Common', pointerPos: 0, lastWedgeAudio: -1 },
+                        currentEncounter: rawState.currentEncounter || null,
+                        encounterShiny: !!rawState.encounterShiny,
+                        catchMinigame: rawState.catchMinigame || { active: false, ringScale: 1.0, contracting: true, score: 0 }
+                    };
+                    return normalized;
+                }
+
+                function assignPokemonUids() {
+                    if (!gameState.pcBox || gameState.pcBox.length === 0) {
+                        nextCatchUid = 1;
+                        return;
+                    }
+                    let maxUid = 0;
+                    gameState.pcBox.forEach(p => { if (p.uid && p.uid > maxUid) maxUid = p.uid; });
+                    nextCatchUid = maxUid + 1;
+                    gameState.pcBox.forEach(p => { if (!p.uid) p.uid = nextCatchUid++; });
+                }
+
+                function getStoneEvolutionTarget(itemKey, pokemon) {
+                    const candidates = STONE_EVOLUTION_MAP[itemKey] || [];
+                    return candidates.find(entry => entry.from === pokemon.id)?.to || null;
                 }
 
 
@@ -1149,7 +1205,7 @@
 
                 function saveProgressLocal() {
                     try {
-                        localStorage.setItem(SAVE_KEY, JSON.stringify(gameState));
+                        localStorage.setItem(SAVE_KEY, JSON.stringify(normalizeSaveState(gameState)));
                     } catch (e) {
                         console.warn('Local save failed:', e);
                     }
@@ -1164,28 +1220,10 @@
                         const raw = localStorage.getItem(SAVE_KEY);
                         if (raw) {
                             const parsed = JSON.parse(raw);
-                            if (parsed.pokedex && parsed.balls) {
-                                if (!parsed.inventoryItems) {
-                                    const defaultItems = Object.keys(HOLD_ITEMS_DB).reduce((acc, key) => { acc[key] = 0; return acc; }, {});
-                                    parsed.inventoryItems = defaultItems;
-                                }
-                                if (!parsed.unlockedStages) parsed.unlockedStages = 1;
-                                
-                                gameState.pokedex = parsed.pokedex;
-                                gameState.pcBox = parsed.pcBox || [];
-                                gameState.coins = parsed.coins ?? 100;
-                                gameState.xp = parsed.xp ?? 0;
-                                gameState.level = parsed.level ?? 1;
-                                gameState.unlockedStages = parsed.unlockedStages ?? 1;
-                                gameState.balls = parsed.balls;
-                                gameState.inventoryItems = parsed.inventoryItems;
-
-                                if (gameState.pcBox.length > 0) {
-                                    let maxUid = 0;
-                                    gameState.pcBox.forEach(p => { if (p.uid && p.uid > maxUid) maxUid = p.uid; });
-                                    nextCatchUid = maxUid + 1;
-                                    gameState.pcBox.forEach(p => { if (!p.uid) p.uid = nextCatchUid++; });
-                                }
+                            const normalized = normalizeSaveState(parsed);
+                            if (normalized.pokedex && normalized.balls) {
+                                Object.assign(gameState, normalized);
+                                assignPokemonUids();
                             }
                         }
                     } catch (e) {
@@ -1257,31 +1295,17 @@
                             throw new Error('Invalid save data structure');
                         }
 
-                        const defaultItems = Object.keys(HOLD_ITEMS_DB).reduce((acc, key) => { acc[key] = 0; return acc; }, {});
-                        if (!importedData.inventoryItems) importedData.inventoryItems = defaultItems;
-                        if (!importedData.unlockedStages) importedData.unlockedStages = 1;
-
-                        gameState.pokedex = importedData.pokedex;
-                        gameState.pcBox = importedData.pcBox || [];
-                        gameState.coins = importedData.coins ?? 100;
-                        gameState.xp = importedData.xp ?? 0;
-                        gameState.level = importedData.level ?? 1;
-                        gameState.unlockedStages = importedData.unlockedStages ?? 1;
-                        gameState.balls = importedData.balls;
-                        gameState.inventoryItems = importedData.inventoryItems;
-
-                        if (gameState.pcBox.length > 0) {
-                            let maxUid = 0;
-                            gameState.pcBox.forEach(p => { if (p.uid && p.uid > maxUid) maxUid = p.uid; });
-                            nextCatchUid = maxUid + 1;
-                            gameState.pcBox.forEach(p => { if (!p.uid) p.uid = nextCatchUid++; });
-                        }
+                        const normalizedImport = normalizeSaveState(importedData);
+                        Object.assign(gameState, normalizedImport);
+                        assignPokemonUids();
 
                         saveProgress();
                         updateUI();
                         renderRoadmap();
+                        renderPCBox();
+                        renderPokedex();
+                        renderHeldItemsShop();
                         showNotification('Data imported', 'Progress restored from your pasted backup.', 'success');
-                        showNotification('Data imported', 'Your encrypted backup has been restored successfully.', 'success');
                     } catch (e) {
                         showNotification('Import failed', 'The pasted backup is corrupted or invalid: ' + e.message, 'error');
                     }
@@ -2696,7 +2720,7 @@
                     showNotification('Moves Updated', `${pokemon.name} now has a new move setup.`, 'success');
                 };
 
-                window.usePcConsumable = function(pokemonUid, itemKey) {
+                window.usePcConsumable = async function(pokemonUid, itemKey) {
                     initAudio();
                     const pokemon = gameState.pcBox.find(p => p.uid === pokemonUid);
                     const item = itemKey ? HOLD_ITEMS_DB[itemKey] : null;
@@ -2708,23 +2732,46 @@
                         return;
                     }
 
-                    gameState.inventoryItems[itemKey] = owned - 1;
-                    if (item.effect === 'heal_hp') {
-                        pokemon.hpBonus = (pokemon.hpBonus || 0) + (item.value || 20);
-                        showNotification('Consumed', `${pokemon.name} healed with ${item.name}.`, 'success');
-                    } else if (item.effect === 'full_restore') {
-                        pokemon.hpBonus = Math.max(pokemon.hpBonus || 0, 60);
-                        showNotification('Consumed', `${pokemon.name} was fully restored with ${item.name}.`, 'success');
-                    } else if (item.effect === 'evolution') {
+                    if (item.effect === 'evolution') {
+                        const targetId = getStoneEvolutionTarget(itemKey, pokemon);
+                        if (!targetId) {
+                            showNotification('No Evolution', `${pokemon.name} cannot evolve with ${item.name}.`, 'info');
+                            return;
+                        }
+
+                        const evolvedData = await fetchPokemonData(targetId);
+                        pokemon.id = evolvedData.id;
+                        pokemon.name = evolvedData.name;
+                        pokemon.type1 = evolvedData.type1;
+                        pokemon.type2 = evolvedData.type2;
+                        pokemon.sprite = evolvedData.sprite;
+                        pokemon.hp = evolvedData.hp;
+                        pokemon.atk = evolvedData.atk;
+                        pokemon.def = evolvedData.def;
+                        pokemon.spAtk = evolvedData.spAtk || evolvedData.atk;
+                        pokemon.spDef = evolvedData.spDef || evolvedData.def;
+                        pokemon.speed = evolvedData.speed || 60;
+                        pokemon.moves = pokemon.moves && pokemon.moves.length ? pokemon.moves : evolvedData.moves;
                         pokemon.evoStoneUsed = true;
-                        showNotification('Stone Used', `${item.name} was spent on ${pokemon.name}.`, 'success');
+                        gameState.inventoryItems[itemKey] = owned - 1;
+                        showNotification('Evolved', `${pokemon.name} evolved with ${item.name}.`, 'success');
                     } else {
-                        showNotification('Consumed', `${item.name} was used on ${pokemon.name}.`, 'success');
+                        gameState.inventoryItems[itemKey] = owned - 1;
+                        if (item.effect === 'heal_hp') {
+                            pokemon.hpBonus = (pokemon.hpBonus || 0) + (item.value || 20);
+                            showNotification('Consumed', `${pokemon.name} healed with ${item.name}.`, 'success');
+                        } else if (item.effect === 'full_restore') {
+                            pokemon.hpBonus = Math.max(pokemon.hpBonus || 0, 60);
+                            showNotification('Consumed', `${pokemon.name} was fully restored with ${item.name}.`, 'success');
+                        } else {
+                            showNotification('Consumed', `${item.name} was used on ${pokemon.name}.`, 'success');
+                        }
                     }
 
                     saveProgress();
                     renderPCBox();
                     renderPokedex();
+                    renderHeldItemsShop();
                 };
 
                 // ==========================================
