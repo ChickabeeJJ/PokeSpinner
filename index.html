@@ -91,15 +91,15 @@
     <body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white pb-16 md:pb-0">
         <div class="scanlines"></div>
 
-        <!-- AUDIO TOGGLE, GOOGLE SIGN IN BAR & NOTIFICATIONS -->
+        <!-- AUDIO TOGGLE, SUPPORT & DATA TOOLS -->
         <div class="fixed top-4 right-4 z-50 flex flex-row gap-2 items-center">
-            <a href="https://www.buymeacoffee.com/yourname" target="_blank" rel="noopener" class="bg-amber-500/15 backdrop-blur-md border border-amber-500/30 px-4 py-2.5 rounded-full hover:bg-amber-500/25 transition duration-200 text-xs font-bold text-amber-300 flex items-center gap-2 shadow-xl">
+            <a href="https://buymeacoffee.com/luojj2019o" target="_blank" rel="noopener" class="bg-amber-500/15 backdrop-blur-md border border-amber-500/30 px-4 py-2.5 rounded-full hover:bg-amber-500/25 transition duration-200 text-xs font-bold text-amber-300 flex items-center gap-2 shadow-xl">
                 <i class="fas fa-mug-hot"></i>
                 <span>Buy me a coffee</span>
             </a>
-            <button id="googleLoginBtn" onclick="handleGoogleSignIn()" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 px-4 py-2.5 rounded-full hover:bg-slate-800 transition duration-200 text-xs font-bold text-white flex items-center gap-2 shadow-xl">
-                <i class="fab fa-google text-rose-500"></i>
-                <span id="googleLoginText">Sync Account</span>
+            <button onclick="openDataTransferModal()" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 px-4 py-2.5 rounded-full hover:bg-slate-800 transition duration-200 text-xs font-bold text-white flex items-center gap-2 shadow-xl">
+                <i class="fas fa-database text-emerald-400"></i>
+                <span>Data Backup</span>
             </button>
             <button id="soundToggleBtn" onclick="toggleMute()" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-full hover:bg-slate-800 transition duration-200 text-yellow-400 focus:outline-none shadow-lg">
                 <i id="soundIcon" class="fas fa-volume-up text-lg"></i>
@@ -114,6 +114,28 @@
             <div>
                 <h4 id="toastTitle" class="font-bold text-white text-sm uppercase tracking-wide">System Alert</h4>
                 <p id="toastMessage" class="text-slate-300 text-xs mt-0.5">Notification description.</p>
+            </div>
+        </div>
+
+        <!-- DATA TRANSFER MODAL -->
+        <div id="dataTransferModal" class="fixed inset-0 z-[60] bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4">
+            <div class="w-full max-w-2xl rounded-3xl border border-slate-800 bg-slate-950 p-5 shadow-2xl">
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <p class="text-[10px] uppercase tracking-[0.35em] text-slate-500">Local save transfer</p>
+                        <h3 class="text-lg font-black text-white">Backup or restore your progress</h3>
+                    </div>
+                    <button onclick="closeDataTransferModal()" class="rounded-full border border-slate-800 p-2 text-slate-400 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <p class="mt-2 text-xs text-slate-400">Copy the text below to keep a backup, or paste a saved string here to import it later.</p>
+                <textarea id="dataTransferText" rows="12" class="mt-4 w-full rounded-2xl border border-slate-800 bg-slate-900 p-3 text-[11px] text-slate-200 font-mono focus:outline-none focus:border-emerald-500"></textarea>
+                <div class="mt-4 flex flex-wrap gap-3">
+                    <button onclick="copyExportedData()" class="rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-emerald-500">Copy Data</button>
+                    <button onclick="importDataFromText()" class="rounded-xl bg-rose-600 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-rose-500">Import Data</button>
+                    <button onclick="openDataTransferModal()" class="rounded-xl border border-slate-700 px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white">Refresh</button>
+                </div>
             </div>
         </div>
 
@@ -533,7 +555,7 @@
                                     <p class="text-[10px] uppercase tracking-[0.3em] text-slate-500">Sponsored</p>
                                     <h3 class="text-sm font-bold text-white">Support the project</h3>
                                 </div>
-                                <a href="https://www.buymeacoffee.com/yourname" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs font-bold text-amber-300 hover:bg-amber-500/20 transition">
+                                <a href="https://buymeacoffee.com/luojj2019o" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs font-bold text-amber-300 hover:bg-amber-500/20 transition">
                                     <i class="fas fa-mug-hot"></i>
                                     Buy me a coffee
                                 </a>
@@ -1059,95 +1081,25 @@
                 };
 
                 // ==========================================
-                // MODULE 3: FIREBASE CLOUD & SAVES
+                // MODULE 3: LOCAL SAVES & DATA TRANSFER
                 // ==========================================
-                let db = null;
-                let auth = null;
-                let currentUser = null;
-                const appId = typeof __app_id !== 'undefined' ? __app_id : 'pokemon-radar-elite';
+                const SAVE_KEY = 'pokemon_radar_roadmap_save';
 
-                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                function saveProgressLocal() {
                     try {
-                        const firebaseConfig = JSON.parse(__firebase_config);
-                        firebase.initializeApp(firebaseConfig);
-                        auth = firebase.auth();
-                        db = firebase.firestore();
-
-                        auth.onAuthStateChanged(user => {
-                            if (user) {
-                                currentUser = user;
-                                document.getElementById('googleLoginText').textContent = user.displayName || "Linked";
-                                document.getElementById('googleLoginBtn').classList.add('bg-emerald-950/80', 'border-emerald-700/60', 'text-emerald-300');
-                                loadFromCloud();
-                            } else {
-                                currentUser = null;
-                                document.getElementById('googleLoginText').textContent = "Sync Account";
-                                document.getElementById('googleLoginBtn').classList.remove('bg-emerald-950/80', 'border-emerald-700/60', 'text-emerald-300');
-                            }
-                        });
-                    } catch(e) {
-                        console.warn("Firebase Auth Configuration missed. Auto-fallback active.");
+                        localStorage.setItem(SAVE_KEY, JSON.stringify(gameState));
+                    } catch (e) {
+                        console.warn('Local save failed:', e);
                     }
-                }
-
-                window.handleGoogleSignIn = function() {
-                    initAudio();
-                    playConfirmSound();
-                    if (!auth) {
-                        showNotification("No Cloud Config", "Local browser memory is currently storing your profile perfectly.", "info");
-                        return;
-                    }
-
-                    if (auth.currentUser) {
-                        showNotification("Synced Safe", "All scanning profiles backed up on Google Cloud.", "success");
-                        return;
-                    }
-
-                    const provider = new firebase.auth.GoogleAuthProvider();
-                    auth.signInWithPopup(provider).then(result => {
-                        showNotification("Google Connected!", "Transferred backup files successfully.", "success");
-                    }).catch(err => {
-                        showNotification("Sync Failed", "Using local-first data saving safely.", "error");
-                    });
-                };
-
-                function loadFromCloud() {
-                    if (!db || !currentUser) return;
-                    const docPath = db.doc(`artifacts/${appId}/users/${currentUser.uid}/trainer_progress/current`);
-                    docPath.get().then(doc => {
-                        if (doc.exists) {
-                            const cloudData = doc.data();
-                            if (cloudData && cloudData.pokedex) {
-                                gameState = Object.assign({}, gameState, cloudData);
-                                updateUI();
-                                saveProgressLocal();
-                                showNotification("Cloud Profile Loaded", "Successfully restored your progress!", "success");
-                                renderRoadmap();
-                            }
-                        } else {
-                            saveProgressCloud();
-                        }
-                    }).catch(err => console.error("Firestore loading error:", err));
-                }
-
-                function saveProgressCloud() {
-                    if (!db || !currentUser) return;
-                    const docPath = db.doc(`artifacts/${appId}/users/${currentUser.uid}/trainer_progress/current`);
-                    docPath.set(gameState).catch(err => console.warn("Cloud save issue:", err));
                 }
 
                 function saveProgress() {
                     saveProgressLocal();
-                    saveProgressCloud();
-                }
-
-                function saveProgressLocal() {
-                    try { localStorage.setItem('pokemon_radar_roadmap_save', JSON.stringify(gameState)); } catch (e) {}
                 }
 
                 function loadSavedProgress() {
                     try {
-                        const raw = localStorage.getItem('pokemon_radar_roadmap_save');
+                        const raw = localStorage.getItem(SAVE_KEY);
                         if (raw) {
                             const parsed = JSON.parse(raw);
                             if (parsed.pokedex && parsed.balls) {
@@ -1171,8 +1123,93 @@
                                 }
                             }
                         }
-                    } catch (e) {}
+                    } catch (e) {
+                        console.warn('Load save failed:', e);
+                    }
                 }
+
+                function getDataExportPayload() {
+                    return JSON.stringify({
+                        version: 1,
+                        exportedAt: new Date().toISOString(),
+                        data: gameState
+                    });
+                }
+
+                function openDataTransferModal() {
+                    initAudio();
+                    playConfirmSound();
+                    const modal = document.getElementById('dataTransferModal');
+                    const textarea = document.getElementById('dataTransferText');
+                    textarea.value = getDataExportPayload();
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+
+                function closeDataTransferModal() {
+                    const modal = document.getElementById('dataTransferModal');
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+
+                async function copyExportedData() {
+                    const textarea = document.getElementById('dataTransferText');
+                    if (!textarea.value) return;
+                    try {
+                        await navigator.clipboard.writeText(textarea.value);
+                        showNotification('Backup copied', 'Your save data is ready to paste elsewhere.', 'success');
+                    } catch (e) {
+                        showNotification('Copy failed', 'Select the text manually and copy it.', 'info');
+                    }
+                }
+
+                function importDataFromText() {
+                    const textarea = document.getElementById('dataTransferText');
+                    const text = textarea.value.trim();
+                    if (!text) {
+                        showNotification('Nothing to import', 'Paste a saved data string first.', 'error');
+                        return;
+                    }
+
+                    try {
+                        const parsed = JSON.parse(text);
+                        const importedData = parsed.data || parsed;
+                        if (!importedData || !importedData.pokedex || !importedData.balls) {
+                            throw new Error('Invalid save data');
+                        }
+
+                        if (!importedData.inventoryItems) importedData.inventoryItems = { oran_berry: 0, leftovers: 0, choice_band: 0, wise_glasses: 0 };
+                        if (!importedData.unlockedStages) importedData.unlockedStages = 1;
+
+                        gameState.pokedex = importedData.pokedex;
+                        gameState.pcBox = importedData.pcBox || [];
+                        gameState.coins = importedData.coins ?? 100;
+                        gameState.xp = importedData.xp ?? 0;
+                        gameState.level = importedData.level ?? 1;
+                        gameState.unlockedStages = importedData.unlockedStages ?? 1;
+                        gameState.balls = importedData.balls;
+                        gameState.inventoryItems = importedData.inventoryItems;
+
+                        if (gameState.pcBox.length > 0) {
+                            let maxUid = 0;
+                            gameState.pcBox.forEach(p => { if (p.uid && p.uid > maxUid) maxUid = p.uid; });
+                            nextCatchUid = maxUid + 1;
+                            gameState.pcBox.forEach(p => { if (!p.uid) p.uid = nextCatchUid++; });
+                        }
+
+                        saveProgress();
+                        updateUI();
+                        renderRoadmap();
+                        showNotification('Data imported', 'Progress restored from your pasted backup.', 'success');
+                    } catch (e) {
+                        showNotification('Import failed', 'The pasted text is not a valid save export.', 'error');
+                    }
+                }
+
+                window.openDataTransferModal = openDataTransferModal;
+                window.closeDataTransferModal = closeDataTransferModal;
+                window.copyExportedData = copyExportedData;
+                window.importDataFromText = importDataFromText;
 
                 // ==========================================
                 // MODULE 4: CORE UI & NOTIFICATIONS
