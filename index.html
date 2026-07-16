@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="google-adsense-account" content="ca-pub-4850555217888083">
-        <title>Pokémon Radar: Elite Edition</title>
+        <title>Pokémon Spinner: Elite Edition</title>
         <!-- Tailwind CSS -->
         <script src="https://cdn.tailwindcss.com"></script>
         <!-- Google Fonts -->
@@ -340,7 +340,7 @@
                 <!-- Title -->
                 <div class="text-center mb-1">
                     <h1 class="font-black tracking-tight text-transparent bg-clip-text mb-1" style="font-size:2.8rem;line-height:1;background-image:linear-gradient(135deg,#f43f5e 0%,#ec4899 40%,#fb923c 80%,#fbbf24 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 2px 16px rgba(244,63,94,0.5));">POKÉMON</h1>
-                    <h1 class="font-black tracking-widest text-white" style="font-size:1.5rem;line-height:1;letter-spacing:0.35em;text-shadow:0 0 20px rgba(244,63,94,0.6),0 2px 8px rgba(0,0,0,0.8);">RADAR</h1>
+                    <h1 class="font-black tracking-widest text-white" style="font-size:1.5rem;line-height:1;letter-spacing:0.35em;text-shadow:0 0 20px rgba(244,63,94,0.6),0 2px 8px rgba(0,0,0,0.8);">SPINNER</h1>
                 </div>
                 <!-- Elite badge -->
                 <div class="flex items-center gap-2 mb-8">
@@ -358,15 +358,15 @@
                     </div>
                 </div>
                 <!-- Loading text -->
-                <p id="loadingText" class="text-center text-xs font-bold tracking-widest uppercase" style="color:rgba(255,255,255,0.4);">Scanning Pokémon database...</p>
+                <p id="loadingText" class="text-center text-xs font-bold tracking-widest uppercase" style="color:rgba(255,255,255,0.4);">Shuffling Pokémon data...</p>
             </div>
         </div>
 
         <!-- AUDIO TOGGLE, SUPPORT & SETTINGS -->
         <div class="fixed top-4 right-4 z-50 flex flex-row gap-2 items-center">
             <!-- Profile button -->
-            <button id="profileToggleBtn" onclick="openProfileModal()" title="Trainer Profile" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-full hover:bg-slate-800 transition duration-200 focus:outline-none shadow-lg flex items-center justify-center themed-gradient" style="min-width:44px;min-height:44px;">
-                <span id="profileBtnLabel" class="text-white font-black text-xs uppercase tracking-widest leading-none">?</span>
+            <button id="profileToggleBtn" onclick="openProfileModal()" title="Trainer Profile" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-full hover:bg-slate-800 transition duration-200 focus:outline-none shadow-lg flex items-center justify-center" style="min-width:44px;min-height:44px;">
+                <i class="fas fa-user text-lg text-purple-400" id="profileBtnIcon"></i>
             </button>
             <button id="settingsToggleBtn" onclick="openSettingsModal()" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-full hover:bg-slate-800 transition duration-200 text-cyan-400 focus:outline-none shadow-lg">
                 <i class="fas fa-cog text-lg"></i>
@@ -410,21 +410,34 @@
         <!-- PROFILE MODAL -->
         <div id="profileModal" class="fixed inset-0 z-[70] bg-black/70 backdrop-blur-md hidden items-center justify-center p-4 overflow-y-auto">
             <div class="w-full max-w-md rounded-3xl overflow-hidden shadow-2xl my-8" style="border:3px solid rgba(255,255,255,0.12);background:linear-gradient(160deg,#0d1220 0%,#0a0f1e 100%);">
-                <!-- Header -->
-                <div class="px-6 py-4 flex items-center justify-between themed-gradient">
+                <!-- Header bar -->
+                <div class="px-6 py-4 flex items-center justify-between" style="background:linear-gradient(90deg,#1e1040,#0f172a,#1a0530);border-bottom:1px solid rgba(255,255,255,0.08);">
                     <div class="flex items-center gap-3">
-                        <div id="profileAvatarModal" class="w-10 h-10 rounded-full bg-white/20 border-2 border-white/40 flex items-center justify-center text-white font-black text-lg">?</div>
+                        <div id="profileAvatarModal" class="w-10 h-10 rounded-full themed-gradient flex items-center justify-center text-white font-black text-lg border-2 border-white/20">?</div>
                         <div>
-                            <p class="text-[9px] uppercase tracking-[0.3em] text-white/60 font-bold">Trainer Card</p>
+                            <p class="text-[9px] uppercase tracking-[0.3em] text-purple-400 font-bold">Trainer Card</p>
                             <h3 id="profileNameDisplay" class="text-base font-black text-white tracking-wide">Anonymous</h3>
                         </div>
                     </div>
-                    <button onclick="closeProfileModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition">
+                    <button onclick="closeProfileModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition">
                         <i class="fas fa-times text-sm"></i>
                     </button>
                 </div>
 
                 <div class="p-5 space-y-4">
+                    <!-- Username Editor -->
+                    <div class="p-4 rounded-2xl" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                        <div class="flex items-center gap-2 mb-3">
+                            <i class="fas fa-pen text-purple-400 text-sm"></i>
+                            <span class="text-xs font-bold text-white uppercase tracking-widest">Trainer Name</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <input id="profileUsernameInput" type="text" maxlength="16" placeholder="Enter your trainer name..."
+                                class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs font-bold text-white placeholder-slate-600 focus:outline-none focus:border-purple-600 transition"
+                                oninput="saveUsernameFromProfile(this.value)" />
+                        </div>
+                    </div>
+
                     <!-- Badge Case -->
                     <div class="p-4 rounded-2xl" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
                         <div class="flex items-center gap-2 mb-3">
@@ -453,7 +466,7 @@
 
                 <div class="px-5 pb-5">
                     <button onclick="closeProfileModal()" class="w-full py-3 rounded-2xl text-sm font-black text-white tracking-wider transition themed-gradient">
-                        Close
+                        Done
                     </button>
                 </div>
             </div>
@@ -502,19 +515,6 @@
                                 <i class="fas fa-music text-cyan-400"></i>
                                 <span id="settingsSoundText">Sound On</span>
                             </button>
-                        </div>
-                    </div>
-
-                    <!-- Username -->
-                    <div class="p-4 rounded-2xl flex flex-col gap-3" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-id-card text-rose-400 text-sm"></i>
-                            <span class="text-xs font-bold text-white">Trainer Name</span>
-                        </div>
-                        <div class="flex gap-2">
-                            <input id="usernameInput" type="text" maxlength="16" placeholder="Enter your name..."
-                                class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-white placeholder-slate-600 focus:outline-none focus:border-slate-600 transition"
-                                oninput="saveUsername(this.value)" />
                         </div>
                     </div>
 
@@ -618,7 +618,7 @@
                     </div>
                     <div>
                         <h1 class="heading-font text-xl md:text-2xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 vibe-title">
-                            POKÉMON RADAR
+                            POKÉMON SPINNER
                         </h1>
                     </div>
                 </div>
@@ -875,34 +875,33 @@
                         </div>
 
                         <div class="flex justify-center border-b border-slate-900 pb-4">
-                            <div class="inline-flex bg-slate-950 p-1.5 rounded-xl border border-slate-900">
-                                <button onclick="toggleJourneySubMode('campaign')" id="btn-journey-campaign" class="px-5 py-2 rounded-lg text-xs font-bold transition duration-150 bg-rose-600 text-white">
-                                    <i class="fas fa-route mr-1.5"></i>Regional Campaign
+                            <div class="inline-flex bg-slate-950 p-1.5 rounded-xl border border-slate-900 gap-0.5">
+                                <button onclick="toggleJourneySubMode('trainers')" id="btn-journey-trainers" class="px-4 py-2 rounded-lg text-xs font-bold transition duration-150 themed-gradient text-white">
+                                    <i class="fas fa-user mr-1.5"></i>Trainers
                                 </button>
-                                <button onclick="toggleJourneySubMode('unlimited')" id="btn-journey-unlimited" class="px-5 py-2 rounded-lg text-xs font-bold transition duration-150 text-slate-400 hover:text-white">
-                                    <i class="fas fa-infinity mr-1.5"></i>Unlimited Arena
+                                <button onclick="toggleJourneySubMode('gym')" id="btn-journey-gym" class="px-4 py-2 rounded-lg text-xs font-bold transition duration-150 text-slate-400 hover:text-white">
+                                    <i class="fas fa-medal mr-1.5"></i>Gym Leaders
+                                </button>
+                                <button onclick="toggleJourneySubMode('unlimited')" id="btn-journey-unlimited" class="px-4 py-2 rounded-lg text-xs font-bold transition duration-150 text-slate-400 hover:text-white">
+                                    <i class="fas fa-infinity mr-1.5"></i>Endless
                                 </button>
                             </div>
                         </div>
 
-                        <div id="journey-campaign-panel" class="space-y-5">
-                            <!-- Normal Trainers -->
-                            <div>
-                                <div class="flex items-center gap-2 mb-3">
-                                    <span class="text-[9px] font-bold uppercase tracking-widest text-slate-400 border border-slate-800 px-2 py-0.5 rounded-full">Trainers</span>
-                                    <div class="flex-1 border-t border-slate-900"></div>
-                                </div>
-                                <div id="roadmapTrainerGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3"></div>
+                        <!-- Trainers panel -->
+                        <div id="journey-trainers-panel" class="space-y-3">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[9px] text-slate-500">Beat trainers to unlock gym challenges</span>
                             </div>
-                            <!-- Gym Battles -->
-                            <div>
-                                <div class="flex items-center gap-2 mb-3">
-                                    <span class="text-[9px] font-bold uppercase tracking-widest themed-chip border px-2 py-0.5 rounded-full">Gym Challenges</span>
-                                    <div class="flex-1 border-t border-slate-900"></div>
-                                    <span class="text-[9px] text-slate-500">Must clear prerequisite trainers first</span>
-                                </div>
-                                <div id="roadmapGymGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3"></div>
+                            <div id="roadmapTrainerGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3"></div>
+                        </div>
+
+                        <!-- Gym panel (hidden by default) -->
+                        <div id="journey-gym-panel" class="hidden space-y-3">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[9px] text-slate-500">Gym leaders unlock as you clear prerequisite trainers</span>
                             </div>
+                            <div id="roadmapGymGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3"></div>
                         </div>
 
                         <div id="journey-unlimited-panel" class="hidden space-y-6">
@@ -972,7 +971,6 @@
                             <div class="w-12 h-12 rounded-full border border-slate-800 bg-slate-950 flex items-center justify-center shadow-lg">
                                 <i class="fas fa-bolt text-red-500 animate-pulse text-lg"></i>
                             </div>
-                            <div id="effectivenessIndicator" class="text-[10px] font-bold text-center text-yellow-500 font-mono tracking-wide"></div>
                         </div>
 
                         <div class="md:col-span-5 bg-slate-950 border border-slate-900 rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden">
@@ -996,8 +994,27 @@
                         </div>
 
                         <div class="md:col-span-12 bg-slate-950 border border-slate-900 p-6 rounded-2xl flex flex-col gap-4">
-                            <div class="text-xs text-slate-400 uppercase tracking-widest font-bold">Select Strategy / STAB Action Moves</div>
+                            <div class="flex items-center justify-between">
+                                <div class="text-xs text-slate-400 uppercase tracking-widest font-bold">Select Strategy / STAB Action Moves</div>
+                                <div id="effectivenessIndicator" class="text-[10px] font-bold text-slate-500 italic"></div>
+                            </div>
                             <div id="battleMovesGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+
+                            <!-- STAT STAGES PANEL -->
+                            <div id="statStagesPanel" class="hidden rounded-xl border border-slate-800 p-3" style="background:rgba(255,255,255,0.03);">
+                                <div class="text-[9px] uppercase tracking-widest font-bold text-slate-500 mb-2">Active Stat Changes</div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <div class="text-[8px] text-slate-500 uppercase font-bold mb-1.5">Your Pokémon</div>
+                                        <div id="playerStatStages" class="flex flex-wrap gap-1"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-[8px] text-slate-500 uppercase font-bold mb-1.5">Opponent</div>
+                                        <div id="bossStatStages" class="flex flex-wrap gap-1"></div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div id="battleLog" class="w-full bg-slate-955 border border-slate-900 rounded-xl p-3 text-xs font-mono h-28 overflow-y-auto text-slate-400">
                                 <div>Battle stage configured. Ready to strike first based on speed.</div>
                             </div>
@@ -1274,35 +1291,35 @@
                     "dazzling-gleam": { type: "fairy", power: 80, category: "special" },
                     "hyper-beam": { type: "normal", power: 150, category: "special" },
                     "razor-leaf": { type: "grass", power: 55, category: "physical" },
-                    "sleep-powder": { type: "grass", power: 0, category: "status" },
-                    "leech-seed": { type: "grass", power: 0, category: "status" },
-                    "growl": { type: "normal", power: 0, category: "status" },
-                    "tail-whip": { type: "normal", power: 0, category: "status" },
+                    "sleep-powder": { type: "grass", power: 0, category: "status", effect: { target: "foe", status: "sleep" } },
+                    "leech-seed": { type: "grass", power: 0, category: "status", effect: { target: "foe", status: "leech" } },
+                    "growl": { type: "normal", power: 0, category: "status", effect: { target: "foe", stat: "atk", stages: -1 } },
+                    "tail-whip": { type: "normal", power: 0, category: "status", effect: { target: "foe", stat: "def", stages: -1 } },
                     "bubble": { type: "water", power: 40, category: "special" },
-                    "withdraw": { type: "water", power: 0, category: "status" },
+                    "withdraw": { type: "water", power: 0, category: "status", effect: { target: "self", stat: "def", stages: 1 } },
                     "rapid-spin": { type: "normal", power: 50, category: "physical" },
                     "metal-claw": { type: "steel", power: 50, category: "physical" },
-                    "leer": { type: "normal", power: 0, category: "status" },
-                    "smokescreen": { type: "normal", power: 0, category: "status" },
+                    "leer": { type: "normal", power: 0, category: "status", effect: { target: "foe", stat: "def", stages: -1 } },
+                    "smokescreen": { type: "normal", power: 0, category: "status", effect: { target: "foe", stat: "accuracy", stages: -1 } },
                     "dragon-rage": { type: "dragon", power: 40, category: "special" },
                     "slash": { type: "normal", power: 70, category: "physical" },
                     "thunder-shock": { type: "electric", power: 40, category: "special" },
-                    "thunder-wave": { type: "electric", power: 0, category: "status" },
+                    "thunder-wave": { type: "electric", power: 0, category: "status", effect: { target: "foe", status: "para" } },
                     "double-kick": { type: "fighting", power: 60, category: "physical" },
                     "poison-sting": { type: "poison", power: 15, category: "physical" },
                     "fury-attack": { type: "normal", power: 45, category: "physical" },
                     "peck": { type: "flying", power: 35, category: "physical" },
                     "gust": { type: "flying", power: 40, category: "special" },
-                    "sand-attack": { type: "ground", power: 0, category: "status" },
+                    "sand-attack": { type: "ground", power: 0, category: "status", effect: { target: "foe", stat: "accuracy", stages: -1 } },
                     "confusion": { type: "psychic", power: 50, category: "special" },
-                    "string-shot": { type: "bug", power: 0, category: "status" },
+                    "string-shot": { type: "bug", power: 0, category: "status", effect: { target: "foe", stat: "speed", stages: -2 } },
                     "bug-bite": { type: "bug", power: 60, category: "physical" },
-                    "harden": { type: "normal", power: 0, category: "status" },
+                    "harden": { type: "normal", power: 0, category: "status", effect: { target: "self", stat: "def", stages: 1 } },
                     "mud-slap": { type: "ground", power: 20, category: "special" },
                     "water-pulse": { type: "water", power: 60, category: "special" },
                     "flame-wheel": { type: "fire", power: 60, category: "physical" },
                     "rollout": { type: "rock", power: 30, category: "physical" },
-                    "defense-curl": { type: "normal", power: 0, category: "status" },
+                    "defense-curl": { type: "normal", power: 0, category: "status", effect: { target: "self", stat: "def", stages: 1 } },
                     "magnitude": { type: "ground", power: 50, category: "physical" },
                     "body-slam": { type: "normal", power: 85, category: "physical" },
                     "take-down": { type: "normal", power: 90, category: "physical" },
@@ -1310,7 +1327,7 @@
                     "acid": { type: "poison", power: 40, category: "special" },
                     "sludge-bomb": { type: "poison", power: 90, category: "special" },
                     "mega-drain": { type: "grass", power: 40, category: "special" },
-                    "stun-spore": { type: "grass", power: 0, category: "status" },
+                    "stun-spore": { type: "grass", power: 0, category: "status", effect: { target: "foe", status: "para" } },
                     "absorb": { type: "grass", power: 20, category: "special" },
                     "zen-headbutt": { type: "psychic", power: 80, category: "physical" },
                     "aerial-ace": { type: "flying", power: 60, category: "physical" },
@@ -1318,20 +1335,20 @@
                     "twister": { type: "dragon", power: 40, category: "special" },
                     "aqua-tail": { type: "water", power: 90, category: "physical" },
                     "headbutt": { type: "normal", power: 70, category: "physical" },
-                    "disable": { type: "normal", power: 0, category: "status" },
-                    "hypnosis": { type: "psychic", power: 0, category: "status" },
+                    "disable": { type: "normal", power: 0, category: "status", effect: { target: "foe", stat: "speed", stages: -1 } },
+                    "hypnosis": { type: "psychic", power: 0, category: "status", effect: { target: "foe", status: "sleep" } },
                     "lick": { type: "ghost", power: 30, category: "physical" },
                     "low-kick": { type: "fighting", power: 50, category: "physical" },
                     "karate-chop": { type: "fighting", power: 50, category: "physical" },
                     "seismic-toss": { type: "fighting", power: 60, category: "physical" },
-                    "rest": { type: "psychic", power: 0, category: "status" },
-                    "amnesia": { type: "psychic", power: 0, category: "status" },
+                    "rest": { type: "psychic", power: 0, category: "status", effect: { target: "self", heals: "full" } },
+                    "amnesia": { type: "psychic", power: 0, category: "status", effect: { target: "self", stat: "spAtk", stages: 2 } },
                     "pound": { type: "normal", power: 40, category: "physical" },
-                    "sing": { type: "normal", power: 0, category: "status" },
+                    "sing": { type: "normal", power: 0, category: "status", effect: { target: "foe", status: "sleep" } },
                     "double-slap": { type: "normal", power: 45, category: "physical" },
                     "covet": { type: "normal", power: 60, category: "physical" },
                     "swift": { type: "normal", power: 60, category: "special" },
-                    "charm": { type: "fairy", power: 0, category: "status" },
+                    "charm": { type: "fairy", power: 0, category: "status", effect: { target: "foe", stat: "atk", stages: -2 } },
                     "moonblast": { type: "fairy", power: 95, category: "special" },
                     "disarming-voice": { type: "fairy", power: 40, category: "special" },
                     "power-gem": { type: "rock", power: 80, category: "special" },
@@ -1640,7 +1657,7 @@
                         activeBattleStage: rawState.activeBattleStage || null,
                         battleType: rawState.battleType || 'campaign',
                         endlessRunDefeats: rawState.endlessRunDefeats ?? 0,
-                        battle: rawState.battle || { active: false, bossPokemon: null, fighterPokemon: null, fighterHP: 0, bossHP: 0, fighterMaxHP: 0, bossMaxHP: 0, oranUsed: false, bossOranUsed: false, playerTeam: [], playerTeamIndex: 0 },
+                        battle: rawState.battle || { active: false, bossPokemon: null, fighterPokemon: null, fighterHP: 0, bossHP: 0, fighterMaxHP: 0, bossMaxHP: 0, oranUsed: false, bossOranUsed: false, playerTeam: [], playerTeamIndex: 0, statStages: { player: {atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss: {atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} }, statusConds: { player: null, boss: null } },
                         dexUI: rawState.dexUI || { page: 1, pageSize: 9, total: 1025, search: '', rarity: 'all' },
                         wheel: rawState.wheel || { spinning: false, currentAngle: 0, spinSpeed: 0, targetRarity: 'Common', pointerPos: 0, lastWedgeAudio: -1 },
                         currentEncounter: rawState.currentEncounter || null,
@@ -1700,9 +1717,9 @@
                     inventoryItems: { oran_berry: 0, leftovers: 0, choice_band: 0, wise_glasses: 0, antidote: 0, burn_heal: 0, ice_heal: 0, awakening: 0, paralyze_heal: 0, full_heal: 0, full_restore: 0, fire_stone: 0, water_stone: 0, thunder_stone: 0, leaf_stone: 0, ice_stone: 0, dawn_stone: 0, dusk_stone: 0, moon_stone: 0, shiny_stone: 0, assault_vest: 0, exp_share: 0, scope_lens: 0, weakness_policy: 0, life_orb: 0, potion: 0, super_potion: 0, hyper_potion: 0, max_potion: 0, ether: 0, max_ether: 0, elixir: 0, max_elixir: 0, attack_boost: 0, defense_boost: 0, speed_boost: 0, special_boost: 0, ability_capsule: 0, nature_mint: 0, vitamin_a: 0, vitamin_b: 0, vitamin_c: 0, vitamin_d: 0, vitamin_e: 0, vitamin_f: 0 },
                     unlockedStages: 1, 
                     activeBattleStage: null,
-                    battleType: 'campaign',
+                    battleType: 'trainers',
                     endlessRunDefeats: 0,
-                    battle: { active: false, bossPokemon: null, fighterPokemon: null, fighterHP: 0, bossHP: 0, fighterMaxHP: 0, bossMaxHP: 0, oranUsed: false, bossOranUsed: false },
+                    battle: { active: false, bossPokemon: null, fighterPokemon: null, fighterHP: 0, bossHP: 0, fighterMaxHP: 0, bossMaxHP: 0, oranUsed: false, bossOranUsed: false, statStages: { player: {atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss: {atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} }, statusConds: { player: null, boss: null } },
                     dexUI: { page: 1, pageSize: 9, total: 1025, search: "", rarity: "all" }
                 };
 
@@ -1710,30 +1727,47 @@
                 // PROFILE + USERNAME FUNCTIONS
                 // ==========================================
                 function saveUsername(value) {
-                    gameState.username = value.trim().substring(0, 16);
+                    gameState.username = (value || '').trim().substring(0, 16);
+                    updateProfileBtn();
+                    saveProgress();
+                }
+
+                function saveUsernameFromProfile(value) {
+                    gameState.username = (value || '').trim().substring(0, 16);
+                    // Update the name/avatar live in the modal
+                    const nameEl   = document.getElementById('profileNameDisplay');
+                    const avatarEl = document.getElementById('profileAvatarModal');
+                    const display  = gameState.username || 'Anonymous';
+                    if (nameEl)   nameEl.textContent   = display;
+                    if (avatarEl) avatarEl.textContent  = display.substring(0,1).toUpperCase() || '?';
                     updateProfileBtn();
                     saveProgress();
                 }
 
                 function updateProfileBtn() {
-                    const btn = document.getElementById('profileBtnLabel');
-                    if (!btn) return;
-                    const name = gameState.username || '';
-                    btn.textContent = name ? name.substring(0, 2).toUpperCase() : '?';
-                    // Keep the input field in sync when called from loadSavedProgress
-                    const uInput = document.getElementById('usernameInput');
-                    if (uInput && uInput.value !== gameState.username) uInput.value = gameState.username || '';
+                    // Highlight the profile button when a name is set
+                    const btn = document.getElementById('profileToggleBtn');
+                    if (btn) {
+                        const named = !!(gameState.username && gameState.username.trim());
+                        btn.style.borderColor = named ? 'var(--theme-c1)' : '';
+                        btn.style.boxShadow   = named ? '0 0 10px color-mix(in srgb,var(--theme-c1) 40%,transparent)' : '';
+                    }
+                    // Sync profile input if modal is open
+                    const pInput = document.getElementById('profileUsernameInput');
+                    if (pInput && pInput.value !== (gameState.username||'')) pInput.value = gameState.username || '';
                 }
 
                 function openProfileModal() {
                     initAudio();
                     playConfirmSound();
                     // Populate name
-                    const nameDis = document.getElementById('profileNameDisplay');
+                    const nameDis  = document.getElementById('profileNameDisplay');
                     const avatarDis = document.getElementById('profileAvatarModal');
+                    const pInput   = document.getElementById('profileUsernameInput');
                     const name = gameState.username || 'Anonymous';
-                    if (nameDis) nameDis.textContent = name;
-                    if (avatarDis) avatarDis.textContent = name.substring(0, 1).toUpperCase() || '?';
+                    if (nameDis)   nameDis.textContent   = name;
+                    if (avatarDis) avatarDis.textContent  = name.substring(0, 1).toUpperCase() || '?';
+                    if (pInput)    pInput.value           = gameState.username || '';
 
                     // Stats
                     const gymStages = CAMPAIGN_ROADMAP.filter(s => s.isGym);
@@ -1918,9 +1952,6 @@
                         assignPokemonUids();
                         if (parsed._lightMode) { isLightMode = true; applyLightDarkMode(true); }
                         if (parsed._theme && THEMES[parsed._theme])   { currentTheme = parsed._theme; }
-                        // Restore username to input field
-                        const uInput = document.getElementById('usernameInput');
-                        if (uInput && gameState.username) uInput.value = gameState.username;
                         updateProfileBtn();
                         console.log('[SAVE] Loaded ' + (normalized.pokedex ? normalized.pokedex.length : 0) + ' Pokémon, coins=' + normalized.coins);
                         return true;
@@ -2173,11 +2204,7 @@
                     const labelEl = document.getElementById('activeThemeLabel');
                     if (labelEl) labelEl.textContent = labels[currentTheme] || 'Rose';
 
-                    // Sync username input
-                    const uInput = document.getElementById('usernameInput');
-                    if (uInput && uInput.value !== (gameState.username || '')) uInput.value = gameState.username || '';
-
-                    // Sync profile button label
+                    // Sync profile button
                     updateProfileBtn();
                 }
 
@@ -2272,9 +2299,9 @@
                             inventoryItems: { oran_berry: 0, leftovers: 0, choice_band: 0, wise_glasses: 0, antidote: 0, burn_heal: 0, ice_heal: 0, awakening: 0, paralyze_heal: 0, full_heal: 0, full_restore: 0, fire_stone: 0, water_stone: 0, thunder_stone: 0, leaf_stone: 0, ice_stone: 0, dawn_stone: 0, dusk_stone: 0, moon_stone: 0, shiny_stone: 0, assault_vest: 0, exp_share: 0, scope_lens: 0, weakness_policy: 0, life_orb: 0, potion: 0, super_potion: 0, hyper_potion: 0, max_potion: 0, ether: 0, max_ether: 0, elixir: 0, max_elixir: 0, attack_boost: 0, defense_boost: 0, speed_boost: 0, special_boost: 0, ability_capsule: 0, nature_mint: 0, vitamin_a: 0, vitamin_b: 0, vitamin_c: 0, vitamin_d: 0, vitamin_e: 0, vitamin_f: 0 },
                             unlockedStages: 1, 
                             activeBattleStage: null,
-                            battleType: 'campaign',
+                            battleType: 'trainers',
                             endlessRunDefeats: 0,
-                            battle: { active: false, bossPokemon: null, fighterPokemon: null, fighterHP: 0, bossHP: 0, fighterMaxHP: 0, bossMaxHP: 0, oranUsed: false, bossOranUsed: false },
+                            battle: { active: false, bossPokemon: null, fighterPokemon: null, fighterHP: 0, bossHP: 0, fighterMaxHP: 0, bossMaxHP: 0, oranUsed: false, bossOranUsed: false, statStages: { player: {atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss: {atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} }, statusConds: { player: null, boss: null } },
                             dexUI: { page: 1, pageSize: 9, total: 1025, search: "", rarity: "all" }
                         };
                         
@@ -3021,21 +3048,17 @@
                     playConfirmSound();
                     gameState.battleType = mode;
                     
-                    const btnCampaign = document.getElementById('btn-journey-campaign');
+                    /* campaign btn handled by toggleJourneySubMode */
                     const btnUnlimited = document.getElementById('btn-journey-unlimited');
-                    const panelCampaign = document.getElementById('journey-campaign-panel');
+                    /* campaign panel handled by toggleJourneySubMode */
                     const panelUnlimited = document.getElementById('journey-unlimited-panel');
 
                     if (mode === 'campaign') {
-                        if (btnCampaign) btnCampaign.className = "px-5 py-2 rounded-lg text-xs font-bold transition duration-150 bg-rose-600 text-white";
-                        if (btnUnlimited) btnUnlimited.className = "px-5 py-2 rounded-lg text-xs font-bold transition duration-150 text-slate-400 hover:text-white";
-                        if (panelCampaign) panelCampaign.classList.remove('hidden');
-                        if (panelUnlimited) panelUnlimited.classList.add('hidden');
+                            if (btnUnlimited) btnUnlimited.className = "px-5 py-2 rounded-lg text-xs font-bold transition duration-150 text-slate-400 hover:text-white";
+                            if (panelUnlimited) panelUnlimited.classList.add('hidden');
                     } else {
-                        if (btnCampaign) btnCampaign.className = "px-5 py-2 rounded-lg text-xs font-bold transition duration-150 text-slate-400 hover:text-white";
-                        if (btnUnlimited) btnUnlimited.className = "px-5 py-2 rounded-lg text-xs font-bold transition duration-150 bg-rose-600 text-white";
-                        if (panelCampaign) panelCampaign.classList.add('hidden');
-                        if (panelUnlimited) panelUnlimited.classList.remove('hidden');
+                            if (btnUnlimited) btnUnlimited.className = "px-5 py-2 rounded-lg text-xs font-bold transition duration-150 bg-rose-600 text-white";
+                            if (panelUnlimited) panelUnlimited.classList.remove('hidden');
                     }
                 };
 
@@ -3248,6 +3271,9 @@
                     gameState.battle.bossMaxHP = enemyProfile.hp;
                     gameState.battle.oranUsed = false;
                     gameState.battle.bossOranUsed = false;
+                    // Reset per-battle stat stages and status conditions
+                    gameState.battle.statStages = { player:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} };
+                    gameState.battle.statusConds = { player: null, boss: null };
 
                     document.getElementById('fighterSelector').classList.add('hidden');
                     document.getElementById('battleArenaActive').classList.remove('hidden');
@@ -3284,17 +3310,82 @@
                     const moves = pokemon.moves && pokemon.moves.length ? pokemon.moves : ["tackle", "quick-attack"];
 
                     moves.forEach(move => {
-                        const spec = MOVES_DB[move] || { type: "normal", power: 40, category: "physical" },
-                            moveBtn = document.createElement('button');
-                        moveBtn.className = "py-3 px-4 bg-slate-900 hover:bg-slate-850 border border-slate-800 rounded-xl text-xs font-bold text-slate-200 capitalize hover:border-blue-500 transition duration-150 flex flex-col justify-center items-center gap-0.5";
-                        
+                        const spec = MOVES_DB[move] || { type: "normal", power: 40, category: "physical" };
+                        const isStatus = spec.category === 'status';
+                        const moveBtn = document.createElement('button');
+                        const borderCol = isStatus ? 'border-violet-800 hover:border-violet-500' : 'border-slate-800 hover:border-blue-500';
+                        moveBtn.className = `py-3 px-4 bg-slate-900 ${borderCol} border rounded-xl text-xs font-bold text-slate-200 capitalize transition duration-150 flex flex-col justify-center items-center gap-0.5`;
+                        const pwrText = isStatus
+                            ? `<span class="text-[8px] text-violet-400 font-mono">${spec.type.toUpperCase()} | STATUS</span>`
+                            : `<span class="text-[8px] text-slate-500 font-mono">${spec.type.toUpperCase()} | PWR ${spec.power}</span>`;
+                        const statusIcon = isStatus ? '<span class="text-violet-500 text-[8px]">✨ </span>' : '';
                         moveBtn.onclick = () => executeBattleTurn(move);
-                        moveBtn.innerHTML = `
-                            <span>${move.replace("-", " ")}</span>
-                            <span class="text-[8px] text-slate-500 font-mono">${spec.type.toUpperCase()} | PWR ${spec.power}</span>
-                        `;
+                        moveBtn.innerHTML = `${statusIcon}<span class="capitalize">${move.replace(/-/g, ' ')}</span>${pwrText}`;
                         grid.appendChild(moveBtn);
                     });
+                }
+
+                // ── Stat-stage helpers ────────────────────────────────────────
+                function stageMultiplier(stage) {
+                    const s = Math.max(-6, Math.min(6, stage || 0));
+                    return s >= 0 ? (2 + s) / 2 : 2 / (2 - s);
+                }
+
+                function applyStatStage(side, stat, delta, logBox, atkName, defName) {
+                    if (!gameState.battle.statStages) gameState.battle.statStages = { player:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} };
+                    const stages = gameState.battle.statStages[side];
+                    const prev = stages[stat] || 0;
+                    stages[stat] = Math.max(-6, Math.min(6, prev + delta));
+                    const change = stages[stat] - prev;
+                    const ownerName = side === 'player' ? atkName : defName;
+                    if (change === 0) {
+                        logBox.innerHTML += `<div class="text-slate-500 mt-1 italic text-[10px]">${ownerName}'s ${stat} won't go any ${delta > 0 ? 'higher' : 'lower'}!</div>`;
+                    } else {
+                        const sharply = Math.abs(change) >= 2 ? ' sharply' : '';
+                        const dir = change > 0 ? '⬆ rose' : '⬇ fell';
+                        const col = change > 0 ? 'text-green-400' : 'text-red-400';
+                        logBox.innerHTML += `<div class="${col} mt-1 font-bold">${ownerName}'s ${stat}${sharply} ${dir}!</div>`;
+                    }
+                    renderStatStagesUI();
+                }
+
+                function renderStatStagesUI() {
+                    const panel = document.getElementById('statStagesPanel');
+                    if (!panel || !gameState.battle.statStages) return;
+                    const stages = gameState.battle.statStages;
+                    const labels = { atk:'ATK', def:'DEF', spAtk:'SpAtk', spDef:'SpDef', speed:'SPD', accuracy:'ACC' };
+                    const renderSide = (side, elId) => {
+                        const el = document.getElementById(elId);
+                        if (!el) return false;
+                        el.innerHTML = '';
+                        let any = false;
+                        Object.entries(stages[side]).forEach(([stat, val]) => {
+                            if (val === 0) return;
+                            any = true;
+                            const col = val > 0 ? 'text-green-400 border-green-800 bg-green-950/40' : 'text-red-400 border-red-900 bg-red-950/40';
+                            el.innerHTML += `<span class="text-[8px] font-black px-1.5 py-0.5 rounded border ${col}">${labels[stat]} ${val > 0 ? '+' : ''}${val}</span>`;
+                        });
+                        if (!any) el.innerHTML = '<span class="text-[8px] text-slate-600">—</span>';
+                        return any;
+                    };
+                    renderSide('player', 'playerStatStages');
+                    renderSide('boss',   'bossStatStages');
+                    const hasAny = Object.values(stages.player).some(v=>v!==0) || Object.values(stages.boss).some(v=>v!==0);
+                    panel.classList.toggle('hidden', !hasAny);
+                }
+
+                function applyStatusCond(side, cond, logBox, myName, foeName) {
+                    if (!gameState.battle.statusConds) gameState.battle.statusConds = { player: null, boss: null };
+                    const ownerName = side === 'player' ? myName : foeName;
+                    if (gameState.battle.statusConds[side]) {
+                        logBox.innerHTML += `<div class="text-slate-500 mt-1 italic text-[10px]">${ownerName} already has a condition!</div>`;
+                        return;
+                    }
+                    gameState.battle.statusConds[side] = cond;
+                    const msgs = { sleep:`💤 fell asleep!`, para:`⚡ became paralysed!`, leech:`🌱 was seeded!` };
+                    const cols = { sleep:'text-indigo-400', para:'text-yellow-400', leech:'text-emerald-400' };
+                    logBox.innerHTML += `<div class="${cols[cond]||'text-slate-400'} mt-1 font-bold">${ownerName} ${msgs[cond]||cond}</div>`;
+                    if (cond === 'para') applyStatStage(side, 'speed', -2, logBox, myName, foeName);
                 }
 
                 function resolveMoveAttack(attacker, defender, moveName, isPlayerAttacker) {
@@ -3302,35 +3393,75 @@
                     const moveSpec = MOVES_DB[moveName] || { type: "normal", power: 40, category: "physical" };
                     const logBox = document.getElementById('battleLog');
                     const effIndicator = document.getElementById('effectivenessIndicator');
+                    const attackerSide = isPlayerAttacker ? 'player' : 'boss';
+                    const defenderSide = isPlayerAttacker ? 'boss'   : 'player';
+
+                    // ── STATUS (non-damaging) moves ─────────────────────
+                    if (moveSpec.category === 'status' && moveSpec.effect) {
+                        const eff = moveSpec.effect;
+                        playBeep();
+                        logBox.innerHTML += `<div class="text-violet-400 mt-1">✨ ${attacker.name} used <span class="text-white capitalize font-bold">${moveName.replace(/-/g,' ')}</span>!</div>`;
+                        if (eff.heals === 'full' && isPlayerAttacker) {
+                            gameState.battle.fighterHP = gameState.battle.fighterMaxHP;
+                            document.getElementById('playerFighterHPBar').style.width = '100%';
+                            document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterMaxHP}/${gameState.battle.fighterMaxHP}`;
+                            logBox.innerHTML += `<div class="text-green-400 mt-1 font-bold">💚 ${attacker.name} restored all HP!</div>`;
+                        } else if (eff.status) {
+                            const tSide = eff.target === 'self' ? attackerSide : defenderSide;
+                            applyStatusCond(tSide, eff.status, logBox, attacker.name, defender.name);
+                        } else if (eff.stat) {
+                            const tSide = eff.target === 'self' ? attackerSide : defenderSide;
+                            applyStatStage(tSide, eff.stat, eff.stages, logBox, attacker.name, defender.name);
+                        }
+                        if (effIndicator) effIndicator.textContent = '';
+                        logBox.scrollTop = logBox.scrollHeight;
+                        return;
+                    }
+                    if (moveSpec.category === 'status') {
+                        // Status move with no effect data — just show a message
+                        playBeep();
+                        logBox.innerHTML += `<div class="text-violet-400 mt-1">✨ ${attacker.name} used <span class="text-white capitalize font-bold">${moveName.replace(/-/g,' ')}</span>! But nothing happened...</div>`;
+                        logBox.scrollTop = logBox.scrollHeight;
+                        return;
+                    }
+
+                    // ── DAMAGING moves ──────────────────────────────────
+                    // Sleep check
+                    const sc = gameState.battle.statusConds || {};
+                    if (sc[attackerSide] === 'sleep' && Math.random() < 0.5) {
+                        logBox.innerHTML += `<div class="text-indigo-400 mt-1 italic">💤 ${attacker.name} is fast asleep!</div>`;
+                        if (Math.random() < 0.33) {
+                            gameState.battle.statusConds[attackerSide] = null;
+                            logBox.innerHTML += `<div class="text-indigo-300 mt-0.5">😲 ${attacker.name} woke up!</div>`;
+                        }
+                        logBox.scrollTop = logBox.scrollHeight;
+                        return;
+                    }
 
                     let typeMod = 1.0;
                     if (TYPE_MATCHUPS[moveSpec.type]) {
                         if (TYPE_MATCHUPS[moveSpec.type][defender.type1] !== undefined) typeMod *= TYPE_MATCHUPS[moveSpec.type][defender.type1];
                         if (defender.type2 && TYPE_MATCHUPS[moveSpec.type][defender.type2] !== undefined) typeMod *= TYPE_MATCHUPS[moveSpec.type][defender.type2];
                     }
-
-                    let stabMod = 1.0;
-                    if (moveSpec.type === attacker.type1 || moveSpec.type === attacker.type2) stabMod = 1.5;
-
+                    let stabMod = (moveSpec.type === attacker.type1 || moveSpec.type === attacker.type2) ? 1.5 : 1.0;
                     let itemMod = 1.0;
                     if (attacker.heldItem) {
-                        const holdItemSpec = HOLD_ITEMS_DB[attacker.heldItem];
-                        if (holdItemSpec) {
-                            if (holdItemSpec.effect === "boost_physical" && moveSpec.category === "physical") itemMod = holdItemSpec.value;
-                            if (holdItemSpec.effect === "boost_special" && moveSpec.category === "special") itemMod = holdItemSpec.value;
+                        const h = HOLD_ITEMS_DB[attacker.heldItem];
+                        if (h) {
+                            if (h.effect === "boost_physical" && moveSpec.category === "physical") itemMod = h.value;
+                            if (h.effect === "boost_special"  && moveSpec.category === "special")  itemMod = h.value;
                         }
                     }
-
+                    const ss = gameState.battle.statStages || { player:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} };
                     const attackerLvl = attacker.level || 1;
-                    const levelMultiplier = 1 + ((attackerLvl - 1) * 0.05);
-                    let attackStat = 1.0, defenseStat = 1.0;
-
+                    const lvlMul = 1 + ((attackerLvl - 1) * 0.05);
+                    let attackStat, defenseStat;
                     if (moveSpec.category === "special") {
-                        attackStat = (attacker.spAtk || attacker.atk || 50) * levelMultiplier;
-                        defenseStat = (defender.spDef || defender.def || 50);
+                        attackStat  = (attacker.spAtk || attacker.atk || 50) * lvlMul * stageMultiplier(ss[attackerSide].spAtk);
+                        defenseStat = (defender.spDef || defender.def || 50)            * stageMultiplier(ss[defenderSide].spDef);
                     } else {
-                        attackStat = (attacker.atk || 50) * levelMultiplier;
-                        defenseStat = (defender.def || 50);
+                        attackStat  = (attacker.atk || 50) * lvlMul * stageMultiplier(ss[attackerSide].atk);
+                        defenseStat = (defender.def || 50)            * stageMultiplier(ss[defenderSide].def);
                     }
 
                     let calculatedDamage = Math.round((((2 * attackerLvl / 5 + 2) * moveSpec.power * (attackStat / defenseStat)) / 50 + 2) * stabMod * typeMod * itemMod * (0.85 + Math.random() * 0.15));
@@ -3339,48 +3470,43 @@
                     if (isPlayerAttacker) {
                         gameState.battle.bossHP -= calculatedDamage;
                         if (gameState.battle.bossHP < 0) gameState.battle.bossHP = 0;
-                        
-                        if (typeMod > 1.0) { playCritStrike(); effIndicator.textContent = "It's super effective! 💥"; }
-                        else if (typeMod < 1.0 && typeMod > 0) { playNormalHit(); effIndicator.textContent = "It's not very effective... 🛡️"; }
-                        else if (typeMod === 0) { playBeep(); effIndicator.textContent = "Immune! No effect."; }
-                        else playNormalHit();
 
-                        logBox.innerHTML += `<div class="text-blue-400 mt-1">⚔️ ${attacker.name} used <span class="text-white capitalize font-bold">${moveName}</span>! Dealt ${calculatedDamage} Damage.</div>`;
-                        
-                        const bossHpPercent = (gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100;
-                        document.getElementById('bossHPBar').style.width = `${bossHpPercent}%`;
+                        if (typeMod > 1.0) { playCritStrike(); if(effIndicator) effIndicator.textContent = "Super effective! 💥"; }
+                        else if (typeMod < 1.0 && typeMod > 0) { playNormalHit(); if(effIndicator) effIndicator.textContent = "Not very effective... 🛡️"; }
+                        else if (typeMod === 0) { playBeep(); if(effIndicator) effIndicator.textContent = "Immune!"; }
+                        else { playNormalHit(); if(effIndicator) effIndicator.textContent = ''; }
+
+                        logBox.innerHTML += `<div class="text-blue-400 mt-1">⚔️ ${attacker.name} used <span class="text-white capitalize font-bold">${moveName.replace(/-/g,' ')}</span>! Dealt <span class="font-black">${calculatedDamage}</span> dmg.</div>`;
+
+                        document.getElementById('bossHPBar').style.width = `${(gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100}%`;
                         document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossMaxHP}`;
-                        
+
                         if (defender.heldItem === "oran_berry" && !gameState.battle.bossOranUsed && gameState.battle.bossHP <= (gameState.battle.bossMaxHP * 0.3) && gameState.battle.bossHP > 0) {
                             gameState.battle.bossHP = Math.min(gameState.battle.bossMaxHP, gameState.battle.bossHP + 30);
                             gameState.battle.bossOranUsed = true;
-                            logBox.innerHTML += `<div class="text-yellow-400 mt-1">🎒 Opponent consumed equipped <span class="font-bold">Oran Berry</span> and restored 30 HP!</div>`;
+                            logBox.innerHTML += `<div class="text-yellow-400 mt-1">🎒 Opponent used <span class="font-bold">Oran Berry</span> (+30 HP)!</div>`;
                         }
-
                         if (gameState.battle.bossHP <= 0) handleBattleVictory();
                     } else {
                         gameState.battle.fighterHP -= calculatedDamage;
                         if (gameState.battle.fighterHP < 0) gameState.battle.fighterHP = 0;
 
                         playNormalHit();
-                        logBox.innerHTML += `<div class="text-rose-400 mt-1">💥 Opponent countered with <span class="text-white capitalize font-bold">${moveName}</span>! Dealt ${calculatedDamage} Damage.</div>`;
+                        logBox.innerHTML += `<div class="text-rose-400 mt-1">💥 ${attacker.name} used <span class="text-white capitalize font-bold">${moveName.replace(/-/g,' ')}</span>! Dealt <span class="font-black">${calculatedDamage}</span> dmg.</div>`;
 
-                        const playerHpPercent = (gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100;
-                        document.getElementById('playerFighterHPBar').style.width = `${playerHpPercent}%`;
+                        document.getElementById('playerFighterHPBar').style.width = `${(gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100}%`;
                         document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
 
                         if (defender.heldItem === "oran_berry" && !gameState.battle.oranUsed && gameState.battle.fighterHP <= (gameState.battle.fighterMaxHP * 0.3) && gameState.battle.fighterHP > 0) {
                             gameState.battle.fighterHP = Math.min(gameState.battle.fighterMaxHP, gameState.battle.fighterHP + 30);
                             gameState.battle.oranUsed = true;
-                            logBox.innerHTML += `<div class="text-green-400 mt-1">🎒 Your Pokémon automatically consumed equipped <span class="font-bold">Oran Berry</span> and restored 30 HP!</div>`;
+                            logBox.innerHTML += `<div class="text-green-400 mt-1">🎒 Your Pokémon used <span class="font-bold">Oran Berry</span> (+30 HP)!</div>`;
                         }
-
                         if (defender.heldItem === "leftovers" && gameState.battle.fighterHP > 0) {
-                            let healVal = Math.round(gameState.battle.fighterMaxHP * 0.0625);
+                            const healVal = Math.round(gameState.battle.fighterMaxHP * 0.0625);
                             gameState.battle.fighterHP = Math.min(gameState.battle.fighterMaxHP, gameState.battle.fighterHP + healVal);
-                            logBox.innerHTML += `<div class="text-emerald-400 mt-1">✨ Leftovers active! Restored ${healVal} HP.</div>`;
+                            logBox.innerHTML += `<div class="text-emerald-400 mt-1">✨ Leftovers restored ${healVal} HP.</div>`;
                         }
-
                         if (gameState.battle.fighterHP <= 0) handleBattleDefeat();
                     }
                     logBox.scrollTop = logBox.scrollHeight;
@@ -3580,6 +3706,11 @@
                     document.getElementById('fighterSelector').classList.add('hidden');
                     document.getElementById('battleArenaActive').classList.add('hidden');
                     gameState.battle.active = false;
+                    // Clear per-battle stat stages and status conditions
+                    gameState.battle.statStages = { player:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} };
+                    gameState.battle.statusConds = { player: null, boss: null };
+                    const panel = document.getElementById('statStagesPanel');
+                    if (panel) panel.classList.add('hidden');
                 }
 
                 window.cancelBattlePrep = function() {
