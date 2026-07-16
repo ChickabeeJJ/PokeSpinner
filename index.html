@@ -2007,7 +2007,6 @@
                 function loadTheme() {
                     const savedTheme = localStorage.getItem('pokemon_radar_theme') || 'dark';
                     document.documentElement.setAttribute('data-theme', savedTheme);
-                    currentTheme = savedTheme;
                     updateSettingsUI();
                 }
 
