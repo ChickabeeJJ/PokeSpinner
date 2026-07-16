@@ -506,21 +506,37 @@
                             <label class="text-[10px] text-slate-400 uppercase tracking-widest font-bold text-center block mb-2">Select Device Grade (Modifies Scan Zones)</label>
                             <div class="grid grid-cols-4 gap-2">
                                 <button id="ballBtn-poke" onclick="selectBall('poke')" class="ball-selector-btn bg-slate-950 border-2 border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
+                                    <div class="w-8 h-8 bg-red-500 rounded-full border-2 border-slate-950 relative shadow-md">
+                                        <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
+                                        <div class="w-2.5 h-2.5 bg-white rounded-full border border-slate-950 absolute top-[11px] left-[11px] z-10"></div>
+                                    </div>
                                     <div class="w-8 h-8 rounded-full shadow-md pokeball-design"></div>
                                     <span class="text-xs font-bold mt-1.5">Standard</span>
                                     <span id="count-poke" class="text-[10px] text-slate-400">5</span>
                                 </button>
                                 <button id="ballBtn-great" onclick="selectBall('great')" class="ball-selector-btn bg-slate-950 border border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
+                                    <div class="w-8 h-8 bg-blue-500 rounded-full border-2 border-slate-950 relative shadow-md">
+                                        <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
+                                        <div class="w-2.5 h-2.5 bg-white rounded-full border border-slate-950 absolute top-[11px] left-[11px] z-10"></div>
+                                    </div>
                                     <div class="w-8 h-8 rounded-full shadow-md pokeball-design greatball-design"></div>
                                     <span class="text-xs font-bold mt-1.5 text-blue-400">Great</span>
                                     <span id="count-great" class="text-[10px] text-slate-400">0</span>
                                 </button>
                                 <button id="ballBtn-ultra" onclick="selectBall('ultra')" class="ball-selector-btn bg-slate-950 border border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
+                                    <div class="w-8 h-8 bg-yellow-500 rounded-full border-2 border-slate-950 relative shadow-md">
+                                        <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
+                                        <div class="w-2.5 h-2.5 bg-white rounded-full border border-slate-950 absolute top-[11px] left-[11px] z-10"></div>
+                                    </div>
                                     <div class="w-8 h-8 rounded-full shadow-md pokeball-design ultraball-design"></div>
                                     <span class="text-xs font-bold mt-1.5 text-yellow-500">Ultra</span>
                                     <span id="count-ultra" class="text-[10px] text-slate-400">0</span>
                                 </button>
                                 <button id="ballBtn-master" onclick="selectBall('master')" class="ball-selector-btn bg-slate-950 border border-purple-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
+                                    <div class="w-8 h-8 bg-purple-600 rounded-full border-2 border-slate-950 relative shadow-md">
+                                        <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
+                                        <div class="w-2.5 h-2.5 bg-white rounded-full border border-slate-950 absolute top-[11px] left-[11px] z-10"></div>
+                                    </div>
                                     <div class="w-8 h-8 rounded-full shadow-md pokeball-design masterball-design"></div>
                                     <span class="text-xs font-bold mt-1.5 text-purple-400">Master</span>
                                     <span id="count-master" class="text-[10px] text-slate-400">0</span>
@@ -1826,9 +1842,14 @@
                     const allThemeClasses = Object.values(THEMES).flatMap(t => t.primary.split(' '));
 
                     gradientElements.forEach(el => {
+                        el.classList.remove('from-rose-500', 'via-pink-500', 'to-amber-400', 
+                                            'from-cyan-500', 'via-blue-500', 'to-indigo-500',
+                                            'from-emerald-500', 'via-green-500', 'to-teal-500',
+                                            'from-orange-500', 'via-amber-500', 'to-red-500');
                         el.classList.remove(...allThemeClasses);
                         
                         const colors = theme.primary.split(' ');
+                        el.classList.add(colors[0], colors[1], colors[2]);
                         // Ensure we don't add undefined classes
                         if(colors[0]) el.classList.add(colors[0]);
                         if(colors[1]) el.classList.add(colors[1]);
@@ -1998,6 +2019,11 @@
                     list.forEach(type => {
                         const btn = document.getElementById(`ballBtn-${type}`);
                         if (btn) {
+                            if (gameState.selectedBall === type) {
+                                btn.className = `ball-selector-btn bg-slate-900 border-2 border-rose-500 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-850 transition duration-150 scale-105 shadow-lg shadow-rose-500/10`;
+                            } else {
+                                btn.className = `ball-selector-btn bg-slate-950 border border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150`;
+                            }
                             btn.classList.toggle('border-rose-500', gameState.selectedBall === type);
                         }
                     });
@@ -2618,8 +2644,12 @@
                     const teamFighters = getBattleFighterPool(true);
                     if (teamFighters.length === 0) { showNotification("No Team Members", "Assign at least one Pokémon to your team before training in endless mode.", "error"); return; }
                     spendCoins(50);
+                    playConfirmSound();
                     gameState.activeBattleStage = null;
                     gameState.endlessRunDefeats = 0;
+                    document.getElementById('battleSelector').classList.add('hidden');
+                    document.getElementById('fighterSelector').classList.remove('hidden');
+                    renderFighterSelectionGrid();
                     const leadFighter = teamFighters[0];
                     selectFighterAndBegin(leadFighter);
                 };
@@ -2669,6 +2699,9 @@
                     initAudio();
                     playConfirmSound();
                     gameState.activeBattleStage = stage;
+                    document.getElementById('battleSelector').classList.add('hidden');
+                    document.getElementById('fighterSelector').classList.remove('hidden');
+                    renderFighterSelectionGrid();
                     const leadFighter = getBattleFighterPool()[0];
                     selectFighterAndBegin(leadFighter);
                 }
@@ -2687,6 +2720,48 @@
                         if (fromTeam.length > 0) return fromTeam;
                     }
                     return [...gameState.pcBox];
+                }
+
+                function renderFighterSelectionGrid() {
+                    const grid = document.getElementById('fighterSelectionGrid');
+                    if (!grid) return;
+                    grid.innerHTML = "";
+
+                    const fighterPool = getBattleFighterPool();
+                    if (fighterPool.length === 0) {
+                        grid.innerHTML = `
+                            <div class="col-span-full rounded-2xl border border-slate-800 bg-slate-900/50 p-6 text-center text-sm text-slate-400">
+                                No team members are currently selected. Open the Team screen and assign at least one Pokémon to begin.
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    fighterPool.forEach((pk, index) => {
+                        const card = document.createElement('div');
+                        card.className = "bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-2xl p-4 text-center cursor-pointer transition duration-150 relative flex flex-col justify-between";
+                        card.onclick = () => selectFighterAndBegin(pk);
+
+                        let itemStr = pk.heldItem ? HOLD_ITEMS_DB[pk.heldItem].name : "No Item";
+                        let currentLevel = pk.level || 1;
+                        let badge = '';
+                        if (gameState.team && gameState.team.some(Boolean) && index === 0) {
+                            badge = '<span class="absolute top-2 left-2 text-[7px] bg-cyan-500 text-white px-1 rounded uppercase font-black tracking-widest">Lead</span>';
+                        }
+
+                        card.innerHTML = `
+                            <div class="flex justify-center mb-2">
+                                <img src="${pk.sprite}" alt="${pk.name}" class="h-16 w-16 object-contain" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-white truncate">${pk.name}</div>
+                                <div class="text-[9px] text-slate-400 font-mono mt-1">Level ${currentLevel} | Item: <span class="text-cyan-400 font-bold">${itemStr}</span></div>
+                            </div>
+                            ${badge}
+                            ${pk.isShiny ? '<span class="absolute top-2 right-2 text-[7px] bg-pink-500 text-white px-1 rounded uppercase font-black tracking-widest">Shiny</span>' : ''}
+                        `;
+                        grid.appendChild(card);
+                    });
                 }
 
                 async function selectFighterAndBegin(pokemon) {
@@ -2735,6 +2810,7 @@
                     document.getElementById('wildPokemonLoading').classList.add('hidden');
                     gameState.battle.bossPokemon = enemyProfile;
                     gameState.battle.fighterPokemon = pokemon;
+                    gameState.battle.enemyTeam = enemyTeam;
                     gameState.battle.enemyTeam = enemyTeam; // The opponent's full team
                     gameState.battle.enemyTeamIndex = 0;
                     
@@ -3022,6 +3098,7 @@
                     const logBox = document.getElementById('battleLog');
                     logBox.innerHTML += `<div class="text-red-500 font-bold mt-2">💀 CHALLENGE FAILED. Returning to base...</div>`;
                     logBox.scrollTop = logBox.scrollHeight;
+                    setTimeout(() => resetBattleScreen(), 3000);
 
                     const nextFighterIndex = (gameState.battle.playerTeamIndex || 0) + 1;
                     if (nextFighterIndex < gameState.battle.playerTeam.length) {
@@ -3259,7 +3336,9 @@
                     }
                     gameState.team[slotIndex] = normalizedUid;
                     while (gameState.team.length < 6) gameState.team.push(null);
+                    saveProgress();
                     renderTeamView();
+                    renderFighterSelectionGrid();
                     showNotification('Team updated', normalizedUid ? 'Your roster has been updated.' : 'The team slot was cleared.', 'success');
                 };
 
@@ -3268,7 +3347,9 @@
                         gameState.team = Array.from({ length: 6 }, (_, idx) => gameState.team?.[idx] || null);
                     }
                     gameState.team[slotIndex] = null;
+                    saveProgress();
                     renderTeamView();
+                    renderFighterSelectionGrid();
                 };
 
                 function renderPCBox() {
