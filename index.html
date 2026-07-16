@@ -26,31 +26,52 @@
 
         <style>
             :root {
-                /* Candy Colors */
-                --candy-pink: #ff6b9d;
-                --candy-cyan: #00d4ff;
-                --candy-yellow: #ffd93d;
-                --candy-violet: #9b59b6;
-                --candy-green: #7ed321;
-                
-                /* Base Colors */
-                --cream-bg: #fef9f3;
-                --cream-panel: #ffffff;
-                --navy-dark: #1a1a2e;
-                --navy-outline: #2d2d44;
-                --text-dark: #2c3e50;
-                --text-light: #7f8c8d;
-                
-                /* Shadows */
-                --soft-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-                --candy-shadow: 0 4px 16px rgba(255, 107, 157, 0.3);
+                /* Dark Theme (Default) */
+                --bg-primary: #05070f;
+                --bg-secondary: #0a0f1e;
+                --bg-card: #0d1221;
+                --bg-elevated: #121829;
+                --text-primary: #f3f4f6;
+                --text-secondary: #9ca3af;
+                --text-muted: #6b7280;
+                --border-color: #1e293b;
+                --border-light: #334155;
+                --accent-pink: #f43f5e;
+                --accent-cyan: #06b6d4;
+                --accent-yellow: #fbbf24;
+                --accent-violet: #8b5cf6;
+                --accent-green: #10b981;
+                --shadow-color: rgba(0, 0, 0, 0.5);
+                --glow-intensity: 0.3;
+                --card-bg: #0d1221;
+                --panel-bg: #0a0f1e;
+                --input-bg: #121829;
+            }
+
+            [data-theme="light"] {
+                /* Light Theme */
+                --bg-primary: #f8fafc;
+                --bg-secondary: #e2e8f0;
+                --bg-card: #ffffff;
+                --bg-elevated: #f1f5f9;
+                --text-primary: #1e293b;
+                --text-secondary: #475569;
+                --text-muted: #64748b;
+                --border-color: #cbd5e1;
+                --border-light: #e2e8f0;
+                --shadow-color: rgba(0, 0, 0, 0.1);
+                --glow-intensity: 0.15;
+                --card-bg: #ffffff;
+                --panel-bg: #f1f5f9;
+                --input-bg: #f8fafc;
             }
 
             body {
                 font-family: 'Poppins', sans-serif;
-                background-color: var(--cream-bg);
-                color: var(--text-dark);
+                background-color: var(--bg-primary);
+                color: var(--text-primary);
                 overflow-x: hidden;
+                transition: background-color 0.3s ease, color 0.3s ease;
             }
 
             .heading-font {
@@ -70,12 +91,12 @@
                 font-family: 'Baloo 2', cursive;
                 font-weight: 700;
                 color: white;
-                border: 3px solid var(--navy-outline);
+                border: 3px solid var(--border-color);
                 border-radius: 16px;
                 padding: 12px 24px;
                 position: relative;
-                background: linear-gradient(180deg, var(--candy-pink) 0%, #ff8fb1 50%, var(--candy-pink) 100%);
-                box-shadow: 0 4px 0 var(--navy-outline), 0 8px 16px rgba(255, 107, 157, 0.3);
+                background: linear-gradient(180deg, var(--accent-pink) 0%, #ff8fb1 50%, var(--accent-pink) 100%);
+                box-shadow: 0 4px 0 var(--border-color), 0 8px 16px rgba(244, 63, 94, 0.3);
                 text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
                 transition: all 0.15s ease;
                 cursor: pointer;
@@ -95,60 +116,61 @@
 
             .candy-btn:hover {
                 transform: translateY(-2px);
-                box-shadow: 0 6px 0 var(--navy-outline), 0 12px 20px rgba(255, 107, 157, 0.4);
+                box-shadow: 0 6px 0 var(--border-color), 0 12px 20px rgba(244, 63, 94, 0.4);
             }
 
             .candy-btn:active {
                 transform: translateY(2px) scale(0.95);
-                box-shadow: 0 2px 0 var(--navy-outline), 0 4px 8px rgba(255, 107, 157, 0.2);
+                box-shadow: 0 2px 0 var(--border-color), 0 4px 8px rgba(244, 63, 94, 0.2);
             }
 
             .candy-btn-cyan {
-                background: linear-gradient(180deg, var(--candy-cyan) 0%, #5de0ff 50%, var(--candy-cyan) 100%);
-                box-shadow: 0 4px 0 var(--navy-outline), 0 8px 16px rgba(0, 212, 255, 0.3);
+                background: linear-gradient(180deg, var(--accent-cyan) 0%, #5de0ff 50%, var(--accent-cyan) 100%);
+                box-shadow: 0 4px 0 var(--border-color), 0 8px 16px rgba(6, 182, 212, 0.3);
             }
 
             .candy-btn-cyan:hover {
-                box-shadow: 0 6px 0 var(--navy-outline), 0 12px 20px rgba(0, 212, 255, 0.4);
+                box-shadow: 0 6px 0 var(--border-color), 0 12px 20px rgba(6, 182, 212, 0.4);
             }
 
             .candy-btn-yellow {
-                background: linear-gradient(180deg, var(--candy-yellow) 0%, #ffe566 50%, var(--candy-yellow) 100%);
-                box-shadow: 0 4px 0 var(--navy-outline), 0 8px 16px rgba(255, 217, 61, 0.3);
+                background: linear-gradient(180deg, var(--accent-yellow) 0%, #ffe566 50%, var(--accent-yellow) 100%);
+                box-shadow: 0 4px 0 var(--border-color), 0 8px 16px rgba(251, 191, 36, 0.3);
             }
 
             .candy-btn-yellow:hover {
-                box-shadow: 0 6px 0 var(--navy-outline), 0 12px 20px rgba(255, 217, 61, 0.4);
+                box-shadow: 0 6px 0 var(--border-color), 0 12px 20px rgba(251, 191, 36, 0.4);
             }
 
             .candy-btn-violet {
-                background: linear-gradient(180deg, var(--candy-violet) 0%, #b07cc6 50%, var(--candy-violet) 100%);
-                box-shadow: 0 4px 0 var(--navy-outline), 0 8px 16px rgba(155, 89, 182, 0.3);
+                background: linear-gradient(180deg, var(--accent-violet) 0%, #b07cc6 50%, var(--accent-violet) 100%);
+                box-shadow: 0 4px 0 var(--border-color), 0 8px 16px rgba(139, 92, 246, 0.3);
             }
 
             .candy-btn-violet:hover {
-                box-shadow: 0 6px 0 var(--navy-outline), 0 12px 20px rgba(155, 89, 182, 0.4);
+                box-shadow: 0 6px 0 var(--border-color), 0 12px 20px rgba(139, 92, 246, 0.4);
             }
 
             /* Panel/Card Styles */
             .candy-panel {
-                background: var(--cream-panel);
+                background: var(--panel-bg);
                 border-radius: 24px;
-                box-shadow: var(--soft-shadow);
-                border: 1px solid rgba(0, 0, 0, 0.05);
+                box-shadow: 0 8px 24px var(--shadow-color);
+                border: 1px solid var(--border-color);
+                transition: background-color 0.3s ease, border-color 0.3s ease;
             }
 
             .candy-card {
-                background: var(--cream-panel);
+                background: var(--card-bg);
                 border-radius: 20px;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-                border: 1px solid rgba(0, 0, 0, 0.05);
-                transition: all 0.2s ease;
+                box-shadow: 0 4px 12px var(--shadow-color);
+                border: 1px solid var(--border-color);
+                transition: all 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
             }
 
             .candy-card:hover {
                 transform: translateY(-2px);
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 8px 20px var(--shadow-color);
             }
 
             /* Rarity Borders */
@@ -159,10 +181,10 @@
 
             /* Currency Icon Styles */
             .currency-icon {
-                background: linear-gradient(135deg, var(--candy-yellow) 0%, #ffe566 100%);
-                border: 3px solid var(--navy-outline);
+                background: linear-gradient(135deg, var(--accent-yellow) 0%, #ffe566 100%);
+                border: 3px solid var(--border-color);
                 border-radius: 50%;
-                box-shadow: 0 4px 8px rgba(255, 217, 61, 0.4);
+                box-shadow: 0 4px 8px rgba(251, 191, 36, 0.4);
                 position: relative;
             }
 
@@ -180,23 +202,24 @@
 
             /* Modal Styles */
             .candy-modal-backdrop {
-                background: rgba(26, 26, 46, 0.6);
+                background: rgba(0, 0, 0, 0.6);
                 backdrop-filter: blur(4px);
             }
 
             .candy-modal {
-                background: var(--cream-panel);
+                background: var(--card-bg);
                 border-radius: 32px;
-                box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
-                border: 1px solid rgba(0, 0, 0, 0.05);
+                box-shadow: 0 16px 48px var(--shadow-color);
+                border: 1px solid var(--border-color);
+                transition: background-color 0.3s ease, border-color 0.3s ease;
             }
 
             .candy-modal-close {
                 width: 36px;
                 height: 36px;
                 border-radius: 50%;
-                background: var(--navy-dark);
-                color: white;
+                background: var(--text-primary);
+                color: var(--bg-primary);
                 border: none;
                 cursor: pointer;
                 display: flex;
@@ -208,47 +231,47 @@
 
             .candy-modal-close:hover {
                 transform: scale(1.1);
-                background: var(--candy-pink);
+                background: var(--accent-pink);
             }
 
             /* Typography Styles */
             .candy-header {
                 font-family: 'Baloo 2', cursive;
                 font-weight: 800;
-                color: white;
-                text-shadow: 2px 2px 0 var(--navy-outline), -1px -1px 0 var(--navy-outline), 1px -1px 0 var(--navy-outline), -1px 1px 0 var(--navy-outline);
-                filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+                color: var(--text-primary);
+                text-shadow: 2px 2px 0 var(--border-color), -1px -1px 0 var(--border-color), 1px -1px 0 var(--border-color), -1px 1px 0 var(--border-color);
+                filter: drop-shadow(0 2px 4px var(--shadow-color));
             }
 
             .candy-subheader {
                 font-family: 'Baloo 2', cursive;
                 font-weight: 600;
-                color: var(--navy-dark);
+                color: var(--text-primary);
             }
 
             .candy-body {
                 font-family: 'Poppins', sans-serif;
-                color: var(--text-dark);
+                color: var(--text-secondary);
             }
 
             .candy-muted {
                 font-family: 'Poppins', sans-serif;
-                color: var(--text-light);
+                color: var(--text-muted);
             }
 
             /* Progress Bar Styles */
             .candy-progress {
                 height: 12px;
                 border-radius: 8px;
-                background: #e8e8e8;
+                background: var(--border-light);
                 overflow: hidden;
-                box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+                box-shadow: inset 0 2px 4px var(--shadow-color);
             }
 
             .candy-progress-fill {
                 height: 100%;
                 border-radius: 8px;
-                background: linear-gradient(90deg, var(--candy-pink), var(--candy-cyan));
+                background: linear-gradient(90deg, var(--accent-pink), var(--accent-cyan));
                 transition: width 0.3s ease;
             }
 
@@ -271,7 +294,7 @@
                 font-weight: 600;
                 padding: 12px 20px;
                 border-radius: 16px;
-                color: var(--text-light);
+                color: var(--text-muted);
                 background: transparent;
                 border: none;
                 cursor: pointer;
@@ -279,13 +302,13 @@
             }
 
             .candy-tab:hover {
-                background: rgba(255, 107, 157, 0.1);
+                background: rgba(244, 63, 94, 0.1);
             }
 
             .candy-tab.active {
-                background: linear-gradient(135deg, var(--candy-pink), var(--candy-violet));
+                background: linear-gradient(135deg, var(--accent-pink), var(--accent-violet));
                 color: white;
-                box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+                box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3);
             }
 
             /* Custom Glowing Effects (kept for legendary/shiny) */
@@ -505,33 +528,13 @@
                 <!-- Theme Settings -->
                 <div class="mt-4 p-4 candy-card">
                     <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-palette" style="color: var(--candy-violet);"></i>
+                        <i class="fas fa-palette" style="color: var(--accent-violet);"></i>
                         <h4 class="candy-subheader text-sm">Theme</h4>
                     </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="setTheme('default')" class="theme-btn p-3 candy-card btn-press text-left" data-theme="default">
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-rose-500 to-pink-500"></div>
-                                <span class="candy-subheader text-xs">Default</span>
-                            </div>
-                        </button>
-                        <button onclick="setTheme('ocean')" class="theme-btn p-3 candy-card btn-press text-left" data-theme="ocean">
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500"></div>
-                                <span class="candy-subheader text-xs">Ocean</span>
-                            </div>
-                        </button>
-                        <button onclick="setTheme('forest')" class="theme-btn p-3 candy-card btn-press text-left" data-theme="forest">
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-emerald-500 to-green-500"></div>
-                                <span class="candy-subheader text-xs">Forest</span>
-                            </div>
-                        </button>
-                        <button onclick="setTheme('sunset')" class="theme-btn p-3 candy-card btn-press text-left" data-theme="sunset">
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-orange-500 to-amber-500"></div>
-                                <span class="candy-subheader text-xs">Sunset</span>
-                            </div>
+                    <div class="flex items-center justify-between">
+                        <span class="candy-body text-xs">Dark Mode</span>
+                        <button id="themeToggleBtn" onclick="toggleTheme()" class="relative w-16 h-8 rounded-full bg-gray-300 transition-colors duration-300 focus:outline-none">
+                            <div id="themeToggleCircle" class="absolute top-1 left-1 w-6 h-6 rounded-full bg-white shadow-md transition-transform duration-300 transform translate-x-0"></div>
                         </button>
                     </div>
                 </div>
@@ -539,14 +542,14 @@
                 <!-- Data Management -->
                 <div class="mt-4 p-4 candy-card">
                     <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-database" style="color: var(--candy-cyan);"></i>
+                        <i class="fas fa-database" style="color: var(--accent-cyan);"></i>
                         <h4 class="candy-subheader text-sm">Data Management</h4>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <button onclick="openDataTransferModal()" class="flex-1 candy-btn candy-btn-cyan px-4 py-2 text-xs btn-press">
                             <i class="fas fa-download mr-1"></i> Backup/Restore
                         </button>
-                        <button onclick="clearAllData()" class="flex-1 candy-btn px-4 py-2 text-xs btn-press" style="background: linear-gradient(180deg, #ff6b6b 0%, #ff8e8e 50%, #ff6b6b 100%); box-shadow: 0 4px 0 var(--navy-outline), 0 8px 16px rgba(255, 107, 107, 0.3);">
+                        <button onclick="clearAllData()" class="flex-1 candy-btn px-4 py-2 text-xs btn-press" style="background: linear-gradient(180deg, #ff6b6b 0%, #ff8e8e 50%, #ff6b6b 100%); box-shadow: 0 4px 0 var(--border-color), 0 8px 16px rgba(255, 107, 107, 0.3);">
                             <i class="fas fa-trash mr-1"></i> Clear Data
                         </button>
                     </div>
@@ -1942,80 +1945,46 @@
                         settingsSoundText.textContent = audioMuted ? "Sound Off" : "Sound On";
                     }
                     
-                    // Update theme button states
-                    const themeColors = {
-                        'default': 'border-rose-500',
-                        'ocean': 'border-cyan-500',
-                        'forest': 'border-emerald-500',
-                        'sunset': 'border-orange-500'
-                    };
+                    // Update theme toggle button state
+                    const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+                    const toggleBtn = document.getElementById('themeToggleBtn');
+                    const toggleCircle = document.getElementById('themeToggleCircle');
                     
-                    document.querySelectorAll('.theme-btn').forEach(btn => {
-                        const theme = btn.getAttribute('data-theme');
-                        // Remove all theme border colors
-                        Object.values(themeColors).forEach(colorClass => {
-                            btn.classList.remove(colorClass);
-                        });
-                        
-                        if (theme === currentTheme) {
-                            btn.classList.add(themeColors[theme]);
-                            btn.classList.remove('border-slate-700');
+                    if (toggleBtn && toggleCircle) {
+                        if (isDark) {
+                            toggleBtn.style.background = 'var(--accent-violet)';
+                            toggleCircle.style.transform = 'translateX(32px)';
                         } else {
-                            btn.classList.add('border-slate-700');
+                            toggleBtn.style.background = '#9ca3af';
+                            toggleCircle.style.transform = 'translateX(0)';
                         }
-                    });
+                    }
                 }
 
-                let currentTheme = 'default';
+                let currentTheme = 'dark';
 
-                const THEMES = {
-                    default: {
-                        primary: 'from-rose-500 via-pink-500 to-amber-400',
-                        accent: 'rose',
-                        glow: 'rgba(234, 179, 8, 0.65)'
-                    },
-                    ocean: {
-                        primary: 'from-cyan-500 via-blue-500 to-indigo-500',
-                        accent: 'cyan',
-                        glow: 'rgba(6, 182, 212, 0.65)'
-                    },
-                    forest: {
-                        primary: 'from-emerald-500 via-green-500 to-teal-500',
-                        accent: 'emerald',
-                        glow: 'rgba(16, 185, 129, 0.65)'
-                    },
-                    sunset: {
-                        primary: 'from-orange-500 via-amber-500 to-red-500',
-                        accent: 'orange',
-                        glow: 'rgba(249, 115, 22, 0.65)'
-                    }
-                };
-
-                function setTheme(themeName) {
-                    if (!THEMES[themeName]) return;
+                function toggleTheme() {
+                    const html = document.documentElement;
+                    const currentAttr = html.getAttribute('data-theme');
+                    const newTheme = currentAttr === 'light' ? 'dark' : 'light';
                     
-                    currentTheme = themeName;
-                    const theme = THEMES[themeName];
-                    
-                    // Apply theme to gradient elements
-                    const gradientElements = document.querySelectorAll('.bg-gradient-to-r');
-                    gradientElements.forEach(el => {
-                        el.classList.remove('from-rose-500', 'via-pink-500', 'to-amber-400', 
-                                            'from-cyan-500', 'via-blue-500', 'to-indigo-500',
-                                            'from-emerald-500', 'via-green-500', 'to-teal-500',
-                                            'from-orange-500', 'via-amber-500', 'to-red-500');
-                        
-                        const colors = theme.primary.split(' ');
-                        el.classList.add(colors[0], colors[1], colors[2]);
-                    });
-                    
-                    // Update theme button states
-                    updateSettingsUI();
+                    html.setAttribute('data-theme', newTheme);
+                    currentTheme = newTheme;
                     
                     // Save theme preference
-                    localStorage.setItem('pokemon_radar_theme', themeName);
+                    localStorage.setItem('pokemon_radar_theme', newTheme);
                     
-                    showNotification('Theme Changed', `Applied ${themeName.charAt(0).toUpperCase() + themeName.slice(1)} theme`, 'success');
+                    // Update UI
+                    updateSettingsUI();
+                    
+                    showNotification('Theme Changed', `Switched to ${newTheme.charAt(0).toUpperCase() + newTheme.slice(1)} mode`, 'success');
+                }
+
+                function loadTheme() {
+                    const savedTheme = localStorage.getItem('pokemon_radar_theme') || 'dark';
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                    currentTheme = savedTheme;
+                    updateSettingsUI();
                 }
 
                 function clearAllData() {
@@ -3804,10 +3773,7 @@
                                 }
                                 
                                 // Load saved theme
-                                const savedTheme = localStorage.getItem('pokemon_radar_theme');
-                                if (savedTheme && THEMES[savedTheme]) {
-                                    setTheme(savedTheme);
-                                }
+                                loadTheme();
                                 
                                 loadSavedProgress();
                                 buildWheelSectors();
