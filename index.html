@@ -39,6 +39,7 @@
             .glow-epic { box-shadow: 0 0 20px rgba(168, 85, 247, 0.45); }
             .glow-legendary { box-shadow: 0 0 25px rgba(234, 179, 8, 0.65); animation: goldPulse 2s infinite; }
             .glow-shiny { box-shadow: 0 0 30px rgba(236, 72, 153, 0.75); animation: pinkPulse 2s infinite; }
+            .glow-legendary-special { box-shadow: 0 0 40px rgba(234, 179, 8, 0.9), 0 0 80px rgba(255, 215, 0, 0.6); animation: legendaryAura 1.5s infinite; }
 
             @keyframes goldPulse {
                 0%, 100% { box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); }
@@ -47,6 +48,36 @@
             @keyframes pinkPulse {
                 0%, 100% { box-shadow: 0 0 15px rgba(236, 72, 153, 0.4); }
                 50% { box-shadow: 0 0 25px rgba(236, 72, 153, 0.85); }
+            }
+            @keyframes legendaryAura {
+                0%, 100% { 
+                    box-shadow: 0 0 40px rgba(234, 179, 8, 0.9), 0 0 80px rgba(255, 215, 0, 0.6), 0 0 120px rgba(255, 255, 255, 0.3);
+                    transform: scale(1);
+                }
+                50% { 
+                    box-shadow: 0 0 60px rgba(234, 179, 8, 1), 0 0 100px rgba(255, 215, 0, 0.8), 0 0 150px rgba(255, 255, 255, 0.5);
+                    transform: scale(1.05);
+                }
+            }
+            @keyframes legendaryEntry {
+                0% { 
+                    opacity: 0;
+                    transform: scale(0.5) rotate(-180deg);
+                    filter: brightness(0);
+                }
+                50% {
+                    opacity: 0.8;
+                    transform: scale(1.2) rotate(10deg);
+                    filter: brightness(1.5);
+                }
+                100% { 
+                    opacity: 1;
+                    transform: scale(1) rotate(0deg);
+                    filter: brightness(1);
+                }
+            }
+            .legendary-entry-animation {
+                animation: legendaryEntry 1.5s ease-out forwards;
             }
 
             /* Scanline Overlay for Retro Radar Vibe */
@@ -93,6 +124,47 @@
     </head>
     <body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white pb-16 md:pb-0">
         <div class="scanlines"></div>
+
+        <!-- EPIC LOADING SCREEN -->
+        <div id="loadingScreen" class="fixed inset-0 z-[100] bg-slate-950 flex flex-col items-center justify-center">
+            <div class="absolute inset-0 overflow-hidden">
+                <!-- Animated background particles -->
+                <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-rose-950"></div>
+                <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-rose-600/20 rounded-full blur-3xl animate-pulse"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 0.5s;"></div>
+            </div>
+            
+            <div class="relative z-10 flex flex-col items-center">
+                <!-- Radar animation -->
+                <div class="relative w-48 h-48 mb-8">
+                    <div class="absolute inset-0 border-4 border-rose-600/30 rounded-full animate-spin" style="animation-duration: 3s;"></div>
+                    <div class="absolute inset-4 border-4 border-purple-600/30 rounded-full animate-spin" style="animation-duration: 2s; animation-direction: reverse;"></div>
+                    <div class="absolute inset-8 border-4 border-amber-500/30 rounded-full animate-spin" style="animation-duration: 4s;"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-2 h-2 bg-rose-500 rounded-full animate-ping"></div>
+                    </div>
+                    <!-- Radar sweep -->
+                    <div class="absolute inset-0 rounded-full overflow-hidden">
+                        <div class="absolute top-1/2 left-1/2 w-1/2 h-1 bg-gradient-to-r from-transparent via-rose-500 to-transparent origin-left animate-spin" style="animation-duration: 2s;"></div>
+                    </div>
+                </div>
+                
+                <!-- Logo -->
+                <h1 class="heading-font text-4xl md:text-5xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 mb-4 animate-pulse">
+                    POKÉMON RADAR
+                </h1>
+                <p class="text-slate-400 text-sm tracking-widest uppercase mb-8">Elite Edition</p>
+                
+                <!-- Loading bar -->
+                <div class="w-64 h-2 bg-slate-800 rounded-full overflow-hidden mb-4">
+                    <div id="loadingBar" class="h-full bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 rounded-full transition-all duration-300" style="width: 0%;"></div>
+                </div>
+                
+                <!-- Loading text -->
+                <p id="loadingText" class="text-slate-500 text-xs tracking-wider">Initializing quantum radar...</p>
+            </div>
+        </div>
 
         <!-- AUDIO TOGGLE, SUPPORT & DATA TOOLS -->
         <div class="fixed top-4 right-4 z-50 flex flex-row gap-2 items-center">
@@ -920,6 +992,28 @@
                     }
                 };
 
+                // Legendary and Mythical Pokemon List for Special Encounters
+                const LEGENDARY_MYTHICAL_POKEMON = [
+                    // Gen 1 Legendaries
+                    150, 151,  // Mewtwo, Mew
+                    // Gen 2 Legendaries  
+                    243, 244, 245, 249, 250, 251,  // Raikou, Entei, Suicune, Lugia, Ho-Oh, Celebi
+                    // Gen 3 Legendaries
+                    377, 378, 379, 380, 381, 382, 383, 384, 385, 386,  // Regirock, Regice, Registeel, Latias, Latios, Kyogre, Groudon, Rayquaza, Jirachi, Deoxys
+                    // Gen 4 Legendaries
+                    480, 481, 482, 483, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493,  // Uxie, Mesprit, Azelf, Dialga, Palkia, Heatran, Regigigas, Giratina, Cresselia, Phione, Manaphy, Darkrai, Shaymin, Arceus
+                    // Gen 5 Legendaries
+                    494, 638, 639, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649,  // Victini, Cobalion, Terrakion, Virizion, Tornadus, Thundurus, Landorus, Reshiram, Zekrom, Kyurem, Keldeo, Meloetta, Genesect
+                    // Gen 6 Legendaries
+                    716, 717, 718, 719, 720, 721,  // Xerneas, Yveltal, Zygarde, Diancie, Hoopa, Volcanion
+                    // Gen 7 Legendaries
+                    772, 773, 774, 785, 786, 787, 788, 789, 790, 791, 792, 793, 794, 795, 796, 797, 798, 799,  // Type: Null, Silvally, Tapu Koko, Tapu Lele, Tapu Bulu, Tapu Fini, Cosmog, Cosmoem, Solgaleo, Lunala, Necrozma, Magearna, Marshadow, Zeraora, Meltan, Melmetal
+                    // Gen 8 Legendaries
+                    880, 881, 882, 883, 884, 887, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898,  // Zacian, Zamazenta, Eternatus, Kubfu, Urshifu, Zarude, Regieleki, Regidrago, Glastrier, Spectrier, Calyrex, Enamorus, Chien-Pao, Wo-Chien, Ting-Lu, Chi-Yu, Roaring Moon, Iron Valiant
+                    // Gen 9 Legendaries
+                    898, 899, 900, 901, 902, 903, 904, 905, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025  // Koraidon, Miraidon, Wo-Chien, Chien-Pao, Ting-Lu, Chi-Yu, Roaring Moon, Iron Valiant, Walking Wake, Iron Leaves, Dipplin, Archaludon, Hydrapple, Okidogi, Munkidori, Fezandipiti, Ogerpon, Carmorine, Gouging Fire, Raging Bolt, Iron Boulder, Iron Crown, Iron Jugulis, Iron Moth, Iron Hands, Iron Thorns, Iron Treads, Terapagos, Pecharunt
+                ];
+
                 const LEVELUP_MOVES = {
                     1: {1:["tackle","growl"],3:["vine-whip"],6:["growl"],9:["leech-seed"],12:["razor-leaf"],15:["sleep-powder"],20:["seed-bomb"],25:["take-down"],32:["solar-beam"]},
                     4: {1:["scratch","growl"],4:["ember"],8:["smokescreen"],12:["dragon-rage"],17:["fire-fang"],21:["slash"],25:["flamethrower"],30:["fire-spin"],36:["dragon-claw"]},
@@ -1250,7 +1344,10 @@
 
                 function saveProgressLocal() {
                     try {
-                        localStorage.setItem(SAVE_KEY, JSON.stringify(normalizeSaveState(gameState)));
+                        const normalizedState = normalizeSaveState(gameState);
+                        const jsonStr = JSON.stringify(normalizedState);
+                        const encrypted = CryptoJS.AES.encrypt(jsonStr, 'pokemon-radar-secret-key-2024').toString();
+                        localStorage.setItem(SAVE_KEY, encrypted);
                     } catch (e) {
                         console.warn('Local save failed:', e);
                     }
@@ -1264,11 +1361,27 @@
                     try {
                         const raw = localStorage.getItem(SAVE_KEY);
                         if (raw) {
-                            const parsed = JSON.parse(raw);
-                            const normalized = normalizeSaveState(parsed);
-                            if (normalized.pokedex && normalized.balls) {
-                                Object.assign(gameState, normalized);
-                                assignPokemonUids();
+                            // Try to decrypt first (new encrypted format)
+                            try {
+                                const decrypted = CryptoJS.AES.decrypt(raw, 'pokemon-radar-secret-key-2024').toString(CryptoJS.enc.Utf8);
+                                const parsed = JSON.parse(decrypted);
+                                const normalized = normalizeSaveState(parsed);
+                                if (normalized.pokedex && normalized.balls) {
+                                    Object.assign(gameState, normalized);
+                                    assignPokemonUids();
+                                }
+                            } catch (decryptError) {
+                                // If decryption fails, try legacy format (plain JSON)
+                                try {
+                                    const parsed = JSON.parse(raw);
+                                    const normalized = normalizeSaveState(parsed);
+                                    if (normalized.pokedex && normalized.balls) {
+                                        Object.assign(gameState, normalized);
+                                        assignPokemonUids();
+                                    }
+                                } catch (legacyError) {
+                                    console.warn('Load save failed (both formats):', decryptError, legacyError);
+                                }
                             }
                         }
                     } catch (e) {
@@ -1801,21 +1914,41 @@
                     let landedSectorIndex = Math.floor(stopAngle / anglePerWedge);
                     let landedSector = currentSectors[landedSectorIndex];
 
-                    processEncounterResult(landedSector);
+                    // 1 in 200 chance for legendary/mythical encounter
+                    const legendaryChance = Math.random();
+                    const isLegendaryEncounter = legendaryChance < (1 / 200);
+
+                    processEncounterResult(landedSector, isLegendaryEncounter);
                 };
 
-                async function processEncounterResult(sector) {
-                    const rarity = sector.rarity;
+                async function processEncounterResult(sector, isLegendaryEncounter = false) {
                     document.getElementById('wildPokemonLoading').classList.remove('hidden');
                     document.getElementById('wildPokemonGraphic').classList.add('hidden');
                     
-                    const basicId = getWedgePokemonId(rarity);
-                    const pokemon = await fetchPokemonData(basicId);
+                    let pokemon;
+                    let rarity;
+                    let isSpecialLegendary = false;
+
+                    if (isLegendaryEncounter) {
+                        // Get random legendary/mythical pokemon
+                        const legendaryId = LEGENDARY_MYTHICAL_POKEMON[Math.floor(Math.random() * LEGENDARY_MYTHICAL_POKEMON.length)];
+                        pokemon = await fetchPokemonData(legendaryId);
+                        rarity = 'Legendary';
+                        isSpecialLegendary = true;
+                        
+                        // Force level 50 for special legendary encounters
+                        pokemon.level = 50;
+                    } else {
+                        rarity = sector.rarity;
+                        const basicId = getWedgePokemonId(rarity);
+                        pokemon = await fetchPokemonData(basicId);
+                    }
 
                     document.getElementById('wildPokemonLoading').classList.add('hidden');
                     document.getElementById('wildPokemonGraphic').classList.remove('hidden');
 
                     pokemon.rarity = rarity;
+                    pokemon.isSpecialLegendary = isSpecialLegendary;
                     gameState.currentEncounter = pokemon;
                     gameState.encounterShiny = (Math.random() < 0.05);
 
@@ -1827,7 +1960,14 @@
                     const detailsEl = document.getElementById('wildPokemonDetails');
                     const platformEl = document.getElementById('pokemonPlatform');
 
-                    if (rarity === 'Legendary') {
+                    if (isSpecialLegendary) {
+                        // Special legendary encounter with custom animation
+                        encounterTag.classList.add('bg-yellow-500/10', 'text-yellow-400', 'border-yellow-500/30');
+                        encounterTag.innerHTML = `<i class="fas fa-star mr-1"></i> LEGENDARY APPEARANCE!`;
+                        platformEl.className = "absolute bottom-6 w-32 h-6 bg-yellow-500/30 rounded-full blur-lg glow-legendary-special";
+                        graphicEl.classList.add('legendary-entry-animation');
+                        showNotification("LEGENDARY APPEARED!", "A rare Legendary Pokémon has appeared!", "shiny");
+                    } else if (rarity === 'Legendary') {
                         encounterTag.classList.add('bg-yellow-500/10', 'text-yellow-400', 'border-yellow-500/30');
                         platformEl.className = "absolute bottom-6 w-32 h-6 bg-yellow-500/20 rounded-full blur-md animate-pulse";
                     } else if (rarity === 'Epic') {
@@ -1844,7 +1984,9 @@
                     let targetStruck = (rarity === gameState.wheel.targetRarity);
                     let targetBonusMessage = targetStruck ? "⚡ TARGET FOCUS MATCHED (+100% Coins!) ⚡" : "";
 
-                    encounterTag.innerHTML = `<i class="fas fa-satellite-dish mr-1"></i> Radar Locked: ${rarity}`;
+                    if (!isSpecialLegendary) {
+                        encounterTag.innerHTML = `<i class="fas fa-satellite-dish mr-1"></i> Radar Locked: ${rarity}`;
+                    }
                     
                     if (gameState.encounterShiny) {
                         nameEl.innerHTML = `<i class="fas fa-sparkles text-pink-500 animate-spin"></i> SHINY ${pokemon.name.toUpperCase()} <i class="fas fa-sparkles text-pink-500"></i>`;
@@ -1855,9 +1997,18 @@
                         graphicEl.className = "w-36 h-36 object-contain z-10 transform translate-y-2 transition-all duration-300 opacity-100";
                         graphicEl.style.filter = "none";
                     }
+
+                    // Remove animation class after animation completes
+                    setTimeout(() => {
+                        graphicEl.classList.remove('legendary-entry-animation');
+                    }, 1500);
                     
                     graphicEl.src = pokemon.sprite;
-                    detailsEl.innerHTML = `<span class="text-slate-300 font-bold">Type:</span> ${pokemon.type1.toUpperCase()}${pokemon.type2 ? ' / ' + pokemon.type2.toUpperCase() : ''} | <span class="text-slate-300 font-bold">HP:</span> ${pokemon.hp}<br><span class="text-yellow-400 font-extrabold text-[9px]">${targetBonusMessage}</span>`;
+                    
+                    // Show level for special legendary encounters
+                    const levelText = isSpecialLegendary ? ` | <span class="text-slate-300 font-bold">Level:</span> 50` : ` | <span class="text-slate-300 font-bold">HP:</span> ${pokemon.hp}`;
+                    const catchRateText = isSpecialLegendary ? ` | <span class="text-emerald-400 font-extrabold text-[9px]">100% CATCH RATE!</span>` : '';
+                    detailsEl.innerHTML = `<span class="text-slate-300 font-bold">Type:</span> ${pokemon.type1.toUpperCase()}${pokemon.type2 ? ' / ' + pokemon.type2.toUpperCase() : ''}${levelText}<br><span class="text-yellow-400 font-extrabold text-[9px]">${targetBonusMessage}</span>${catchRateText}`;
 
                     const catchBtn = document.getElementById('catchBtn');
                     catchBtn.disabled = false;
@@ -1886,6 +2037,14 @@
                     else { catchPhrase = "GOOD LOCK"; accuracyModifier = 1.0; playBeep(); }
 
                     const pokemon = gameState.currentEncounter;
+                    
+                    // Special legendary encounters have 100% catch rate
+                    if (pokemon.isSpecialLegendary) {
+                        catchPhrase = "LEGENDARY CAPTURE GUARANTEED!";
+                        accuracyModifier = 999.0; // Effectively 100% catch rate
+                        playSuccessCapture();
+                    }
+                    
                     let baseRate = 0.50; 
                     if (pokemon.rarity === 'Rare') baseRate = 0.35;
                     if (pokemon.rarity === 'Epic') baseRate = 0.18;
@@ -3026,13 +3185,48 @@
                 // BOOTSTRAP INIT
                 // ==========================================
                 window.onload = function() {
-                    loadSavedProgress();
-                    buildWheelSectors();
-                    drawWheel(); // Initial draw only, no infinite requestAnimationFrame loop!
-                    updateUI();
-                    updateTargetRarityObjective();
-                    renderRoadmap();
-                    renderHeldItemsShop();
+                    const loadingScreen = document.getElementById('loadingScreen');
+                    const loadingBar = document.getElementById('loadingBar');
+                    const loadingText = document.getElementById('loadingText');
+                    
+                    const loadingSteps = [
+                        { progress: 20, text: 'Initializing quantum radar...' },
+                        { progress: 40, text: 'Calibrating frequency sensors...' },
+                        { progress: 60, text: 'Loading Pokémon database...' },
+                        { progress: 80, text: 'Decrypting save data...' },
+                        { progress: 100, text: 'System ready!' }
+                    ];
+                    
+                    let currentStep = 0;
+                    
+                    const loadingInterval = setInterval(() => {
+                        if (currentStep < loadingSteps.length) {
+                            const step = loadingSteps[currentStep];
+                            loadingBar.style.width = step.progress + '%';
+                            loadingText.textContent = step.text;
+                            currentStep++;
+                        } else {
+                            clearInterval(loadingInterval);
+                            
+                            // Final initialization
+                            setTimeout(() => {
+                                loadSavedProgress();
+                                buildWheelSectors();
+                                drawWheel();
+                                updateUI();
+                                updateTargetRarityObjective();
+                                renderRoadmap();
+                                renderHeldItemsShop();
+                                
+                                // Hide loading screen with fade out
+                                loadingScreen.style.transition = 'opacity 0.5s ease-out';
+                                loadingScreen.style.opacity = '0';
+                                setTimeout(() => {
+                                    loadingScreen.style.display = 'none';
+                                }, 500);
+                            }, 500);
+                        }
+                    }, 400);
                 };
 
             })();
