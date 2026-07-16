@@ -24,6 +24,61 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.0/crypto-js.min.js"></script>
 
         <style>
+        /* ══════════════════════════════════════════════════════
+           THEME SYSTEM — CSS Custom Properties
+           setTheme() swaps body[data-theme]; CSS handles the rest.
+        ══════════════════════════════════════════════════════ */
+        body, body[data-theme="default"] {
+            --t1: #f43f5e; --t2: #ec4899; --t3: #f59e0b;
+            --tglow: rgba(244,63,94,0.45);
+            --tsolid: #f43f5e;
+        }
+        body[data-theme="ocean"] {
+            --t1: #06b6d4; --t2: #3b82f6; --t3: #6366f1;
+            --tglow: rgba(6,182,212,0.45);
+            --tsolid: #06b6d4;
+        }
+        body[data-theme="forest"] {
+            --t1: #10b981; --t2: #22c55e; --t3: #14b8a6;
+            --tglow: rgba(16,185,129,0.45);
+            --tsolid: #10b981;
+        }
+        body[data-theme="sunset"] {
+            --t1: #f97316; --t2: #f59e0b; --t3: #ef4444;
+            --tglow: rgba(249,115,22,0.45);
+            --tsolid: #f97316;
+        }
+        /* Elements that auto-respond when data-theme changes */
+        #xpBar {
+            background: linear-gradient(to right, var(--t1), var(--t2)) !important;
+            transition: width 0.3s ease;
+        }
+        .theme-xp-bar {
+            background: linear-gradient(to right, var(--t1), var(--t2)) !important;
+        }
+        .theme-grad-btn {
+            background: linear-gradient(135deg, var(--t1), var(--t2)) !important;
+            box-shadow: 0 4px 20px var(--tglow);
+            transition: filter 0.2s, box-shadow 0.2s, transform 0.15s;
+        }
+        .theme-grad-btn:hover {
+            filter: brightness(1.13);
+            box-shadow: 0 6px 28px var(--tglow);
+            transform: translateY(-1px);
+        }
+        .nav-btn.active {
+            background: linear-gradient(135deg, var(--t1), var(--t2)) !important;
+            box-shadow: 0 4px 18px var(--tglow) !important;
+            color: white !important;
+            border-color: transparent !important;
+        }
+        .vibe-title {
+            background-image: linear-gradient(to right, var(--t1), var(--t2), var(--t3)) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            color: transparent !important;
+        }
+
             body {
                 font-family: 'Outfit', sans-serif;
                 background-color: #05070f;
@@ -359,10 +414,10 @@
                     <div class="p-4 rounded-2xl" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
                         <div class="flex items-center justify-between mb-3">
                             <div class="flex items-center gap-2">
-                                <i class="fas fa-palette text-purple-400 text-sm"></i>
+                                <i class="fas fa-palette text-sm" style="color:var(--tsolid)"></i>
                                 <span class="text-xs font-bold text-white">Accent Theme</span>
                             </div>
-                            <span id="activeThemeLabel" class="text-[9px] uppercase tracking-widest font-black px-2 py-0.5 rounded-full" style="background:rgba(124,58,237,0.25);color:#a78bfa;border:1px solid rgba(124,58,237,0.4);">Rose</span>
+                            <span id="activeThemeLabel" class="text-[9px] uppercase tracking-widest font-black px-2 py-0.5 rounded-full transition-all duration-300" style="background:var(--tglow);color:var(--tsolid);border:1px solid var(--tsolid);">Rose</span>
                         </div>
                         <div class="grid grid-cols-2 gap-2">
                             <!-- Rose -->
@@ -430,7 +485,7 @@
                 </div>
 
                 <div class="px-5 pb-5">
-                    <button onclick="closeSettingsModal()" class="w-full py-3 rounded-2xl text-sm font-black text-white tracking-wider transition" style="background:linear-gradient(135deg,#7c3aed,#ec4899);">
+                    <button onclick="closeSettingsModal()" class="w-full py-3 rounded-2xl text-sm font-black text-white tracking-wider theme-grad-btn">
                         Done
                     </button>
                 </div>
@@ -737,7 +792,7 @@
                                     <h3 class="text-md font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 uppercase tracking-widest">Endless Battle Simulation</h3>
                                     <p class="text-xs text-slate-400 mt-1 max-w-md">Deploy your partner against dynamically scaled, generation-appropriate adversaries. Rewards scale continuously according to your partner's level!</p>
                                 </div>
-                                <button onclick="startUnlimitedMatch()" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition shadow-lg shrink-0">
+                                <button onclick="startUnlimitedMatch()" class="px-6 py-3 theme-grad-btn text-white font-bold text-xs uppercase tracking-wider rounded-xl shrink-0">
                                     Enter Simulation (50 Coins)
                                 </button>
                             </div>
@@ -1274,6 +1329,69 @@
                     898, 899, 900, 901, 902, 903, 904, 905, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025  // Koraidon, Miraidon, Wo-Chien, Chien-Pao, Ting-Lu, Chi-Yu, Roaring Moon, Iron Valiant, Walking Wake, Iron Leaves, Dipplin, Archaludon, Hydrapple, Okidogi, Munkidori, Fezandipiti, Ogerpon, Carmorine, Gouging Fire, Raging Bolt, Iron Boulder, Iron Crown, Iron Jugulis, Iron Moth, Iron Hands, Iron Thorns, Iron Treads, Terapagos, Pecharunt
                 ];
 
+
+                // ─────────────────────────────────────────────────────────────────
+                // TYPE_MOVE_POOLS — type-appropriate moves by power tier.
+                // Used by applyLevelUpMoves() for Pokémon without explicit tables.
+                // Only contains keys confirmed in MOVES_DB.
+                // ─────────────────────────────────────────────────────────────────
+                const TYPE_MOVE_POOLS = {
+                    normal:   { early:['quick-attack','headbutt','swift','rapid-spin','fury-swipes','double-slap'],
+                                mid:  ['body-slam','slash','take-down','covet','rollout'],
+                                late: ['hyper-beam','giga-impact'] },
+                    fire:     { early:['ember','fire-spin','flame-charge','fire-fang'],
+                                mid:  ['flame-wheel','fire-punch','flamethrower'],
+                                late: ['fire-blast','flare-blitz','overheat'] },
+                    water:    { early:['water-gun','bubble','water-pulse'],
+                                mid:  ['surf','aqua-tail','waterfall'],
+                                late: ['hydro-pump','origin-pulse'] },
+                    grass:    { early:['vine-whip','razor-leaf','absorb','bullet-seed'],
+                                mid:  ['mega-drain','seed-bomb','giga-drain','energy-ball'],
+                                late: ['solar-beam','power-whip','leaf-storm'] },
+                    electric: { early:['thunder-shock','nuzzle','spark','electro-ball'],
+                                mid:  ['discharge','thunderbolt','thunder-fang'],
+                                late: ['thunder','wild-charge','zap-cannon'] },
+                    ice:      { early:['icy-wind','aurora-beam','ice-shard'],
+                                mid:  ['ice-beam','ice-fang','avalanche'],
+                                late: ['blizzard','freeze-dry','glaciate'] },
+                    fighting: { early:['double-kick','low-kick','karate-chop'],
+                                mid:  ['seismic-toss','cross-chop','bulk-up'],
+                                late: ['close-combat','focus-blast','superpower'] },
+                    poison:   { early:['poison-sting','acid','sludge'],
+                                mid:  ['sludge-bomb','poison-jab','cross-poison','venoshock'],
+                                late: ['gunk-shot','acid-spray'] },
+                    ground:   { early:['mud-slap','mud-bomb','bulldoze','magnitude'],
+                                mid:  ['dig','earth-power','bone-club'],
+                                late: ['earthquake','stomping-tantrum'] },
+                    flying:   { early:['gust','peck','wing-attack','aerial-ace'],
+                                mid:  ['air-slash','fly','drill-peck','pluck'],
+                                late: ['brave-bird','hurricane','sky-attack'] },
+                    psychic:  { early:['confusion','psybeam','zen-headbutt'],
+                                mid:  ['psychic','extrasensory','psyshock'],
+                                late: ['stored-power','psycho-boost','expanding-force'] },
+                    bug:      { early:['bug-bite','string-shot','fury-cutter'],
+                                mid:  ['x-scissor','signal-beam','struggle-bug'],
+                                late: ['megahorn','bug-buzz','attack-order'] },
+                    rock:     { early:['rock-throw','rock-blast','rollout'],
+                                mid:  ['power-gem','ancient-power','rock-slide'],
+                                late: ['stone-edge','head-smash','rock-wrecker'] },
+                    ghost:    { early:['lick','astonish','shadow-sneak','night-shade'],
+                                mid:  ['shadow-ball','hex','confuse-ray'],
+                                late: ['phantom-force','shadow-force','poltergeist'] },
+                    dragon:   { early:['dragon-rage','twister'],
+                                mid:  ['dragon-claw','dragon-pulse','aqua-tail'],
+                                late: ['outrage','draco-meteor','dragon-rush'] },
+                    dark:     { early:['bite','feint-attack','sucker-punch'],
+                                mid:  ['crunch','night-slash','assurance','dark-pulse'],
+                                late: ['night-daze','wicked-blow','fiery-wrath'] },
+                    steel:    { early:['metal-claw','bullet-punch'],
+                                mid:  ['iron-tail','iron-head','flash-cannon','smart-strike'],
+                                late: ['meteor-mash','steel-beam','sunsteel-strike'] },
+                    fairy:    { early:['disarming-voice','charm','baby-doll-eyes'],
+                                mid:  ['dazzling-gleam','draining-kiss','moonblast'],
+                                late: ['play-rough','light-of-ruin','sparkling-aria'] }
+                };
+
                 const LEVELUP_MOVES = {
                     1: {1:["tackle","growl"],3:["vine-whip"],6:["growl"],9:["leech-seed"],12:["razor-leaf"],15:["sleep-powder"],20:["seed-bomb"],25:["take-down"],32:["solar-beam"]},
                     4: {1:["scratch","growl"],4:["ember"],8:["smokescreen"],12:["dragon-rage"],17:["fire-fang"],21:["slash"],25:["flamethrower"],30:["fire-spin"],36:["dragon-claw"]},
@@ -1371,6 +1489,43 @@
                     906: {1:["scratch","growl"],5:["vine-whip"],9:["razor-leaf"],13:["bite"],17:["seed-bomb"],21:["body-slam"],25:["energy-ball"]},
                     909: {1:["tackle","leer"],5:["ember"],9:["bite"],13:["flame-charge"],17:["headbutt"],21:["flamethrower"],25:["crunch"]},
                     912: {1:["pound","growl"],5:["water-gun"],9:["quick-attack"],13:["water-pulse"],17:["icy-wind"],21:["aqua-tail"],25:["ice-beam"]}
+                    // ── Eevee line ──────────────────────────────────────────────
+                    133: {1:['tackle','growl','tail-whip'],9:['sand-attack'],16:['quick-attack'],23:['bite'],30:['swift'],36:['take-down'],42:['charm'],50:['double-edge']},
+                    134: {1:['tackle','water-gun'],9:['quick-attack'],16:['water-pulse'],23:['aqua-tail'],30:['surf'],36:['shadow-ball'],42:['hydro-pump']},
+                    135: {1:['tackle','thunder-shock'],9:['quick-attack'],16:['thunder-wave'],23:['discharge'],30:['thunderbolt'],36:['shadow-ball'],42:['thunder']},
+                    136: {1:['tackle','ember'],9:['quick-attack'],16:['fire-spin'],23:['fire-fang'],30:['flamethrower'],36:['shadow-ball'],42:['fire-blast']},
+                    196: {1:['tackle','confusion'],9:['quick-attack'],16:['psybeam'],23:['psychic'],30:['shadow-ball'],36:['swift'],42:['stored-power']},
+                    197: {1:['tackle','bite'],9:['quick-attack'],16:['feint-attack'],23:['crunch'],30:['shadow-ball'],36:['dark-pulse'],42:['night-daze']},
+                    470: {1:['tackle','razor-leaf'],9:['quick-attack'],16:['seed-bomb'],23:['giga-drain'],30:['energy-ball'],36:['leaf-storm']},
+                    471: {1:['tackle','icy-wind'],9:['quick-attack'],16:['aurora-beam'],23:['ice-beam'],30:['blizzard'],36:['freeze-dry']},
+                    700: {1:['tackle','disarming-voice'],9:['quick-attack'],16:['charm'],23:['dazzling-gleam'],30:['moonblast'],36:['play-rough']},
+                    // ── Gen 1 notable Pokémon ────────────────────────────────────
+                    3:   {1:['tackle','growl'],4:['vine-whip'],9:['leech-seed'],12:['razor-leaf'],17:['sleep-powder'],25:['seed-bomb'],32:['take-down'],40:['solar-beam']},
+                    6:   {1:['scratch','growl'],4:['ember'],9:['smokescreen'],17:['dragon-rage'],21:['fire-fang'],28:['slash'],36:['flamethrower'],44:['fire-spin'],50:['dragon-claw']},
+                    9:   {1:['tackle','tail-whip'],4:['water-gun'],13:['bubble'],22:['bite'],31:['rapid-spin'],42:['aqua-tail'],48:['skull-bash'],50:['hydro-pump']},
+                    65:  {1:['confusion','disable'],9:['psybeam'],16:['psychic'],20:['swift'],25:['psyshock'],30:['stored-power'],35:['hyper-beam']},
+                    68:  {1:['low-kick','leer'],9:['karate-chop'],16:['seismic-toss'],20:['bulk-up'],25:['cross-chop'],30:['close-combat'],35:['superpower']},
+                    94:  {1:['lick','night-shade'],4:['shadow-ball'],9:['hypnosis'],13:['hex'],17:['confuse-ray'],21:['dream-eater'],30:['shadow-force']},
+                    130: {1:['tackle','bite'],10:['twister'],20:['aqua-tail'],25:['crunch'],30:['dragon-rage'],35:['hyper-beam'],40:['outrage'],45:['hydro-pump']},
+                    131: {1:['water-gun','growl'],5:['confuse-ray'],9:['body-slam'],13:['ice-beam'],17:['blizzard'],21:['hydro-pump'],25:['dragon-pulse']},
+                    143: {1:['tackle','defense-curl'],4:['headbutt'],9:['body-slam'],13:['rest'],17:['rollout'],25:['sleep-talk'],30:['hyper-beam']},
+                    147: {1:['wrap','leer'],4:['thunder-wave'],8:['twister'],12:['dragon-rage'],16:['aqua-tail'],20:['body-slam'],24:['dragon-pulse'],28:['thunder'],32:['outrage']},
+                    149: {1:['dragon-rage','leer'],10:['twister'],15:['thunder-wave'],20:['dragon-pulse'],25:['dragon-claw'],30:['aqua-tail'],35:['wing-attack'],40:['hyper-beam'],45:['outrage']},
+                    150: {1:['confusion','disable'],9:['psychic'],13:['psybeam'],17:['swift'],21:['psycho-boost'],25:['recover'],30:['stored-power'],35:['hyper-beam']},
+                    151: {1:['pound','confusion'],10:['psychic'],20:['ancient-power'],30:['amnesia'],40:['swift'],50:['hyper-beam']},
+                    // ── Gen 2 starters ────────────────────────────────────────────
+                    152: {1:['tackle','growl'],4:['razor-leaf'],9:['body-slam'],12:['synthesis'],17:['giga-drain'],20:['reflect'],24:['solar-beam']},
+                    155: {1:['tackle','leer'],4:['ember'],9:['smokescreen'],12:['quick-attack'],17:['flame-wheel'],20:['rollout'],24:['swift'],28:['flamethrower']},
+                    158: {1:['scratch','leer'],4:['water-gun'],9:['bite'],12:['headbutt'],17:['crunch'],20:['slash'],24:['aqua-tail'],28:['hydro-pump']},
+                    // ── Gen 3 starters ────────────────────────────────────────────
+                    252: {1:['pound','leer'],4:['absorb'],9:['quick-attack'],12:['mega-drain'],17:['pursuit'],20:['energy-ball'],24:['giga-drain'],28:['solar-beam']},
+                    255: {1:['scratch','growl'],4:['ember'],9:['peck'],12:['sand-attack'],17:['fire-spin'],20:['quick-attack'],24:['flamethrower'],28:['aerial-ace'],32:['brave-bird']},
+                    258: {1:['tackle','growl'],4:['water-gun'],9:['mud-slap'],12:['rock-throw'],17:['surf'],20:['take-down'],24:['earthquake'],28:['hydro-pump']},
+                    // ── Popular Gen 4/5 ───────────────────────────────────────────
+                    282: {1:['growl','confusion'],6:['psybeam'],12:['calm-mind'],18:['psychic'],24:['dazzling-gleam'],30:['moonblast'],36:['stored-power'],42:['hyper-beam']},
+                    350: {1:['water-gun','growl'],9:['water-pulse'],17:['aqua-tail'],21:['surf'],25:['hydro-pump'],29:['ice-beam'],33:['blizzard']},
+                    445: {1:['tackle','sand-attack'],6:['dragon-rage'],13:['sand-tomb'],16:['take-down'],19:['dig'],25:['dragon-claw'],32:['crunch'],35:['earthquake'],40:['outrage']},
+                    448: {1:['quick-attack','force-palm'],8:['metal-claw'],12:['bulk-up'],16:['cross-chop'],24:['close-combat'],28:['flash-cannon'],32:['iron-head'],36:['aura-sphere']},
                 };
 
                 const HOLD_ITEMS_DB = {
@@ -1978,29 +2133,13 @@
 
                 function setTheme(themeName) {
                     if (!THEMES[themeName]) return;
-                    
                     currentTheme = themeName;
-                    const theme = THEMES[themeName];
-                    
-                    // Apply theme to gradient elements
-                    const gradientElements = document.querySelectorAll('.bg-gradient-to-r');
-                    gradientElements.forEach(el => {
-                        el.classList.remove('from-rose-500', 'via-pink-500', 'to-amber-400', 
-                                            'from-cyan-500', 'via-blue-500', 'to-indigo-500',
-                                            'from-emerald-500', 'via-green-500', 'to-teal-500',
-                                            'from-orange-500', 'via-amber-500', 'to-red-500');
-                        
-                        const colors = theme.primary.split(' ');
-                        el.classList.add(colors[0], colors[1], colors[2]);
-                    });
-                    
-                    // Update theme button states
+                    // CSS custom properties handle all theming — just swap the attribute
+                    document.body.setAttribute('data-theme', themeName);
                     updateSettingsUI();
-                    
-                    // Save theme preference
                     localStorage.setItem('pokemon_radar_theme', themeName);
-                    
-                    showNotification('Theme Changed', `Applied ${themeName.charAt(0).toUpperCase() + themeName.slice(1)} theme`, 'success');
+                    const labels = { default:'Rose', ocean:'Ocean', forest:'Forest', sunset:'Sunset' };
+                    showNotification('Theme Changed', `🎨 ${labels[themeName] || themeName} theme applied`, 'success');
                 }
 
                 function clearAllData() {
@@ -2110,7 +2249,7 @@
                     
                     const targetNav = document.getElementById(`nav-${viewName}`);
                     if (targetNav) {
-                        targetNav.className = "nav-btn active flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-gradient-to-r from-rose-600 to-pink-600 text-white border-transparent shadow-lg shadow-rose-600/10";
+                        targetNav.className = "nav-btn active flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm text-white border-transparent";
                     }
 
                     if (viewName === 'pokedex') renderPokedex();
@@ -2734,15 +2873,45 @@
                 }
 
                 function applyLevelUpMoves(pokemon) {
-                    const moveData = LEVELUP_MOVES[pokemon.id];
-                    if (!moveData) return [];
+                    if (!pokemon.moves) pokemon.moves = ['tackle', 'quick-attack'];
                     const level = pokemon.level || 1;
                     const newMoves = [];
-                    if (moveData[level]) {
+
+                    // Priority 1: explicit level-up table for this specific Pokémon
+                    const moveData = LEVELUP_MOVES[pokemon.id];
+                    if (moveData && moveData[level]) {
                         for (const move of moveData[level]) {
-                            if (!pokemon.moves.includes(move)) newMoves.push(move);
+                            if (MOVES_DB[move] && !pokemon.moves.includes(move)) {
+                                newMoves.push(move);
+                            }
                         }
                     }
+
+                    // Priority 2: type-based fallback — fires for ALL Pokémon every 3–5 levels
+                    if (newMoves.length === 0) {
+                        const interval = 3 + (pokemon.id % 3); // 3, 4, or 5 based on ID
+                        if (level % interval === 0) {
+                            const tier = level < 20 ? 'early' : level < 42 ? 'mid' : 'late';
+                            const pool = [];
+                            const types = [pokemon.type1, pokemon.type2].filter(Boolean);
+                            for (const t of types) {
+                                const tp = TYPE_MOVE_POOLS[t];
+                                if (!tp) continue;
+                                pool.push(...(tp[tier] || []));
+                                if (tier === 'mid')  pool.push(...(tp.early || []));
+                                if (tier === 'late') pool.push(...(tp.mid || []), ...(tp.early || []));
+                            }
+                            const available = [...new Set(pool)].filter(
+                                m => m && MOVES_DB[m] && !pokemon.moves.includes(m)
+                            );
+                            if (available.length > 0) {
+                                // Deterministic: same Pokémon at same level always learns same move
+                                newMoves.push(available[(pokemon.id * level) % available.length]);
+                            }
+                        }
+                    }
+
+                    // Apply — slot 4 rotates out the oldest move when full
                     for (const move of newMoves) {
                         if (pokemon.moves.length < 4) pokemon.moves.push(move);
                         else { pokemon.moves.shift(); pokemon.moves.push(move); }
@@ -3206,7 +3375,15 @@
                         }
                         if (newMoves.length > 0) {
                             const logBox2 = document.getElementById('battleLog');
-                            newMoves.forEach(m => logBox2.innerHTML += `<div class="text-cyan-400 font-bold mt-1">📖 ${fighter.name} learned <span class="text-white capitalize">${m.replace('-', ' ')}</span>!</div>`);
+                            newMoves.forEach(m => {
+                                const spec = MOVES_DB[m] || {};
+                                const TC = {fire:'#f97316',water:'#06b6d4',grass:'#22c55e',electric:'#facc15',ice:'#67e8f9',fighting:'#ef4444',poison:'#a855f7',ground:'#d97706',flying:'#818cf8',psychic:'#ec4899',bug:'#84cc16',rock:'#a78bfa',ghost:'#7c3aed',dragon:'#6366f1',dark:'#64748b',steel:'#94a3b8',fairy:'#f9a8d4',normal:'#9ca3af'};
+                                const tc = TC[spec.type] || '#a78bfa';
+                                const mn = m.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+                                const tb = spec.type ? `<span style="background:${tc}22;color:${tc};border:1px solid ${tc}55;padding:1px 5px;border-radius:4px;font-size:9px;font-weight:700;text-transform:uppercase;margin-left:4px;vertical-align:middle">${spec.type}</span>` : '';
+                                const pb = (spec.power>0) ? `<span style="color:#64748b;font-size:9px;margin-left:3px;vertical-align:middle">${spec.power}BP</span>` : '';
+                                logBox2.innerHTML += `<div class="text-cyan-400 font-bold mt-1">📖 ${fighter.name} learned <span style="color:#fff">${mn}</span>${tb}${pb}!</div>`;
+                            });
                         }
                     }
 
@@ -3393,7 +3570,7 @@
                                             <span>XP PROGRESS</span><span>${xp}/${nextLevelReq}</span>
                                         </div>
                                         <div class="w-full bg-slate-900 rounded-full h-1 overflow-hidden">
-                                            <div class="bg-gradient-to-r from-pink-500 to-rose-400 h-full transition-all duration-300" style="width: ${xpPercent}%;"></div>
+                                            <div class="theme-xp-bar h-full transition-all duration-300" style="width: ${xpPercent}%;"></div>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-3 gap-1 w-full mt-3 pt-2 border-t border-slate-900 text-[8px] font-mono text-slate-500 text-center">
@@ -3607,7 +3784,7 @@
                                 <div class="mt-1.5">
                                     <div class="flex justify-between text-[8px] font-mono text-slate-500 mb-0.5"><span>XP</span><span>${xp}/${nextLevelReq}</span></div>
                                     <div class="w-full bg-slate-900 rounded-full h-1 overflow-hidden">
-                                        <div class="bg-gradient-to-r from-emerald-500 to-cyan-400 h-full transition-all duration-300" style="width: ${xpPercent}%;"></div>
+                                        <div class="theme-xp-bar h-full transition-all duration-300" style="width: ${xpPercent}%;"></div>
                                     </div>
                                 </div>
                                 <div class="mt-2 pt-2 border-t border-slate-900">
@@ -3850,11 +4027,9 @@
                                 const savedLightMode = localStorage.getItem('pokemon_radar_lightmode');
                                 if (savedLightMode === '1') { isLightMode = true; applyLightDarkMode(true); }
 
-                                // Load saved theme
+                                // Load saved theme (always sets body[data-theme])
                                 const savedTheme = localStorage.getItem('pokemon_radar_theme');
-                                if (savedTheme && THEMES[savedTheme]) {
-                                    setTheme(savedTheme);
-                                }
+                                setTheme((savedTheme && THEMES[savedTheme]) ? savedTheme : 'default');
 
                                 loadSavedProgress();
                                 buildWheelSectors();
