@@ -232,6 +232,48 @@
             .theme-btn.is-active .theme-active-ring { display: block !important; }
             .theme-btn:not(.is-active) .theme-active-ring { display: none !important; }
 
+            /* ===== SPIN / LOCK BUTTON STATES ===== */
+            /* Active spin button uses theme gradient */
+            #spinBtn.spin-ready {
+                background: linear-gradient(135deg, var(--theme-c1), var(--theme-c2), var(--theme-c3)) !important;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 24px color-mix(in srgb, var(--theme-c1) 50%, transparent) !important;
+            }
+            #spinBtn.spin-ready:hover { filter: brightness(1.1); }
+            /* Spinning lock button glows */
+            @keyframes lock-pulse {
+                0%,100% { box-shadow: 0 0 10px 2px var(--theme-c1), inset 0 1px 0 rgba(255,255,255,0.2); }
+                50%      { box-shadow: 0 0 28px 8px var(--theme-c2), inset 0 1px 0 rgba(255,255,255,0.25); }
+            }
+            #stopBtn.lock-lit {
+                background: linear-gradient(135deg, var(--theme-c1), var(--theme-c2)) !important;
+                color: #fff !important;
+                animation: lock-pulse 1s ease-in-out infinite;
+                cursor: pointer !important;
+                border: none !important;
+            }
+
+            /* ===== THEMED ELEMENTS ===== */
+            /* Title text gradient follows theme */
+            .vibe-title {
+                background-image: linear-gradient(90deg, var(--theme-c1), var(--theme-c2), var(--theme-c3)) !important;
+            }
+            /* XP bar follows theme */
+            #xpBar {
+                background-image: linear-gradient(90deg, var(--theme-c1), var(--theme-c2)) !important;
+            }
+            /* Loading bar follows theme */
+            #loadingBar {
+                background: linear-gradient(90deg, var(--theme-c1), var(--theme-c2), var(--theme-c3)) !important;
+                box-shadow: 0 0 16px color-mix(in srgb, var(--theme-c1) 80%, transparent),
+                            0 0 6px color-mix(in srgb, var(--theme-c1) 90%, transparent) !important;
+            }
+
+            /* ===== PROFILE MODAL ===== */
+            .badge-earned  { filter: none; opacity: 1; }
+            .badge-locked  { filter: grayscale(1); opacity: 0.3; }
+            @keyframes badge-pop { 0%{transform:scale(0.5);opacity:0} 70%{transform:scale(1.15)} 100%{transform:scale(1);opacity:1} }
+            .badge-earned  { animation: badge-pop 0.4s ease both; }
+
 
             /* ===== LOADING SCREEN ===== */
             @keyframes pulseBlob {
@@ -322,6 +364,10 @@
 
         <!-- AUDIO TOGGLE, SUPPORT & SETTINGS -->
         <div class="fixed top-4 right-4 z-50 flex flex-row gap-2 items-center">
+            <!-- Profile button -->
+            <button id="profileToggleBtn" onclick="openProfileModal()" title="Trainer Profile" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-full hover:bg-slate-800 transition duration-200 focus:outline-none shadow-lg flex items-center justify-center themed-gradient" style="min-width:44px;min-height:44px;">
+                <span id="profileBtnLabel" class="text-white font-black text-xs uppercase tracking-widest leading-none">?</span>
+            </button>
             <button id="settingsToggleBtn" onclick="openSettingsModal()" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-full hover:bg-slate-800 transition duration-200 text-cyan-400 focus:outline-none shadow-lg">
                 <i class="fas fa-cog text-lg"></i>
             </button>
@@ -357,6 +403,58 @@
                     <button onclick="copyExportedData()" class="rounded-xl border border-emerald-700 px-4 py-2 text-xs font-bold uppercase tracking-wider text-emerald-400 hover:text-white">Copy Export Code</button>
                     <button onclick="importDataFromText()" class="rounded-xl bg-rose-600 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-rose-500">Import Backup</button>
                     <button onclick="closeDataTransferModal()" class="rounded-xl border border-slate-700 px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROFILE MODAL -->
+        <div id="profileModal" class="fixed inset-0 z-[70] bg-black/70 backdrop-blur-md hidden items-center justify-center p-4 overflow-y-auto">
+            <div class="w-full max-w-md rounded-3xl overflow-hidden shadow-2xl my-8" style="border:3px solid rgba(255,255,255,0.12);background:linear-gradient(160deg,#0d1220 0%,#0a0f1e 100%);">
+                <!-- Header -->
+                <div class="px-6 py-4 flex items-center justify-between themed-gradient">
+                    <div class="flex items-center gap-3">
+                        <div id="profileAvatarModal" class="w-10 h-10 rounded-full bg-white/20 border-2 border-white/40 flex items-center justify-center text-white font-black text-lg">?</div>
+                        <div>
+                            <p class="text-[9px] uppercase tracking-[0.3em] text-white/60 font-bold">Trainer Card</p>
+                            <h3 id="profileNameDisplay" class="text-base font-black text-white tracking-wide">Anonymous</h3>
+                        </div>
+                    </div>
+                    <button onclick="closeProfileModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition">
+                        <i class="fas fa-times text-sm"></i>
+                    </button>
+                </div>
+
+                <div class="p-5 space-y-4">
+                    <!-- Badge Case -->
+                    <div class="p-4 rounded-2xl" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                        <div class="flex items-center gap-2 mb-3">
+                            <i class="fas fa-certificate text-yellow-400 text-sm"></i>
+                            <span class="text-xs font-bold text-white uppercase tracking-widest">Gym Badge Case</span>
+                        </div>
+                        <div id="profileBadgeCase" class="grid grid-cols-5 gap-3"></div>
+                    </div>
+
+                    <!-- Stats row -->
+                    <div class="grid grid-cols-3 gap-3 text-center">
+                        <div class="p-3 rounded-xl" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                            <div id="profileStatBadges" class="text-xl font-black text-yellow-400">0</div>
+                            <div class="text-[9px] uppercase tracking-widest text-slate-400 font-bold mt-0.5">Badges</div>
+                        </div>
+                        <div class="p-3 rounded-xl" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                            <div id="profileStatPokemon" class="text-xl font-black text-cyan-400">0</div>
+                            <div class="text-[9px] uppercase tracking-widest text-slate-400 font-bold mt-0.5">Pokémon</div>
+                        </div>
+                        <div class="p-3 rounded-xl" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                            <div id="profileStatLevel" class="text-xl font-black text-purple-400">1</div>
+                            <div class="text-[9px] uppercase tracking-widest text-slate-400 font-bold mt-0.5">Trainer Lvl</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="px-5 pb-5">
+                    <button onclick="closeProfileModal()" class="w-full py-3 rounded-2xl text-sm font-black text-white tracking-wider transition themed-gradient">
+                        Close
+                    </button>
                 </div>
             </div>
         </div>
@@ -404,6 +502,19 @@
                                 <i class="fas fa-music text-cyan-400"></i>
                                 <span id="settingsSoundText">Sound On</span>
                             </button>
+                        </div>
+                    </div>
+
+                    <!-- Username -->
+                    <div class="p-4 rounded-2xl flex flex-col gap-3" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-id-card text-rose-400 text-sm"></i>
+                            <span class="text-xs font-bold text-white">Trainer Name</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <input id="usernameInput" type="text" maxlength="16" placeholder="Enter your name..."
+                                class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-white placeholder-slate-600 focus:outline-none focus:border-slate-600 transition"
+                                oninput="saveUsername(this.value)" />
                         </div>
                     </div>
 
@@ -709,10 +820,10 @@
 
                         <!-- CRITICAL BUTTON CONTROLS -->
                         <div class="mt-6 flex gap-3 w-full z-10">
-                            <button id="spinBtn" onclick="triggerSpin()" class="flex-1 py-4 px-6 text-white font-black uppercase rounded-2xl shadow-xl transition duration-150 tracking-wider" style="background:linear-gradient(135deg,#e11d48,#ec4899,#f43f5e);box-shadow:0 4px 20px rgba(244,63,94,0.5),inset 0 1px 0 rgba(255,255,255,0.2);text-shadow:0 1px 4px rgba(0,0,0,0.4);letter-spacing:0.1em;">
+                            <button id="spinBtn" onclick="triggerSpin()" class="flex-1 py-4 px-6 text-white font-black uppercase rounded-2xl shadow-xl transition-all duration-150 tracking-wider spin-ready" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);letter-spacing:0.1em;">
                                 <i class="fas fa-dice mr-2"></i> SPIN!
                             </button>
-                            <button id="stopBtn" onclick="triggerPrecisionStop()" class="flex-1 py-4 px-6 font-black uppercase rounded-2xl cursor-not-allowed transition duration-150 tracking-wider border" style="background:#0f1629;border-color:rgba(255,255,255,0.08);color:rgba(255,255,255,0.25);letter-spacing:0.1em;" disabled>
+                            <button id="stopBtn" onclick="triggerPrecisionStop()" class="flex-1 py-4 px-6 font-black uppercase rounded-2xl cursor-not-allowed transition-all duration-150 tracking-wider border" style="background:#0f1629;border-color:rgba(255,255,255,0.08);color:rgba(255,255,255,0.25);letter-spacing:0.1em;" disabled>
                                 <i class="fas fa-bullseye mr-2"></i> LOCK!
                             </button>
                         </div>
@@ -774,12 +885,23 @@
                             </div>
                         </div>
 
-                        <div id="journey-campaign-panel" class="space-y-4">
-                            <div class="text-center md:text-left">
-                                <h3 class="text-sm font-bold text-slate-300 uppercase tracking-widest">Regional Boss Roadmap</h3>
-                                <p class="text-xs text-slate-500">Defeating chapters unlocks new generations in your Quantum Scanner!</p>
+                        <div id="journey-campaign-panel" class="space-y-5">
+                            <!-- Normal Trainers -->
+                            <div>
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="text-[9px] font-bold uppercase tracking-widest text-slate-400 border border-slate-800 px-2 py-0.5 rounded-full">Trainers</span>
+                                    <div class="flex-1 border-t border-slate-900"></div>
+                                </div>
+                                <div id="roadmapTrainerGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3"></div>
                             </div>
-                            <div id="roadmapCampaignGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 pt-2">
+                            <!-- Gym Battles -->
+                            <div>
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="text-[9px] font-bold uppercase tracking-widest themed-chip border px-2 py-0.5 rounded-full">Gym Challenges</span>
+                                    <div class="flex-1 border-t border-slate-900"></div>
+                                    <span class="text-[9px] text-slate-500">Must clear prerequisite trainers first</span>
+                                </div>
+                                <div id="roadmapGymGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3"></div>
                             </div>
                         </div>
 
@@ -1523,7 +1645,9 @@
                         wheel: rawState.wheel || { spinning: false, currentAngle: 0, spinSpeed: 0, targetRarity: 'Common', pointerPos: 0, lastWedgeAudio: -1 },
                         currentEncounter: rawState.currentEncounter || null,
                         encounterShiny: !!rawState.encounterShiny,
-                        catchMinigame: rawState.catchMinigame || { active: false, ringScale: 1.0, contracting: true, score: 0 }
+                        catchMinigame: rawState.catchMinigame || { active: false, ringScale: 1.0, contracting: true, score: 0 },
+                        username: typeof rawState.username === 'string' ? rawState.username : "",
+                        gymBadges: Array.isArray(rawState.gymBadges) ? rawState.gymBadges : []
                     };
                     return normalized;
                 }
@@ -1546,22 +1670,24 @@
 
 
                 const CAMPAIGN_ROADMAP = [
-                    { stageId: 1, name: "Viridian Forest", trainer: "Bug Catcher Rick", pokemonId: 10, bossName: "Caterpie", level: 5, reward: 60, icon: "🐛", teamSize: 1 },
-                    { stageId: 2, name: "Pewter Gym", trainer: "Gym Leader Brock", pokemonId: 95, bossName: "Onix", level: 12, reward: 120, icon: "🪨", teamSize: 2 },
-                    { stageId: 3, name: "Cerulean Route", trainer: "Lass Haley", pokemonId: 39, bossName: "Jigglypuff", level: 18, reward: 150, icon: "🎈", teamSize: 2 },
-                    { stageId: 4, name: "Cerulean Gym", trainer: "Gym Leader Misty", pokemonId: 120, bossName: "Staryu", level: 24, reward: 180, icon: "⭐", teamSize: 2 },
-                    { stageId: 5, name: "Vermilion Gym", trainer: "Gym Leader Lt. Surge", pokemonId: 26, bossName: "Raichu", level: 32, reward: 220, icon: "⚡", teamSize: 3 },
-                    { stageId: 6, name: "Lavender Tower", trainer: "Channeler Patricia", pokemonId: 93, bossName: "Haunter", level: 40, reward: 260, icon: "👻", teamSize: 3 },
-                    { stageId: 7, name: "Celadon Gym", trainer: "Gym Leader Erika", pokemonId: 45, bossName: "Vileplume", level: 48, reward: 300, icon: "🌸", teamSize: 3 },
-                    { stageId: 8, name: "Saffron Gym", trainer: "Gym Leader Sabrina", pokemonId: 65, bossName: "Alakazam", level: 55, reward: 350, icon: "🥄", teamSize: 4 },
-                    { stageId: 9, name: "Seafoam Caverns", trainer: "Feral Articuno", pokemonId: 144, bossName: "Articuno", level: 70, reward: 500, icon: "❄️", teamSize: 4 },
-                    { stageId: 10, name: "Indigo Plateau", trainer: "Champion Lance", pokemonId: 149, bossName: "Dragonite", level: 85, reward: 800, icon: "🐉", teamSize: 4 }
+                    { stageId: 1,  name: "Viridian Forest",   trainer: "Bug Catcher Rick",        pokemonId: 10,  bossName: "Caterpie",  level: 5,  reward: 60,  icon: "🐛", teamSize: 1 },
+                    { stageId: 2,  name: "Pewter Gym",         trainer: "Gym Leader Brock",        pokemonId: 95,  bossName: "Onix",      level: 12, reward: 120, icon: "🪨", teamSize: 2, isGym: true,  badgeName: "Boulder Badge", badgeColor: "#9ca3af", badgeEmoji: "🪨" },
+                    { stageId: 3,  name: "Cerulean Route",     trainer: "Lass Haley",              pokemonId: 39,  bossName: "Jigglypuff",level: 18, reward: 150, icon: "🎈", teamSize: 2 },
+                    { stageId: 4,  name: "Cerulean Gym",       trainer: "Gym Leader Misty",        pokemonId: 120, bossName: "Staryu",    level: 24, reward: 180, icon: "⭐", teamSize: 2, isGym: true,  badgeName: "Cascade Badge", badgeColor: "#38bdf8", badgeEmoji: "💧" },
+                    { stageId: 5,  name: "Vermilion Gym",      trainer: "Gym Leader Lt. Surge",    pokemonId: 26,  bossName: "Raichu",    level: 32, reward: 220, icon: "⚡", teamSize: 3, isGym: true,  badgeName: "Thunder Badge", badgeColor: "#facc15", badgeEmoji: "⚡" },
+                    { stageId: 6,  name: "Lavender Tower",     trainer: "Channeler Patricia",      pokemonId: 93,  bossName: "Haunter",   level: 40, reward: 260, icon: "👻", teamSize: 3 },
+                    { stageId: 7,  name: "Celadon Gym",        trainer: "Gym Leader Erika",        pokemonId: 45,  bossName: "Vileplume", level: 48, reward: 300, icon: "🌸", teamSize: 3, isGym: true,  badgeName: "Rainbow Badge", badgeColor: "#34d399", badgeEmoji: "🌿" },
+                    { stageId: 8,  name: "Saffron Gym",        trainer: "Gym Leader Sabrina",      pokemonId: 65,  bossName: "Alakazam",  level: 55, reward: 350, icon: "🥄", teamSize: 4, isGym: true,  badgeName: "Marsh Badge",   badgeColor: "#c084fc", badgeEmoji: "🔮" },
+                    { stageId: 9,  name: "Seafoam Caverns",    trainer: "Feral Articuno",          pokemonId: 144, bossName: "Articuno",  level: 70, reward: 500, icon: "❄️", teamSize: 4 },
+                    { stageId: 10, name: "Indigo Plateau",     trainer: "Champion Lance",          pokemonId: 149, bossName: "Dragonite", level: 85, reward: 800, icon: "🐉", teamSize: 4 }
                 ];
 
                 let gameState = {
                     coins: 100,
                     xp: 0,
                     level: 1,
+                    username: "",
+                    gymBadges: [],
                     balls: { poke: 5, great: 0, ultra: 0, master: 0 },
                     pokedex: [],
                     pcBox: [],
@@ -1579,6 +1705,74 @@
                     battle: { active: false, bossPokemon: null, fighterPokemon: null, fighterHP: 0, bossHP: 0, fighterMaxHP: 0, bossMaxHP: 0, oranUsed: false, bossOranUsed: false },
                     dexUI: { page: 1, pageSize: 9, total: 1025, search: "", rarity: "all" }
                 };
+
+                // ==========================================
+                // PROFILE + USERNAME FUNCTIONS
+                // ==========================================
+                function saveUsername(value) {
+                    gameState.username = value.trim().substring(0, 16);
+                    updateProfileBtn();
+                    saveProgress();
+                }
+
+                function updateProfileBtn() {
+                    const btn = document.getElementById('profileBtnLabel');
+                    if (!btn) return;
+                    const name = gameState.username || '';
+                    btn.textContent = name ? name.substring(0, 2).toUpperCase() : '?';
+                    // Keep the input field in sync when called from loadSavedProgress
+                    const uInput = document.getElementById('usernameInput');
+                    if (uInput && uInput.value !== gameState.username) uInput.value = gameState.username || '';
+                }
+
+                function openProfileModal() {
+                    initAudio();
+                    playConfirmSound();
+                    // Populate name
+                    const nameDis = document.getElementById('profileNameDisplay');
+                    const avatarDis = document.getElementById('profileAvatarModal');
+                    const name = gameState.username || 'Anonymous';
+                    if (nameDis) nameDis.textContent = name;
+                    if (avatarDis) avatarDis.textContent = name.substring(0, 1).toUpperCase() || '?';
+
+                    // Stats
+                    const gymStages = CAMPAIGN_ROADMAP.filter(s => s.isGym);
+                    const earnedCount = gymStages.filter(s => gameState.gymBadges.includes(s.stageId)).length;
+                    const statBadges = document.getElementById('profileStatBadges');
+                    const statPoke   = document.getElementById('profileStatPokemon');
+                    const statLvl    = document.getElementById('profileStatLevel');
+                    if (statBadges) statBadges.textContent = earnedCount;
+                    if (statPoke)   statPoke.textContent   = gameState.pcBox ? gameState.pcBox.length : 0;
+                    if (statLvl)    statLvl.textContent    = gameState.level || 1;
+
+                    // Badge case
+                    const badgeCase = document.getElementById('profileBadgeCase');
+                    if (badgeCase) {
+                        badgeCase.innerHTML = '';
+                        gymStages.forEach(stage => {
+                            const earned = gameState.gymBadges.includes(stage.stageId);
+                            const div = document.createElement('div');
+                            div.className = 'flex flex-col items-center gap-1 ' + (earned ? 'badge-earned' : 'badge-locked');
+                            div.innerHTML = `
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center text-lg border-2 ${earned ? 'border-yellow-400/60' : 'border-slate-700'}" style="background:${earned ? 'rgba(234,179,8,0.15)' : 'rgba(255,255,255,0.03)'}">
+                                    ${stage.badgeEmoji}
+                                </div>
+                                <span class="text-[7px] font-bold text-center leading-tight ${earned ? 'text-yellow-300' : 'text-slate-600'} uppercase tracking-wide max-w-[44px] truncate">${stage.badgeName.replace(' Badge','')}</span>
+                            `;
+                            badgeCase.appendChild(div);
+                        });
+                    }
+
+                    const modal = document.getElementById('profileModal');
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+
+                function closeProfileModal() {
+                    const modal = document.getElementById('profileModal');
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
 
                 // ==========================================
                 // MODULE 2: AUDIO SYNTHESIZER
@@ -1724,6 +1918,10 @@
                         assignPokemonUids();
                         if (parsed._lightMode) { isLightMode = true; applyLightDarkMode(true); }
                         if (parsed._theme && THEMES[parsed._theme])   { currentTheme = parsed._theme; }
+                        // Restore username to input field
+                        const uInput = document.getElementById('usernameInput');
+                        if (uInput && gameState.username) uInput.value = gameState.username;
+                        updateProfileBtn();
                         console.log('[SAVE] Loaded ' + (normalized.pokedex ? normalized.pokedex.length : 0) + ' Pokémon, coins=' + normalized.coins);
                         return true;
                     }
@@ -1974,6 +2172,13 @@
                     const labels = { default:'Rose', ocean:'Ocean', forest:'Forest', sunset:'Sunset' };
                     const labelEl = document.getElementById('activeThemeLabel');
                     if (labelEl) labelEl.textContent = labels[currentTheme] || 'Rose';
+
+                    // Sync username input
+                    const uInput = document.getElementById('usernameInput');
+                    if (uInput && uInput.value !== (gameState.username || '')) uInput.value = gameState.username || '';
+
+                    // Sync profile button label
+                    updateProfileBtn();
                 }
 
                 let currentTheme = 'default';
@@ -2053,6 +2258,8 @@
                             coins: 100,
                             xp: 0,
                             level: 1,
+                            username: "",
+                            gymBadges: [],
                             balls: { poke: 5, great: 0, ultra: 0, master: 0 },
                             pokedex: [],
                             pcBox: [],
@@ -2844,44 +3051,62 @@
                     selectFighterAndBegin(teamFighters[0]);
                 };
 
+                function buildStageCard(stage) {
+                    const isUnlocked = stage.stageId <= gameState.unlockedStages;
+                    const isCleared  = stage.stageId < gameState.unlockedStages;
+                    const hasBadge   = stage.isGym && gameState.gymBadges.includes(stage.stageId);
+
+                    const card = document.createElement('div');
+
+                    if (isUnlocked) {
+                        let borderColor = isCleared ? 'border-emerald-600/50' : 'border-slate-700';
+                        if (stage.isGym && !isCleared) borderColor = 'border-yellow-500/60';
+                        if (stage.isGym && isCleared)  borderColor = 'border-yellow-600/40';
+
+                        card.className = `p-4 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between h-44 bg-slate-900 hover:bg-slate-800 text-white ${borderColor}`;
+                        if (stage.isGym && !isCleared) card.style.boxShadow = 'inset 0 0 0 1px rgba(234,179,8,0.2), 0 0 18px rgba(234,179,8,0.12)';
+                        card.onclick = () => launchStagePrep(stage);
+
+                        const gymBadgeTag = stage.isGym
+                            ? `<span class="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full ${hasBadge ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/40' : 'bg-slate-800 text-slate-500 border border-slate-700'}">
+                                ${hasBadge ? '🏅 ' + stage.badgeName : '🔒 Badge Locked'}
+                               </span>`
+                            : '';
+
+                        card.innerHTML = `
+                            <div class="flex justify-between items-start gap-1">
+                                <span class="text-[9px] font-mono tracking-wide text-slate-400 uppercase">Stage ${stage.stageId}</span>
+                                <span class="text-xs leading-none">${stage.icon}</span>
+                            </div>
+                            <div class="my-1 space-y-0.5">
+                                <h4 class="text-xs font-black truncate">${stage.name}</h4>
+                                <p class="text-[10px] text-slate-400 truncate">${stage.trainer}</p>
+                                <p class="text-[9px] text-slate-500">Team: ${stage.teamSize || 1}</p>
+                                ${gymBadgeTag}
+                            </div>
+                            <div class="pt-2 border-t border-slate-800 flex justify-between items-center">
+                                <span class="text-[9px] bg-slate-950 px-2 py-0.5 rounded font-bold">LVL ${stage.level}</span>
+                                <span class="text-[10px] ${isCleared ? 'text-emerald-400' : stage.isGym ? 'text-yellow-300' : 'text-rose-400'} font-extrabold">${isCleared ? 'Cleared ✓' : 'FIGHT ⚔️'}</span>
+                            </div>
+                        `;
+                    } else {
+                        card.className = "p-4 rounded-2xl border border-slate-900 bg-slate-950/20 text-slate-600 flex flex-col justify-center items-center h-44 opacity-30 select-none";
+                        card.innerHTML = `<i class="fas fa-lock text-xl mb-2"></i><span class="text-[10px] font-bold font-mono">Stage ${stage.stageId}</span>`;
+                    }
+                    return card;
+                }
+
                 function renderRoadmap() {
-                    const grid = document.getElementById('roadmapCampaignGrid');
-                    if (!grid) return;
-                    grid.innerHTML = "";
+                    const trainerGrid = document.getElementById('roadmapTrainerGrid');
+                    const gymGrid     = document.getElementById('roadmapGymGrid');
+                    if (!trainerGrid || !gymGrid) return;
+                    trainerGrid.innerHTML = "";
+                    gymGrid.innerHTML     = "";
 
                     CAMPAIGN_ROADMAP.forEach(stage => {
-                        const isUnlocked = stage.stageId <= gameState.unlockedStages;
-                        const isCleared = stage.stageId < gameState.unlockedStages;
-
-                        const card = document.createElement('div');
-                        if (isUnlocked) {
-                            let cardStyle = isCleared 
-                                ? "border-emerald-600/50 bg-slate-900/60 hover:bg-slate-900/90 text-slate-200" 
-                                : "border-rose-500 bg-slate-900 text-white shadow-lg shadow-rose-950/20 animate-pulse";
-                            
-                            card.className = `p-4 rounded-2xl border cursor-pointer transition flex flex-col justify-between h-44 ${cardStyle}`;
-                            card.onclick = () => launchStagePrep(stage);
-                            
-                            card.innerHTML = `
-                                <div class="flex justify-between items-start">
-                                    <span class="text-[9px] font-mono tracking-wide text-slate-400 uppercase">Stage ${stage.stageId}</span>
-                                    <span class="text-xs">${stage.icon}</span>
-                                </div>
-                                <div class="my-2">
-                                    <h4 class="text-xs font-black truncate">${stage.name}</h4>
-                                    <p class="text-[10px] text-slate-400 mt-0.5 truncate">${stage.trainer}</p>
-                                    <p class="text-[9px] text-slate-500 mt-1">Team size: ${stage.teamSize || 1}</p>
-                                </div>
-                                <div class="pt-2 border-t border-slate-850 flex justify-between items-center">
-                                    <span class="text-[9px] bg-slate-950 px-2 py-0.5 rounded font-bold">LVL ${stage.level}</span>
-                                    <span class="text-[10px] text-emerald-400 font-extrabold">${isCleared ? 'Cleared ✓' : 'FIGHT ⚔️'}</span>
-                                </div>
-                            `;
-                        } else {
-                            card.className = "p-4 rounded-2xl border border-slate-950 bg-slate-950/20 text-slate-600 flex flex-col justify-center items-center h-44 opacity-25 select-none";
-                            card.innerHTML = `<i class="fas fa-lock text-xl mb-2"></i><span class="text-[10px] font-bold font-mono">Stage ${stage.stageId} Locked</span>`;
-                        }
-                        grid.appendChild(card);
+                        const card = buildStageCard(stage);
+                        if (stage.isGym) gymGrid.appendChild(card);
+                        else             trainerGrid.appendChild(card);
                     });
                 }
 
@@ -3236,7 +3461,13 @@
                     if (stage) {
                         rewardCoins = stage.reward; enemyLvl = stage.level;
                         if (gameState.unlockedStages === stage.stageId) gameState.unlockedStages += 1;
-                        showNotification("STAGE CLEARED!", `Defeated ${stage.trainer}! Unlocked next sector channel!`, 'success');
+                        // Award gym badge if this was a gym battle and not already earned
+                        if (stage.isGym && !gameState.gymBadges.includes(stage.stageId)) {
+                            gameState.gymBadges.push(stage.stageId);
+                            showNotification("🏅 GYM BADGE EARNED!", `You received the ${stage.badgeName}!`, 'success');
+                        } else {
+                            showNotification("STAGE CLEARED!", `Defeated ${stage.trainer}! Unlocked next sector channel!`, 'success');
+                        }
                     } else {
                         enemyLvl = gameState.battle.bossPokemon.level;
                         rewardCoins = 30 + (enemyLvl * 8);
@@ -3913,6 +4144,7 @@
                                 }
 
                                 loadSavedProgress();
+                                updateProfileBtn();
                                 buildWheelSectors();
                                 drawWheel();
                                 updateUI();
