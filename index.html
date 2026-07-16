@@ -9,6 +9,7 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <!-- Font Awesome for Icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         
@@ -24,16 +25,296 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.0/crypto-js.min.js"></script>
 
         <style>
-            body {
-                font-family: 'Outfit', sans-serif;
-                background-color: #05070f;
-                color: #f3f4f6;
-                overflow-x: hidden;
+            :root {
+                /* Dark Theme (Default) */
+                --bg-primary: #05070f;
+                --bg-secondary: #0a0f1e;
+                --bg-card: #0d1221;
+                --bg-elevated: #121829;
+                --text-primary: #f3f4f6;
+                --text-secondary: #9ca3af;
+                --text-muted: #6b7280;
+                --border-color: #1e293b;
+                --border-light: #334155;
+                --accent-pink: #f43f5e;
+                --accent-cyan: #06b6d4;
+                --accent-yellow: #fbbf24;
+                --accent-violet: #8b5cf6;
+                --accent-green: #10b981;
+                --shadow-color: rgba(0, 0, 0, 0.5);
+                --glow-intensity: 0.3;
+                --card-bg: #0d1221;
+                --card-bg-hover: #121829;
+                --panel-bg: #0a0f1e;
+                --input-bg: #121829;
             }
+
+            [data-theme="light"] {
+                /* Light Theme */
+                --bg-primary: #f8fafc;
+                --bg-secondary: #e2e8f0;
+                --bg-card: #ffffff;
+                --bg-elevated: #f1f5f9;
+                --text-primary: #1e293b;
+                --text-secondary: #475569;
+                --text-muted: #64748b;
+                --border-color: #cbd5e1;
+                --border-light: #e2e8f0;
+                --shadow-color: rgba(0, 0, 0, 0.1);
+                --glow-intensity: 0.15;
+                --card-bg: #ffffff;
+                --card-bg-hover: #f8fafc;
+                --panel-bg: #f1f5f9;
+                --input-bg: #f8fafc;
+            }
+
+            body {
+                font-family: 'Poppins', sans-serif;
+                background-color: var(--bg-primary);
+                color: var(--text-primary);
+                overflow-x: hidden;
+                background-image: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+
             .heading-font {
                 font-family: 'Space Grotesk', sans-serif;
             }
-            /* Custom Glowing Effects */
+
+            .candy-font {
+                font-family: 'Baloo 2', cursive;
+            }
+
+            .body-font {
+                font-family: 'Poppins', sans-serif;
+            }
+
+            /* Candy Button Styles */
+            .candy-btn {
+                font-family: 'Baloo 2', cursive;
+                font-weight: 700;
+                color: white;
+                border: 3px solid var(--border-color);
+                border-radius: 16px;
+                padding: 12px 24px;
+                position: relative;
+                background: linear-gradient(180deg, var(--accent-pink) 0%, #ff8fb1 50%, var(--accent-pink) 100%);
+                box-shadow: 0 4px 0 var(--border-color), 0 8px 16px rgba(244, 63, 94, 0.3);
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+                transition: all 0.15s ease;
+                cursor: pointer;
+            }
+
+            .candy-btn::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 40%;
+                background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 100%);
+                border-radius: 12px 12px 0 0;
+                pointer-events: none;
+            }
+
+            .candy-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 0 var(--border-color), 0 12px 20px rgba(244, 63, 94, 0.4);
+            }
+
+            .candy-btn:active {
+                transform: translateY(2px) scale(0.95);
+                box-shadow: 0 2px 0 var(--border-color), 0 4px 8px rgba(244, 63, 94, 0.2);
+            }
+
+            .candy-btn-cyan {
+                background: linear-gradient(180deg, var(--accent-cyan) 0%, #5de0ff 50%, var(--accent-cyan) 100%);
+                box-shadow: 0 4px 0 var(--border-color), 0 8px 16px rgba(6, 182, 212, 0.3);
+            }
+
+            .candy-btn-cyan:hover {
+                box-shadow: 0 6px 0 var(--border-color), 0 12px 20px rgba(6, 182, 212, 0.4);
+            }
+
+            .candy-btn-yellow {
+                background: linear-gradient(180deg, var(--accent-yellow) 0%, #ffe566 50%, var(--accent-yellow) 100%);
+                box-shadow: 0 4px 0 var(--border-color), 0 8px 16px rgba(251, 191, 36, 0.3);
+            }
+
+            .candy-btn-yellow:hover {
+                box-shadow: 0 6px 0 var(--border-color), 0 12px 20px rgba(251, 191, 36, 0.4);
+            }
+
+            .candy-btn-violet {
+                background: linear-gradient(180deg, var(--accent-violet) 0%, #b07cc6 50%, var(--accent-violet) 100%);
+                box-shadow: 0 4px 0 var(--border-color), 0 8px 16px rgba(139, 92, 246, 0.3);
+            }
+
+            .candy-btn-violet:hover {
+                box-shadow: 0 6px 0 var(--border-color), 0 12px 20px rgba(139, 92, 246, 0.4);
+            }
+
+            /* Panel/Card Styles */
+            .candy-panel {
+                background: var(--panel-bg);
+                border-radius: 24px;
+                box-shadow: 0 8px 24px var(--shadow-color);
+                border: 1px solid var(--border-color);
+                transition: background-color 0.3s ease, border-color 0.3s ease;
+            }
+
+            .candy-card {
+                background: var(--card-bg);
+                border-radius: 20px;
+                box-shadow: 0 4px 12px var(--shadow-color);
+                border: 1px solid var(--border-color);
+                transition: all 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
+            }
+
+            .candy-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 8px 20px var(--shadow-color);
+            }
+
+            /* Rarity Borders */
+            .rarity-common { border: 2px solid #bdc3c7; }
+            .rarity-rare { border: 2px solid #3498db; }
+            .rarity-epic { border: 2px solid #9b59b6; }
+            .rarity-legendary { border: 2px solid #f1c40f; }
+
+            /* Currency Icon Styles */
+            .currency-icon {
+                background: linear-gradient(135deg, var(--accent-yellow) 0%, #ffe566 100%);
+                border: 3px solid var(--border-color);
+                border-radius: 50%;
+                box-shadow: 0 4px 8px rgba(251, 191, 36, 0.4);
+                position: relative;
+            }
+
+            .currency-icon::after {
+                content: '';
+                position: absolute;
+                top: 15%;
+                left: 20%;
+                width: 30%;
+                height: 30%;
+                background: rgba(255, 255, 255, 0.6);
+                border-radius: 50%;
+                filter: blur(2px);
+            }
+
+            /* Modal Styles */
+            .candy-modal-backdrop {
+                background: rgba(0, 0, 0, 0.6);
+                backdrop-filter: blur(4px);
+            }
+
+            .candy-modal {
+                background: var(--card-bg);
+                border-radius: 32px;
+                box-shadow: 0 16px 48px var(--shadow-color);
+                border: 1px solid var(--border-color);
+                transition: background-color 0.3s ease, border-color 0.3s ease;
+            }
+
+            .candy-modal-close {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                background: var(--text-primary);
+                color: var(--bg-primary);
+                border: none;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                transition: all 0.2s ease;
+            }
+
+            .candy-modal-close:hover {
+                transform: scale(1.1);
+                background: var(--accent-pink);
+            }
+
+            /* Typography Styles */
+            .candy-header {
+                font-family: 'Baloo 2', cursive;
+                font-weight: 800;
+                color: var(--text-primary);
+                text-shadow: 2px 2px 0 var(--border-color), -1px -1px 0 var(--border-color), 1px -1px 0 var(--border-color), -1px 1px 0 var(--border-color);
+                filter: drop-shadow(0 2px 4px var(--shadow-color));
+            }
+
+            .candy-subheader {
+                font-family: 'Baloo 2', cursive;
+                font-weight: 600;
+                color: var(--text-primary);
+            }
+
+            .candy-body {
+                font-family: 'Poppins', sans-serif;
+                color: var(--text-secondary);
+            }
+
+            .candy-muted {
+                font-family: 'Poppins', sans-serif;
+                color: var(--text-muted);
+            }
+
+            /* Progress Bar Styles */
+            .candy-progress {
+                height: 12px;
+                border-radius: 8px;
+                background: var(--border-light);
+                overflow: hidden;
+                box-shadow: inset 0 2px 4px var(--shadow-color);
+            }
+
+            .candy-progress-fill {
+                height: 100%;
+                border-radius: 8px;
+                background: linear-gradient(90deg, var(--accent-pink), var(--accent-cyan));
+                transition: width 0.3s ease;
+            }
+
+            /* Notification Badge */
+            .candy-badge {
+                background: #ff4757;
+                color: white;
+                font-family: 'Baloo 2', cursive;
+                font-weight: 700;
+                font-size: 12px;
+                padding: 2px 8px;
+                border-radius: 12px;
+                border: 2px solid white;
+                box-shadow: 0 2px 8px rgba(255, 71, 87, 0.4);
+            }
+
+            /* Tab Styles */
+            .candy-tab {
+                font-family: 'Baloo 2', cursive;
+                font-weight: 600;
+                padding: 12px 20px;
+                border-radius: 16px;
+                color: var(--text-muted);
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+
+            .candy-tab:hover {
+                background: var(--card-bg-hover);
+            }
+
+            .candy-tab.active {
+                background: linear-gradient(135deg, var(--accent-pink), var(--accent-violet));
+                color: var(--text-primary);
+                box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3);
+            }
+
+            /* Custom Glowing Effects (kept for legendary/shiny) */
             .glow-common { box-shadow: 0 0 15px rgba(156, 163, 175, 0.15); }
             .glow-rare { box-shadow: 0 0 15px rgba(59, 130, 246, 0.35); }
             .glow-epic { box-shadow: 0 0 20px rgba(168, 85, 247, 0.45); }
@@ -108,17 +389,55 @@
 
             /* Hide Scrollbars */
             ::-webkit-scrollbar {
-                width: 6px;
+                width: 8px;
             }
             ::-webkit-scrollbar-track {
-                background: #090e1a;
+                background: #f0f0f0;
+                border-radius: 4px;
             }
             ::-webkit-scrollbar-thumb {
-                background: #1e293b;
+                background: var(--candy-pink);
                 border-radius: 4px;
             }
             ::-webkit-scrollbar-thumb:hover {
-                background: #334155;
+                background: var(--candy-violet);
+            }
+
+            /* Button Press Animation */
+            .btn-press {
+                transition: transform 0.1s ease;
+            }
+            .btn-press:active {
+                transform: scale(0.95);
+            }
+
+            /* New Poke Ball Designs */
+            .pokeball-design {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                border: 2px solid #333;
+                position: relative;
+                background: linear-gradient(180deg, #f0f0f0 50%, #f0f0f0 50%);
+                overflow: hidden;
+            }
+            .pokeball-design::before { /* Top half color */
+                content: '';
+                position: absolute;
+                top: 0; left: 0; right: 0;
+                height: 50%;
+            }
+            .pokeball-design::after { /* Center band and button */
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: #333;
+                transform: translateY(-50%);
+                border-top: 1px solid #555;
+                border-bottom: 1px solid #555;
             }
         </style>
     </head>
@@ -168,128 +487,108 @@
 
         <!-- AUDIO TOGGLE, SUPPORT & SETTINGS -->
         <div class="fixed top-4 right-4 z-50 flex flex-row gap-2 items-center">
-            <a href="https://buymeacoffee.com/luojj2019o" target="_blank" rel="noopener" class="bg-amber-500/15 backdrop-blur-md border border-amber-500/30 px-4 py-2.5 rounded-full hover:bg-amber-500/25 transition duration-200 text-xs font-bold text-amber-300 flex items-center gap-2 shadow-xl">
-                <i class="fas fa-mug-hot"></i>
-                <span>Buy me a coffee</span>
+            <a href="https://buymeacoffee.com/luojj2019o" target="_blank" rel="noopener" class="candy-card px-4 py-2.5 flex items-center gap-2 btn-press">
+                <i class="fas fa-mug-hot text-amber-500"></i>
+                <span class="candy-subheader text-xs">Buy me a coffee</span>
             </a>
-            <button id="settingsToggleBtn" onclick="openSettingsModal()" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-full hover:bg-slate-800 transition duration-200 text-cyan-400 focus:outline-none shadow-lg">
-                <i class="fas fa-cog text-lg"></i>
+            <button id="settingsToggleBtn" onclick="openSettingsModal()" class="candy-card p-3 btn-press">
+                <i class="fas fa-cog text-lg" style="color: var(--candy-violet);"></i>
             </button>
         </div>
 
         <!-- CUSTOM NOTIFICATION MODAL -->
-        <div id="customToast" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 bg-slate-900/95 border-2 border-slate-850 px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 transition-all duration-300 opacity-0 translate-y-[-50px] pointer-events-none max-w-md w-[90%]">
-            <div id="toastIconContainer" class="p-3 rounded-xl bg-blue-500/20 text-blue-400">
-                <i id="toastIcon" class="fas fa-info-circle text-xl"></i>
+        <div id="customToast" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 candy-modal px-6 py-4 flex items-center gap-4 transition-all duration-300 opacity-0 translate-y-[-50px] pointer-events-none max-w-md w-[90%]">
+            <div id="toastIconContainer" class="currency-icon w-12 h-12 flex items-center justify-center">
+                <i id="toastIcon" class="fas fa-info-circle text-lg" style="color: var(--navy-dark);"></i>
             </div>
             <div>
-                <h4 id="toastTitle" class="font-bold text-white text-sm uppercase tracking-wide">System Alert</h4>
-                <p id="toastMessage" class="text-slate-300 text-xs mt-0.5">Notification description.</p>
+                <h4 id="toastTitle" class="candy-subheader text-sm">System Alert</h4>
+                <p id="toastMessage" class="candy-muted text-xs mt-0.5">Notification description.</p>
             </div>
         </div>
 
         <!-- DATA TRANSFER MODAL -->
-        <div id="dataTransferModal" class="fixed inset-0 z-[70] bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
-            <div class="w-full max-w-2xl rounded-3xl border border-slate-800 bg-slate-950 p-5 shadow-2xl my-8">
+        <div id="dataTransferModal" class="fixed inset-0 z-[70] candy-modal-backdrop hidden items-center justify-center p-4 overflow-y-auto">
+            <div class="candy-modal w-full max-w-2xl p-6 my-8">
                 <div class="flex items-start justify-between gap-4">
                     <div>
-                        <p class="text-[10px] uppercase tracking-[0.35em] text-slate-500">Local save transfer</p>
-                        <h3 class="text-lg font-black text-white">Backup or restore your progress</h3>
+                        <p class="candy-muted text-[10px] uppercase tracking-wider">Local save transfer</p>
+                        <h3 class="candy-header text-lg">Backup or restore your progress</h3>
                     </div>
-                    <button onclick="closeDataTransferModal()" class="rounded-full border border-slate-800 p-2 text-slate-400 hover:text-white">
+                    <button onclick="closeDataTransferModal()" class="candy-modal-close">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
-                <p class="mt-2 text-xs text-slate-400">Use Export to generate an encrypted backup code for your current progress. Paste that code back here later and click Import to restore it.</p>
-                <textarea id="dataTransferText" rows="12" placeholder="Paste your exported backup code here..." class="mt-4 w-full rounded-2xl border border-slate-800 bg-slate-900 p-3 text-[11px] text-slate-200 font-mono focus:outline-none focus:border-emerald-500"></textarea>
+                <p class="mt-2 candy-body text-xs">Use Export to generate an encrypted backup code for your current progress. Paste that code back here later and click Import to restore it.</p>
+                <textarea id="dataTransferText" rows="12" placeholder="Paste your exported backup code here..." class="mt-4 w-full rounded-2xl border-2 border-gray-200 bg-gray-50 p-3 text-[11px] text-gray-700 font-mono focus:outline-none focus:border-pink-300 candy-body"></textarea>
                 <div class="mt-4 flex flex-wrap gap-3">
-                    <button onclick="exportDataToBackupCode()" class="rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-emerald-500">Export Current Save</button>
-                    <button onclick="copyExportedData()" class="rounded-xl border border-emerald-700 px-4 py-2 text-xs font-bold uppercase tracking-wider text-emerald-400 hover:text-white">Copy Export Code</button>
-                    <button onclick="importDataFromText()" class="rounded-xl bg-rose-600 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-rose-500">Import Backup</button>
-                    <button onclick="closeDataTransferModal()" class="rounded-xl border border-slate-700 px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white">Close</button>
+                    <button onclick="exportDataToBackupCode()" class="candy-btn candy-btn-cyan px-4 py-2 text-xs btn-press">Export Current Save</button>
+                    <button onclick="copyExportedData()" class="candy-btn candy-btn-violet px-4 py-2 text-xs btn-press">Copy Export Code</button>
+                    <button onclick="importDataFromText()" class="candy-btn candy-btn-pink px-4 py-2 text-xs btn-press">Import Backup</button>
+                    <button onclick="closeDataTransferModal()" class="candy-card px-4 py-2 text-xs candy-subheader btn-press">Close</button>
                 </div>
             </div>
         </div>
 
         <!-- SETTINGS MODAL -->
-        <div id="settingsModal" class="fixed inset-0 z-[70] bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
-            <div class="w-full max-w-lg rounded-3xl border border-slate-800 bg-slate-950 p-5 shadow-2xl my-8">
+        <div id="settingsModal" class="fixed inset-0 z-[70] candy-modal-backdrop hidden items-center justify-center p-4 overflow-y-auto">
+            <div class="candy-modal w-full max-w-lg p-6 my-8">
                 <div class="flex items-start justify-between gap-4">
                     <div>
-                        <p class="text-[10px] uppercase tracking-[0.35em] text-slate-500">System Settings</p>
-                        <h3 class="text-lg font-black text-white">Settings</h3>
+                        <p class="candy-muted text-[10px] uppercase tracking-wider">System Settings</p>
+                        <h3 class="candy-header text-lg">Settings</h3>
                     </div>
-                    <button onclick="closeSettingsModal()" class="rounded-full border border-slate-800 p-2 text-slate-400 hover:text-white">
+                    <button onclick="closeSettingsModal()" class="candy-modal-close">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
 
                 <!-- Sound Settings -->
-                <div class="mt-6 p-4 rounded-2xl bg-slate-900/50 border border-slate-800">
+                <div class="mt-6 p-4 candy-card">
                     <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-volume-up text-yellow-400"></i>
-                        <h4 class="text-sm font-bold text-white">Sound</h4>
+                        <i class="fas fa-volume-up" style="color: var(--candy-yellow);"></i>
+                        <h4 class="candy-subheader text-sm">Sound</h4>
                     </div>
                     <div class="flex items-center justify-between">
-                        <span class="text-xs text-slate-400">Master Volume</span>
-                        <button id="settingsSoundBtn" onclick="toggleMute()" class="px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs font-bold text-white hover:bg-slate-700 transition">
+                        <span class="candy-body text-xs">Master Volume</span>
+                        <button id="settingsSoundBtn" onclick="toggleMute()" class="candy-btn candy-btn-yellow px-4 py-2 text-xs btn-press">
                             <span id="settingsSoundText">Sound On</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Theme Settings -->
-                <div class="mt-4 p-4 rounded-2xl bg-slate-900/50 border border-slate-800">
+                <div class="mt-4 p-4 candy-card">
                     <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-palette text-purple-400"></i>
-                        <h4 class="text-sm font-bold text-white">Theme</h4>
+                        <i class="fas fa-palette" style="color: var(--accent-violet);"></i>
+                        <h4 class="candy-subheader text-sm">Theme</h4>
                     </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="setTheme('default')" class="theme-btn p-3 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-rose-500 transition text-left" data-theme="default">
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-rose-500 to-pink-500"></div>
-                                <span class="text-xs font-bold text-white">Default</span>
-                            </div>
-                        </button>
-                        <button onclick="setTheme('ocean')" class="theme-btn p-3 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-cyan-500 transition text-left" data-theme="ocean">
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500"></div>
-                                <span class="text-xs font-bold text-white">Ocean</span>
-                            </div>
-                        </button>
-                        <button onclick="setTheme('forest')" class="theme-btn p-3 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-emerald-500 transition text-left" data-theme="forest">
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-emerald-500 to-green-500"></div>
-                                <span class="text-xs font-bold text-white">Forest</span>
-                            </div>
-                        </button>
-                        <button onclick="setTheme('sunset')" class="theme-btn p-3 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-orange-500 transition text-left" data-theme="sunset">
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-orange-500 to-amber-500"></div>
-                                <span class="text-xs font-bold text-white">Sunset</span>
-                            </div>
+                    <div class="flex items-center justify-between">
+                        <span class="candy-body text-xs">Dark Mode</span>
+                        <button id="themeToggleBtn" onclick="toggleTheme()" class="relative w-16 h-8 rounded-full bg-gray-300 transition-colors duration-300 focus:outline-none">
+                            <div id="themeToggleCircle" class="absolute top-1 left-1 w-6 h-6 rounded-full bg-white shadow-md transition-transform duration-300 transform translate-x-0"></div>
                         </button>
                     </div>
                 </div>
 
                 <!-- Data Management -->
-                <div class="mt-4 p-4 rounded-2xl bg-slate-900/50 border border-slate-800">
+                <div class="mt-4 p-4 candy-card">
                     <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-database text-emerald-400"></i>
-                        <h4 class="text-sm font-bold text-white">Data Management</h4>
+                        <i class="fas fa-database" style="color: var(--accent-cyan);"></i>
+                        <h4 class="candy-subheader text-sm">Data Management</h4>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <button onclick="openDataTransferModal()" class="flex-1 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white transition">
+                        <button onclick="openDataTransferModal()" class="flex-1 candy-btn candy-btn-cyan px-4 py-2 text-xs btn-press">
                             <i class="fas fa-download mr-1"></i> Backup/Restore
                         </button>
-                        <button onclick="clearAllData()" class="flex-1 px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-bold text-white transition">
+                        <button onclick="clearAllData()" class="flex-1 candy-btn px-4 py-2 text-xs btn-press" style="background: linear-gradient(180deg, #ff6b6b 0%, #ff8e8e 50%, #ff6b6b 100%); box-shadow: 0 4px 0 var(--border-color), 0 8px 16px rgba(255, 107, 107, 0.3);">
                             <i class="fas fa-trash mr-1"></i> Clear Data
                         </button>
                     </div>
                 </div>
 
                 <div class="mt-6 flex justify-end">
-                    <button onclick="closeSettingsModal()" class="px-6 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white transition">
+                    <button onclick="closeSettingsModal()" class="candy-card px-6 py-2 candy-subheader text-xs btn-press">
                         Close
                     </button>
                 </div>
@@ -297,73 +596,73 @@
         </div>
 
         <!-- HEADER / DASHBOARD STATUS -->
-        <header class="bg-slate-950/85 backdrop-blur-md border-b border-slate-900 sticky top-0 z-40 py-3 px-4 md:px-8">
+        <header class="candy-panel sticky top-0 z-40 py-3 px-4 md:px-8 border-b border-gray-100">
             <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
                 <!-- Brand -->
                 <div class="flex items-center gap-3">
                     <div class="relative">
-                        <div class="w-10 h-10 bg-rose-600 rounded-full border-4 border-slate-950 flex items-center justify-center shadow-lg">
-                            <div class="w-10 h-1 bg-slate-950 absolute top-[15px]"></div>
-                            <div class="w-3 h-3 bg-white rounded-full border border-slate-950 z-10"></div>
+                        <div class="w-10 h-10 rounded-full border-4 border-white flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, var(--candy-pink), var(--candy-violet));">
+                            <div class="w-10 h-1 bg-white absolute top-[15px]"></div>
+                            <div class="w-3 h-3 bg-white rounded-full border border-white z-10"></div>
                         </div>
                     </div>
                     <div>
-                        <h1 class="heading-font text-xl md:text-2xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400">
+                        <h1 class="candy-header text-xl md:text-2xl tracking-wider">
                             POKÉMON RADAR
                         </h1>
                     </div>
                 </div>
 
                 <!-- Stats Bar -->
-                <div class="flex items-center gap-3 md:gap-6 bg-slate-950/85 px-4 py-2 rounded-2xl border border-slate-900 w-full md:w-auto justify-around md:justify-end">
+                <div class="flex items-center gap-3 md:gap-6 candy-panel px-4 py-2 w-full md:w-auto justify-around md:justify-end">
                     <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center text-yellow-400">
-                            <i class="fas fa-coins text-xs"></i>
+                        <div class="currency-icon w-8 h-8 flex items-center justify-center">
+                            <i class="fas fa-coins text-xs" style="color: var(--navy-dark);"></i>
                         </div>
                         <div>
-                            <span class="text-[9px] text-slate-400 block uppercase font-bold">Coins</span>
-                            <span id="playerCoins" class="font-bold text-xs md:text-sm text-yellow-400 tracking-wide">100</span>
+                            <span class="candy-muted text-[9px] block uppercase font-bold">Coins</span>
+                            <span id="playerCoins" class="candy-subheader text-xs md:text-sm tracking-wide" style="color: var(--candy-yellow);">100</span>
                         </div>
                     </div>
 
                     <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 font-bold text-xs">
-                            <span id="trainerLevelBadge">1</span>
+                        <div class="currency-icon w-8 h-8 flex items-center justify-center" style="background: linear-gradient(135deg, var(--candy-violet), var(--candy-pink));">
+                            <span id="trainerLevelBadge" class="candy-subheader text-xs" style="color: var(--navy-dark);">1</span>
                         </div>
                         <div>
                             <div class="flex justify-between items-baseline gap-2">
-                                <span class="text-[9px] text-slate-400 block uppercase font-bold">Trainer LVL <span id="trainerLevelText">1</span></span>
+                                <span class="candy-muted text-[9px] block uppercase font-bold">Trainer LVL <span id="trainerLevelText">1</span></span>
                             </div>
-                            <div class="w-20 md:w-28 bg-slate-900 rounded-full h-1.5 overflow-hidden mt-0.5">
-                                <div id="xpBar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-full rounded-full transition-all duration-300" style="width: 10%;"></div>
+                            <div class="candy-progress w-20 md:w-28 mt-0.5">
+                                <div id="xpBar" class="candy-progress-fill transition-all duration-300" style="width: 10%;"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div id="ballSelectorMini" class="flex gap-2 border-l border-slate-850 pl-4">
+                    <div id="ballSelectorMini" class="flex gap-2 border-l border-gray-200 pl-4">
                         <div class="flex flex-col items-center">
-                            <div class="w-4 h-4 bg-red-500 rounded-full border border-slate-950 relative" title="Poke Balls">
-                                <div class="w-4 h-0.5 bg-slate-950 absolute top-[7px]"></div>
+                            <div class="w-4 h-4 rounded-full border-2 border-gray-300 relative" title="Poke Balls" style="background: linear-gradient(135deg, #ff6b6b, #ff8e8e);">
+                                <div class="w-4 h-0.5 bg-gray-400 absolute top-[7px]"></div>
                             </div>
-                            <span id="miniCount-poke" class="text-[9px] font-bold mt-0.5">5</span>
+                            <span id="miniCount-poke" class="candy-subheader text-[9px] mt-0.5">5</span>
                         </div>
                         <div class="flex flex-col items-center">
-                            <div class="w-4 h-4 bg-blue-500 rounded-full border border-slate-950 relative" title="Great Balls">
-                                <div class="w-4 h-0.5 bg-slate-950 absolute top-[7px]"></div>
+                            <div class="w-4 h-4 rounded-full border-2 border-gray-300 relative" title="Great Balls" style="background: linear-gradient(135deg, var(--candy-cyan), #5de0ff);">
+                                <div class="w-4 h-0.5 bg-gray-400 absolute top-[7px]"></div>
                             </div>
-                            <span id="miniCount-great" class="text-[9px] font-bold mt-0.5">0</span>
+                            <span id="miniCount-great" class="candy-subheader text-[9px] mt-0.5">0</span>
                         </div>
                         <div class="flex flex-col items-center">
-                            <div class="w-4 h-4 bg-purple-500 rounded-full border border-slate-950 relative" title="Ultra Balls">
-                                <div class="w-4 h-0.5 bg-slate-950 absolute top-[7px]"></div>
+                            <div class="w-4 h-4 rounded-full border-2 border-gray-300 relative" title="Ultra Balls" style="background: linear-gradient(135deg, var(--candy-violet), #b07cc6);">
+                                <div class="w-4 h-0.5 bg-gray-400 absolute top-[7px]"></div>
                             </div>
-                            <span id="miniCount-ultra" class="text-[9px] font-bold mt-0.5">0</span>
+                            <span id="miniCount-ultra" class="candy-subheader text-[9px] mt-0.5">0</span>
                         </div>
                         <div class="flex flex-col items-center">
-                            <div class="w-4 h-4 bg-yellow-500 rounded-full border border-slate-950 relative" title="Master Balls">
-                                <div class="w-4 h-0.5 bg-slate-950 absolute top-[7px]"></div>
+                            <div class="w-4 h-4 rounded-full border-2 border-gray-300 relative" title="Master Balls" style="background: linear-gradient(135deg, var(--candy-yellow), #ffe566);">
+                                <div class="w-4 h-0.5 bg-gray-400 absolute top-[7px]"></div>
                             </div>
-                            <span id="miniCount-master" class="text-[9px] font-bold mt-0.5">0</span>
+                            <span id="miniCount-master" class="candy-subheader text-[9px] mt-0.5">0</span>
                         </div>
                     </div>
                 </div>
@@ -373,30 +672,30 @@
         <!-- MAIN INTERACTIVE LAYOUT -->
         <main class="max-w-7xl mx-auto px-4 py-6 w-full flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             <!-- NAVIGATION PANEL -->
-            <nav class="lg:col-span-3 flex lg:flex-col gap-2 w-full overflow-x-auto lg:overflow-visible py-1 sticky top-[72px] z-30 bg-[#05070f] lg:bg-transparent">
-                <button onclick="switchView('roulette')" id="nav-roulette" class="nav-btn active flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-gradient-to-r from-rose-600 to-pink-600 text-white border-transparent shadow-lg shadow-rose-600/10">
+            <nav class="lg:col-span-3 flex lg:flex-col gap-2 w-full overflow-x-auto lg:overflow-visible py-1 sticky top-[72px] z-30 candy-panel lg:bg-transparent">
+                <button onclick="switchView('roulette')" id="nav-roulette" class="nav-btn active candy-tab active flex items-center justify-center lg:justify-start gap-3 px-4 py-3 w-full shrink-0 lg:shrink text-sm btn-press">
                     <i class="fas fa-radar animate-pulse"></i>
-                    <span>Quantum Scanner</span>
+                    <span class="candy-subheader">Quantum Scanner</span>
                 </button>
-                <button onclick="switchView('battle')" id="nav-battle" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
-                    <i class="fas fa-compass text-rose-500 animate-spin-slow"></i>
-                    <span>Journey Arena</span>
+                <button onclick="switchView('battle')" id="nav-battle" class="nav-btn candy-tab flex items-center justify-center lg:justify-start gap-3 px-4 py-3 w-full shrink-0 lg:shrink text-sm btn-press">
+                    <i class="fas fa-compass" style="color: var(--candy-pink);"></i>
+                    <span class="candy-subheader">Journey Arena</span>
                 </button>
-                <button onclick="switchView('team')" id="nav-team" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
-                    <i class="fas fa-users text-cyan-400"></i>
-                    <span>Team <span id="teamCountBadge" class="ml-auto text-[10px] bg-slate-900 px-2 py-0.5 rounded-full">0/6</span></span>
+                <button onclick="switchView('team')" id="nav-team" class="nav-btn candy-tab flex items-center justify-center lg:justify-start gap-3 px-4 py-3 w-full shrink-0 lg:shrink text-sm btn-press">
+                    <i class="fas fa-users" style="color: var(--candy-cyan);"></i>
+                    <span class="candy-subheader">Team <span id="teamCountBadge" class="ml-auto text-[10px] candy-badge">0/6</span></span>
                 </button>
-                <button onclick="switchView('pokedex')" id="nav-pokedex" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
-                    <i class="fas fa-book text-blue-400"></i>
-                    <span>Registered Pokédex <span id="dexProgressBadge" class="ml-auto text-[10px] bg-slate-900 px-2 py-0.5 rounded-full">0/1025</span></span>
+                <button onclick="switchView('pokedex')" id="nav-pokedex" class="nav-btn candy-tab flex items-center justify-center lg:justify-start gap-3 px-4 py-3 w-full shrink-0 lg:shrink text-sm btn-press">
+                    <i class="fas fa-book" style="color: var(--candy-violet);"></i>
+                    <span class="candy-subheader">Registered Pokédex <span id="dexProgressBadge" class="ml-auto text-[10px] candy-badge">0/1025</span></span>
                 </button>
-                <button onclick="switchView('pc')" id="nav-pc" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
-                    <i class="fas fa-box text-emerald-400"></i>
-                    <span>PC Box <span id="pcCountBadge" class="ml-auto text-[10px] bg-slate-900 px-2 py-0.5 rounded-full">0</span></span>
+                <button onclick="switchView('pc')" id="nav-pc" class="nav-btn candy-tab flex items-center justify-center lg:justify-start gap-3 px-4 py-3 w-full shrink-0 lg:shrink text-sm btn-press">
+                    <i class="fas fa-box" style="color: var(--candy-green);"></i>
+                    <span class="candy-subheader">PC Box <span id="pcCountBadge" class="ml-auto text-[10px] candy-badge">0</span></span>
                 </button>
-                <button onclick="switchView('shop')" id="nav-shop" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
-                    <i class="fas fa-shopping-cart text-yellow-400"></i>
-                    <span>Gear & Item Mart</span>
+                <button onclick="switchView('shop')" id="nav-shop" class="nav-btn candy-tab flex items-center justify-center lg:justify-start gap-3 px-4 py-3 w-full shrink-0 lg:shrink text-sm btn-press">
+                    <i class="fas fa-shopping-cart" style="color: var(--candy-yellow);"></i>
+                    <span class="candy-subheader">Gear & Item Mart</span>
                 </button>
             </nav>
 
@@ -406,24 +705,24 @@
                 <!-- RADAR VIEW -->
                 <div id="view-roulette" class="view-panel grid grid-cols-1 md:grid-cols-12 gap-6">
                     <!-- SPIN CONTROL PANEL -->
-                    <div class="md:col-span-7 bg-slate-955/40 border border-slate-900 p-6 rounded-3xl flex flex-col items-center justify-center relative overflow-hidden shadow-2xl min-h-[500px]">
-                        <div class="absolute -top-12 -left-12 w-40 h-40 bg-pink-500/5 rounded-full blur-3xl"></div>
-                        <div class="absolute -bottom-12 -right-12 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl"></div>
+                    <div class="md:col-span-7 candy-panel p-6 flex flex-col items-center justify-center relative overflow-hidden min-h-[500px]">
+                        <div class="absolute -top-12 -left-12 w-40 h-40 rounded-full blur-3xl" style="background: var(--candy-pink); opacity: 0.1;"></div>
+                        <div class="absolute -bottom-12 -right-12 w-40 h-40 rounded-full blur-3xl" style="background: var(--candy-cyan); opacity: 0.1;"></div>
 
                         <!-- Region Scanner HUD -->
                         <div class="mb-4 text-center z-10">
-                            <span id="regionBadge" class="bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block mb-1">KANTO CHANNEL (GEN 1)</span>
-                            <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold block">Reflex Precision Locking Radar</p>
+                            <span id="regionBadge" class="candy-card text-[10px] px-3 py-1 rounded-full uppercase tracking-widest candy-subheader inline-block mb-1" style="color: var(--candy-cyan);">KANTO CHANNEL (GEN 1)</span>
+                            <p class="candy-muted text-[10px] uppercase tracking-widest font-bold block">Reflex Precision Locking Radar</p>
                         </div>
 
                         <!-- RADAR SCANNER WHEEL CANVAS -->
                         <div class="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center z-10">
-                            <div class="absolute inset-0 rounded-full border-4 border-slate-900 shadow-[0_0_20px_rgba(244,63,94,0.05)] pointer-events-none"></div>
+                            <div class="absolute inset-0 rounded-full border-4 border-gray-200 shadow-[0_0_20px_rgba(255,107,157,0.1)] pointer-events-none"></div>
                             <canvas id="wheelCanvas" width="320" height="320" class="w-full h-full transition-transform duration-75"></canvas>
                             
                             <!-- Central Pointer / Hub -->
-                            <div class="absolute z-20 w-12 h-12 bg-slate-950 rounded-full border-4 border-slate-800 flex items-center justify-center shadow-2xl">
-                                <div class="w-3 h-3 bg-rose-500 rounded-full animate-ping"></div>
+                            <div class="absolute z-20 w-12 h-12 rounded-full border-4 border-gray-300 flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, var(--navy-dark), var(--navy-outline));">
+                                <div class="w-3 h-3 rounded-full animate-ping" style="background: var(--candy-pink);"></div>
                             </div>
 
                             <!-- Pointer Indicator -->
@@ -434,64 +733,65 @@
 
                         <!-- BALL TIER SELECTION -->
                         <div class="mt-6 w-full z-10">
-                            <label class="text-[10px] text-slate-400 uppercase tracking-widest font-bold text-center block mb-2">Select Device Grade (Modifies Scan Zones)</label>
+                            <label class="candy-muted text-[10px] uppercase tracking-widest font-bold text-center block mb-2">Select Device Grade (Modifies Scan Zones)</label>
                             <div class="grid grid-cols-4 gap-2">
-                                <button id="ballBtn-poke" onclick="selectBall('poke')" class="ball-selector-btn bg-slate-950 border-2 border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
-                                    <div class="w-8 h-8 bg-red-500 rounded-full border-2 border-slate-950 relative shadow-md">
-                                        <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
-                                        <div class="w-2.5 h-2.5 bg-white rounded-full border border-slate-950 absolute top-[11px] left-[11px] z-10"></div>
+                                <button id="ballBtn-poke" onclick="selectBall('poke')" class="ball-selector-btn candy-card p-2 rounded-2xl flex flex-col items-center justify-center btn-press">
+                                    <div class="pokeball-design" style="background: linear-gradient(180deg, #ee8181 50%, #f0f0f0 50%);">
+                                        <div class="absolute top-1/2 left-1/2 w-3 h-3 bg-white border-2 border-gray-600 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10"></div>
                                     </div>
-                                    <span class="text-xs font-bold mt-1.5">Standard</span>
-                                    <span id="count-poke" class="text-[10px] text-slate-400">5</span>
+                                    <span class="candy-subheader text-xs mt-1.5">Standard</span>
+                                    <span id="count-poke" class="candy-muted text-[10px]">5</span>
                                 </button>
-                                <button id="ballBtn-great" onclick="selectBall('great')" class="ball-selector-btn bg-slate-950 border border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
-                                    <div class="w-8 h-8 bg-blue-500 rounded-full border-2 border-slate-950 relative shadow-md">
-                                        <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
-                                        <div class="w-2.5 h-2.5 bg-white rounded-full border border-slate-950 absolute top-[11px] left-[11px] z-10"></div>
+                                <button id="ballBtn-great" onclick="selectBall('great')" class="ball-selector-btn candy-card p-2 rounded-2xl flex flex-col items-center justify-center btn-press">
+                                    <div class="pokeball-design" style="background: linear-gradient(180deg, #5d9cec 50%, #f0f0f0 50%);">
+                                        <div class="absolute top-1/2 left-1/2 w-3 h-3 bg-white border-2 border-gray-600 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10"></div>
+                                        <div class="absolute top-[calc(50%-8px)] left-2 w-1.5 h-4 bg-red-500 rounded-sm transform rotate-[-30deg]"></div>
+                                        <div class="absolute top-[calc(50%-8px)] right-2 w-1.5 h-4 bg-red-500 rounded-sm transform rotate-[30deg]"></div>
                                     </div>
-                                    <span class="text-xs font-bold mt-1.5 text-blue-400">Great</span>
-                                    <span id="count-great" class="text-[10px] text-slate-400">0</span>
+                                    <span class="candy-subheader text-xs mt-1.5" style="color: var(--candy-cyan);">Great</span>
+                                    <span id="count-great" class="candy-muted text-[10px]">0</span>
                                 </button>
-                                <button id="ballBtn-ultra" onclick="selectBall('ultra')" class="ball-selector-btn bg-slate-950 border border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
-                                    <div class="w-8 h-8 bg-yellow-500 rounded-full border-2 border-slate-950 relative shadow-md">
-                                        <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
-                                        <div class="w-2.5 h-2.5 bg-white rounded-full border border-slate-950 absolute top-[11px] left-[11px] z-10"></div>
+                                <button id="ballBtn-ultra" onclick="selectBall('ultra')" class="ball-selector-btn candy-card p-2 rounded-2xl flex flex-col items-center justify-center btn-press">
+                                    <div class="pokeball-design" style="background: linear-gradient(180deg, #333 50%, #f0f0f0 50%);">
+                                        <div class="absolute top-1/2 left-1/2 w-3 h-3 bg-white border-2 border-gray-600 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10"></div>
+                                        <div class="absolute top-[calc(50%-10px)] left-1/2 w-4 h-2 bg-yellow-400 transform -translate-x-1/2 -translate-y-1/2 rotate-45"></div>
+                                        <div class="absolute top-[calc(50%-10px)] left-1/2 w-4 h-2 bg-yellow-400 transform -translate-x-1/2 -translate-y-1/2 rotate-[-45deg]"></div>
                                     </div>
-                                    <span class="text-xs font-bold mt-1.5 text-yellow-500">Ultra</span>
-                                    <span id="count-ultra" class="text-[10px] text-slate-400">0</span>
+                                    <span class="candy-subheader text-xs mt-1.5" style="color: var(--candy-violet);">Ultra</span>
+                                    <span id="count-ultra" class="candy-muted text-[10px]">0</span>
                                 </button>
-                                <button id="ballBtn-master" onclick="selectBall('master')" class="ball-selector-btn bg-slate-950 border border-purple-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
-                                    <div class="w-8 h-8 bg-purple-600 rounded-full border-2 border-slate-950 relative shadow-md">
-                                        <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
-                                        <div class="w-2.5 h-2.5 bg-white rounded-full border border-slate-950 absolute top-[11px] left-[11px] z-10"></div>
+                                <button id="ballBtn-master" onclick="selectBall('master')" class="ball-selector-btn candy-card p-2 rounded-2xl flex flex-col items-center justify-center btn-press">
+                                    <div class="pokeball-design" style="background: linear-gradient(180deg, #a45ded 50%, #f0f0f0 50%);">
+                                        <div class="absolute top-1/2 left-1/2 w-3 h-3 bg-white border-2 border-gray-600 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10"></div>
+                                        <div class="absolute top-[calc(50%-10px)] left-1/2 w-4 h-2 bg-pink-400 transform -translate-x-1/2 -translate-y-1/2 text-lg font-black">M</div>
                                     </div>
-                                    <span class="text-xs font-bold mt-1.5 text-purple-400">Master</span>
-                                    <span id="count-master" class="text-[10px] text-slate-400">0</span>
+                                    <span class="candy-subheader text-xs mt-1.5" style="color: var(--candy-yellow);">Master</span>
+                                    <span id="count-master" class="candy-muted text-[10px]">0</span>
                                 </button>
                             </div>
                         </div>
 
                         <!-- CRITICAL BUTTON CONTROLS -->
                         <div class="mt-6 flex gap-3 w-full z-10">
-                            <button id="spinBtn" onclick="triggerSpin()" class="flex-1 py-4 px-6 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-black uppercase rounded-2xl shadow-xl transition duration-150 tracking-wider">
+                            <button id="spinBtn" onclick="triggerSpin()" class="flex-1 candy-btn py-4 px-6 btn-press tracking-wider">
                                 <i class="fas fa-radar mr-2"></i> Initialise Scan
                             </button>
-                            <button id="stopBtn" onclick="triggerPrecisionStop()" class="flex-1 py-4 px-6 bg-slate-900 text-slate-500 font-black uppercase rounded-2xl cursor-not-allowed transition duration-150 tracking-wider border border-slate-800" disabled>
+                            <button id="stopBtn" onclick="triggerPrecisionStop()" class="flex-1 candy-card py-4 px-6 candy-muted font-black uppercase rounded-2xl cursor-not-allowed transition duration-150 tracking-wider border-2 border-gray-200 btn-press" disabled>
                                 <i class="fas fa-stop mr-2"></i> Lock Radar!
                             </button>
                         </div>
                     </div>
 
                     <!-- DYNAMIC CAPTURE ACTION SCREEN -->
-                    <div class="md:col-span-5 bg-slate-955/40 border border-slate-900 p-6 rounded-3xl flex flex-col justify-between shadow-2xl min-h-[500px]">
+                    <div class="md:col-span-5 candy-panel p-6 flex flex-col justify-between min-h-[500px]">
                         <div class="text-center">
-                            <span id="encounterStatus" class="bg-slate-900 text-slate-400 border border-slate-800 text-[10px] px-3 py-1 rounded-full uppercase tracking-wider font-bold inline-block">Scanner Offline</span>
+                            <span id="encounterStatus" class="candy-card text-[10px] px-3 py-1 rounded-full uppercase tracking-wider candy-subheader inline-block">Scanner Offline</span>
                         </div>
 
                         <div class="my-6 flex flex-col items-center justify-center flex-grow">
-                            <div id="wildDisplayBox" class="relative w-48 h-48 flex items-center justify-center rounded-full bg-slate-950 border border-slate-900 shadow-[inset_0_0_20px_rgba(0,0,0,0.8)] overflow-hidden">
-                                <div class="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-40"></div>
-                                <div id="pokemonPlatform" class="absolute bottom-6 w-32 h-6 bg-slate-900 rounded-full blur-sm transition-all duration-300"></div>
+                            <div id="wildDisplayBox" class="relative w-48 h-48 flex items-center justify-center rounded-full border-2 border-gray-200 shadow-[inset_0_0_20px_rgba(0,0,0,0.1)] overflow-hidden" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef);">
+                                <div class="absolute inset-0 bg-[radial-gradient(#d1d5db_1px,transparent_1px)] [background-size:16px_16px] opacity-30"></div>
+                                <div id="pokemonPlatform" class="absolute bottom-6 w-32 h-6 rounded-full blur-sm transition-all duration-300" style="background: var(--candy-pink); opacity: 0.3;"></div>
 
                                 <div id="wildPokemonLoading" class="hidden absolute z-20"><div class="spinner"></div></div>
                                 <img id="wildPokemonGraphic" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Wild Pokemon" class="w-36 h-36 object-contain z-10 transform translate-y-2 transition-all duration-300 opacity-20" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
@@ -503,13 +803,13 @@
                             </div>
 
                             <div class="text-center mt-4 w-full">
-                                <h3 id="wildPokemonName" class="text-lg font-extrabold tracking-wide text-slate-400">Ready to Scan...</h3>
-                                <p id="wildPokemonDetails" class="text-xs text-slate-500 font-mono mt-1">Acquire precision radar lock to find target signature.</p>
+                                <h3 id="wildPokemonName" class="candy-subheader text-lg tracking-wide" style="color: var(--text-light);">Ready to Scan...</h3>
+                                <p id="wildPokemonDetails" class="candy-muted text-xs font-mono mt-1">Acquire precision radar lock to find target signature.</p>
                             </div>
                         </div>
 
                         <div class="w-full">
-                            <button id="catchBtn" onclick="triggerCatchMinigame()" class="w-full py-4 bg-slate-900 text-slate-500 font-extrabold uppercase rounded-2xl border border-slate-800 tracking-wider flex items-center justify-center gap-2 cursor-not-allowed" disabled>
+                            <button id="catchBtn" onclick="triggerCatchMinigame()" class="w-full candy-card py-4 candy-muted font-extrabold uppercase rounded-2xl border-2 border-gray-200 tracking-wider flex items-center justify-center gap-2 cursor-not-allowed btn-press" disabled>
                                 <i class="fas fa-crosshairs text-lg"></i>
                                 <span>Awaiting Encounter...</span>
                             </button>
@@ -518,30 +818,30 @@
                 </div>
 
                 <!-- JOURNEY ARENA VIEW (ROADMAP & ENDLESS ARENA) -->
-                <div id="view-battle" class="view-panel hidden bg-slate-955/40 border border-slate-900 p-6 rounded-3xl shadow-2xl min-h-[500px]">
+                <div id="view-battle" class="view-panel hidden candy-panel p-6 min-h-[500px]">
                     
                     <div id="battleSelector" class="space-y-6">
                         <div class="text-center">
-                            <span class="bg-rose-500/10 text-rose-400 border border-rose-500/20 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-bold">Journey Tab</span>
-                            <h2 class="heading-font text-2xl font-black mt-2 text-white">THE ADVENTURE ARENA</h2>
-                            <p class="text-xs text-slate-400 max-w-xl mx-auto mt-1">Choose your combat engagement! Clear structural boss challenges across regions, or test your partners in the scaled Unlimited Arena.</p>
+                            <span class="candy-card text-[10px] px-3 py-1 rounded-full uppercase tracking-widest candy-subheader" style="color: var(--candy-pink);">Journey Tab</span>
+                            <h2 class="candy-header text-2xl mt-2">THE ADVENTURE ARENA</h2>
+                            <p class="candy-muted text-xs max-w-xl mx-auto mt-1">Choose your combat engagement! Clear structural boss challenges across regions, or test your partners in the scaled Unlimited Arena.</p>
                         </div>
 
-                        <div class="flex justify-center border-b border-slate-900 pb-4">
-                            <div class="inline-flex bg-slate-950 p-1.5 rounded-xl border border-slate-900">
-                                <button onclick="toggleJourneySubMode('campaign')" id="btn-journey-campaign" class="px-5 py-2 rounded-lg text-xs font-bold transition duration-150 bg-rose-600 text-white">
+                        <div class="flex justify-center border-b border-gray-200 pb-4">
+                            <div class="inline-flex candy-card p-1.5 rounded-xl">
+                                <button onclick="toggleJourneySubMode('campaign')" id="btn-journey-campaign" class="candy-tab active px-5 py-2 rounded-lg text-xs btn-press">
                                     <i class="fas fa-route mr-1.5"></i>Regional Campaign
                                 </button>
-                                <button onclick="toggleJourneySubMode('unlimited')" id="btn-journey-unlimited" class="px-5 py-2 rounded-lg text-xs font-bold transition duration-150 text-slate-400 hover:text-white">
+                                <button onclick="toggleJourneySubMode('unlimited')" id="btn-journey-unlimited" class="candy-tab px-5 py-2 rounded-lg text-xs btn-press">
                                     <i class="fas fa-infinity mr-1.5"></i>Unlimited Arena
                                 </button>
                             </div>
                         </div>
 
                         <div id="journey-campaign-panel" class="space-y-4">
-                            <div class="text-center md:text-left">
-                                <h3 class="text-sm font-bold text-slate-300 uppercase tracking-widest">Regional Boss Roadmap</h3>
-                                <p class="text-xs text-slate-500">Defeating chapters unlocks new generations in your Quantum Scanner!</p>
+                            <div class="text-center">
+                                <h3 class="candy-subheader text-sm uppercase tracking-widest">Regional Boss Roadmap</h3>
+                                <p class="candy-muted text-xs">Defeating chapters unlocks new generations in your Quantum Scanner!</p>
                             </div>
                             <div id="roadmapCampaignGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 pt-2">
                             </div>
@@ -549,11 +849,11 @@
 
                         <div id="journey-unlimited-panel" class="hidden space-y-6">
                             <div class="bg-gradient-to-r from-purple-950/30 to-slate-950/30 border border-slate-850 p-6 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4">
-                                <div class="text-center md:text-left">
-                                    <h3 class="text-md font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 uppercase tracking-widest">Endless Battle Simulation</h3>
+                                <div class="text-center">
+                                    <h3 class="candy-subheader text-md text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 uppercase tracking-widest">Endless Battle Simulation</h3>
                                     <p class="text-xs text-slate-400 mt-1 max-w-md">Deploy your partner against dynamically scaled, generation-appropriate adversaries. Rewards scale continuously according to your partner's level!</p>
                                 </div>
-                                <button onclick="startUnlimitedMatch()" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition shadow-lg shrink-0">
+                                <button onclick="startUnlimitedMatch()" class="candy-btn candy-btn-violet px-6 py-3 text-xs uppercase tracking-wider shrink-0">
                                     Enter Simulation (50 Coins)
                                 </button>
                             </div>
@@ -579,11 +879,11 @@
 
                     <div id="fighterSelector" class="hidden space-y-6">
                         <button onclick="cancelBattlePrep()" class="text-xs text-slate-400 hover:text-white"><i class="fas fa-arrow-left mr-1"></i> Back to Arena</button>
-                        <div class="text-center">
-                            <h3 class="text-xl font-bold">Deploy Your Partner</h3>
-                            <p class="text-xs text-slate-400">Select one of your registered dex Pokémon to battle in this stage.</p>
+                        <div class="text-center mb-4">
+                            <h3 class="candy-header text-xl">Deploy Your Partner</h3>
+                            <p class="candy-muted text-xs">Select one of your registered dex Pokémon to battle in this stage.</p>
                         </div>
-
+                        
                         <div id="fighterSelectionGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-[350px] overflow-y-auto p-1">
                         </div>
                     </div>
@@ -595,14 +895,14 @@
                             
                             <div class="flex flex-col items-center justify-center flex-grow py-6">
                                 <img id="bossSprite" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Enemy" class="h-32 w-32 object-contain mb-4 transform scale-110">
-                                <h4 id="bossName" class="text-md font-extrabold text-white">Opponent</h4>
-                                <span id="bossLevelBadge" class="text-[10px] bg-slate-900 text-slate-400 px-2 py-0.5 rounded font-bold mt-1">LVL 5</span>
+                                <h4 id="bossName" class="candy-subheader text-md">Opponent</h4>
+                                <span id="bossLevelBadge" class="candy-card text-[10px] px-2 py-0.5 rounded mt-1">LVL 5</span>
                                 <div class="w-full mt-4">
                                     <div class="flex justify-between text-[11px] font-mono mb-1 text-slate-400">
                                         <span>HP Status</span>
                                         <span id="bossHPText">300/300</span>
                                     </div>
-                                    <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+                                    <div class="candy-progress h-2">
                                         <div id="bossHPBar" class="bg-red-500 h-full transition-all duration-300" style="width: 100%;"></div>
                                     </div>
                                 </div>
@@ -623,14 +923,14 @@
                             
                             <div class="flex flex-col items-center justify-center flex-grow py-6">
                                 <img id="playerFighterSprite" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Player Partner" class="h-32 w-32 object-contain mb-4 transform scale-110">
-                                <h4 id="playerFighterName" class="text-md font-extrabold text-white">Partner</h4>
-                                <span id="playerFighterLevelBadge" class="text-[10px] bg-slate-900 text-slate-400 px-2 py-0.5 rounded font-bold mt-1">LVL 1</span>
+                                <h4 id="playerFighterName" class="candy-subheader text-md">Partner</h4>
+                                <span id="playerFighterLevelBadge" class="candy-card text-[10px] px-2 py-0.5 rounded mt-1">LVL 1</span>
                                 <div class="w-full mt-4">
                                     <div class="flex justify-between text-[11px] font-mono mb-1 text-slate-400">
                                         <span>HP Status</span>
                                         <span id="playerFighterHPText">200/200</span>
                                     </div>
-                                    <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+                                    <div class="candy-progress h-2">
                                         <div id="playerFighterHPBar" class="bg-green-500 h-full transition-all duration-300" style="width: 10%;"></div>
                                     </div>
                                 </div>
@@ -638,9 +938,9 @@
                         </div>
 
                         <div class="md:col-span-12 bg-slate-950 border border-slate-900 p-6 rounded-2xl flex flex-col gap-4">
-                            <div class="text-xs text-slate-400 uppercase tracking-widest font-bold">Select Strategy / STAB Action Moves</div>
+                            <div class="candy-muted text-xs uppercase tracking-widest font-bold">Select Strategy / STAB Action Moves</div>
                             <div id="battleMovesGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
-                            <div id="battleLog" class="w-full bg-slate-955 border border-slate-900 rounded-xl p-3 text-xs font-mono h-28 overflow-y-auto text-slate-400">
+                            <div id="battleLog" class="w-full bg-slate-955 border border-slate-900 rounded-xl p-3 text-xs font-mono h-28 overflow-y-auto candy-muted">
                                 <div>Battle stage configured. Ready to strike first based on speed.</div>
                             </div>
                         </div>
@@ -651,12 +951,12 @@
                 <div id="view-team" class="view-panel hidden bg-slate-955/40 border border-slate-900 p-6 rounded-3xl shadow-2xl min-h-[500px]">
                     <div class="flex flex-col md:flex-row justify-between items-start gap-4 mb-6 pb-6 border-b border-slate-900">
                         <div>
-                            <h2 class="heading-font text-2xl font-black text-white">TEAM DEPLOYMENT</h2>
-                            <p class="text-xs text-slate-400 font-medium font-mono">Build a party of up to 6 Pokémon from your PC. The first slot is your lead partner.</p>
+                            <h2 class="candy-header text-2xl">TEAM DEPLOYMENT</h2>
+                            <p class="candy-muted text-xs font-medium font-mono">Build a party of up to 6 Pokémon from your PC. The first slot is your lead partner.</p>
                         </div>
-                        <div class="text-xs text-slate-400 bg-slate-950 border border-slate-900 px-3 py-2 rounded-xl">
-                            <div class="font-bold text-slate-300">Lead order</div>
-                            <div>Slot 1 → Slot 2 → Slot 3 → ...</div>
+                        <div class="candy-card text-xs px-3 py-2">
+                            <div class="font-bold candy-subheader">Lead order</div>
+                            <div class="candy-muted">Slot 1 → Slot 2 → Slot 3 → ...</div>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -669,8 +969,8 @@
                         </div>
                         <div class="bg-slate-950/70 border border-slate-900 rounded-2xl p-4">
                             <div class="mb-4">
-                                <h3 class="text-sm font-bold text-slate-300 uppercase tracking-widest">Choose from PC</h3>
-                                <p class="text-[10px] text-slate-500 mt-1">Select any caught Pokémon from your PC for each team slot.</p>
+                                <h3 class="candy-subheader text-sm uppercase tracking-widest">Choose from PC</h3>
+                                <p class="candy-muted text-[10px] mt-1">Select any caught Pokémon from your PC for each team slot.</p>
                             </div>
                             <div id="teamPcSummary" class="text-[10px] text-slate-400">Loading team roster...</div>
                         </div>
@@ -681,8 +981,8 @@
                 <div id="view-pokedex" class="view-panel hidden bg-slate-955/40 border border-slate-900 p-6 rounded-3xl shadow-2xl min-h-[500px]">
                     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-6 border-b border-slate-900">
                         <div>
-                            <h2 class="heading-font text-2xl font-black text-white">REGISTERED PARTNERS</h2>
-                            <p class="text-xs text-slate-400 font-medium font-mono">View statistics, levels, XP metrics, and equip held items below!</p>
+                            <h2 class="candy-header text-2xl">REGISTERED PARTNERS</h2>
+                            <p class="candy-muted text-xs font-medium font-mono">View statistics, levels, XP metrics, and equip held items below!</p>
                         </div>
                         <div class="flex gap-2 w-full md:w-auto">
                             <input type="text" id="dexSearchInput" oninput="triggerDexSearch()" placeholder="Search Species..." class="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs text-white focus:outline-none focus:border-rose-500 flex-grow md:w-48">
@@ -709,8 +1009,8 @@
                 <div id="view-pc" class="view-panel hidden bg-slate-955/40 border border-slate-900 p-6 rounded-3xl shadow-2xl min-h-[500px]">
                     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-6 border-b border-slate-900">
                         <div>
-                            <h2 class="heading-font text-2xl font-black text-white">PC STORAGE BOX</h2>
-                            <p class="text-xs text-slate-400 font-medium font-mono">All your caught Pok&eacute;mon are stored here. Each catch is unique!</p>
+                            <h2 class="candy-header text-2xl">PC STORAGE BOX</h2>
+                            <p class="candy-muted text-xs font-medium font-mono">All your caught Pok&eacute;mon are stored here. Each catch is unique!</p>
                         </div>
                         <div class="flex gap-2 w-full md:w-auto">
                             <input type="text" id="pcSearchInput" oninput="triggerPCSearch()" placeholder="Search by name or #..." class="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500 flex-grow md:w-48">
@@ -734,8 +1034,8 @@
                 <!-- MART SHOP VIEW -->
                 <div id="view-shop" class="view-panel hidden bg-slate-955/40 border border-slate-900 p-6 rounded-3xl shadow-2xl min-h-[500px]">
                     <div class="text-center mb-6">
-                        <span class="bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-bold">SILPH CO. STRATEGY MART</span>
-                        <h2 class="heading-font text-2xl font-black text-white mt-2">RADAR & STRATEGIC EQUIPMENT</h2>
+                        <span class="candy-card text-[10px] px-3 py-1 rounded-full uppercase tracking-widest candy-subheader" style="color: var(--candy-yellow);">SILPH CO. STRATEGY MART</span>
+                        <h2 class="candy-header text-2xl mt-2">RADAR & STRATEGIC EQUIPMENT</h2>
                         <p class="text-xs text-slate-400">Purchase scanner gear, balls, and equippable passive Hold Items to power up your roadmap campaign!</p>
                     </div>
 
@@ -743,11 +1043,11 @@
                         <div class="rounded-2xl border border-slate-900 bg-slate-950/70 p-4">
                             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
                                 <div>
-                                    <p class="text-[10px] uppercase tracking-[0.3em] text-slate-500">Sponsored</p>
-                                    <h3 class="text-sm font-bold text-white">Support the project</h3>
+                                    <p class="candy-muted text-[10px] uppercase tracking-[0.3em]">Sponsored</p>
+                                    <h3 class="candy-subheader text-sm">Support the project</h3>
                                 </div>
-                                <a href="https://buymeacoffee.com/luojj2019o" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs font-bold text-amber-300 hover:bg-amber-500/20 transition">
-                                    <i class="fas fa-mug-hot"></i>
+                                <a href="https://buymeacoffee.com/luojj2019o" target="_blank" rel="noopener" class="candy-btn candy-btn-yellow px-4 py-2 text-xs btn-press">
+                                    <i class="fas fa-mug-hot mr-1"></i>
                                     Buy me a coffee
                                 </a>
                             </div>
@@ -763,64 +1063,62 @@
                         </div>
 
                         <div>
-                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Scanning Devices (radar wedge & capture modifiers)</h3>
+                            <h3 class="candy-subheader text-sm uppercase tracking-wider mb-3">Scanning Devices (radar wedge & capture modifiers)</h3>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <!-- Great Ball -->
-                                <div class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-blue-500/50 transition">
+                                <div class="candy-card p-4 flex flex-col justify-between">
                                     <div class="flex justify-between items-start">
-                                        <div class="w-8 h-8 bg-blue-500 rounded-full border-2 border-slate-950 relative shadow">
-                                            <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
-                                        </div>
-                                        <span class="text-[9px] font-mono text-slate-400 uppercase">Qty Owned: <span id="shopCount-great" class="font-bold">0</span></span>
+                                        <div class="w-8 h-8 bg-blue-500 rounded-full border-2 border-slate-950 relative shadow"></div>
+                                        <span class="candy-muted text-[9px] font-mono uppercase">Owned: <span id="shopCount-great" class="font-bold">0</span></span>
                                     </div>
-                                    <h4 class="text-sm font-extrabold mt-3 text-white">Great Scanning Lens</h4>
-                                    <p class="text-[11px] text-slate-400 mt-1">Slows scanner speed slightly and increases rare signature wedges on the dial.</p>
+                                    <h4 class="candy-subheader text-sm mt-3">Great Scanning Lens</h4>
+                                    <p class="candy-body text-[11px] mt-1 h-12 overflow-hidden">Slows scanner speed slightly and increases rare signature wedges on the dial.</p>
                                     <div class="mt-4 flex items-center justify-between">
                                         <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> 50 Coins</span>
-                                        <button onclick="buyBall('great')" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-[11px] uppercase font-bold rounded-lg transition">Buy 1</button>
+                                        <button onclick="buyBall('great')" class="candy-btn candy-btn-cyan px-3 py-1.5 text-[11px] btn-press">Buy 1</button>
                                     </div>
                                 </div>
                                 <!-- Ultra Ball -->
-                                <div class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-yellow-500/50 transition">
+                                <div class="candy-card p-4 flex flex-col justify-between">
                                     <div class="flex justify-between items-start">
                                         <div class="w-8 h-8 bg-yellow-500 rounded-full border-2 border-slate-950 relative shadow">
                                             <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
                                         </div>
-                                        <span class="text-[9px] font-mono text-slate-400 uppercase">Qty Owned: <span id="shopCount-ultra" class="font-bold">0</span></span>
+                                        <span class="candy-muted text-[9px] font-mono uppercase">Owned: <span id="shopCount-ultra" class="font-bold">0</span></span>
                                     </div>
-                                    <h4 class="text-sm font-extrabold mt-3 text-white">Ultra Tracking Core</h4>
-                                    <p class="text-[11px] text-slate-400 mt-1">Slows scanning rate by 35% and increases probability of hitting targeted legendary scanning wedges.</p>
+                                    <h4 class="candy-subheader text-sm mt-3">Ultra Tracking Core</h4>
+                                    <p class="candy-body text-[11px] mt-1 h-12 overflow-hidden">Slows scanning rate by 35% and increases probability of hitting targeted legendary scanning wedges.</p>
                                     <div class="mt-4 flex items-center justify-between">
-                                        <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> 150 Coins</span>
-                                        <button onclick="buyBall('ultra')" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-[11px] uppercase font-black rounded-lg transition">Buy 1</button>
+                                        <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> 50 Coins</span>
+                                        <button onclick="buyBall('ultra')" class="candy-btn candy-btn-yellow px-3 py-1.5 text-[11px] btn-press">Buy 1</button>
                                     </div>
                                 </div>
                                 <!-- Master Ball -->
-                                <div class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-purple-500/50 transition">
+                                <div class="candy-card p-4 flex flex-col justify-between">
                                     <div class="flex justify-between items-start">
                                         <div class="w-8 h-8 bg-purple-600 rounded-full border-2 border-slate-950 relative shadow">
                                             <div class="w-8 h-0.5 bg-slate-950 absolute top-[13px]"></div>
                                         </div>
-                                        <span class="text-[9px] font-mono text-slate-400 uppercase">Qty Owned: <span id="shopCount-master" class="font-bold">0</span></span>
+                                        <span class="candy-muted text-[9px] font-mono uppercase">Owned: <span id="shopCount-master" class="font-bold">0</span></span>
                                     </div>
-                                    <h4 class="text-sm font-extrabold mt-3 text-white">Quantum Master Link</h4>
-                                    <p class="text-[11px] text-slate-400 mt-1">Extremely easy slow spin. Captures targets instantly without needing the ring accuracy game.</p>
+                                    <h4 class="candy-subheader text-sm mt-3">Quantum Master Link</h4>
+                                    <p class="candy-body text-[11px] mt-1 h-12 overflow-hidden">Extremely easy slow spin. Captures targets instantly without needing the ring accuracy game.</p>
                                     <div class="mt-4 flex items-center justify-between">
                                         <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> 500 Coins</span>
-                                        <button onclick="buyBall('master')" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-[11px] uppercase font-bold rounded-lg transition">Buy 1</button>
+                                        <button onclick="buyBall('master')" class="candy-btn candy-btn-violet px-3 py-1.5 text-[11px] btn-press">Buy 1</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div>
-                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Held Items (Equip to your partners for passive boosts)</h3>
+                            <h3 class="candy-subheader text-sm uppercase tracking-wider mb-3">Held Items (Equip to your partners for passive boosts)</h3>
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="heldItemsShopList">
                             </div>
                         </div>
 
                         <div>
-                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Consumables & Evolution Stones (Use directly in your PC)</h3>
+                            <h3 class="candy-subheader text-sm uppercase tracking-wider mb-3">Consumables & Evolution Stones (Use directly in your PC)</h3>
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="consumablesShopList">
                             </div>
                         </div>
@@ -833,27 +1131,27 @@
         <!-- FOOTER MOBILE NAV -->
         <footer class="bg-slate-950 border-t border-slate-900 py-2 fixed bottom-0 left-0 right-0 z-40 block lg:hidden">
             <div class="flex justify-around items-center">
-                <button onclick="switchView('roulette')" class="mobile-nav-btn text-center text-rose-500">
+                <button onclick="switchView('roulette')" class="mobile-nav-btn text-center text-rose-500 btn-press">
                     <i class="fas fa-crosshairs text-lg"></i>
                     <span class="block text-[10px] font-bold">Radar</span>
                 </button>
-                <button onclick="switchView('battle')" class="mobile-nav-btn text-center text-slate-400">
+                <button onclick="switchView('battle')" class="mobile-nav-btn text-center text-slate-400 btn-press">
                     <i class="fas fa-route text-lg"></i>
                     <span class="block text-[10px] font-bold">Journey</span>
                 </button>
-                <button onclick="switchView('team')" class="mobile-nav-btn text-center text-slate-400">
+                <button onclick="switchView('team')" class="mobile-nav-btn text-center text-slate-400 btn-press">
                     <i class="fas fa-users text-lg"></i>
                     <span class="block text-[10px] font-bold">Team</span>
                 </button>
-                <button onclick="switchView('pokedex')" class="mobile-nav-btn text-center text-slate-400">
+                <button onclick="switchView('pokedex')" class="mobile-nav-btn text-center text-slate-400 btn-press">
                     <i class="fas fa-book text-lg"></i>
                     <span class="block text-[10px] font-bold">Dex</span>
                 </button>
-                <button onclick="switchView('pc')" class="mobile-nav-btn text-center text-slate-400">
+                <button onclick="switchView('pc')" class="mobile-nav-btn text-center text-slate-400 btn-press">
                     <i class="fas fa-box text-lg"></i>
                     <span class="block text-[10px] font-bold">PC</span>
                 </button>
-                <button onclick="switchView('shop')" class="mobile-nav-btn text-center text-slate-400">
+                <button onclick="switchView('shop')" class="mobile-nav-btn text-center text-slate-400 btn-press">
                     <i class="fas fa-shopping-cart text-lg"></i>
                     <span class="block text-[10px] font-bold">Mart</span>
                 </button>
@@ -1678,80 +1976,39 @@
                         settingsSoundText.textContent = audioMuted ? "Sound Off" : "Sound On";
                     }
                     
-                    // Update theme button states
-                    const themeColors = {
-                        'default': 'border-rose-500',
-                        'ocean': 'border-cyan-500',
-                        'forest': 'border-emerald-500',
-                        'sunset': 'border-orange-500'
-                    };
+                    // Update theme toggle button state
+                    const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+                    const toggleBtn = document.getElementById('themeToggleBtn');
+                    const toggleCircle = document.getElementById('themeToggleCircle');
                     
-                    document.querySelectorAll('.theme-btn').forEach(btn => {
-                        const theme = btn.getAttribute('data-theme');
-                        // Remove all theme border colors
-                        Object.values(themeColors).forEach(colorClass => {
-                            btn.classList.remove(colorClass);
-                        });
-                        
-                        if (theme === currentTheme) {
-                            btn.classList.add(themeColors[theme]);
-                            btn.classList.remove('border-slate-700');
-                        } else {
-                            btn.classList.add('border-slate-700');
-                        }
-                    });
+                    if (toggleBtn && toggleCircle) {
+                        toggleBtn.style.background = isDark ? 'var(--accent-violet)' : '#cbd5e1';
+                        toggleCircle.style.transform = isDark ? 'translateX(32px)' : 'translateX(0)';
+                    }
                 }
 
-                let currentTheme = 'default';
-
-                const THEMES = {
-                    default: {
-                        primary: 'from-rose-500 via-pink-500 to-amber-400',
-                        accent: 'rose',
-                        glow: 'rgba(234, 179, 8, 0.65)'
-                    },
-                    ocean: {
-                        primary: 'from-cyan-500 via-blue-500 to-indigo-500',
-                        accent: 'cyan',
-                        glow: 'rgba(6, 182, 212, 0.65)'
-                    },
-                    forest: {
-                        primary: 'from-emerald-500 via-green-500 to-teal-500',
-                        accent: 'emerald',
-                        glow: 'rgba(16, 185, 129, 0.65)'
-                    },
-                    sunset: {
-                        primary: 'from-orange-500 via-amber-500 to-red-500',
-                        accent: 'orange',
-                        glow: 'rgba(249, 115, 22, 0.65)'
-                    }
-                };
-
-                function setTheme(themeName) {
-                    if (!THEMES[themeName]) return;
+                window.toggleTheme = function() {
+                    const html = document.documentElement;
+                    const currentAttr = html.getAttribute('data-theme');
+                    const newTheme = currentAttr === 'light' ? 'dark' : 'light';
                     
-                    currentTheme = themeName;
-                    const theme = THEMES[themeName];
-                    
-                    // Apply theme to gradient elements
-                    const gradientElements = document.querySelectorAll('.bg-gradient-to-r');
-                    gradientElements.forEach(el => {
-                        el.classList.remove('from-rose-500', 'via-pink-500', 'to-amber-400', 
-                                            'from-cyan-500', 'via-blue-500', 'to-indigo-500',
-                                            'from-emerald-500', 'via-green-500', 'to-teal-500',
-                                            'from-orange-500', 'via-amber-500', 'to-red-500');
-                        
-                        const colors = theme.primary.split(' ');
-                        el.classList.add(colors[0], colors[1], colors[2]);
-                    });
-                    
-                    // Update theme button states
-                    updateSettingsUI();
+                    html.setAttribute('data-theme', newTheme);
+                    currentTheme = newTheme;
                     
                     // Save theme preference
-                    localStorage.setItem('pokemon_radar_theme', themeName);
+                    localStorage.setItem('pokemon_radar_theme', newTheme);
                     
-                    showNotification('Theme Changed', `Applied ${themeName.charAt(0).toUpperCase() + themeName.slice(1)} theme`, 'success');
+                    // Update UI
+                    updateSettingsUI();
+                    
+                    showNotification('Theme Changed', `Switched to ${newTheme.charAt(0).toUpperCase() + newTheme.slice(1)} mode`, 'success');
+                }
+
+                function loadTheme() {
+                    const savedTheme = localStorage.getItem('pokemon_radar_theme') || 'dark';
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                    currentTheme = savedTheme;
+                    updateSettingsUI();
                 }
 
                 function clearAllData() {
@@ -1787,15 +2044,14 @@
                         };
                         
                         // Reset theme to default
-                        currentTheme = 'default';
-                        setTheme('default');
+                        localStorage.removeItem('pokemon_radar_theme');
+                        loadAndApplyTheme();
                         
                         updateUI();
                         renderRoadmap();
                         renderPCBox();
                         renderPokedex();
                         renderHeldItemsShop();
-                        
                         closeSettingsModal();
                         showNotification('Data Cleared', 'All progress has been reset', 'success');
                     } catch (e) {
@@ -1806,7 +2062,6 @@
 
                 window.openSettingsModal = openSettingsModal;
                 window.closeSettingsModal = closeSettingsModal;
-                window.setTheme = setTheme;
                 window.clearAllData = clearAllData;
 
                 // ==========================================
@@ -1847,22 +2102,18 @@
                 window.switchView = function(viewName) {
                     initAudio();
                     playConfirmSound();
-                    document.querySelectorAll('.view-panel').forEach(panel => panel.classList.add('hidden'));
-                    document.querySelectorAll('.nav-btn').forEach(btn => {
-                        btn.className = "nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-950 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900";
-                    });
-                    
-                    document.querySelectorAll('.mobile-nav-btn').forEach(mBtn => {
-                        mBtn.className = "mobile-nav-btn text-center text-slate-400";
-                    });
+                    document.querySelectorAll('.view-panel').forEach(p => p.classList.add('hidden'));
+                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('text-rose-500'));
 
                     const activePanel = document.getElementById(`view-${viewName}`);
                     if (activePanel) activePanel.classList.remove('hidden');
                     
                     const targetNav = document.getElementById(`nav-${viewName}`);
-                    if (targetNav) {
-                        targetNav.className = "nav-btn active flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-gradient-to-r from-rose-600 to-pink-600 text-white border-transparent shadow-lg shadow-rose-600/10";
-                    }
+                    if (targetNav) targetNav.classList.add('active');
+
+                    const mobileNav = document.querySelector(`.mobile-nav-btn[onclick="switchView('${viewName}')"]`);
+                    if(mobileNav) mobileNav.classList.add('text-rose-500');
 
                     if (viewName === 'pokedex') renderPokedex();
                     else if (viewName === 'battle') { resetBattleScreen(); renderRoadmap(); }
@@ -1907,11 +2158,11 @@
                     list.forEach(type => {
                         const btn = document.getElementById(`ballBtn-${type}`);
                         if (btn) {
-                            if (gameState.selectedBall === type) {
-                                btn.className = `ball-selector-btn bg-slate-900 border-2 border-rose-500 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-850 transition duration-150 scale-105 shadow-lg shadow-rose-500/10`;
-                            } else {
-                                btn.className = `ball-selector-btn bg-slate-950 border border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150`;
-                            }
+                            btn.classList.toggle('border-rose-500', gameState.selectedBall === type);
+                            btn.classList.toggle('scale-105', gameState.selectedBall === type);
+                            btn.classList.toggle('shadow-lg', gameState.selectedBall === type);
+                            btn.classList.toggle('shadow-rose-500/10', gameState.selectedBall === type);
+                            btn.classList.toggle('bg-slate-900', gameState.selectedBall === type);
                         }
                     });
 
@@ -2652,13 +2903,14 @@
                     const stage = gameState.activeBattleStage;
                     let enemyProfile = null;
                     let enemyTeam = [];
-                    document.getElementById('wildPokemonLoading').classList.remove('hidden');
+                    document.getElementById('battleArenaActive').classList.add('hidden');
+                    document.getElementById('fighterSelector').classList.add('hidden');
+                    document.getElementById('battleSelector').classList.add('hidden');
 
                     if (stage) {
                         const teamSize = Math.max(1, Math.min(4, stage.teamSize || 1));
                         for (let index = 0; index < teamSize; index += 1) {
-                            const teamMemberId = Math.min(1025, stage.pokemonId + (index * 5));
-                            const member = await fetchPokemonData(teamMemberId);
+                            const member = await fetchPokemonData(stage.pokemonId);
                             const memberLevel = stage.level + (index * 4);
                             member.hp = member.hp + (memberLevel * 3);
                             member.atk = member.atk + (memberLevel * 1.2);
@@ -2690,7 +2942,6 @@
                         enemyTeam = [enemyProfile];
                     }
 
-                    document.getElementById('wildPokemonLoading').classList.add('hidden');
                     gameState.battle.bossPokemon = enemyProfile;
                     gameState.battle.fighterPokemon = pokemon;
                     gameState.battle.enemyTeam = enemyTeam;
@@ -2707,7 +2958,7 @@
                     gameState.battle.bossOranUsed = false;
 
                     document.getElementById('fighterSelector').classList.add('hidden');
-                    document.getElementById('battleArenaActive').classList.remove('hidden');
+                    document.getElementById('battleArenaActive').classList.remove('hidden', 'md:grid-cols-12');
 
                     document.getElementById('bossSprite').src = enemyProfile.sprite;
                     document.getElementById('bossName').textContent = enemyProfile.name;
@@ -2721,11 +2972,11 @@
                     document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${scaledHP}`;
                     document.getElementById('playerFighterHPBar').style.width = "100%";
 
-                    document.getElementById('playerHeldItemBadge').innerHTML = pokemon.heldItem 
-                        ? `<span class="bg-cyan-900/80 border border-cyan-700 text-cyan-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase"><i class="fas fa-briefcase"></i> ${HOLD_ITEMS_DB[pokemon.heldItem].name}</span>`
+                    document.getElementById('playerHeldItemBadge').innerHTML = pokemon.heldItem
+                        ? `<span class="candy-card text-[8px] px-1.5 py-0.5 rounded uppercase" style="color: var(--accent-cyan);"><i class="fas fa-briefcase"></i> ${HOLD_ITEMS_DB[pokemon.heldItem].name}</span>`
                         : "";
-                    document.getElementById('bossHeldItemBadge').innerHTML = enemyProfile.heldItem 
-                        ? `<span class="bg-yellow-900/80 border border-yellow-700 text-yellow-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase">${HOLD_ITEMS_DB[enemyProfile.heldItem].name}</span>`
+                    document.getElementById('bossHeldItemBadge').innerHTML = enemyProfile.heldItem
+                        ? `<span class="candy-card text-[8px] px-1.5 py-0.5 rounded uppercase" style="color: var(--accent-yellow);">${HOLD_ITEMS_DB[enemyProfile.heldItem].name}</span>`
                         : "";
 
                     document.getElementById('battleLog').innerHTML = `<div class="text-cyan-400">Combat initiated: Engagement vs <span class="font-bold text-white">${enemyProfile.name}</span>!</div>`;
@@ -2740,7 +2991,7 @@
                     grid.innerHTML = "";
                     const moves = pokemon.moves && pokemon.moves.length ? pokemon.moves : ["tackle", "quick-attack"];
 
-                    moves.forEach(move => {
+                    moves.slice(0, 4).forEach(move => {
                         const spec = MOVES_DB[move] || { type: "normal", power: 40, category: "physical" },
                             moveBtn = document.createElement('button');
                         moveBtn.className = "py-3 px-4 bg-slate-900 hover:bg-slate-850 border border-slate-800 rounded-xl text-xs font-bold text-slate-200 capitalize hover:border-blue-500 transition duration-150 flex flex-col justify-center items-center gap-0.5";
@@ -2884,6 +3135,11 @@
                     const fighter = gameState.battle.fighterPokemon;
                     const team = gameState.battle.enemyTeam || [gameState.battle.bossPokemon];
                     const currentIndex = gameState.battle.enemyTeamIndex || 0;
+                    const playerTeam = gameState.team.map(uid => gameState.pcBox.find(p => p.uid === uid)).filter(Boolean);
+                    const currentFighterIndex = playerTeam.findIndex(p => p.uid === fighter.uid);
+
+                    fighter.battleCount = (fighter.battleCount || 0) + 1;
+                    fighter.friendship = Math.min(255, (fighter.friendship || 50) + 1);
 
                     if (team.length > 1 && currentIndex + 1 < team.length) {
                         const nextIndex = currentIndex + 1;
@@ -2951,11 +3207,6 @@
                     addCoins(rewardCoins);
                     addXP(Math.round(rewardCoins / 2));
 
-                    if (gameState.battle.fighterPokemon) {
-                        gameState.battle.fighterPokemon.battleCount = (gameState.battle.fighterPokemon.battleCount || 0) + 1;
-                        gameState.battle.fighterPokemon.friendship = Math.min(255, (gameState.battle.fighterPokemon.friendship || 50) + 3);
-                    }
-
                     const logBox = document.getElementById('battleLog');
                     logBox.innerHTML += `<div class="text-emerald-400 font-bold mt-2">🏆 VICTORY! Deployed partner gained +${xpAward} XP!</div>`;
                     if (gameState.battle.fighterPokemon) {
@@ -2969,16 +3220,33 @@
                 }
 
                 function handleBattleDefeat() {
-                    gameState.battle.active = false;
-                    if (!gameState.activeBattleStage) {
-                        gameState.endlessRunDefeats = 0;
+                    const fighter = gameState.battle.fighterPokemon;
+                    const playerTeam = gameState.team.map(uid => gameState.pcBox.find(p => p.uid === uid)).filter(Boolean);
+                    const currentFighterIndex = playerTeam.findIndex(p => p.uid === fighter.uid);
+
+                    if (currentFighterIndex !== -1 && currentFighterIndex + 1 < playerTeam.length) {
+                        const nextFighter = playerTeam[currentFighterIndex + 1];
+                        playBeep();
+                        const logBox = document.getElementById('battleLog');
+                        logBox.innerHTML += `<div class="text-orange-400 font-bold mt-2">Partner fainted! Sending out ${nextFighter.name}!</div>`;
+                        logBox.scrollTop = logBox.scrollHeight;
+                        
+                        setTimeout(() => {
+                            selectFighterAndBegin(nextFighter);
+                        }, 1500);
+
+                    } else {
+                        gameState.battle.active = false;
+                        if (!gameState.activeBattleStage) {
+                            gameState.endlessRunDefeats = 0;
+                        }
+                        playFailCapture();
+                        showNotification("DEFEATED", "Your team fainted. Purchase held items or train in Unlimited mode to gain stats!", "error");
+                        const logBox = document.getElementById('battleLog');
+                        logBox.innerHTML += `<div class="text-red-500 font-bold mt-2">💀 CHALLENGE FAILED. Returning to base...</div>`;
+                        logBox.scrollTop = logBox.scrollHeight;
+                        setTimeout(() => resetBattleScreen(), 3000);
                     }
-                    playFailCapture();
-                    showNotification("DEFEATED", "Your partner fainted. Purchase held items or train in Unlimited mode to gain stats!", "error");
-                    const logBox = document.getElementById('battleLog');
-                    logBox.innerHTML += `<div class="text-red-500 font-bold mt-2">💀 CHALLENGE FAILED. Returning to base...</div>`;
-                    logBox.scrollTop = logBox.scrollHeight;
-                    setTimeout(() => resetBattleScreen(), 3000);
                 }
 
                 function resetBattleScreen() {
@@ -2991,6 +3259,7 @@
                 window.cancelBattlePrep = function() {
                     initAudio();
                     playConfirmSound();
+                    gameState.endlessRunDefeats = 0;
                     resetBattleScreen();
                 };
 
@@ -3068,7 +3337,7 @@
                             const currentSPDEF = Math.round((cached.spDef || cached.def) * levelMultiplier);
                             const currentSPD = Math.round((cached.speed || 60) * levelMultiplier);
 
-                            card.className = `p-4 rounded-2xl border flex flex-col justify-between relative overflow-hidden transition ${borderClass} ${glowClass}`;
+                            card.className = `candy-card p-4 flex flex-col justify-between relative overflow-hidden transition ${borderClass} ${glowClass}`;
                             card.innerHTML = `
                                 <div>
                                     <div class="flex justify-between items-center mb-1 gap-1">
@@ -3079,17 +3348,17 @@
                                     <div class="flex justify-center my-2">
                                         <img src="${cached.sprite}" alt="${cached.name}" class="h-16 w-16 object-contain" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
                                     </div>
-                                    <h4 class="font-extrabold text-white text-xs tracking-wide text-center truncate w-full">${cached.name}</h4>
-                                    <div class="text-[7px] text-slate-400 font-mono text-center mt-1">Battles: ${cached.battleCount || 0}</div>
+                                    <h4 class="candy-subheader text-xs tracking-wide text-center truncate w-full">${cached.name}</h4>
+                                    <div class="candy-muted text-[7px] font-mono text-center mt-1">Battles: ${cached.battleCount || 0}</div>
                                     <div class="mt-1.5">
-                                        <div class="flex justify-between text-[8px] font-mono text-slate-500 mb-0.5">
+                                        <div class="flex justify-between text-[8px] font-mono candy-muted mb-0.5">
                                             <span>XP PROGRESS</span><span>${xp}/${nextLevelReq}</span>
                                         </div>
-                                        <div class="w-full bg-slate-900 rounded-full h-1 overflow-hidden">
+                                        <div class="candy-progress h-1">
                                             <div class="bg-gradient-to-r from-pink-500 to-rose-400 h-full transition-all duration-300" style="width: ${xpPercent}%;"></div>
                                         </div>
                                     </div>
-                                    <div class="grid grid-cols-3 gap-1 w-full mt-3 pt-2 border-t border-slate-900 text-[8px] font-mono text-slate-500 text-center">
+                                    <div class="grid grid-cols-3 gap-1 w-full mt-3 pt-2 border-t border-slate-900 text-[8px] font-mono candy-muted text-center">
                                         <div>HP: <span class="font-bold text-slate-300">${currentHP}</span></div>
                                         <div>ATK: <span class="font-bold text-slate-300">${currentATK}</span></div>
                                         <div>DEF: <span class="font-bold text-slate-300">${currentDEF}</span></div>
@@ -3099,7 +3368,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-3 pt-2 border-t border-slate-900 text-center">
-                                    <span class="text-[8px] font-mono text-slate-500">Owned: <span class="font-bold text-emerald-400">${gameState.pcBox.filter(p => p.id === item.id).length}x</span></span>
+                                    <span class="candy-muted text-[8px] font-mono">Owned: <span class="font-bold text-emerald-400">${gameState.pcBox.filter(p => p.id === item.id).length}x</span></span>
                                 </div>
                                 <div class="absolute bottom-2 right-2 flex gap-1">
                                     ${item.caughtNormal ? '<span class="text-[7px] font-bold bg-slate-800 text-slate-300 px-1 rounded">N</span>' : ''}
@@ -3107,8 +3376,8 @@
                                 </div>
                             `;
                         } else {
-                            card.className = "p-4 rounded-2xl border border-slate-950 bg-slate-950/40 flex flex-col items-center justify-center min-h-[170px] opacity-30";
-                            card.innerHTML = `<div class="text-3xl text-slate-800 mb-2"><i class="fas fa-satellite"></i></div><h4 class="text-[10px] font-bold text-slate-500 font-mono">Signal Lost</h4><span class="text-[8px] text-slate-600 font-mono mt-0.5">No. ${item.id}</span>`;
+                            card.className = "candy-card p-4 flex flex-col items-center justify-center min-h-[170px] opacity-30";
+                            card.innerHTML = `<div class="text-3xl text-slate-800 mb-2"><i class="fas fa-satellite"></i></div><h4 class="candy-subheader text-[10px]">Signal Lost</h4><span class="candy-muted text-[8px] font-mono mt-0.5">No. ${item.id}</span>`;
                         }
                         grid.appendChild(card);
                     });
@@ -3184,6 +3453,11 @@
                     renderTeamView();
                     renderFighterSelectionGrid();
                     showNotification('Team updated', normalizedUid ? 'Your roster has been updated.' : 'The team slot was cleared.', 'success');
+                };
+
+                window.openPcForTeamSlot = function(slotIndex) {
+                    // This function can be expanded to show a modal of the PC box
+                    showNotification('Team Building', 'Select a Pokémon from the dropdown to assign it to this slot.', 'info');
                 };
 
                 window.clearTeamSlot = function(slotIndex) {
@@ -3276,7 +3550,7 @@
                         const consumableOptions = Object.keys(HOLD_ITEMS_DB).filter(key => {
                             const item = HOLD_ITEMS_DB[key];
                             return (item.type === 'consumable' || item.type === 'evolution_stone') && (gameState.inventoryItems[key] || 0) > 0;
-                        });
+                        }).sort((a, b) => HOLD_ITEMS_DB[a].name.localeCompare(HOLD_ITEMS_DB[b].name));
                         const consumableMarkup = consumableOptions.length ? `
                             <select id="pcConsumableSelect-${pk.uid}" class="flex-1 bg-slate-900 border border-slate-800 text-[9px] rounded p-1 text-slate-300 focus:outline-none focus:border-emerald-500">
                                 <option value="">Choose item</option>
@@ -3285,7 +3559,7 @@
                             <button onclick="window.usePcConsumable(${pk.uid}, document.getElementById('pcConsumableSelect-${pk.uid}').value)" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-[9px] uppercase font-bold rounded">Use</button>
                         ` : '<div class="text-[8px] text-slate-500">No one-time items owned.</div>';
 
-                        card.className = `p-4 rounded-2xl border flex flex-col justify-between relative overflow-hidden transition ${borderClass} ${glowClass}`;
+                        card.className = `candy-card p-4 flex flex-col justify-between relative overflow-hidden transition ${borderClass} ${glowClass}`;
                         card.innerHTML = `
                             <div>
                                 <div class="flex justify-between items-center mb-1">
@@ -3295,19 +3569,19 @@
                                 <div class="flex justify-center my-2">
                                     <img src="${pk.sprite}" alt="${pk.name}" class="h-16 w-16 object-contain ${pk.isShiny ? 'drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]' : ''}" style="${pk.isShiny ? 'filter: hue-rotate(120deg) saturate(1.5)' : ''}" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
                                 </div>
-                                <h4 class="font-extrabold text-white text-xs tracking-wide text-center truncate w-full">${pk.isShiny ? '✨ ' : ''}${pk.name}</h4>
-                                <div class="text-center mt-1 text-[9px] text-slate-400">${pk.type1.toUpperCase()}${pk.type2 ? ' / ' + pk.type2.toUpperCase() : ''}</div>
+                                <h4 class="candy-subheader text-xs tracking-wide text-center truncate w-full">${pk.isShiny ? '✨ ' : ''}${pk.name}</h4>
+                                <div class="candy-muted text-center mt-1 text-[9px]">${pk.type1.toUpperCase()}${pk.type2 ? ' / ' + pk.type2.toUpperCase() : ''}</div>
                                 <div class="mt-1.5">
-                                    <div class="flex justify-between text-[8px] font-mono text-slate-500 mb-0.5"><span>XP</span><span>${xp}/${nextLevelReq}</span></div>
-                                    <div class="w-full bg-slate-900 rounded-full h-1 overflow-hidden">
+                                    <div class="flex justify-between text-[8px] font-mono candy-muted mb-0.5"><span>XP</span><span>${xp}/${nextLevelReq}</span></div>
+                                    <div class="candy-progress h-1">
                                         <div class="bg-gradient-to-r from-emerald-500 to-cyan-400 h-full transition-all duration-300" style="width: ${xpPercent}%;"></div>
                                     </div>
                                 </div>
                                 <div class="mt-2 pt-2 border-t border-slate-900">
-                                    <div class="text-[7px] text-slate-500 uppercase font-bold mb-1">Moves</div>
+                                    <div class="candy-muted text-[7px] uppercase font-bold mb-1">Moves</div>
                                     <div class="flex flex-wrap gap-1">${movesHtml}</div>
                                 </div>
-                                <div class="grid grid-cols-3 gap-1 w-full mt-2 pt-2 border-t border-slate-900 text-[8px] font-mono text-slate-500 text-center">
+                                <div class="grid grid-cols-3 gap-1 w-full mt-2 pt-2 border-t border-slate-900 text-[8px] font-mono candy-muted text-center">
                                     <div>HP: <span class="font-bold text-slate-300">${currentHP}</span></div>
                                     <div>ATK: <span class="font-bold text-slate-300">${currentATK}</span></div>
                                     <div>DEF: <span class="font-bold text-slate-300">${currentDEF}</span></div>
@@ -3317,17 +3591,17 @@
                                 </div>
                             </div>
                             <div class="mt-3 pt-2 border-t border-slate-900">
-                                <label class="block text-[8px] uppercase tracking-wider text-slate-400 font-bold mb-1">Hold Item</label>
+                                <label class="block text-[8px] uppercase tracking-wider candy-muted font-bold mb-1">Hold Item</label>
                                 <select onchange="window.equipItem(${pk.uid}, this.value)" class="w-full bg-slate-900 border border-slate-800 text-[10px] rounded p-1 text-slate-300 focus:outline-none focus:border-cyan-500">
                                     ${optionsMarkup}
                                 </select>
                             </div>
                             <div class="mt-2 pt-2 border-t border-slate-900">
-                                <div class="text-[7px] text-slate-500 uppercase font-bold mb-1">Move Relearn</div>
+                                <div class="candy-muted text-[7px] uppercase font-bold mb-1">Move Relearn</div>
                                 <div class="grid grid-cols-1 gap-1">${moveSlotsMarkup}</div>
                             </div>
                             <div class="mt-2 pt-2 border-t border-slate-900">
-                                <div class="text-[7px] text-slate-500 uppercase font-bold mb-1">Consumables</div>
+                                <div class="candy-muted text-[7px] uppercase font-bold mb-1">Consumables</div>
                                 <div class="flex flex-col gap-2">${consumableMarkup}</div>
                             </div>
                             ${pk.isShiny ? '<span class="absolute top-2 right-2 text-[7px] bg-pink-500 text-white px-1 rounded uppercase font-black">Shiny</span>' : ''}
@@ -3438,7 +3712,7 @@
                         const targetContainer = item.type === 'held_item' ? heldContainer : consumablesContainer;
                         if (!targetContainer) return;
 
-                        card.className = "bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-cyan-500/50 transition";
+                        card.className = "candy-card p-4 flex flex-col justify-between";
                         card.innerHTML = `
                             <div>
                                 <div class="flex justify-between items-start">
@@ -3450,7 +3724,7 @@
                             </div>
                             <div class="mt-4 flex items-center justify-between">
                                 <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> ${item.cost}</span>
-                                <button onclick="window.buyShopItem('${key}')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white text-[10px] uppercase font-bold rounded-lg transition">Buy</button>
+                                <button onclick="window.buyShopItem('${key}')" class="candy-btn candy-btn-cyan px-3 py-1 text-[10px] btn-press">Buy</button>
                             </div>
                         `;
                         targetContainer.appendChild(card);
@@ -3539,11 +3813,8 @@
                                     console.error('WARNING: CryptoJS encryption may not work properly');
                                 }
                                 
-                                // Load saved theme
-                                const savedTheme = localStorage.getItem('pokemon_radar_theme');
-                                if (savedTheme && THEMES[savedTheme]) {
-                                    setTheme(savedTheme);
-                                }
+                                // Load and apply saved theme
+                                loadAndApplyTheme();
                                 
                                 loadSavedProgress();
                                 buildWheelSectors();
