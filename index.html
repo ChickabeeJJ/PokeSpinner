@@ -166,18 +166,14 @@
             </div>
         </div>
 
-        <!-- AUDIO TOGGLE, SUPPORT & DATA TOOLS -->
+        <!-- AUDIO TOGGLE, SUPPORT & SETTINGS -->
         <div class="fixed top-4 right-4 z-50 flex flex-row gap-2 items-center">
             <a href="https://buymeacoffee.com/luojj2019o" target="_blank" rel="noopener" class="bg-amber-500/15 backdrop-blur-md border border-amber-500/30 px-4 py-2.5 rounded-full hover:bg-amber-500/25 transition duration-200 text-xs font-bold text-amber-300 flex items-center gap-2 shadow-xl">
                 <i class="fas fa-mug-hot"></i>
                 <span>Buy me a coffee</span>
             </a>
-            <button onclick="openDataTransferModal()" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 px-4 py-2.5 rounded-full hover:bg-slate-800 transition duration-200 text-xs font-bold text-white flex items-center gap-2 shadow-xl">
-                <i class="fas fa-database text-emerald-400"></i>
-                <span>Data Backup</span>
-            </button>
-            <button id="soundToggleBtn" onclick="toggleMute()" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-full hover:bg-slate-800 transition duration-200 text-yellow-400 focus:outline-none shadow-lg">
-                <i id="soundIcon" class="fas fa-volume-up text-lg"></i>
+            <button id="settingsToggleBtn" onclick="openSettingsModal()" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-full hover:bg-slate-800 transition duration-200 text-cyan-400 focus:outline-none shadow-lg">
+                <i class="fas fa-cog text-lg"></i>
             </button>
         </div>
 
@@ -211,6 +207,91 @@
                     <button onclick="copyExportedData()" class="rounded-xl border border-emerald-700 px-4 py-2 text-xs font-bold uppercase tracking-wider text-emerald-400 hover:text-white">Copy Export Code</button>
                     <button onclick="importDataFromText()" class="rounded-xl bg-rose-600 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-rose-500">Import Backup</button>
                     <button onclick="closeDataTransferModal()" class="rounded-xl border border-slate-700 px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SETTINGS MODAL -->
+        <div id="settingsModal" class="fixed inset-0 z-[70] bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+            <div class="w-full max-w-lg rounded-3xl border border-slate-800 bg-slate-950 p-5 shadow-2xl my-8">
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <p class="text-[10px] uppercase tracking-[0.35em] text-slate-500">System Settings</p>
+                        <h3 class="text-lg font-black text-white">Settings</h3>
+                    </div>
+                    <button onclick="closeSettingsModal()" class="rounded-full border border-slate-800 p-2 text-slate-400 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- Sound Settings -->
+                <div class="mt-6 p-4 rounded-2xl bg-slate-900/50 border border-slate-800">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i class="fas fa-volume-up text-yellow-400"></i>
+                        <h4 class="text-sm font-bold text-white">Sound</h4>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-slate-400">Master Volume</span>
+                        <button id="settingsSoundBtn" onclick="toggleMute()" class="px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs font-bold text-white hover:bg-slate-700 transition">
+                            <span id="settingsSoundText">Sound On</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Theme Settings -->
+                <div class="mt-4 p-4 rounded-2xl bg-slate-900/50 border border-slate-800">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i class="fas fa-palette text-purple-400"></i>
+                        <h4 class="text-sm font-bold text-white">Theme</h4>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="setTheme('default')" class="theme-btn p-3 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-rose-500 transition text-left" data-theme="default">
+                            <div class="flex items-center gap-2">
+                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-rose-500 to-pink-500"></div>
+                                <span class="text-xs font-bold text-white">Default</span>
+                            </div>
+                        </button>
+                        <button onclick="setTheme('ocean')" class="theme-btn p-3 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-cyan-500 transition text-left" data-theme="ocean">
+                            <div class="flex items-center gap-2">
+                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500"></div>
+                                <span class="text-xs font-bold text-white">Ocean</span>
+                            </div>
+                        </button>
+                        <button onclick="setTheme('forest')" class="theme-btn p-3 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-emerald-500 transition text-left" data-theme="forest">
+                            <div class="flex items-center gap-2">
+                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-emerald-500 to-green-500"></div>
+                                <span class="text-xs font-bold text-white">Forest</span>
+                            </div>
+                        </button>
+                        <button onclick="setTheme('sunset')" class="theme-btn p-3 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-orange-500 transition text-left" data-theme="sunset">
+                            <div class="flex items-center gap-2">
+                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-orange-500 to-amber-500"></div>
+                                <span class="text-xs font-bold text-white">Sunset</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Data Management -->
+                <div class="mt-4 p-4 rounded-2xl bg-slate-900/50 border border-slate-800">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i class="fas fa-database text-emerald-400"></i>
+                        <h4 class="text-sm font-bold text-white">Data Management</h4>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="openDataTransferModal()" class="flex-1 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white transition">
+                            <i class="fas fa-download mr-1"></i> Backup/Restore
+                        </button>
+                        <button onclick="clearAllData()" class="flex-1 px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-bold text-white transition">
+                            <i class="fas fa-trash mr-1"></i> Clear Data
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex justify-end">
+                    <button onclick="closeSettingsModal()" class="px-6 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white transition">
+                        Close
+                    </button>
                 </div>
             </div>
         </div>
@@ -1325,14 +1406,22 @@
                     audioMuted = !audioMuted;
                     const soundIcon = document.getElementById('soundIcon');
                     const soundToggleBtn = document.getElementById('soundToggleBtn');
+                    const settingsSoundText = document.getElementById('settingsSoundText');
+                    
                     if (audioMuted) {
-                        soundIcon.className = "fas fa-volume-mute text-lg text-slate-400";
-                        soundToggleBtn.classList.remove('text-yellow-400');
-                        soundToggleBtn.classList.add('text-slate-400');
+                        if (soundIcon) soundIcon.className = "fas fa-volume-mute text-lg text-slate-400";
+                        if (soundToggleBtn) {
+                            soundToggleBtn.classList.remove('text-yellow-400');
+                            soundToggleBtn.classList.add('text-slate-400');
+                        }
+                        if (settingsSoundText) settingsSoundText.textContent = "Sound Off";
                     } else {
-                        soundIcon.className = "fas fa-volume-up text-lg text-yellow-400";
-                        soundToggleBtn.classList.remove('text-slate-400');
-                        soundToggleBtn.classList.add('text-yellow-400');
+                        if (soundIcon) soundIcon.className = "fas fa-volume-up text-lg text-yellow-400";
+                        if (soundToggleBtn) {
+                            soundToggleBtn.classList.remove('text-slate-400');
+                            soundToggleBtn.classList.add('text-yellow-400');
+                        }
+                        if (settingsSoundText) settingsSoundText.textContent = "Sound On";
                         initAudio(); // Warm up context on unmute
                     }
                 };
@@ -1341,6 +1430,29 @@
                 // MODULE 3: LOCAL SAVES & DATA TRANSFER
                 // ==========================================
                 const SAVE_KEY = 'pokemon_radar_roadmap_save';
+
+                // Test CryptoJS availability
+                function testCryptoJS() {
+                    if (typeof CryptoJS === 'undefined') {
+                        console.error('CryptoJS is not loaded!');
+                        return false;
+                    }
+                    try {
+                        const testStr = 'test';
+                        const encrypted = CryptoJS.AES.encrypt(testStr, 'test-key').toString();
+                        const decrypted = CryptoJS.AES.decrypt(encrypted, 'test-key').toString(CryptoJS.enc.Utf8);
+                        if (decrypted === testStr) {
+                            console.log('CryptoJS test passed');
+                            return true;
+                        } else {
+                            console.error('CryptoJS test failed: decrypted != original');
+                            return false;
+                        }
+                    } catch (e) {
+                        console.error('CryptoJS test error:', e);
+                        return false;
+                    }
+                }
 
                 function saveProgressLocal() {
                     try {
@@ -1390,25 +1502,55 @@
                 }
 
                 function getDataExportPayload() {
-                    const dataObject = {
-                        version: 1,
-                        exportedAt: new Date().toISOString(),
-                        data: gameState
-                    };
-                    const jsonStr = JSON.stringify(dataObject);
-                    const encrypted = CryptoJS.AES.encrypt(jsonStr, 'pokemon-radar-secret-key-2024').toString();
-                    return 'PKMN_BACKUP:' + encrypted;
+                    try {
+                        // Check if CryptoJS is available
+                        if (typeof CryptoJS === 'undefined') {
+                            console.error('CryptoJS not loaded');
+                            throw new Error('CryptoJS library not loaded');
+                        }
+                        
+                        const dataObject = {
+                            version: 1,
+                            exportedAt: new Date().toISOString(),
+                            data: gameState
+                        };
+                        const jsonStr = JSON.stringify(dataObject);
+                        console.log('Export JSON length:', jsonStr.length);
+                        
+                        // Use a more robust encryption method
+                        const encrypted = CryptoJS.AES.encrypt(jsonStr, 'pokemon-radar-secret-key-2024').toString();
+                        console.log('Export encrypted length:', encrypted.length);
+                        
+                        if (!encrypted || encrypted.length === 0) {
+                            throw new Error('Encryption returned empty result');
+                        }
+                        
+                        return 'PKMN_BACKUP:' + encrypted;
+                    } catch (e) {
+                        console.error('Export encryption failed:', e);
+                        throw new Error('Encryption failed: ' + e.message);
+                    }
                 }
 
 
                 function exportDataToBackupCode() {
-                    const textarea = document.getElementById('dataTransferText');
-                    const payload = getDataExportPayload();
-                    textarea.value = payload;
-                    textarea.focus();
-                    textarea.select();
-                    showNotification('Export ready', 'A fresh encrypted backup code was generated for your current save.', 'success');
-                    return payload;
+                    try {
+                        const textarea = document.getElementById('dataTransferText');
+                        if (!textarea) {
+                            showNotification('Export failed', 'Data transfer textarea not found.', 'error');
+                            return;
+                        }
+                        const payload = getDataExportPayload();
+                        textarea.value = payload;
+                        textarea.focus();
+                        textarea.select();
+                        showNotification('Export ready', 'A fresh encrypted backup code was generated for your current save.', 'success');
+                        return payload;
+                    } catch (e) {
+                        console.error('Export failed:', e);
+                        showNotification('Export failed', 'Failed to generate backup: ' + e.message, 'error');
+                        return null;
+                    }
                 }
 
                 function openDataTransferModal() {
@@ -1444,6 +1586,11 @@
 
                 function importDataFromText() {
                     const textarea = document.getElementById('dataTransferText');
+                    if (!textarea) {
+                        showNotification('Import failed', 'Data transfer textarea not found.', 'error');
+                        return;
+                    }
+                    
                     const text = textarea.value.trim();
                     if (!text) {
                         showNotification('Nothing to import', 'Paste a saved data string first.', 'error');
@@ -1451,17 +1598,37 @@
                     }
 
                     try {
+                        // Check if CryptoJS is available
+                        if (typeof CryptoJS === 'undefined') {
+                            throw new Error('CryptoJS library not loaded');
+                        }
+                        
+                        console.log('Import text length:', text.length);
+                        console.log('Import text prefix:', text.substring(0, 50));
+                        
                         if (!text.startsWith('PKMN_BACKUP:')) {
-                            throw new Error('Invalid backup format');
+                            throw new Error('Invalid backup format - must start with PKMN_BACKUP:');
                         }
 
                         const encryptedData = text.replace('PKMN_BACKUP:', '');
+                        console.log('Encrypted data length:', encryptedData.length);
+                        
                         const decrypted = CryptoJS.AES.decrypt(encryptedData, 'pokemon-radar-secret-key-2024').toString(CryptoJS.enc.Utf8);
+                        console.log('Decrypted length:', decrypted ? decrypted.length : 0);
+                        
+                        if (!decrypted || decrypted.length === 0) {
+                            throw new Error('Decryption failed - returned empty string. Check that the backup code is complete.');
+                        }
+                        
                         const parsed = JSON.parse(decrypted);
+                        console.log('Parsed data keys:', Object.keys(parsed));
+                        
                         const importedData = parsed.data || parsed;
+                        console.log('Imported data has pokedex:', !!importedData.pokedex);
+                        console.log('Imported data has balls:', !!importedData.balls);
                         
                         if (!importedData || !importedData.pokedex || !importedData.balls) {
-                            throw new Error('Invalid save data structure');
+                            throw new Error('Invalid save data structure - missing required fields');
                         }
 
                         const normalizedImport = normalizeSaveState(importedData);
@@ -1476,6 +1643,7 @@
                         renderHeldItemsShop();
                         showNotification('Data imported', 'Progress restored from your pasted backup.', 'success');
                     } catch (e) {
+                        console.error('Import failed:', e);
                         showNotification('Import failed', 'The pasted backup is corrupted or invalid: ' + e.message, 'error');
                     }
                 }
@@ -1485,6 +1653,161 @@
                 window.exportDataToBackupCode = exportDataToBackupCode;
                 window.copyExportedData = copyExportedData;
                 window.importDataFromText = importDataFromText;
+
+                // ==========================================
+                // SETTINGS MODAL FUNCTIONS
+                // ==========================================
+                function openSettingsModal() {
+                    initAudio();
+                    playConfirmSound();
+                    const modal = document.getElementById('settingsModal');
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    updateSettingsUI();
+                }
+
+                function closeSettingsModal() {
+                    const modal = document.getElementById('settingsModal');
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+
+                function updateSettingsUI() {
+                    const settingsSoundText = document.getElementById('settingsSoundText');
+                    if (settingsSoundText) {
+                        settingsSoundText.textContent = audioMuted ? "Sound Off" : "Sound On";
+                    }
+                    
+                    // Update theme button states
+                    const themeColors = {
+                        'default': 'border-rose-500',
+                        'ocean': 'border-cyan-500',
+                        'forest': 'border-emerald-500',
+                        'sunset': 'border-orange-500'
+                    };
+                    
+                    document.querySelectorAll('.theme-btn').forEach(btn => {
+                        const theme = btn.getAttribute('data-theme');
+                        // Remove all theme border colors
+                        Object.values(themeColors).forEach(colorClass => {
+                            btn.classList.remove(colorClass);
+                        });
+                        
+                        if (theme === currentTheme) {
+                            btn.classList.add(themeColors[theme]);
+                            btn.classList.remove('border-slate-700');
+                        } else {
+                            btn.classList.add('border-slate-700');
+                        }
+                    });
+                }
+
+                let currentTheme = 'default';
+
+                const THEMES = {
+                    default: {
+                        primary: 'from-rose-500 via-pink-500 to-amber-400',
+                        accent: 'rose',
+                        glow: 'rgba(234, 179, 8, 0.65)'
+                    },
+                    ocean: {
+                        primary: 'from-cyan-500 via-blue-500 to-indigo-500',
+                        accent: 'cyan',
+                        glow: 'rgba(6, 182, 212, 0.65)'
+                    },
+                    forest: {
+                        primary: 'from-emerald-500 via-green-500 to-teal-500',
+                        accent: 'emerald',
+                        glow: 'rgba(16, 185, 129, 0.65)'
+                    },
+                    sunset: {
+                        primary: 'from-orange-500 via-amber-500 to-red-500',
+                        accent: 'orange',
+                        glow: 'rgba(249, 115, 22, 0.65)'
+                    }
+                };
+
+                function setTheme(themeName) {
+                    if (!THEMES[themeName]) return;
+                    
+                    currentTheme = themeName;
+                    const theme = THEMES[themeName];
+                    
+                    // Apply theme to gradient elements
+                    const gradientElements = document.querySelectorAll('.bg-gradient-to-r');
+                    gradientElements.forEach(el => {
+                        el.classList.remove('from-rose-500', 'via-pink-500', 'to-amber-400', 
+                                            'from-cyan-500', 'via-blue-500', 'to-indigo-500',
+                                            'from-emerald-500', 'via-green-500', 'to-teal-500',
+                                            'from-orange-500', 'via-amber-500', 'to-red-500');
+                        
+                        const colors = theme.primary.split(' ');
+                        el.classList.add(colors[0], colors[1], colors[2]);
+                    });
+                    
+                    // Update theme button states
+                    updateSettingsUI();
+                    
+                    // Save theme preference
+                    localStorage.setItem('pokemon_radar_theme', themeName);
+                    
+                    showNotification('Theme Changed', `Applied ${themeName.charAt(0).toUpperCase() + themeName.slice(1)} theme`, 'success');
+                }
+
+                function clearAllData() {
+                    if (!confirm('Are you sure you want to clear all data? This cannot be undone!')) {
+                        return;
+                    }
+                    
+                    try {
+                        localStorage.removeItem(SAVE_KEY);
+                        localStorage.removeItem('pokemon_radar_theme');
+                        
+                        // Reset game state to default
+                        gameState = {
+                            coins: 100,
+                            xp: 0,
+                            level: 1,
+                            balls: { poke: 5, great: 0, ultra: 0, master: 0 },
+                            pokedex: [],
+                            pcBox: [],
+                            team: [],
+                            selectedBall: 'poke',
+                            wheel: { spinning: false, currentAngle: 0, spinSpeed: 0, targetRarity: 'Common', pointerPos: 0, lastWedgeAudio: -1 },
+                            currentEncounter: null,
+                            encounterShiny: false,
+                            catchMinigame: { active: false, ringScale: 1.0, contracting: true, score: 0 },
+                            inventoryItems: { oran_berry: 0, leftovers: 0, choice_band: 0, wise_glasses: 0, antidote: 0, burn_heal: 0, ice_heal: 0, awakening: 0, paralyze_heal: 0, full_heal: 0, full_restore: 0, fire_stone: 0, water_stone: 0, thunder_stone: 0, leaf_stone: 0, ice_stone: 0, dawn_stone: 0, dusk_stone: 0, moon_stone: 0, shiny_stone: 0, assault_vest: 0, exp_share: 0, scope_lens: 0, weakness_policy: 0, life_orb: 0, potion: 0, super_potion: 0, hyper_potion: 0, max_potion: 0, ether: 0, max_ether: 0, elixir: 0, max_elixir: 0, attack_boost: 0, defense_boost: 0, speed_boost: 0, special_boost: 0, ability_capsule: 0, nature_mint: 0, vitamin_a: 0, vitamin_b: 0, vitamin_c: 0, vitamin_d: 0, vitamin_e: 0, vitamin_f: 0 },
+                            unlockedStages: 1, 
+                            activeBattleStage: null,
+                            battleType: 'campaign',
+                            endlessRunDefeats: 0,
+                            battle: { active: false, bossPokemon: null, fighterPokemon: null, fighterHP: 0, bossHP: 0, fighterMaxHP: 0, bossMaxHP: 0, oranUsed: false, bossOranUsed: false },
+                            dexUI: { page: 1, pageSize: 9, total: 1025, search: "", rarity: "all" }
+                        };
+                        
+                        // Reset theme to default
+                        currentTheme = 'default';
+                        setTheme('default');
+                        
+                        updateUI();
+                        renderRoadmap();
+                        renderPCBox();
+                        renderPokedex();
+                        renderHeldItemsShop();
+                        
+                        closeSettingsModal();
+                        showNotification('Data Cleared', 'All progress has been reset', 'success');
+                    } catch (e) {
+                        console.error('Clear data failed:', e);
+                        showNotification('Clear Failed', 'Failed to clear data: ' + e.message, 'error');
+                    }
+                }
+
+                window.openSettingsModal = openSettingsModal;
+                window.closeSettingsModal = closeSettingsModal;
+                window.setTheme = setTheme;
+                window.clearAllData = clearAllData;
 
                 // ==========================================
                 // MODULE 4: CORE UI & NOTIFICATIONS
@@ -3193,7 +3516,7 @@
                         { progress: 20, text: 'Initializing quantum radar...' },
                         { progress: 40, text: 'Calibrating frequency sensors...' },
                         { progress: 60, text: 'Loading Pokémon database...' },
-                        { progress: 80, text: 'Decrypting save data...' },
+                        { progress: 80, text: 'Testing encryption systems...' },
                         { progress: 100, text: 'System ready!' }
                     ];
                     
@@ -3210,6 +3533,18 @@
                             
                             // Final initialization
                             setTimeout(() => {
+                                // Test CryptoJS
+                                const cryptoTest = testCryptoJS();
+                                if (!cryptoTest) {
+                                    console.error('WARNING: CryptoJS encryption may not work properly');
+                                }
+                                
+                                // Load saved theme
+                                const savedTheme = localStorage.getItem('pokemon_radar_theme');
+                                if (savedTheme && THEMES[savedTheme]) {
+                                    setTheme(savedTheme);
+                                }
+                                
                                 loadSavedProgress();
                                 buildWheelSectors();
                                 drawWheel();
