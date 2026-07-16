@@ -180,58 +180,96 @@
             .pokeball-svg { animation: floatBall 4s ease-in-out infinite; }
             .ball-selector-btn:hover .pokeball-svg, .ball-selector-btn.active .pokeball-svg { animation: none; }
 
+
+            /* ===== LOADING SCREEN ===== */
+            @keyframes pulseBlob {
+                0%,100% { transform:scale(1); opacity:0.8; }
+                50% { transform:scale(1.15); opacity:1; }
+            }
+            @keyframes loadBallBounce {
+                0%,100% { transform:translateY(0px) rotate(0deg); }
+                30% { transform:translateY(-22px) rotate(-8deg); }
+                60% { transform:translateY(-8px) rotate(4deg); }
+            }
+            .load-star {
+                position:absolute;
+                width:3px; height:3px;
+                border-radius:50%;
+                background:rgba(255,255,255,0.7);
+                animation:twinkleStar 2.5s ease-in-out infinite;
+            }
+            @keyframes shimmerSweep {
+                0% { transform: translateX(-100%); }
+                100% { transform: translateX(200%); }
+            }
+            @keyframes twinkleStar {
+                0%,100% { opacity:0.15; transform:scale(0.8); }
+                50% { opacity:1; transform:scale(1.4); }
+            }
         </style>
     </head>
     <body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white pb-16 md:pb-0">
         <div class="scanlines"></div>
 
         <!-- EPIC LOADING SCREEN -->
-        <div id="loadingScreen" class="fixed inset-0 z-[100] bg-slate-950 flex flex-col items-center justify-center">
-            <div class="absolute inset-0 overflow-hidden">
-                <!-- Animated background particles -->
-                <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-rose-950"></div>
-                <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-rose-600/20 rounded-full blur-3xl animate-pulse"></div>
-                <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
-                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 0.5s;"></div>
+        <div id="loadingScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center" style="background:radial-gradient(ellipse at 30% 40%, #1a0535 0%, #05070f 50%, #0a0218 100%);">
+            <!-- Layered glow blobs -->
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                <div class="absolute w-[600px] h-[600px] rounded-full" style="top:-150px;left:-150px;background:radial-gradient(circle,rgba(244,63,94,0.18) 0%,transparent 70%);animation:pulseBlob 4s ease-in-out infinite;"></div>
+                <div class="absolute w-[500px] h-[500px] rounded-full" style="bottom:-100px;right:-100px;background:radial-gradient(circle,rgba(139,92,246,0.18) 0%,transparent 70%);animation:pulseBlob 4s ease-in-out infinite 1.3s;"></div>
+                <div class="absolute w-[400px] h-[400px] rounded-full" style="top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(251,146,60,0.08) 0%,transparent 70%);animation:pulseBlob 5s ease-in-out infinite 0.7s;"></div>
+                <!-- Star field -->
+                <div class="load-star" style="top:12%;left:20%;animation-delay:0s;"></div>
+                <div class="load-star" style="top:28%;left:72%;animation-delay:0.4s;"></div>
+                <div class="load-star" style="top:65%;left:15%;animation-delay:0.8s;"></div>
+                <div class="load-star" style="top:80%;left:82%;animation-delay:1.2s;"></div>
+                <div class="load-star" style="top:45%;left:88%;animation-delay:0.6s;"></div>
+                <div class="load-star" style="top:10%;left:55%;animation-delay:1.0s;"></div>
+                <div class="load-star" style="top:90%;left:40%;animation-delay:0.2s;"></div>
             </div>
-            
-            <div class="relative z-10 flex flex-col items-center">
-                <!-- Radar animation -->
-                <div class="relative w-48 h-48 mb-8">
-                    <div class="absolute inset-0 border-4 border-rose-600/30 rounded-full animate-spin" style="animation-duration: 3s;"></div>
-                    <div class="absolute inset-4 border-4 border-purple-600/30 rounded-full animate-spin" style="animation-duration: 2s; animation-direction: reverse;"></div>
-                    <div class="absolute inset-8 border-4 border-amber-500/30 rounded-full animate-spin" style="animation-duration: 4s;"></div>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="w-2 h-2 bg-rose-500 rounded-full animate-ping"></div>
-                    </div>
-                    <!-- Radar sweep -->
-                    <div class="absolute inset-0 rounded-full overflow-hidden">
-                        <div class="absolute top-1/2 left-1/2 w-1/2 h-1 bg-gradient-to-r from-transparent via-rose-500 to-transparent origin-left animate-spin" style="animation-duration: 2s;"></div>
+
+            <div class="relative z-10 flex flex-col items-center px-6 w-full max-w-sm">
+                <!-- Giant bouncing Pokéball -->
+                <div style="animation:loadBallBounce 1.2s ease-in-out infinite;margin-bottom:2rem;" id="loadBall">
+                    <svg width="120" height="120" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 8px 32px rgba(244,63,94,0.7)) drop-shadow(0 0 60px rgba(244,63,94,0.3));">
+                        <circle cx="20" cy="20" r="19" fill="#f0f0f0" stroke="#111" stroke-width="1.5"/>
+                        <path d="M1.2 20 A18.8 18.8 0 0 1 38.8 20Z" fill="#e11d48"/>
+                        <path d="M3 20 A17 17 0 0 1 37 20Z" fill="#be123c" opacity="0.5"/>
+                        <rect x="0.5" y="17.5" width="39" height="5" fill="#111"/>
+                        <circle cx="20" cy="20" r="7" fill="#f0f0f0" stroke="#111" stroke-width="1.5"/>
+                        <circle cx="20" cy="20" r="4" fill="#e5e7eb"/>
+                        <circle cx="20" cy="20" r="4" fill="none" stroke="#111" stroke-width="0.5"/>
+                        <circle cx="17.5" cy="17.5" r="1.5" fill="#fff" opacity="0.85"/>
+                    </svg>
+                </div>
+
+                <!-- Title -->
+                <div class="text-center mb-1">
+                    <h1 class="font-black tracking-tight text-transparent bg-clip-text mb-1" style="font-size:2.8rem;line-height:1;background-image:linear-gradient(135deg,#f43f5e 0%,#ec4899 40%,#fb923c 80%,#fbbf24 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 2px 16px rgba(244,63,94,0.5));">POKÉMON</h1>
+                    <h1 class="font-black tracking-widest text-white" style="font-size:1.5rem;line-height:1;letter-spacing:0.35em;text-shadow:0 0 20px rgba(244,63,94,0.6),0 2px 8px rgba(0,0,0,0.8);">RADAR</h1>
+                </div>
+                <!-- Elite badge -->
+                <div class="flex items-center gap-2 mb-8">
+                    <div style="height:1px;width:40px;background:linear-gradient(to right,transparent,rgba(244,63,94,0.6));"></div>
+                    <span class="text-[10px] font-black uppercase tracking-[0.4em]" style="color:#ec4899;">Elite Edition</span>
+                    <div style="height:1px;width:40px;background:linear-gradient(to left,transparent,rgba(244,63,94,0.6));"></div>
+                </div>
+
+                <!-- Progress bar — chunky with glow -->
+                <div class="w-full mb-3 relative">
+                    <div class="w-full h-4 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);box-shadow:inset 0 2px 4px rgba(0,0,0,0.4);">
+                        <div id="loadingBar" class="h-full rounded-full transition-all duration-300 relative" style="width:0%;background:linear-gradient(90deg,#f43f5e,#ec4899,#fb923c);box-shadow:0 0 16px rgba(244,63,94,0.8),0 0 6px rgba(244,63,94,0.9);">
+                            <div class="absolute inset-0 rounded-full" style="background:linear-gradient(to bottom,rgba(255,255,255,0.25),transparent);"></div>
+                        </div>
                     </div>
                 </div>
-                
-                <!-- Logo -->
-                <h1 class="heading-font text-4xl md:text-5xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 mb-4 animate-pulse">
-                    POKÉMON RADAR
-                </h1>
-                <p class="text-slate-400 text-sm tracking-widest uppercase mb-8">Elite Edition</p>
-                
-                <!-- Loading bar -->
-                <div class="w-64 h-2 bg-slate-800 rounded-full overflow-hidden mb-4">
-                    <div id="loadingBar" class="h-full bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 rounded-full transition-all duration-300" style="width: 0%;"></div>
-                </div>
-                
                 <!-- Loading text -->
-                <p id="loadingText" class="text-slate-500 text-xs tracking-wider">Initializing quantum radar...</p>
+                <p id="loadingText" class="text-center text-xs font-bold tracking-widest uppercase" style="color:rgba(255,255,255,0.4);">Scanning Pokémon database...</p>
             </div>
         </div>
 
         <!-- AUDIO TOGGLE, SUPPORT & SETTINGS -->
         <div class="fixed top-4 right-4 z-50 flex flex-row gap-2 items-center">
-            <a href="https://buymeacoffee.com/luojj2019o" target="_blank" rel="noopener" class="bg-amber-500/15 backdrop-blur-md border border-amber-500/30 px-4 py-2.5 rounded-full hover:bg-amber-500/25 transition duration-200 text-xs font-bold text-amber-300 flex items-center gap-2 shadow-xl">
-                <i class="fas fa-mug-hot"></i>
-                <span>Buy me a coffee</span>
-            </a>
             <button id="settingsToggleBtn" onclick="openSettingsModal()" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-full hover:bg-slate-800 transition duration-200 text-cyan-400 focus:outline-none shadow-lg">
                 <i class="fas fa-cog text-lg"></i>
             </button>
@@ -272,92 +310,128 @@
         </div>
 
         <!-- SETTINGS MODAL -->
-        <div id="settingsModal" class="fixed inset-0 z-[70] bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
-            <div class="w-full max-w-lg rounded-3xl border border-slate-800 bg-slate-950 p-5 shadow-2xl my-8">
-                <div class="flex items-start justify-between gap-4">
-                    <div>
-                        <p class="text-[10px] uppercase tracking-[0.35em] text-slate-500">System Settings</p>
-                        <h3 class="text-lg font-black text-white">Settings</h3>
+        <div id="settingsModal" class="fixed inset-0 z-[70] bg-black/70 backdrop-blur-md hidden items-center justify-center p-4 overflow-y-auto">
+            <div class="w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl my-8" style="border:3px solid rgba(255,255,255,0.12); background:linear-gradient(160deg,#0d1220 0%,#0a0f1e 100%);">
+                <!-- Modal Header Bar -->
+                <div class="px-6 py-4 flex items-center justify-between" style="background:linear-gradient(90deg,#1e1040,#0f172a,#1a0530);border-bottom:1px solid rgba(255,255,255,0.08);">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#7c3aed,#ec4899);">
+                            <i class="fas fa-cog text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="text-[9px] uppercase tracking-[0.3em] text-purple-400 font-bold">Configuration</p>
+                            <h3 class="text-base font-black text-white tracking-wide">Settings</h3>
+                        </div>
                     </div>
-                    <button onclick="closeSettingsModal()" class="rounded-full border border-slate-800 p-2 text-slate-400 hover:text-white">
-                        <i class="fas fa-times"></i>
+                    <button onclick="closeSettingsModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition">
+                        <i class="fas fa-times text-sm"></i>
                     </button>
                 </div>
 
-                <!-- Light / Dark Mode -->
-                <div class="mt-6 p-4 rounded-2xl bg-slate-900/50 border border-slate-800">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <i class="fas fa-adjust text-yellow-400"></i>
-                            <h4 class="text-sm font-bold text-white">Light / Dark Mode</h4>
+                <div class="p-5 space-y-3">
+                    <!-- Appearance row: Light/Dark + Sound side by side -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <!-- Light / Dark Mode -->
+                        <div class="p-4 rounded-2xl flex flex-col gap-3" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-circle-half-stroke text-yellow-400 text-sm"></i>
+                                <span class="text-xs font-bold text-white">Display</span>
+                            </div>
+                            <button onclick="toggleDarkLight()" id="darkModeBtn" class="w-full py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);">
+                                <i id="darkModeIconSettings" class="fas fa-sun text-yellow-400"></i>
+                                <span id="darkModeSettingsText">Light Mode</span>
+                            </button>
                         </div>
-                        <button onclick="toggleDarkLight()" class="px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs font-bold text-white hover:bg-slate-700 transition flex items-center gap-2">
-                            <i id="darkModeIconSettings" class="fas fa-sun text-yellow-400"></i>
-                            <span id="darkModeSettingsText">Switch to Light</span>
-                        </button>
+                        <!-- Sound -->
+                        <div class="p-4 rounded-2xl flex flex-col gap-3" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-volume-high text-cyan-400 text-sm"></i>
+                                <span class="text-xs font-bold text-white">Sound</span>
+                            </div>
+                            <button id="settingsSoundBtn" onclick="toggleMute()" class="w-full py-2 rounded-xl text-xs font-bold text-white transition flex items-center justify-center gap-2" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);">
+                                <i class="fas fa-music text-cyan-400"></i>
+                                <span id="settingsSoundText">Sound On</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Theme Selector — big visual cards -->
+                    <div class="p-4 rounded-2xl" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-palette text-purple-400 text-sm"></i>
+                                <span class="text-xs font-bold text-white">Accent Theme</span>
+                            </div>
+                            <span id="activeThemeLabel" class="text-[9px] uppercase tracking-widest font-black px-2 py-0.5 rounded-full" style="background:rgba(124,58,237,0.25);color:#a78bfa;border:1px solid rgba(124,58,237,0.4);">Rose</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <!-- Rose -->
+                            <button onclick="setTheme('default')" class="theme-btn group relative rounded-2xl overflow-hidden transition-all duration-200" data-theme="default" data-label="Rose">
+                                <div class="h-16 w-full" style="background:linear-gradient(135deg,#f43f5e,#ec4899,#fb923c);"></div>
+                                <div class="px-3 py-2 flex items-center justify-between" style="background:rgba(0,0,0,0.4);">
+                                    <span class="text-xs font-bold text-white">🌹 Rose</span>
+                                    <div class="theme-check w-5 h-5 rounded-full border-2 border-white/30 flex items-center justify-center" style="display:none;">
+                                        <i class="fas fa-check text-white text-[10px]"></i>
+                                    </div>
+                                </div>
+                                <div class="theme-active-ring absolute inset-0 rounded-2xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 3px #f43f5e, 0 0 20px rgba(244,63,94,0.4);"></div>
+                            </button>
+                            <!-- Ocean -->
+                            <button onclick="setTheme('ocean')" class="theme-btn group relative rounded-2xl overflow-hidden transition-all duration-200" data-theme="ocean" data-label="Ocean">
+                                <div class="h-16 w-full" style="background:linear-gradient(135deg,#06b6d4,#3b82f6,#6366f1);"></div>
+                                <div class="px-3 py-2 flex items-center justify-between" style="background:rgba(0,0,0,0.4);">
+                                    <span class="text-xs font-bold text-white">🌊 Ocean</span>
+                                    <div class="theme-check w-5 h-5 rounded-full border-2 border-white/30 flex items-center justify-center" style="display:none;">
+                                        <i class="fas fa-check text-white text-[10px]"></i>
+                                    </div>
+                                </div>
+                                <div class="theme-active-ring absolute inset-0 rounded-2xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 3px #06b6d4, 0 0 20px rgba(6,182,212,0.4);"></div>
+                            </button>
+                            <!-- Forest -->
+                            <button onclick="setTheme('forest')" class="theme-btn group relative rounded-2xl overflow-hidden transition-all duration-200" data-theme="forest" data-label="Forest">
+                                <div class="h-16 w-full" style="background:linear-gradient(135deg,#10b981,#22c55e,#14b8a6);"></div>
+                                <div class="px-3 py-2 flex items-center justify-between" style="background:rgba(0,0,0,0.4);">
+                                    <span class="text-xs font-bold text-white">🌿 Forest</span>
+                                    <div class="theme-check w-5 h-5 rounded-full border-2 border-white/30 flex items-center justify-center" style="display:none;">
+                                        <i class="fas fa-check text-white text-[10px]"></i>
+                                    </div>
+                                </div>
+                                <div class="theme-active-ring absolute inset-0 rounded-2xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 3px #10b981, 0 0 20px rgba(16,185,129,0.4);"></div>
+                            </button>
+                            <!-- Sunset -->
+                            <button onclick="setTheme('sunset')" class="theme-btn group relative rounded-2xl overflow-hidden transition-all duration-200" data-theme="sunset" data-label="Sunset">
+                                <div class="h-16 w-full" style="background:linear-gradient(135deg,#f97316,#f59e0b,#ef4444);"></div>
+                                <div class="px-3 py-2 flex items-center justify-between" style="background:rgba(0,0,0,0.4);">
+                                    <span class="text-xs font-bold text-white">🌅 Sunset</span>
+                                    <div class="theme-check w-5 h-5 rounded-full border-2 border-white/30 flex items-center justify-center" style="display:none;">
+                                        <i class="fas fa-check text-white text-[10px]"></i>
+                                    </div>
+                                </div>
+                                <div class="theme-active-ring absolute inset-0 rounded-2xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 3px #f97316, 0 0 20px rgba(249,115,22,0.4);"></div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Data Management -->
+                    <div class="p-4 rounded-2xl" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                        <div class="flex items-center gap-2 mb-3">
+                            <i class="fas fa-database text-emerald-400 text-sm"></i>
+                            <span class="text-xs font-bold text-white">Save Data</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="openDataTransferModal()" class="flex-1 py-2.5 rounded-xl text-xs font-bold text-white transition" style="background:linear-gradient(135deg,#059669,#10b981);">
+                                <i class="fas fa-download mr-1.5"></i>Backup / Restore
+                            </button>
+                            <button onclick="clearAllData()" class="flex-1 py-2.5 rounded-xl text-xs font-bold text-white transition" style="background:linear-gradient(135deg,#dc2626,#f43f5e);">
+                                <i class="fas fa-trash mr-1.5"></i>Clear All
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Sound Settings -->
-                <div class="mt-4 p-4 rounded-2xl bg-slate-900/50 border border-slate-800">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-volume-up text-yellow-400"></i>
-                        <h4 class="text-sm font-bold text-white">Sound</h4>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-slate-400">Master Volume</span>
-                        <button id="settingsSoundBtn" onclick="toggleMute()" class="px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs font-bold text-white hover:bg-slate-700 transition">
-                            <span id="settingsSoundText">Sound On</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Accent Colour Themes -->
-                <div class="mt-4 p-4 rounded-2xl bg-slate-900/50 border border-slate-800">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-palette text-purple-400"></i>
-                        <h4 class="text-sm font-bold text-white">Accent Colour</h4>
-                        <span class="text-[10px] text-slate-500 uppercase tracking-wider ml-auto">Changes gradient highlights</span>
-                    </div>
-                    <div class="grid grid-cols-4 gap-2">
-                        <button onclick="setTheme('default')" class="theme-btn flex flex-col items-center gap-1.5 p-2.5 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-rose-500 transition" data-theme="default" title="Default">
-                            <div class="w-7 h-7 rounded-full bg-gradient-to-br from-rose-500 to-pink-500 shadow-md"></div>
-                            <span class="text-[10px] font-bold text-white">Rose</span>
-                        </button>
-                        <button onclick="setTheme('ocean')" class="theme-btn flex flex-col items-center gap-1.5 p-2.5 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-cyan-500 transition" data-theme="ocean" title="Ocean">
-                            <div class="w-7 h-7 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 shadow-md"></div>
-                            <span class="text-[10px] font-bold text-white">Ocean</span>
-                        </button>
-                        <button onclick="setTheme('forest')" class="theme-btn flex flex-col items-center gap-1.5 p-2.5 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-emerald-500 transition" data-theme="forest" title="Forest">
-                            <div class="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-500 to-green-500 shadow-md"></div>
-                            <span class="text-[10px] font-bold text-white">Forest</span>
-                        </button>
-                        <button onclick="setTheme('sunset')" class="theme-btn flex flex-col items-center gap-1.5 p-2.5 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-orange-500 transition" data-theme="sunset" title="Sunset">
-                            <div class="w-7 h-7 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 shadow-md"></div>
-                            <span class="text-[10px] font-bold text-white">Sunset</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Data Management -->
-                <div class="mt-4 p-4 rounded-2xl bg-slate-900/50 border border-slate-800">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-database text-emerald-400"></i>
-                        <h4 class="text-sm font-bold text-white">Data Management</h4>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <button onclick="openDataTransferModal()" class="flex-1 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white transition">
-                            <i class="fas fa-download mr-1"></i> Backup/Restore
-                        </button>
-                        <button onclick="clearAllData()" class="flex-1 px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-bold text-white transition">
-                            <i class="fas fa-trash mr-1"></i> Clear Data
-                        </button>
-                    </div>
-                </div>
-
-                <div class="mt-6 flex justify-end">
-                    <button onclick="closeSettingsModal()" class="px-6 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white transition">
-                        Close
+                <div class="px-5 pb-5">
+                    <button onclick="closeSettingsModal()" class="w-full py-3 rounded-2xl text-sm font-black text-white tracking-wider transition" style="background:linear-gradient(135deg,#7c3aed,#ec4899);">
+                        Done
                     </button>
                 </div>
             </div>
@@ -474,10 +548,27 @@
                         <div class="absolute -top-12 -left-12 w-40 h-40 bg-pink-500/5 rounded-full blur-3xl"></div>
                         <div class="absolute -bottom-12 -right-12 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl"></div>
 
-                        <!-- Region Scanner HUD -->
-                        <div class="mb-4 text-center z-10">
-                            <span id="regionBadge" class="bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block mb-1">KANTO CHANNEL (GEN 1)</span>
-                            <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold block">Reflex Precision Locking Radar</p>
+                        <!-- Pokéspinner Header Banner -->
+                        <div class="mb-5 w-full z-10">
+                            <div class="relative rounded-2xl overflow-hidden" style="background:linear-gradient(135deg,#1a0535,#2d0a6e,#1a0535);border:2px solid rgba(139,92,246,0.4);box-shadow:0 4px 24px rgba(139,92,246,0.25),inset 0 1px 0 rgba(255,255,255,0.1);">
+                                <!-- Shimmer sweep -->
+                                <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.06) 50%,transparent 100%);animation:shimmerSweep 3s linear infinite;"></div>
+                                <!-- Glow orbs -->
+                                <div class="absolute -top-4 -left-4 w-24 h-24 rounded-full pointer-events-none" style="background:radial-gradient(circle,rgba(244,63,94,0.3),transparent 70%);"></div>
+                                <div class="absolute -top-4 -right-4 w-24 h-24 rounded-full pointer-events-none" style="background:radial-gradient(circle,rgba(139,92,246,0.3),transparent 70%);"></div>
+                                <div class="relative px-4 py-3 text-center">
+                                    <div class="flex items-center justify-center gap-2 mb-0.5">
+                                        <div class="h-px flex-1" style="background:linear-gradient(to right,transparent,rgba(244,63,94,0.6));"></div>
+                                        <span class="text-[9px] font-black uppercase tracking-[0.4em]" style="color:#a78bfa;">Pokémon Capture System</span>
+                                        <div class="h-px flex-1" style="background:linear-gradient(to left,transparent,rgba(244,63,94,0.6));"></div>
+                                    </div>
+                                    <h2 class="font-black text-transparent bg-clip-text" style="font-size:1.6rem;line-height:1.1;background-image:linear-gradient(135deg,#f43f5e,#ec4899,#fb923c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 8px rgba(244,63,94,0.5));letter-spacing:-0.01em;">🎰 POKÉ SPINNER</h2>
+                                    <div class="flex items-center justify-center gap-3 mt-1">
+                                        <span id="regionBadge" class="text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full" style="background:rgba(6,182,212,0.15);color:#67e8f9;border:1px solid rgba(6,182,212,0.35);">KANTO · GEN 1</span>
+                                        <span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider">Precision Lock Radar</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- RADAR SCANNER WHEEL CANVAS -->
@@ -498,7 +589,7 @@
 
                         <!-- BALL TIER SELECTION -->
                         <div class="mt-6 w-full z-10">
-                            <label class="text-[10px] text-slate-400 uppercase tracking-widest font-bold text-center block mb-2">Select Device Grade (Modifies Scan Zones)</label>
+                            <label class="text-[10px] font-black text-center block mb-2 uppercase tracking-widest" style="color:#a78bfa;letter-spacing:0.3em;">Choose Your Poké Ball</label>
                             <div class="grid grid-cols-4 gap-2">
                                 <button id="ballBtn-poke" onclick="selectBall('poke')" class="ball-selector-btn bg-slate-950 border-2 border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
                                     <div class="pokeball-svg">
@@ -566,11 +657,11 @@
 
                         <!-- CRITICAL BUTTON CONTROLS -->
                         <div class="mt-6 flex gap-3 w-full z-10">
-                            <button id="spinBtn" onclick="triggerSpin()" class="flex-1 py-4 px-6 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-black uppercase rounded-2xl shadow-xl transition duration-150 tracking-wider">
-                                <i class="fas fa-radar mr-2"></i> Initialise Scan
+                            <button id="spinBtn" onclick="triggerSpin()" class="flex-1 py-4 px-6 text-white font-black uppercase rounded-2xl shadow-xl transition duration-150 tracking-wider" style="background:linear-gradient(135deg,#e11d48,#ec4899,#f43f5e);box-shadow:0 4px 20px rgba(244,63,94,0.5),inset 0 1px 0 rgba(255,255,255,0.2);text-shadow:0 1px 4px rgba(0,0,0,0.4);letter-spacing:0.1em;">
+                                <i class="fas fa-dice mr-2"></i> SPIN!
                             </button>
-                            <button id="stopBtn" onclick="triggerPrecisionStop()" class="flex-1 py-4 px-6 bg-slate-900 text-slate-500 font-black uppercase rounded-2xl cursor-not-allowed transition duration-150 tracking-wider border border-slate-800" disabled>
-                                <i class="fas fa-stop mr-2"></i> Lock Radar!
+                            <button id="stopBtn" onclick="triggerPrecisionStop()" class="flex-1 py-4 px-6 font-black uppercase rounded-2xl cursor-not-allowed transition duration-150 tracking-wider border" style="background:#0f1629;border-color:rgba(255,255,255,0.08);color:rgba(255,255,255,0.25);letter-spacing:0.1em;" disabled>
+                                <i class="fas fa-bullseye mr-2"></i> LOCK!
                             </button>
                         </div>
                     </div>
@@ -1806,33 +1897,36 @@
                 }
 
                 function updateSettingsUI() {
+                    // Sound label
                     const settingsSoundText = document.getElementById('settingsSoundText');
-                    if (settingsSoundText) {
-                        settingsSoundText.textContent = audioMuted ? "Sound Off" : "Sound On";
+                    if (settingsSoundText) settingsSoundText.textContent = audioMuted ? "Sound Off" : "Sound On";
+
+                    // Light/dark label
+                    const darkText = document.getElementById('darkModeSettingsText');
+                    const darkIcon = document.getElementById('darkModeIconSettings');
+                    if (isLightMode) {
+                        if (darkText) darkText.textContent = 'Dark Mode';
+                        if (darkIcon) darkIcon.className = 'fas fa-moon text-purple-400';
+                    } else {
+                        if (darkText) darkText.textContent = 'Light Mode';
+                        if (darkIcon) darkIcon.className = 'fas fa-sun text-yellow-400';
                     }
-                    
-                    // Update theme button states
-                    const themeColors = {
-                        'default': 'border-rose-500',
-                        'ocean': 'border-cyan-500',
-                        'forest': 'border-emerald-500',
-                        'sunset': 'border-orange-500'
-                    };
-                    
+
+                    // Theme cards — show active ring + checkmark
                     document.querySelectorAll('.theme-btn').forEach(btn => {
-                        const theme = btn.getAttribute('data-theme');
-                        // Remove all theme border colors
-                        Object.values(themeColors).forEach(colorClass => {
-                            btn.classList.remove(colorClass);
-                        });
-                        
-                        if (theme === currentTheme) {
-                            btn.classList.add(themeColors[theme]);
-                            btn.classList.remove('border-slate-700');
-                        } else {
-                            btn.classList.add('border-slate-700');
-                        }
+                        const isActive = btn.getAttribute('data-theme') === currentTheme;
+                        const ring = btn.querySelector('.theme-active-ring');
+                        const check = btn.querySelector('.theme-check');
+                        if (ring)  ring.style.display  = isActive ? 'block' : 'none';
+                        if (check) check.style.display = isActive ? 'flex'  : 'none';
+                        btn.style.transform = isActive ? 'scale(1.03)' : 'scale(1)';
+                        btn.style.opacity   = isActive ? '1' : '0.7';
                     });
+
+                    // Active theme label chip
+                    const labels = { default:'Rose', ocean:'Ocean', forest:'Forest', sunset:'Sunset' };
+                    const labelEl = document.getElementById('activeThemeLabel');
+                    if (labelEl) labelEl.textContent = labels[currentTheme] || 'Rose';
                 }
 
                 let currentTheme = 'default';
@@ -2684,15 +2778,13 @@
 
                 window.startUnlimitedMatch = function() {
                     initAudio();
-                    if (gameState.coins < 50) { showNotification("No Entry Fee", "Requires 50 Coins to play simulation.", "error"); return; }
                     const teamFighters = getBattleFighterPool(true);
-                    if (teamFighters.length === 0) { showNotification("No Team Members", "Assign at least one Pokémon to your team before training in endless mode.", "error"); return; }
-                    spendCoins(50);
+                    if (teamFighters.length === 0) { showNotification("No Team", "Assign at least one Pokémon to your team to enter Endless Mode!", "error"); return; }
                     playConfirmSound();
                     gameState.activeBattleStage = null;
                     gameState.endlessRunDefeats = 0;
                     document.getElementById('battleSelector').classList.add('hidden');
-                    // Auto-use team lead — no manual selection needed
+                    // Auto-use team lead — no manual selection, no coin cost
                     selectFighterAndBegin(teamFighters[0]);
                 };
 
