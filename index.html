@@ -162,8 +162,7 @@
             body.light-mode #wildDisplayBox { background-color:#f1f5f9!important; border-color:#e2e8f0!important; }
             body.light-mode .theme-btn { background-color:#f8fafc!important; }
             body.light-mode .theme-btn span.text-white { color:#0f172a!important; }
-            body.light-mode #darkModeToggleBtn { background-color:rgba(241,245,249,0.98)!important; border-color:#e2e8f0!important; color:#7c3aed!important; }
-            body.light-mode #settingsToggleBtn { background-color:rgba(241,245,249,0.98)!important; border-color:#e2e8f0!important; }
+            body.light-mode #settingsToggleBtn { background-color:rgba(241,245,249,0.98)!important; border-color:#e2e8f0!important; color:#64748b!important; }
             body.light-mode .rounded-3xl { border-color:#e2e8f0!important; }
             body.light-mode .rounded-2xl.border.bg-slate-950 { background-color:#ffffff!important; }
 
@@ -233,9 +232,6 @@
                 <i class="fas fa-mug-hot"></i>
                 <span>Buy me a coffee</span>
             </a>
-            <button id="darkModeToggleBtn" onclick="toggleDarkLight()" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-full hover:bg-slate-800 transition duration-200 text-yellow-400 focus:outline-none shadow-lg" title="Toggle Light / Dark Mode">
-                <i id="darkModeIcon" class="fas fa-sun text-lg"></i>
-            </button>
             <button id="settingsToggleBtn" onclick="openSettingsModal()" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-full hover:bg-slate-800 transition duration-200 text-cyan-400 focus:outline-none shadow-lg">
                 <i class="fas fa-cog text-lg"></i>
             </button>
@@ -316,36 +312,29 @@
                     </div>
                 </div>
 
-                <!-- Theme Settings -->
+                <!-- Accent Colour Themes -->
                 <div class="mt-4 p-4 rounded-2xl bg-slate-900/50 border border-slate-800">
                     <div class="flex items-center gap-3 mb-3">
                         <i class="fas fa-palette text-purple-400"></i>
-                        <h4 class="text-sm font-bold text-white">Theme</h4>
+                        <h4 class="text-sm font-bold text-white">Accent Colour</h4>
+                        <span class="text-[10px] text-slate-500 uppercase tracking-wider ml-auto">Changes gradient highlights</span>
                     </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="setTheme('default')" class="theme-btn p-3 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-rose-500 transition text-left" data-theme="default">
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-rose-500 to-pink-500"></div>
-                                <span class="text-xs font-bold text-white">Default</span>
-                            </div>
+                    <div class="grid grid-cols-4 gap-2">
+                        <button onclick="setTheme('default')" class="theme-btn flex flex-col items-center gap-1.5 p-2.5 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-rose-500 transition" data-theme="default" title="Default">
+                            <div class="w-7 h-7 rounded-full bg-gradient-to-br from-rose-500 to-pink-500 shadow-md"></div>
+                            <span class="text-[10px] font-bold text-white">Rose</span>
                         </button>
-                        <button onclick="setTheme('ocean')" class="theme-btn p-3 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-cyan-500 transition text-left" data-theme="ocean">
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500"></div>
-                                <span class="text-xs font-bold text-white">Ocean</span>
-                            </div>
+                        <button onclick="setTheme('ocean')" class="theme-btn flex flex-col items-center gap-1.5 p-2.5 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-cyan-500 transition" data-theme="ocean" title="Ocean">
+                            <div class="w-7 h-7 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 shadow-md"></div>
+                            <span class="text-[10px] font-bold text-white">Ocean</span>
                         </button>
-                        <button onclick="setTheme('forest')" class="theme-btn p-3 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-emerald-500 transition text-left" data-theme="forest">
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-emerald-500 to-green-500"></div>
-                                <span class="text-xs font-bold text-white">Forest</span>
-                            </div>
+                        <button onclick="setTheme('forest')" class="theme-btn flex flex-col items-center gap-1.5 p-2.5 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-emerald-500 transition" data-theme="forest" title="Forest">
+                            <div class="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-500 to-green-500 shadow-md"></div>
+                            <span class="text-[10px] font-bold text-white">Forest</span>
                         </button>
-                        <button onclick="setTheme('sunset')" class="theme-btn p-3 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-orange-500 transition text-left" data-theme="sunset">
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full bg-gradient-to-r from-orange-500 to-amber-500"></div>
-                                <span class="text-xs font-bold text-white">Sunset</span>
-                            </div>
+                        <button onclick="setTheme('sunset')" class="theme-btn flex flex-col items-center gap-1.5 p-2.5 rounded-xl border-2 border-slate-700 bg-slate-950 hover:border-orange-500 transition" data-theme="sunset" title="Sunset">
+                            <div class="w-7 h-7 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 shadow-md"></div>
+                            <span class="text-[10px] font-bold text-white">Sunset</span>
                         </button>
                     </div>
                 </div>
@@ -380,10 +369,15 @@
                 <!-- Brand -->
                 <div class="flex items-center gap-3">
                     <div class="relative">
-                        <div class="w-10 h-10 bg-rose-600 rounded-full border-4 border-slate-950 flex items-center justify-center shadow-lg">
-                            <div class="w-10 h-1 bg-slate-950 absolute top-[15px]"></div>
-                            <div class="w-3 h-3 bg-white rounded-full border border-slate-950 z-10"></div>
-                        </div>
+                        <svg width="44" height="44" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 8px rgba(220,38,38,0.5))">
+                            <circle cx="20" cy="20" r="19" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="2"/>
+                            <path d="M1.5 20 A18.5 18.5 0 0 1 38.5 20Z" fill="#dc2626"/>
+                            <path d="M5 20 A15 15 0 0 1 35 20Z" fill="#b91c1c" opacity="0.5"/>
+                            <rect x="1" y="18" width="38" height="4" fill="#1a1a2e"/>
+                            <circle cx="20" cy="20" r="6.5" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="2"/>
+                            <circle cx="20" cy="20" r="3.5" fill="#e5e7eb"/>
+                            <circle cx="18.5" cy="18.5" r="1.2" fill="#fff" opacity="0.9"/>
+                        </svg>
                     </div>
                     <div>
                         <h1 class="heading-font text-xl md:text-2xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 vibe-title">
@@ -1548,23 +1542,25 @@
                     }
                 }
 
+                // ── SAVE SYSTEM ────────────────────────────────────────────
+                // Plain JSON save — no CryptoJS dependency for primary slot.
+                // CryptoJS is still used for the manual Export/Import feature.
+                // ────────────────────────────────────────────────────────────
                 function saveProgressLocal() {
                     try {
-                        const normalizedState = normalizeSaveState(gameState);
-                        // Persist theme/light mode alongside game state
-                        normalizedState._theme = currentTheme;
-                        normalizedState._lightMode = isLightMode;
-                        const jsonStr = JSON.stringify(normalizedState);
-                        const encrypted = CryptoJS.AES.encrypt(jsonStr, 'pokemon-radar-secret-key-2024').toString();
-                        localStorage.setItem(SAVE_KEY, encrypted);
-                        // Also plain backup for reliability
-                        localStorage.setItem(SAVE_KEY + '_ts', Date.now().toString());
-                    } catch (e) {
-                        console.warn('Local save failed:', e);
-                        // Fallback: try plain JSON
-                        try {
-                            localStorage.setItem(SAVE_KEY + '_fallback', JSON.stringify(normalizeSaveState(gameState)));
-                        } catch(e2) {}
+                        const state = normalizeSaveState(gameState);
+                        state._theme     = currentTheme;
+                        state._lightMode = isLightMode;
+                        state._savedAt   = Date.now();
+                        const json = JSON.stringify(state);
+                        // Primary: plain JSON (most reliable)
+                        localStorage.setItem(SAVE_KEY + '_json', json);
+                        // Secondary: btoa-encoded (light obfuscation, still recoverable without CryptoJS)
+                        try { localStorage.setItem(SAVE_KEY + '_b64', btoa(unescape(encodeURIComponent(json)))); } catch(e) {}
+                        // Mark timestamp so we can detect stale data
+                        localStorage.setItem(SAVE_KEY + '_ts', state._savedAt.toString());
+                    } catch (err) {
+                        console.error('[SAVE] saveProgressLocal failed:', err);
                     }
                 }
 
@@ -1573,57 +1569,69 @@
                 }
 
                 function loadSavedProgress() {
+                    // ── LOAD PRIORITY ───────────────────────────────────────────
+                    // 1) _json  — plain JSON   (written by current save system)
+                    // 2) _b64   — btoa-encoded (backup written by current system)
+                    // 3) legacy AES slot       (old encrypted format, backward compat)
+                    // ─────────────────────────────────────────────────────────────
+                    function applyParsed(parsed) {
+                        const normalized = normalizeSaveState(parsed);
+                        if (!normalized.balls) return false;           // sanity check
+                        Object.assign(gameState, normalized);
+                        assignPokemonUids();
+                        if (parsed._lightMode) { isLightMode = true; applyLightDarkMode(true); }
+                        if (parsed._theme && THEMES[parsed._theme])   { currentTheme = parsed._theme; }
+                        console.log('[SAVE] Loaded ' + (normalized.pokedex ? normalized.pokedex.length : 0) + ' Pokémon, coins=' + normalized.coins);
+                        return true;
+                    }
+
+                    // Slot 1 — plain JSON
+                    try {
+                        const raw = localStorage.getItem(SAVE_KEY + '_json');
+                        if (raw) {
+                            const parsed = JSON.parse(raw);
+                            if (applyParsed(parsed)) return;
+                        }
+                    } catch(e) { console.warn('[SAVE] _json slot failed:', e); }
+
+                    // Slot 2 — btoa-encoded
+                    try {
+                        const b64 = localStorage.getItem(SAVE_KEY + '_b64');
+                        if (b64) {
+                            const json = decodeURIComponent(escape(atob(b64)));
+                            const parsed = JSON.parse(json);
+                            if (applyParsed(parsed)) {
+                                // Migrate to plain JSON slot so we don't rely on btoa next time
+                                try { localStorage.setItem(SAVE_KEY + '_json', json); } catch(e) {}
+                                return;
+                            }
+                        }
+                    } catch(e) { console.warn('[SAVE] _b64 slot failed:', e); }
+
+                    // Slot 3 — legacy AES encrypted slot (backward compat)
                     try {
                         const raw = localStorage.getItem(SAVE_KEY);
-                        let loaded = false;
+                        if (raw && typeof CryptoJS !== 'undefined') {
+                            const decrypted = CryptoJS.AES.decrypt(raw, 'pokemon-radar-secret-key-2024').toString(CryptoJS.enc.Utf8);
+                            if (decrypted && decrypted.length > 2) {
+                                const parsed = JSON.parse(decrypted);
+                                if (applyParsed(parsed)) {
+                                    // Migrate to plain JSON slot
+                                    try { localStorage.setItem(SAVE_KEY + '_json', JSON.stringify(normalizeSaveState(parsed))); } catch(e) {}
+                                    return;
+                                }
+                            }
+                        }
+                    } catch(e) { console.warn('[SAVE] legacy AES slot failed:', e); }
+
+                    // Slot 4 — old _fallback plain JSON key
+                    try {
+                        const raw = localStorage.getItem(SAVE_KEY + '_fallback');
                         if (raw) {
-                            // Try to decrypt first (new encrypted format)
-                            try {
-                                const decrypted = CryptoJS.AES.decrypt(raw, 'pokemon-radar-secret-key-2024').toString(CryptoJS.enc.Utf8);
-                                if (decrypted && decrypted.length > 0) {
-                                    const parsed = JSON.parse(decrypted);
-                                    const normalized = normalizeSaveState(parsed);
-                                    if (normalized.pokedex && normalized.balls) {
-                                        Object.assign(gameState, normalized);
-                                        assignPokemonUids();
-                                        loaded = true;
-                                        // Restore light mode + theme from save
-                                        if (parsed._lightMode) { isLightMode = true; applyLightDarkMode(true); }
-                                        if (parsed._theme && THEMES[parsed._theme]) { currentTheme = parsed._theme; }
-                                    }
-                                }
-                            } catch (decryptError) {
-                                // If decryption fails, try legacy format (plain JSON)
-                                try {
-                                    const parsed = JSON.parse(raw);
-                                    const normalized = normalizeSaveState(parsed);
-                                    if (normalized.pokedex && normalized.balls) {
-                                        Object.assign(gameState, normalized);
-                                        assignPokemonUids();
-                                        loaded = true;
-                                    }
-                                } catch (legacyError) {
-                                    console.warn('Load save failed (both formats):', decryptError, legacyError);
-                                }
-                            }
+                            const parsed = JSON.parse(raw);
+                            applyParsed(parsed);
                         }
-                        // Fallback to plain backup if encrypted failed
-                        if (!loaded) {
-                            const fallback = localStorage.getItem(SAVE_KEY + '_fallback');
-                            if (fallback) {
-                                try {
-                                    const parsed = JSON.parse(fallback);
-                                    const normalized = normalizeSaveState(parsed);
-                                    if (normalized.pokedex && normalized.balls) {
-                                        Object.assign(gameState, normalized);
-                                        assignPokemonUids();
-                                    }
-                                } catch(e) {}
-                            }
-                        }
-                    } catch (e) {
-                        console.warn('Load save failed:', e);
-                    }
+                    } catch(e) { console.warn('[SAVE] _fallback slot failed:', e); }
                 }
 
                 function getDataExportPayload() {
@@ -1832,17 +1840,14 @@
 
                 function applyLightDarkMode(light) {
                     const body = document.body;
-                    const icon = document.getElementById('darkModeIcon');
                     const iconSettings = document.getElementById('darkModeIconSettings');
                     const text = document.getElementById('darkModeSettingsText');
                     if (light) {
                         body.classList.add('light-mode');
-                        if (icon) icon.className = 'fas fa-moon text-lg';
                         if (iconSettings) iconSettings.className = 'fas fa-moon text-purple-400';
                         if (text) text.textContent = 'Switch to Dark';
                     } else {
                         body.classList.remove('light-mode');
-                        if (icon) icon.className = 'fas fa-sun text-lg';
                         if (iconSettings) iconSettings.className = 'fas fa-sun text-yellow-400';
                         if (text) text.textContent = 'Switch to Light';
                     }
@@ -2026,6 +2031,8 @@
                 };
 
                 function updateUI() {
+                    // Persist on every UI refresh (catches all state mutations)
+                    saveProgress();
                     document.getElementById('playerCoins').textContent = gameState.coins.toLocaleString();
                     document.getElementById('trainerLevelBadge').textContent = gameState.level;
                     document.getElementById('trainerLevelText').textContent = gameState.level;
