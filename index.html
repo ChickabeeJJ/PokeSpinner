@@ -1,4 +1,4 @@
-﻿    <!DOCTYPE html>
+    <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -180,6 +180,58 @@
             .pokeball-svg { animation: floatBall 4s ease-in-out infinite; }
             .ball-selector-btn:hover .pokeball-svg, .ball-selector-btn.active .pokeball-svg { animation: none; }
 
+            /* ===== THEME CSS VARIABLES ===== */
+            /* Default (Rose) */
+            body {
+                --theme-c1: #f43f5e;
+                --theme-c2: #ec4899;
+                --theme-c3: #fb923c;
+                --theme-chip-bg: rgba(244,63,94,0.18);
+                --theme-chip-color: #fb7185;
+                --theme-chip-border: rgba(244,63,94,0.4);
+            }
+            body[data-theme="ocean"] {
+                --theme-c1: #06b6d4;
+                --theme-c2: #3b82f6;
+                --theme-c3: #6366f1;
+                --theme-chip-bg: rgba(6,182,212,0.18);
+                --theme-chip-color: #22d3ee;
+                --theme-chip-border: rgba(6,182,212,0.4);
+            }
+            body[data-theme="forest"] {
+                --theme-c1: #10b981;
+                --theme-c2: #22c55e;
+                --theme-c3: #14b8a6;
+                --theme-chip-bg: rgba(16,185,129,0.18);
+                --theme-chip-color: #34d399;
+                --theme-chip-border: rgba(16,185,129,0.4);
+            }
+            body[data-theme="sunset"] {
+                --theme-c1: #f97316;
+                --theme-c2: #f59e0b;
+                --theme-c3: #ef4444;
+                --theme-chip-bg: rgba(249,115,22,0.18);
+                --theme-chip-color: #fb923c;
+                --theme-chip-border: rgba(249,115,22,0.4);
+            }
+            /* Utility classes that use theme variables */
+            .themed-gradient {
+                background: linear-gradient(135deg, var(--theme-c1), var(--theme-c2)) !important;
+            }
+            .themed-chip {
+                background: var(--theme-chip-bg) !important;
+                color: var(--theme-chip-color) !important;
+                border-color: var(--theme-chip-border) !important;
+            }
+            /* Theme card active ring — driven by inline box-shadow but transition added here */
+            .theme-btn { transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease; }
+            .theme-btn.is-active { transform: scale(1.05) !important; opacity: 1 !important; }
+            .theme-btn:not(.is-active) { opacity: 0.72; }
+            .theme-btn.is-active .theme-check { display: flex !important; }
+            .theme-btn:not(.is-active) .theme-check { display: none !important; }
+            .theme-btn.is-active .theme-active-ring { display: block !important; }
+            .theme-btn:not(.is-active) .theme-active-ring { display: none !important; }
+
 
             /* ===== LOADING SCREEN ===== */
             @keyframes pulseBlob {
@@ -315,7 +367,7 @@
                 <!-- Modal Header Bar -->
                 <div class="px-6 py-4 flex items-center justify-between" style="background:linear-gradient(90deg,#1e1040,#0f172a,#1a0530);border-bottom:1px solid rgba(255,255,255,0.08);">
                     <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#7c3aed,#ec4899);">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center themed-gradient">
                             <i class="fas fa-cog text-white text-sm"></i>
                         </div>
                         <div>
@@ -362,7 +414,7 @@
                                 <i class="fas fa-palette text-purple-400 text-sm"></i>
                                 <span class="text-xs font-bold text-white">Accent Theme</span>
                             </div>
-                            <span id="activeThemeLabel" class="text-[9px] uppercase tracking-widest font-black px-2 py-0.5 rounded-full" style="background:rgba(124,58,237,0.25);color:#a78bfa;border:1px solid rgba(124,58,237,0.4);">Rose</span>
+                            <span id="activeThemeLabel" class="themed-chip text-[9px] uppercase tracking-widest font-black px-2 py-0.5 rounded-full" style="border:1px solid var(--theme-chip-border);">Rose</span>
                         </div>
                         <div class="grid grid-cols-2 gap-2">
                             <!-- Rose -->
@@ -430,7 +482,7 @@
                 </div>
 
                 <div class="px-5 pb-5">
-                    <button onclick="closeSettingsModal()" class="w-full py-3 rounded-2xl text-sm font-black text-white tracking-wider transition" style="background:linear-gradient(135deg,#7c3aed,#ec4899);">
+                    <button onclick="closeSettingsModal()" class="w-full py-3 rounded-2xl text-sm font-black text-white tracking-wider transition themed-gradient">
                         Done
                     </button>
                 </div>
@@ -1912,18 +1964,13 @@
                         if (darkIcon) darkIcon.className = 'fas fa-sun text-yellow-400';
                     }
 
-                    // Theme cards — show active ring + checkmark
+                    // Theme cards — toggle CSS class (is-active) which drives ring + checkmark via CSS
                     document.querySelectorAll('.theme-btn').forEach(btn => {
                         const isActive = btn.getAttribute('data-theme') === currentTheme;
-                        const ring = btn.querySelector('.theme-active-ring');
-                        const check = btn.querySelector('.theme-check');
-                        if (ring)  ring.style.display  = isActive ? 'block' : 'none';
-                        if (check) check.style.display = isActive ? 'flex'  : 'none';
-                        btn.style.transform = isActive ? 'scale(1.03)' : 'scale(1)';
-                        btn.style.opacity   = isActive ? '1' : '0.7';
+                        btn.classList.toggle('is-active', isActive);
                     });
 
-                    // Active theme label chip
+                    // Active theme label chip — text only; colours come from CSS variables
                     const labels = { default:'Rose', ocean:'Ocean', forest:'Forest', sunset:'Sunset' };
                     const labelEl = document.getElementById('activeThemeLabel');
                     if (labelEl) labelEl.textContent = labels[currentTheme] || 'Rose';
@@ -1934,17 +1981,13 @@
 
                 function applyLightDarkMode(light) {
                     const body = document.body;
-                    const iconSettings = document.getElementById('darkModeIconSettings');
-                    const text = document.getElementById('darkModeSettingsText');
                     if (light) {
                         body.classList.add('light-mode');
-                        if (iconSettings) iconSettings.className = 'fas fa-moon text-purple-400';
-                        if (text) text.textContent = 'Switch to Dark';
                     } else {
                         body.classList.remove('light-mode');
-                        if (iconSettings) iconSettings.className = 'fas fa-sun text-yellow-400';
-                        if (text) text.textContent = 'Switch to Light';
                     }
+                    // Let updateSettingsUI keep the button labels in sync
+                    updateSettingsUI();
                 }
 
                 window.toggleDarkLight = function() {
@@ -1976,31 +2019,24 @@
                     }
                 };
 
-                function setTheme(themeName) {
+                function setTheme(themeName, silent = false) {
                     if (!THEMES[themeName]) return;
-                    
+
                     currentTheme = themeName;
-                    const theme = THEMES[themeName];
-                    
-                    // Apply theme to gradient elements
-                    const gradientElements = document.querySelectorAll('.bg-gradient-to-r');
-                    gradientElements.forEach(el => {
-                        el.classList.remove('from-rose-500', 'via-pink-500', 'to-amber-400', 
-                                            'from-cyan-500', 'via-blue-500', 'to-indigo-500',
-                                            'from-emerald-500', 'via-green-500', 'to-teal-500',
-                                            'from-orange-500', 'via-amber-500', 'to-red-500');
-                        
-                        const colors = theme.primary.split(' ');
-                        el.classList.add(colors[0], colors[1], colors[2]);
-                    });
-                    
-                    // Update theme button states
+
+                    // Drive all themed elements via CSS variables on body
+                    document.body.setAttribute('data-theme', themeName);
+
+                    // Update card states and label chip
                     updateSettingsUI();
-                    
-                    // Save theme preference
+
+                    // Persist
                     localStorage.setItem('pokemon_radar_theme', themeName);
-                    
-                    showNotification('Theme Changed', `Applied ${themeName.charAt(0).toUpperCase() + themeName.slice(1)} theme`, 'success');
+
+                    if (!silent) {
+                        const labels = { default:'Rose', ocean:'Ocean', forest:'Forest', sunset:'Sunset' };
+                        showNotification('Theme Changed', `Applied ${labels[themeName] || themeName} theme`, 'success');
+                    }
                 }
 
                 function clearAllData() {
@@ -2037,7 +2073,7 @@
                         
                         // Reset theme to default
                         currentTheme = 'default';
-                        setTheme('default');
+                        setTheme('default', true);
                         
                         updateUI();
                         renderRoadmap();
@@ -2724,13 +2760,33 @@
                 }
 
                 function getLearnableMovesForPokemon(pokemon) {
-                    const moves = new Set(["tackle", "quick-attack", "scratch", "ember", "water-gun", "vine-whip", "thunder-shock", "ice-beam", "psychic", "earthquake", "shadow-ball", "dragon-claw", "outrage", "iron-tail", "dazzling-gleam", "hyper-beam", "razor-leaf", "growl", "tail-whip", "bubble", "withdraw", "rapid-spin", "metal-claw", "leer", "smokescreen", "slash", "double-kick", "poison-sting", "peck", "gust", "sand-attack", "confusion", "string-shot", "bug-bite", "harden", "mud-slap", "water-pulse", "flame-wheel", "rollout", "defense-curl", "magnitude", "body-slam", "take-down", "wrap", "acid", "sludge-bomb", "mega-drain", "stun-spore", "absorb", "zen-headbutt", "aerial-ace", "crunch", "twister", "aqua-tail", "headbutt", "disable", "hypnosis", "lick", "low-kick", "karate-chop", "seismic-toss", "rest", "amnesia", "pound", "sing", "double-slap", "covet", "swift", "charm", "moonblast", "disarming-voice", "power-gem", "ancient-power", "night-shade", "hex", "sucker-punch", "play-rough", "iron-head", "flash-cannon", "poison-jab", "cross-poison", "x-scissor", "signal-beam", "fly", "brave-bird", "drill-peck", "dig", "bulldoze", "bone-rush", "rock-throw", "rock-blast", "psybeam", "aurora-beam", "icy-wind", "ice-shard", "blizzard", "fire-spin", "fire-fang", "fire-punch", "flame-charge", "thunder-fang", "thunder", "discharge", "electro-ball", "nuzzle", "feint-attack", "fury-swipes", "pay-day", "power-whip", "seed-bomb", "giga-drain", "energy-ball", "sludge", "mud-bomb"]);
+                    // Only allow moves the Pokemon actually learns in the main games,
+                    // up to and including its current level (like the Move Reminder).
+                    const currentLevel = pokemon.level || 1;
+                    const learned = new Set();
+
                     const moveData = LEVELUP_MOVES[pokemon.id];
                     if (moveData) {
-                        Object.values(moveData).forEach(list => list.forEach(move => moves.add(move)));
+                        const sortedLevels = Object.keys(moveData).map(Number).sort((a, b) => a - b);
+                        for (const lvl of sortedLevels) {
+                            if (lvl <= currentLevel) {
+                                moveData[lvl].forEach(move => { if (MOVES_DB[move]) learned.add(move); });
+                            }
+                        }
                     }
-                    if (pokemon.moves) pokemon.moves.forEach(move => moves.add(move));
-                    return Array.from(moves).filter(move => MOVES_DB[move]).sort();
+
+                    // Always include the Pokemon's currently equipped moves
+                    // (covers edge cases like evolutions or legacy saves)
+                    if (pokemon.moves) {
+                        pokemon.moves.forEach(move => { if (MOVES_DB[move]) learned.add(move); });
+                    }
+
+                    // Fallback so the dropdown is never empty
+                    if (learned.size === 0) {
+                        ["tackle", "quick-attack"].forEach(m => { if (MOVES_DB[m]) learned.add(m); });
+                    }
+
+                    return Array.from(learned).sort();
                 }
 
                 function applyLevelUpMoves(pokemon) {
@@ -3850,10 +3906,10 @@
                                 const savedLightMode = localStorage.getItem('pokemon_radar_lightmode');
                                 if (savedLightMode === '1') { isLightMode = true; applyLightDarkMode(true); }
 
-                                // Load saved theme
+                                // Load saved theme (silent — no toast on page load)
                                 const savedTheme = localStorage.getItem('pokemon_radar_theme');
                                 if (savedTheme && THEMES[savedTheme]) {
-                                    setTheme(savedTheme);
+                                    setTheme(savedTheme, true);
                                 }
 
                                 loadSavedProgress();
