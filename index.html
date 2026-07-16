@@ -1757,7 +1757,7 @@
                     if (pInput && pInput.value !== (gameState.username||'')) pInput.value = gameState.username || '';
                 }
 
-                function openProfileModal() {
+                window.openProfileModal = function openProfileModal() {
                     initAudio();
                     playConfirmSound();
                     // Populate name
@@ -1802,7 +1802,7 @@
                     modal.classList.add('flex');
                 }
 
-                function closeProfileModal() {
+                window.closeProfileModal = function closeProfileModal() {
                     const modal = document.getElementById('profileModal');
                     modal.classList.add('hidden');
                     modal.classList.remove('flex');
@@ -2717,7 +2717,8 @@
                     
                     const stopBtn = document.getElementById('stopBtn');
                     stopBtn.disabled = false;
-                    stopBtn.className = "flex-1 py-4 px-6 bg-rose-600 hover:bg-rose-500 text-white font-black uppercase rounded-2xl shadow-xl transition duration-150 tracking-wider cursor-pointer";
+                    stopBtn.classList.add('lock-lit');
+                    stopBtn.className = "lock-lit flex-1 py-4 px-6 text-white font-black uppercase rounded-2xl shadow-xl transition duration-150 tracking-wider cursor-pointer";
 
                     let baseSpeed = 0.15;
                     if (selected === 'great') baseSpeed = 0.12;
@@ -2732,7 +2733,7 @@
 
                     document.getElementById('encounterStatus').className = "bg-rose-600/15 text-rose-500 border border-rose-500/20 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-bold inline-block animate-pulse";
                     document.getElementById('encounterStatus').textContent = "Scanning Quantum Channels...";
-                    document.getElementById('wildPokemonName').textContent = "Radar scanning frequencies...";
+                    document.getElementById('wildPokemonName').textContent = "Spinner scanning frequencies...";
                     document.getElementById('wildPokemonGraphic').style.opacity = "0.1";
                 };
 
@@ -2747,6 +2748,7 @@
                     
                     const stopBtn = document.getElementById('stopBtn');
                     stopBtn.disabled = true;
+                    stopBtn.classList.remove('lock-lit');
                     stopBtn.className = "flex-1 py-4 px-6 bg-slate-900 text-slate-600 font-black uppercase rounded-2xl cursor-not-allowed transition duration-150 tracking-wider border border-slate-800";
 
                     const wedgeCount = currentSectors.length;
@@ -3047,25 +3049,21 @@
                     initAudio();
                     playConfirmSound();
                     gameState.battleType = mode;
-                    
-                    /* campaign btn handled by toggleJourneySubMode */
-                    const btnUnlimited = document.getElementById('btn-journey-unlimited');
-                    /* campaign panel handled by toggleJourneySubMode */
-                    const panelUnlimited = document.getElementById('journey-unlimited-panel');
-
-                    if (mode === 'campaign') {
-                            if (btnUnlimited) btnUnlimited.className = "px-5 py-2 rounded-lg text-xs font-bold transition duration-150 text-slate-400 hover:text-white";
-                            if (panelUnlimited) panelUnlimited.classList.add('hidden');
-                    } else {
-                            if (btnUnlimited) btnUnlimited.className = "px-5 py-2 rounded-lg text-xs font-bold transition duration-150 bg-rose-600 text-white";
-                            if (panelUnlimited) panelUnlimited.classList.remove('hidden');
-                    }
+                    const TABS = ['trainers', 'gym', 'unlimited'];
+                    const inactiveCls = 'px-4 py-2 rounded-lg text-xs font-bold transition duration-150 text-slate-400 hover:text-white';
+                    const activeCls   = 'px-4 py-2 rounded-lg text-xs font-bold transition duration-150 themed-gradient text-white';
+                    TABS.forEach(t => {
+                        const btn   = document.getElementById('btn-journey-' + t);
+                        const panel = document.getElementById('journey-' + t + '-panel');
+                        if (btn)   btn.className = (t === mode) ? activeCls : inactiveCls;
+                        if (panel) panel.classList.toggle('hidden', t !== mode);
+                    });
                 };
 
                 window.startUnlimitedMatch = function() {
                     initAudio();
                     const teamFighters = getBattleFighterPool(true);
-                    if (teamFighters.length === 0) { showNotification("No Team", "Assign at least one Pokémon to your team to enter Endless Mode!", "error"); return; }
+                    if (teamFighters.length === 0) { showNotification("No Team!", "Add at least one Pokémon to your Team in the PC Box before battling.", "error"); return; }
                     playConfirmSound();
                     gameState.activeBattleStage = null;
                     gameState.endlessRunDefeats = 0;
@@ -3137,7 +3135,11 @@
                     initAudio();
                     playConfirmSound();
                     gameState.activeBattleStage = stage;
-                    // Auto-select team lead if team is set
+                    // Check PC box first — need at least one Pokémon
+                    if (!gameState.pcBox || gameState.pcBox.length === 0) {
+                        showNotification("No Pokémon!", "Spin the wheel to catch Pokémon before battling.", "error");
+                        return;
+                    }
                     const teamFighters = getBattleFighterPool(true);
                     if (teamFighters.length > 0) {
                         document.getElementById('battleSelector').classList.add('hidden');
