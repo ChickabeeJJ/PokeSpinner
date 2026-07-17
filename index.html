@@ -247,16 +247,17 @@
             /* Cutscene overlay stays dark */
             body.light-mode #rareCutscene { background:rgba(0,0,0,0.92)!important; }
 
-            /* ===== RARE ENCOUNTER CUTSCENE ===== */
+            /* Trainer name input — visible in light mode */
+            body.light-mode #profileUsernameInput { color:#0f172a!important; background:#f8fafc!important; border-color:#94a3b8!important; }
+            body.light-mode #profileUsernameInput::placeholder { color:#94a3b8!important; }
+
+            /* ===== RARE ENCOUNTER CUTSCENE — ELITE EDITION ===== */
             #rareCutscene {
-                position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.92);
+                position:fixed; inset:0; z-index:9999;
                 display:flex; flex-direction:column; align-items:center; justify-content:center;
-                pointer-events:all; transition:opacity 0.4s ease;
+                pointer-events:all; transition:opacity 0.5s ease;
             }
             #rareCutscene.hidden { opacity:0; pointer-events:none; }
-            @keyframes cutsceneFlash {
-                0%,100% { opacity:1; } 10%,30%,50% { opacity:0; } 20%,40% { opacity:1; }
-            }
             @keyframes cutsceneScale {
                 0% { transform:scale(0.2) rotate(-15deg); opacity:0; }
                 60% { transform:scale(1.15) rotate(3deg); opacity:1; }
@@ -264,27 +265,56 @@
                 100% { transform:scale(1) rotate(0deg); }
             }
             @keyframes cutsceneGlow {
-                0%,100% { filter:drop-shadow(0 0 20px rgba(255,200,50,0.7)); }
-                50% { filter:drop-shadow(0 0 60px rgba(255,200,50,1)); }
+                0%,100% { filter:drop-shadow(0 0 22px rgba(255,200,50,0.75)); }
+                50% { filter:drop-shadow(0 0 70px rgba(255,200,50,1)) brightness(1.15); }
             }
-            @keyframes cutsceneShinyGlow {
-                0%,100% { filter:drop-shadow(0 0 20px rgba(236,72,153,0.8)) hue-rotate(100deg) saturate(1.5); }
-                50% { filter:drop-shadow(0 0 60px rgba(236,72,153,1)) hue-rotate(140deg) saturate(2); }
+            @keyframes cutsceneShakeKF {
+                0%,100%{transform:translate(0,0) rotate(0);}
+                10%{transform:translate(-9px,-4px) rotate(-0.8deg);}
+                20%{transform:translate(9px,5px) rotate(0.8deg);}
+                30%{transform:translate(-7px,7px) rotate(-0.5deg);}
+                40%{transform:translate(7px,-7px) rotate(0.5deg);}
+                50%{transform:translate(-5px,5px) rotate(-0.3deg);}
+                60%{transform:translate(5px,-5px) rotate(0.3deg);}
+                70%{transform:translate(-2px,3px) rotate(0);}
+                80%{transform:translate(2px,-2px) rotate(0);}
+                90%{transform:translate(-1px,1px) rotate(0);}
             }
-            #cutsceneSprite { animation: cutsceneScale 0.7s cubic-bezier(0.175,0.885,0.32,1.275) forwards; }
-            #cutsceneSprite.is-shiny { animation: cutsceneScale 0.7s cubic-bezier(0.175,0.885,0.32,1.275) forwards, cutsceneShinyGlow 1.5s ease-in-out infinite; }
-            #cutsceneSprite.is-legendary { animation: cutsceneScale 0.7s cubic-bezier(0.175,0.885,0.32,1.275) forwards, cutsceneGlow 1.5s ease-in-out infinite; }
-            #cutsceneBg { position:absolute; inset:0; animation:cutsceneFlash 0.8s ease-in-out; background:radial-gradient(circle at center, rgba(255,220,80,0.25), transparent 70%); }
-            #cutsceneBg.shiny { background:radial-gradient(circle at center, rgba(236,72,153,0.3), transparent 70%); }
-            #cutsceneLabel {
-                font-size:1.6rem; font-weight:900; letter-spacing:0.15em; text-transform:uppercase;
-                text-align:center; margin-top:1rem;
-                animation: cutsceneScale 0.6s 0.2s cubic-bezier(0.175,0.885,0.32,1.275) both;
+            @keyframes cutsceneSpiralIn {
+                0%{transform:scale(0) rotate(-540deg);opacity:0;filter:brightness(4);}
+                55%{transform:scale(1.28) rotate(15deg);opacity:1;filter:brightness(1.9);}
+                76%{transform:scale(0.92) rotate(-4deg);filter:brightness(1.2);}
+                100%{transform:scale(1) rotate(0);opacity:1;filter:brightness(1);}
             }
-            #cutsceneLabel.shiny { color:#f472b6; text-shadow:0 0 20px rgba(244,114,182,0.8); }
-            #cutsceneLabel.legendary { color:#fbbf24; text-shadow:0 0 20px rgba(251,191,36,0.8); }
-            #cutsceneSub { font-size:0.75rem; letter-spacing:0.1em; color:rgba(255,255,255,0.55); margin-top:0.4rem; text-transform:uppercase; animation: cutsceneScale 0.5s 0.4s both; }
-            #cutsceneSkip { margin-top:2rem; font-size:0.7rem; color:rgba(255,255,255,0.3); cursor:pointer; animation: cutsceneScale 0.5s 1.5s both; }
+            @keyframes cutsceneRainbow {
+                0%{filter:drop-shadow(0 0 30px #f472b6) hue-rotate(0deg) saturate(2.2);}
+                33%{filter:drop-shadow(0 0 55px #a78bfa) hue-rotate(120deg) saturate(2.6);}
+                66%{filter:drop-shadow(0 0 55px #34d399) hue-rotate(240deg) saturate(2.6);}
+                100%{filter:drop-shadow(0 0 30px #f472b6) hue-rotate(360deg) saturate(2.2);}
+            }
+            @keyframes cutsceneEnergyRing {
+                0%{transform:scale(0.35);opacity:1;border-width:7px;}
+                100%{transform:scale(3.8);opacity:0;border-width:1px;}
+            }
+            @keyframes cutsceneParticleFly {
+                0%{transform:translate(0,0) scale(1);opacity:1;}
+                100%{transform:translate(var(--pdx),var(--pdy)) scale(0);opacity:0;}
+            }
+            @keyframes cutsceneTextIn {
+                0%{opacity:0;transform:scale(0.55) translateY(14px);}
+                70%{opacity:1;transform:scale(1.06) translateY(-2px);}
+                100%{opacity:1;transform:scale(1) translateY(0);}
+            }
+            .cutscene-shake-anim { animation: cutsceneShakeKF 0.58s ease-in-out; }
+            .cutscene-energy-ring {
+                position:absolute; border-radius:50%; border:5px solid;
+                width:110px; height:110px;
+                animation: cutsceneEnergyRing 1.05s ease-out forwards;
+            }
+            .cutscene-particle {
+                position:absolute; border-radius:50%;
+                animation: cutsceneParticleFly var(--pdur,0.85s) ease-out var(--pdel,0s) forwards;
+            }
 
             /* ===== VIBE GLOW PULSE ===== */
             @keyframes vibeGlow {
@@ -1786,7 +1816,8 @@
                         encounterShiny: !!rawState.encounterShiny,
                         catchMinigame: rawState.catchMinigame || { active: false, ringScale: 1.0, contracting: true, score: 0 },
                         username: typeof rawState.username === 'string' ? rawState.username : "",
-                        gymBadges: Array.isArray(rawState.gymBadges) ? rawState.gymBadges : []
+                        gymBadges: Array.isArray(rawState.gymBadges) ? rawState.gymBadges : [],
+                        endlessModeUnlocked: rawState.endlessModeUnlocked || false
                     };
                     return normalized;
                 }
@@ -2079,7 +2110,7 @@ const CAMPAIGN_ROADMAP = [
                                 </div>
                                 <button onclick="window.profileRegionNav(1)" class="text-slate-400 hover:text-white px-3 py-1 rounded-lg border border-slate-800 text-[11px] disabled:opacity-30 transition" ${nextOk?'':'disabled'}>Next ▶</button>
                             </div>
-                            <div id="profileBadgeGrid" class="grid grid-cols-4 gap-3 w-full"></div>
+                            <div id="profileBadgeGrid" class="grid grid-cols-4 gap-4 w-full"></div>
                         `;
                         const grid = document.getElementById('profileBadgeGrid');
                         regionGyms.forEach(stage => {
@@ -2087,10 +2118,10 @@ const CAMPAIGN_ROADMAP = [
                             const div = document.createElement('div');
                             div.className = 'flex flex-col items-center gap-1 ' + (earned ? 'badge-earned' : 'badge-locked');
                             div.innerHTML = `
-                                <div class="w-11 h-11 rounded-full flex items-center justify-center text-xl border-2 ${earned ? 'border-yellow-400/60' : 'border-slate-700'}" style="background:${earned ? 'rgba(234,179,8,0.15)' : 'rgba(255,255,255,0.03)'}">
+                                <div class="w-16 h-16 rounded-full flex items-center justify-center text-3xl border-2 ${earned ? 'border-yellow-400/70' : 'border-slate-700'}" style="background:${earned ? 'rgba(234,179,8,0.18)' : 'rgba(255,255,255,0.03)'}">
                                     ${stage.badgeEmoji}
                                 </div>
-                                <span class="text-[7px] font-bold text-center leading-tight ${earned ? 'text-yellow-300' : 'text-slate-600'} uppercase tracking-wide max-w-[44px] truncate">${stage.badgeName.replace(/ Badge| Z$/,'')}</span>
+                                <span class="text-[9px] font-bold text-center leading-tight ${earned ? 'text-yellow-300' : 'text-slate-600'} uppercase tracking-wide max-w-[56px] truncate">${stage.badgeName.replace(/ Badge| Z$/,'')}</span>
                             `;
                             if (grid) grid.appendChild(div);
                         });
@@ -3178,40 +3209,114 @@ const CAMPAIGN_ROADMAP = [
                     }
                 }
 
-                // ── Rare encounter cutscene JS ────────────────────────────────────────
+                // ── Rare encounter cutscene JS — ELITE EDITION ───────────────────────
                 window._cutsceneCallback = null;
                 window._cutsceneTimeout = null;
 
-                window.showRareCutscene = function(pokemon, isShiny, isLegendary, callback) {
-                    const overlay  = document.getElementById('rareCutscene');
-                    const bg       = document.getElementById('cutsceneBg');
-                    const sprite   = document.getElementById('cutsceneSprite');
-                    const label    = document.getElementById('cutsceneLabel');
-                    const sub      = document.getElementById('cutsceneSub');
-                    if (!overlay) { if (callback) callback(); return; }
-
-                    // Reset classes
-                    sprite.className = ''; bg.className = ''; label.className = '';
-                    sprite.src = pokemon.sprite || '';
-                    if (isShiny) {
-                        sprite.classList.add('is-shiny');
-                        bg.classList.add('shiny');
-                        label.textContent = '✨ SHINY ENCOUNTER! ✨';
-                        label.classList.add('shiny');
-                    } else {
-                        sprite.classList.add('is-legendary');
-                        label.textContent = '⭐ LEGENDARY ENCOUNTER! ⭐';
-                        label.classList.add('legendary');
+                function _spawnCutsceneParticles(container, color1, color2, count) {
+                    for (let i = 0; i < count; i++) {
+                        setTimeout(() => {
+                            const p = document.createElement('div');
+                            p.className = 'cutscene-particle';
+                            const angle = Math.random() * Math.PI * 2;
+                            const dist = 80 + Math.random() * 230;
+                            const dx = Math.cos(angle) * dist, dy = Math.sin(angle) * dist;
+                            const size = 3 + Math.random() * 10;
+                            p.style.cssText = `left:calc(50% + ${(Math.random()-0.5)*130}px);top:calc(50% + ${(Math.random()-0.5)*130}px);width:${size}px;height:${size}px;background:${Math.random()>0.5?color1:color2};--pdx:${dx}px;--pdy:${dy}px;--pdur:${(0.5+Math.random()*1).toFixed(2)}s;--pdel:${(Math.random()*0.3).toFixed(2)}s;box-shadow:0 0 8px ${color1};`;
+                            container.appendChild(p);
+                            setTimeout(() => p.remove(), 1800);
+                        }, i * 16);
                     }
-                    sub.textContent = pokemon.name ? pokemon.name.toUpperCase() + ' APPEARED!' : '';
+                }
 
+                window.showRareCutscene = function(pokemon, isShiny, isLegendary, callback) {
+                    // Create overlay element if it doesn't exist
+                    let overlay = document.getElementById('rareCutscene');
+                    if (!overlay) {
+                        overlay = document.createElement('div');
+                        overlay.id = 'rareCutscene';
+                        overlay.className = 'hidden';
+                        document.body.appendChild(overlay);
+                    }
+
+                    const primaryColor   = isShiny ? '#f472b6' : '#fbbf24';
+                    const secondaryColor = isShiny ? '#a78bfa' : '#fb923c';
+                    const bgGrad = isShiny
+                        ? 'radial-gradient(ellipse at center, #200035 0%, #0a0018 55%, #000 100%)'
+                        : 'radial-gradient(ellipse at center, #1e1200 0%, #0a0600 55%, #000 100%)';
+                    const titleText = isShiny ? '✨ SHINY POKÉMON! ✨' : '⭐ LEGENDARY! ⭐';
+                    const subText   = pokemon.name ? pokemon.name.toUpperCase() + ' APPEARED!' : '';
+                    const typeLabel = isShiny ? '✨ SHINY' : '⭐ LEGENDARY';
+
+                    overlay.style.cssText = `background:${bgGrad};`;
+                    overlay.innerHTML = `
+                        <div id="_csFlash" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at center,${primaryColor}55,transparent 65%);opacity:0;transition:opacity 0.07s;"></div>
+                        <div id="_csRings" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden;"></div>
+                        <div id="_csParts" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;"></div>
+                        <div style="position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                            <img id="_csSprite" src="${pokemon.sprite||''}" style="width:180px;height:180px;object-fit:contain;opacity:0;" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
+                            <div id="_csLabel" style="font-size:1.75rem;font-weight:900;letter-spacing:0.15em;text-transform:uppercase;text-align:center;margin-top:1.3rem;color:${primaryColor};text-shadow:0 0 45px ${primaryColor}bb,0 0 90px ${primaryColor}44;opacity:0;">${titleText}</div>
+                            <div id="_csSub" style="font-size:0.8rem;letter-spacing:0.22em;color:rgba(255,255,255,0.68);margin-top:0.5rem;text-transform:uppercase;opacity:0;">${subText}</div>
+                            <div id="_csTag" style="margin-top:0.9rem;opacity:0;"><span style="font-size:0.72rem;font-weight:900;text-transform:uppercase;letter-spacing:0.14em;padding:0.25rem 1rem;border-radius:9999px;border:1px solid ${primaryColor}60;background:${primaryColor}1a;color:${primaryColor};">${typeLabel} · ${(pokemon.type1||'').toUpperCase()}</span></div>
+                        </div>
+                        <div onclick="window.dismissCutscene()" style="position:absolute;bottom:1.5rem;font-size:0.65rem;color:rgba(255,255,255,0.28);cursor:pointer;letter-spacing:0.12em;">TAP TO SKIP</div>
+                    `;
                     overlay.classList.remove('hidden');
                     overlay.style.opacity = '1';
                     window._cutsceneCallback = callback;
 
-                    // Auto-dismiss after 3.2 seconds
+                    const flashL  = document.getElementById('_csFlash');
+                    const rings   = document.getElementById('_csRings');
+                    const parts   = document.getElementById('_csParts');
+                    const sprite  = document.getElementById('_csSprite');
+                    const label   = document.getElementById('_csLabel');
+                    const sub     = document.getElementById('_csSub');
+                    const tag     = document.getElementById('_csTag');
+
+                    // Phase 1 — rapid flash strobes
+                    let fc = 0;
+                    const doFlash = () => {
+                        if (fc >= 9) {
+                            // Phase 2 — screen shake
+                            overlay.classList.add('cutscene-shake-anim');
+                            setTimeout(() => overlay.classList.remove('cutscene-shake-anim'), 580);
+                            // Phase 3 — energy rings burst outward
+                            for (let ri = 0; ri < 5; ri++) {
+                                setTimeout(() => {
+                                    const ring = document.createElement('div');
+                                    ring.className = 'cutscene-energy-ring';
+                                    ring.style.borderColor = ri % 2 === 0 ? primaryColor : secondaryColor;
+                                    rings.appendChild(ring);
+                                    setTimeout(() => ring.remove(), 1200);
+                                }, ri * 120);
+                            }
+                            // Phase 4 — particle explosion
+                            _spawnCutsceneParticles(parts, primaryColor, secondaryColor, 40);
+                            // Phase 5 — sprite spiral entrance
+                            setTimeout(() => {
+                                sprite.style.opacity = '1';
+                                sprite.style.animation = 'cutsceneSpiralIn 0.88s cubic-bezier(0.175,0.885,0.32,1.275) forwards';
+                                setTimeout(() => {
+                                    sprite.style.animation = isShiny ? 'cutsceneRainbow 2.4s ease-in-out infinite' : 'cutsceneGlow 1.5s ease-in-out infinite';
+                                    if (!isShiny) sprite.style.filter = `drop-shadow(0 0 40px ${primaryColor})`;
+                                    // Second smaller burst at reveal moment
+                                    _spawnCutsceneParticles(parts, primaryColor, secondaryColor, 22);
+                                }, 890);
+                            }, 180);
+                            // Phase 6 — staggered text reveals
+                            setTimeout(() => { label.style.opacity='1'; label.style.animation='cutsceneTextIn 0.5s ease-out'; }, 480);
+                            setTimeout(() => { sub.style.opacity='1';   sub.style.animation='cutsceneTextIn 0.45s ease-out'; }, 700);
+                            setTimeout(() => { tag.style.opacity='1';   tag.style.animation='cutsceneTextIn 0.4s ease-out'; }, 900);
+                            return;
+                        }
+                        flashL.style.opacity = fc % 2 === 0 ? '1' : '0.04';
+                        fc++;
+                        setTimeout(doFlash, 72);
+                    };
+                    doFlash();
+
                     clearTimeout(window._cutsceneTimeout);
-                    window._cutsceneTimeout = setTimeout(window.dismissCutscene, 3200);
+                    window._cutsceneTimeout = setTimeout(window.dismissCutscene, 4800);
                 };
 
                 window.dismissCutscene = function() {
@@ -3227,7 +3332,7 @@ const CAMPAIGN_ROADMAP = [
                             window._cutsceneCallback = null;
                             cb();
                         }
-                    }, 400);
+                    }, 500);
                 };
 
                 window.triggerCatchMinigame = function() {
@@ -3391,9 +3496,20 @@ const CAMPAIGN_ROADMAP = [
                     if (!moveData) return [];
                     const level = pokemon.level || 1;
                     const newMoves = [];
+                    // Check exact level first
                     if (moveData[level]) {
                         for (const move of moveData[level]) {
-                            if (!pokemon.moves.includes(move)) newMoves.push(move);
+                            if (!pokemon.moves.includes(move) && MOVES_DB[move]) newMoves.push(move);
+                        }
+                    }
+                    // Catch-up pass: check the last 5 levels for any missed moves.
+                    // This implements "every 3-5 levels" — gaps never go unlearned.
+                    for (let catchLvl = Math.max(1, level - 5); catchLvl < level; catchLvl++) {
+                        if (!moveData[catchLvl]) continue;
+                        for (const move of moveData[catchLvl]) {
+                            if (!pokemon.moves.includes(move) && !newMoves.includes(move) && MOVES_DB[move]) {
+                                newMoves.push(move);
+                            }
                         }
                     }
                     for (const move of newMoves) {
@@ -3726,12 +3842,30 @@ const CAMPAIGN_ROADMAP = [
                     const panel = document.getElementById('statStagesPanel');
                     if (!panel || !gameState.battle.statStages) return;
                     const stages = gameState.battle.statStages;
+                    const sc = gameState.battle.statusConds || {};
                     const labels = { atk:'ATK', def:'DEF', spAtk:'SpAtk', spDef:'SpDef', speed:'SPD', accuracy:'ACC' };
+                    const statusBadge = { sleep:'💤 Sleep', para:'⚡ Para', leech:'🌱 Leech', burn:'🔥 Burn', freeze:'🧊 Freeze', poison:'☠️ Poison' };
+                    const statusCol   = {
+                        sleep:  'text-indigo-400 border-indigo-800 bg-indigo-950/50',
+                        para:   'text-yellow-400 border-yellow-800 bg-yellow-950/50',
+                        leech:  'text-emerald-400 border-emerald-800 bg-emerald-950/50',
+                        burn:   'text-red-400 border-red-800 bg-red-950/50',
+                        freeze: 'text-blue-300 border-blue-800 bg-blue-950/50',
+                        poison: 'text-purple-400 border-purple-800 bg-purple-950/50'
+                    };
                     const renderSide = (side, elId) => {
                         const el = document.getElementById(elId);
                         if (!el) return false;
                         el.innerHTML = '';
                         let any = false;
+                        // Status condition badge — shown first and with pulse animation
+                        const cond = sc[side];
+                        if (cond) {
+                            any = true;
+                            const sCol = statusCol[cond] || 'text-slate-400 border-slate-700 bg-slate-900/50';
+                            el.innerHTML += `<span class="text-[8px] font-black px-1.5 py-0.5 rounded border animate-pulse ${sCol}">${statusBadge[cond] || cond}</span>`;
+                        }
+                        // Stat stage chips
                         Object.entries(stages[side]).forEach(([stat, val]) => {
                             if (val === 0) return;
                             any = true;
@@ -3743,7 +3877,9 @@ const CAMPAIGN_ROADMAP = [
                     };
                     renderSide('player', 'playerStatStages');
                     renderSide('boss',   'bossStatStages');
-                    const hasAny = Object.values(stages.player).some(v=>v!==0) || Object.values(stages.boss).some(v=>v!==0);
+                    const hasAny = sc.player || sc.boss ||
+                        Object.values(stages.player).some(v=>v!==0) ||
+                        Object.values(stages.boss).some(v=>v!==0);
                     panel.classList.toggle('hidden', !hasAny);
                 }
 
@@ -3999,22 +4135,36 @@ const CAMPAIGN_ROADMAP = [
                     addCoins(rewardCoins);
                     addXP(Math.round(rewardCoins / 2));
 
-                    // ── Exp. Share: team members holding exp_share get 50% XP ──
+                    // ── Exp. Share — Gen 6+ style ──────────────────────────────────────
+                    // If ANY party member holds exp_share, ALL non-battling members
+                    // receive 50% XP (mirrors the cartridge Gen 6+ behaviour).
                     if (gameState.team && gameState.pcBox) {
-                        const expShareAmt = Math.round(xpAward * 0.5);
-                        gameState.team.forEach(uid => {
-                            if (!uid) return;
+                        const anyExpShare = (gameState.team || []).some(uid => {
+                            if (!uid) return false;
                             const tm = gameState.pcBox.find(p => p.uid === uid);
-                            if (!tm || !tm.heldItem || tm.heldItem !== 'exp_share' || tm.uid === fighter.uid) return;
-                            tm.xp = (tm.xp || 0) + expShareAmt;
-                            let tmNext = (tm.level||1) * 100;
-                            while (tm.xp >= tmNext) {
-                                tm.xp -= tmNext; tm.level = (tm.level||1)+1; tmNext = tm.level*100;
-                                applyLevelUpMoves(tm);
-                            }
-                            const logB = document.getElementById('battleLog');
-                            if (logB) logB.innerHTML += `<div class="text-amber-300 mt-1 text-[10px]">📡 ${tm.name} (Exp. Share) +${expShareAmt} XP → Lv${tm.level}</div>`;
+                            return tm && tm.heldItem === 'exp_share';
                         });
+                        if (anyExpShare) {
+                            const expShareAmt = Math.round(xpAward * 0.5);
+                            const logB = document.getElementById('battleLog');
+                            gameState.team.forEach(uid => {
+                                if (!uid) return;
+                                const tm = gameState.pcBox.find(p => p.uid === uid);
+                                if (!tm || tm.uid === fighter.uid) return; // Active battler already got full XP above
+                                tm.xp = (tm.xp || 0) + expShareAmt;
+                                let tmNext = (tm.level||1) * 100;
+                                let tmLeveled = false;
+                                while (tm.xp >= tmNext) {
+                                    tm.xp -= tmNext; tm.level = (tm.level||1)+1; tmNext = tm.level*100;
+                                    const newMs = applyLevelUpMoves(tm);
+                                    if (newMs.length > 0 && logB) {
+                                        newMs.forEach(m => logB.innerHTML += `<div class="text-cyan-300 mt-0.5 text-[9px]">📖 ${tm.name} learned <span class="capitalize">${m.replace(/-/g,' ')}</span>!</div>`);
+                                    }
+                                    tmLeveled = true;
+                                }
+                                if (logB) logB.innerHTML += `<div class="text-amber-300 mt-1 text-[10px]">📡 ${tm.name} +${expShareAmt} XP (Exp. Share)${tmLeveled?' → Lv'+tm.level:''}</div>`;
+                            });
+                        }
                     }
 
                     // ── Region unlock when champion is beaten ──
@@ -4509,6 +4659,19 @@ const CAMPAIGN_ROADMAP = [
                     if (itemKey && HOLD_ITEMS_DB[itemKey] && HOLD_ITEMS_DB[itemKey].type !== 'held_item') {
                         showNotification('Only held items', 'Use the consumables section to apply one-time-use items.', 'info');
                         return;
+                    }
+
+                    if (itemKey && pokemon.heldItem !== itemKey) {
+                        // Uniqueness check: compare owned count vs already-equipped-by-others count
+                        const owned = gameState.inventoryItems[itemKey] || 0;
+                        const equippedByOthers = gameState.pcBox.filter(p => p.uid !== pokemonUid && p.heldItem === itemKey).length;
+                        const available = owned - equippedByOthers;
+                        if (available <= 0) {
+                            const iname = (HOLD_ITEMS_DB[itemKey] && HOLD_ITEMS_DB[itemKey].name) ? HOLD_ITEMS_DB[itemKey].name : itemKey.replace(/_/g,' ');
+                            showNotification('Item Unavailable', `All owned ${iname}s are already held by other Pokémon. Unequip one first!`, 'error');
+                            renderPCBox(); // reset dropdown visual
+                            return;
+                        }
                     }
 
                     pokemon.heldItem = itemKey || null;
