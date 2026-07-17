@@ -828,16 +828,6 @@
                         </div>
                     </div>
 
-                    <!-- Profile & Settings — in-header so they never block content -->
-                    <div class="flex gap-1.5 border-l border-slate-850 pl-4 items-center">
-                        <button id="profileToggleBtn" onclick="openProfileModal()" title="Trainer Profile" class="bg-slate-900/80 border border-slate-800 p-2 rounded-full hover:bg-slate-800 transition duration-200 focus:outline-none flex items-center justify-center">
-                            <i class="fas fa-user text-sm text-purple-400" id="profileBtnIcon"></i>
-                        </button>
-                        <button id="settingsToggleBtn" onclick="openSettingsModal()" class="bg-slate-900/80 border border-slate-800 p-2 rounded-full hover:bg-slate-800 transition duration-200 text-cyan-400 focus:outline-none">
-                            <i class="fas fa-cog text-sm"></i>
-                        </button>
-                    </div>
-
                     <div id="ballSelectorMini" class="flex gap-2 border-l border-slate-850 pl-4">
                         <div class="flex flex-col items-center" title="Poké Balls">
                             <svg width="16" height="16" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="3"/><path d="M1.5 20 A18.5 18.5 0 0 1 38.5 20Z" fill="#dc2626"/><rect x="0" y="17.5" width="40" height="5" fill="#1a1a2e"/><circle cx="20" cy="20" r="6" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="2.5"/><circle cx="20" cy="20" r="3" fill="#e5e7eb"/></svg>
@@ -855,6 +845,16 @@
                             <svg width="16" height="16" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="3"/><path d="M1.5 20 A18.5 18.5 0 0 1 38.5 20Z" fill="#7c3aed"/><circle cx="20" cy="10" r="5" fill="#ec4899"/><rect x="0" y="17.5" width="40" height="5" fill="#1a1a2e"/><circle cx="20" cy="20" r="6" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="2.5"/><circle cx="20" cy="20" r="3" fill="#e9d5ff"/></svg>
                             <span id="miniCount-master" class="text-[9px] font-bold mt-0.5">0</span>
                         </div>
+                    </div>
+
+                    <!-- Profile & Settings — after ball display -->
+                    <div class="flex gap-1.5 border-l border-slate-850 pl-4 items-center">
+                        <button id="settingsToggleBtn" onclick="openSettingsModal()" class="bg-slate-900/80 border border-slate-800 p-2 rounded-full hover:bg-slate-800 transition duration-200 text-cyan-400 focus:outline-none">
+                            <i class="fas fa-cog text-sm"></i>
+                        </button>
+                        <button id="profileToggleBtn" onclick="openProfileModal()" title="Trainer Profile" class="bg-slate-900/80 border border-slate-800 p-2 rounded-full hover:bg-slate-800 transition duration-200 focus:outline-none flex items-center justify-center">
+                            <i class="fas fa-user text-sm text-purple-400" id="profileBtnIcon"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1387,6 +1387,51 @@
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="consumablesShopList">
                             </div>
                         </div>
+
+                        <div id="autoBattlerShopSection">
+                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Premium Upgrades</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div id="autoBattlerShopCard" class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-amber-500/50 transition">
+                                    <div>
+                                        <div class="flex justify-between items-start">
+                                            <span class="p-2 bg-amber-950/40 text-amber-400 rounded-lg text-xs"><i class="fas fa-robot"></i></span>
+                                            <span id="autoBattlerOwned" class="text-[9px] font-mono text-slate-400">Not Owned</span>
+                                        </div>
+                                        <h4 class="text-xs font-extrabold mt-3 text-white">Auto Battler</h4>
+                                        <p class="text-[10px] text-slate-400 mt-1">Automatically plays a selected campaign stage on repeat, collecting rewards hands-free. Stop anytime.</p>
+                                    </div>
+                                    <div class="mt-4 flex items-center justify-between">
+                                        <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> 50.00k</span>
+                                        <button id="autoBattlerBuyBtn" onclick="buyAutoBattler()" class="px-2.5 py-1.5 bg-amber-700 hover:bg-amber-600 text-white text-[10px] uppercase font-bold rounded-lg transition">Buy</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Auto Battler Control Panel (shown when owned) -->
+                        <div id="autoBattlerPanel" class="hidden bg-gradient-to-r from-amber-950/30 to-slate-950/30 border border-amber-900/50 p-5 rounded-2xl space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-sm font-bold text-amber-400 uppercase tracking-widest flex items-center gap-2"><i class="fas fa-robot"></i> Auto Battler</h3>
+                                    <p class="text-[10px] text-slate-400 mt-0.5">Select a stage and let your team fight automatically.</p>
+                                </div>
+                                <div id="autoBattlerStatusBadge" class="text-[9px] font-bold px-2 py-1 rounded bg-slate-800 text-slate-400">IDLE</div>
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-end">
+                                <div class="flex-1">
+                                    <label class="text-[10px] text-slate-400 uppercase font-bold block mb-1">Stage to Farm</label>
+                                    <select id="autoBattlerStageSelect" class="w-full bg-slate-900 border border-slate-700 text-white text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
+                                        <option value="">-- Select a stage --</option>
+                                    </select>
+                                </div>
+                                <button id="autoBattlerStartBtn" onclick="toggleAutoBattler()" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold uppercase rounded-xl transition shrink-0">
+                                    Start Auto Battle
+                                </button>
+                            </div>
+                            <div id="autoBattlerLog" class="bg-slate-950/70 border border-slate-800 rounded-xl p-3 h-24 overflow-y-auto text-[10px] text-slate-400 font-mono hidden">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -1866,7 +1911,9 @@
                         catchMinigame: rawState.catchMinigame || { active: false, ringScale: 1.0, contracting: true, score: 0 },
                         username: typeof rawState.username === 'string' ? rawState.username : "",
                         gymBadges: Array.isArray(rawState.gymBadges) ? rawState.gymBadges : [],
-                        endlessModeUnlocked: rawState.endlessModeUnlocked || false
+                        endlessModeUnlocked: rawState.endlessModeUnlocked || false,
+                        autoBattler: rawState.autoBattler || false,
+                        autoBattlerStage: rawState.autoBattlerStage || null
                     };
                     return normalized;
                 }
@@ -2067,7 +2114,9 @@ const CAMPAIGN_ROADMAP = [
                     battleType: 'trainers',
                     endlessRunDefeats: 0,
                     battle: { active: false, bossPokemon: null, fighterPokemon: null, fighterHP: 0, bossHP: 0, fighterMaxHP: 0, bossMaxHP: 0, oranUsed: false, bossOranUsed: false, statStages: { player: {atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss: {atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} }, statusConds: { player: null, boss: null } },
-                    dexUI: { page: 1, pageSize: 9, total: 1025, search: "", rarity: "all" }
+                    dexUI: { page: 1, pageSize: 9, total: 1025, search: "", rarity: "all" },
+                    autoBattler: false,
+                    autoBattlerStage: null
                 };
 
                 // ==========================================
@@ -2681,18 +2730,22 @@ const CAMPAIGN_ROADMAP = [
                             battleType: 'trainers',
                             endlessRunDefeats: 0,
                             battle: { active: false, bossPokemon: null, fighterPokemon: null, fighterHP: 0, bossHP: 0, fighterMaxHP: 0, bossMaxHP: 0, oranUsed: false, bossOranUsed: false, statStages: { player: {atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss: {atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} }, statusConds: { player: null, boss: null } },
-                            dexUI: { page: 1, pageSize: 9, total: 1025, search: "", rarity: "all" }
+                            dexUI: { page: 1, pageSize: 9, total: 1025, search: "", rarity: "all" },
+                            autoBattler: false,
+                            autoBattlerStage: null
                         };
                         
                         // Reset theme to default
                         currentTheme = 'default';
                         setTheme('default', true);
                         
+                        if (typeof stopAutoBattler === 'function') stopAutoBattler();
                         updateUI();
                         renderRoadmap();
                         renderPCBox();
                         renderPokedex();
                         renderHeldItemsShop();
+                        updateAutoBattlerUI();
                         
                         closeSettingsModal();
                         showNotification('Data Cleared', 'All progress has been reset', 'success');
@@ -2764,7 +2817,7 @@ const CAMPAIGN_ROADMAP = [
 
                     if (viewName === 'pokedex') renderPokedex();
                     else if (viewName === 'battle') { resetBattleScreen(); renderRoadmap(); }
-                    else if (viewName === 'shop') renderHeldItemsShop();
+                    else if (viewName === 'shop') { renderHeldItemsShop(); updateAutoBattlerUI(); }
                     else if (viewName === 'pc') renderPCBox();
                     else if (viewName === 'team') renderTeamView();
                     else if (viewName === 'roulette' && !animationFrameId) {
@@ -2773,10 +2826,19 @@ const CAMPAIGN_ROADMAP = [
                     }
                 };
 
-                function updateUI() {
+                function formatNum(n) {
+                    if (n === null || n === undefined || isNaN(n)) return '0';
+                    const abs = Math.abs(n);
+                    if (abs >= 1e9)  return (n / 1e9).toFixed(2) + 'b';
+                    if (abs >= 1e6)  return (n / 1e6).toFixed(2) + 'm';
+                    if (abs >= 1e3)  return (n / 1e3).toFixed(2) + 'k';
+                    return String(n);
+                }
+
+                  function updateUI() {
                     // Persist on every UI refresh (catches all state mutations)
                     saveProgress();
-                    document.getElementById('playerCoins').textContent = gameState.coins.toLocaleString();
+                    document.getElementById('playerCoins').textContent = formatNum(gameState.coins);
                     document.getElementById('trainerLevelBadge').textContent = gameState.level;
                     document.getElementById('trainerLevelText').textContent = gameState.level;
                     
@@ -5087,7 +5149,7 @@ const CAMPAIGN_ROADMAP = [
                                 <p class="text-[10px] text-slate-400 mt-1 h-12 overflow-hidden">${item.desc}</p>
                             </div>
                             <div class="mt-4 flex items-center justify-between">
-                                <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> ${item.cost}</span>
+                                <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> ${formatNum(item.cost)}</span>
                                 <button onclick="window.buyShopItem('${key}')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white text-[10px] uppercase font-bold rounded-lg transition">Buy</button>
                             </div>
                         `;
@@ -5101,7 +5163,7 @@ const CAMPAIGN_ROADMAP = [
                     if (!item) return;
 
                     if (gameState.coins < item.cost) {
-                        showNotification('No Funds Available', `Requires ${item.cost} Coins. Beat roadmap chapters to earn payouts!`, 'error');
+                        showNotification('No Funds Available', `Requires ${formatNum(item.cost)} Coins. Beat roadmap chapters to earn payouts!`, 'error');
                         return;
                     }
 
@@ -5128,7 +5190,7 @@ const CAMPAIGN_ROADMAP = [
                     if (ballType === 'master') cost = 500;
 
                     if (gameState.coins < cost) {
-                        showNotification("No Funds Available", `Requires ${cost} Coins.`, 'error');
+                        showNotification("No Funds Available", `Requires ${formatNum(cost)} Coins.`, 'error');
                         return;
                     }
 
@@ -5142,7 +5204,168 @@ const CAMPAIGN_ROADMAP = [
                     saveProgress();
                 };
 
-                // ==========================================
+
+                  // ==========================================
+                  // MODULE 9: AUTO BATTLER
+                  // ==========================================
+                  let autoBattlerIntervalId = null;
+                  let autoBattlerRunning = false;
+                  let autoBattlerBusy = false;
+
+                  function updateAutoBattlerUI() {
+                      var owned = gameState.autoBattler || false;
+                      var card = document.getElementById('autoBattlerShopCard');
+                      var panel = document.getElementById('autoBattlerPanel');
+                      var ownedBadge = document.getElementById('autoBattlerOwned');
+                      var buyBtn = document.getElementById('autoBattlerBuyBtn');
+                      if (owned) {
+                          if (card) card.classList.add('border-amber-500/50');
+                          if (ownedBadge) ownedBadge.textContent = '\u2705 Owned';
+                          if (buyBtn) { buyBtn.textContent = 'Owned'; buyBtn.disabled = true; buyBtn.className = 'px-2.5 py-1.5 bg-slate-700 text-slate-400 text-[10px] uppercase font-bold rounded-lg cursor-not-allowed'; }
+                          if (panel) panel.classList.remove('hidden');
+                      } else {
+                          if (panel) panel.classList.add('hidden');
+                      }
+                      var sel = document.getElementById('autoBattlerStageSelect');
+                      if (sel && owned) {
+                          var currentVal = gameState.autoBattlerStage;
+                          sel.innerHTML = '<option value="">-- Select a stage --</option>';
+                          var maxStage = gameState.unlockedStages || 1;
+                          CAMPAIGN_ROADMAP.forEach(function(s) {
+                              if (s.stageId <= maxStage) {
+                                  var opt = document.createElement('option');
+                                  opt.value = String(s.stageId);
+                                  opt.textContent = 'Stage ' + s.stageId + ': ' + s.name + ' (' + s.trainer + ') \u2014 ' + formatNum(s.reward) + ' coins';
+                                  if (String(s.stageId) === String(currentVal)) opt.selected = true;
+                                  sel.appendChild(opt);
+                              }
+                          });
+                      }
+                      var startBtn = document.getElementById('autoBattlerStartBtn');
+                      if (startBtn) {
+                          if (autoBattlerRunning) { startBtn.textContent = 'Stop Auto Battle'; startBtn.className = 'px-4 py-2 bg-red-700 hover:bg-red-600 text-white text-xs font-bold uppercase rounded-xl transition shrink-0'; }
+                          else { startBtn.textContent = 'Start Auto Battle'; startBtn.className = 'px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold uppercase rounded-xl transition shrink-0'; }
+                      }
+                      var badge = document.getElementById('autoBattlerStatusBadge');
+                      if (badge) {
+                          if (autoBattlerRunning) { badge.textContent = 'RUNNING'; badge.className = 'text-[9px] font-bold px-2 py-1 rounded bg-amber-900/60 text-amber-400 animate-pulse'; }
+                          else { badge.textContent = 'IDLE'; badge.className = 'text-[9px] font-bold px-2 py-1 rounded bg-slate-800 text-slate-400'; }
+                      }
+                  }
+
+                  window.buyAutoBattler = function() {
+                      initAudio();
+                      if (gameState.autoBattler) { showNotification('Already Owned', 'Auto Battler is already active.', 'info'); return; }
+                      var cost = 50000;
+                      if (gameState.coins < cost) { showNotification('No Funds Available', 'Requires ' + formatNum(cost) + ' Coins.', 'error'); return; }
+                      spendCoins(cost);
+                      gameState.autoBattler = true;
+                      saveProgress();
+                      playConfirmSound();
+                      showNotification('Auto Battler Unlocked!', 'Select a stage below and start farming!', 'success');
+                      updateAutoBattlerUI();
+                  };
+
+                  window.toggleAutoBattler = function() {
+                      if (autoBattlerRunning) stopAutoBattler(); else startAutoBattler();
+                  };
+
+                  function autoBattlerLog(msg) {
+                      var log = document.getElementById('autoBattlerLog');
+                      if (!log) return;
+                      log.classList.remove('hidden');
+                      var now = new Date();
+                      var ts = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0') + ':' + now.getSeconds().toString().padStart(2,'0');
+                      var line = document.createElement('div');
+                      line.innerHTML = '<span style="color:#475569">[' + ts + ']</span> ' + msg;
+                      log.appendChild(line);
+                      log.scrollTop = log.scrollHeight;
+                      var lines = log.querySelectorAll('div');
+                      if (lines.length > 80) lines[0].remove();
+                  }
+
+                  function startAutoBattler() {
+                      if (!gameState.autoBattler) return;
+                      var sel = document.getElementById('autoBattlerStageSelect');
+                      var stageId = sel ? parseInt(sel.value) : null;
+                      if (!stageId || isNaN(stageId)) { showNotification('No Stage Selected', 'Pick a campaign stage to farm first.', 'error'); return; }
+                      var stage = CAMPAIGN_ROADMAP.find(function(s) { return s.stageId === stageId; });
+                      if (!stage) { showNotification('Stage Not Found', 'Invalid stage.', 'error'); return; }
+                      var fighters = typeof getBattleFighterPool === 'function' ? getBattleFighterPool() : [];
+                      if (!fighters || fighters.length === 0) { showNotification('No Team', 'Assign at least one Pokemon to your team first.', 'error'); return; }
+                      gameState.autoBattlerStage = stageId;
+                      autoBattlerRunning = true;
+                      autoBattlerBusy = false;
+                      saveProgress();
+                      updateAutoBattlerUI();
+                      autoBattlerLog('\u25b6 Started \u2014 Stage ' + stageId + ': ' + stage.name);
+                      runAutoBattleRound();
+                      autoBattlerIntervalId = setInterval(function() {
+                          if (!autoBattlerRunning) { clearInterval(autoBattlerIntervalId); return; }
+                          if (!autoBattlerBusy) runAutoBattleRound();
+                      }, 4500);
+                  }
+
+                  function stopAutoBattler() {
+                      autoBattlerRunning = false;
+                      autoBattlerBusy = false;
+                      if (autoBattlerIntervalId) { clearInterval(autoBattlerIntervalId); autoBattlerIntervalId = null; }
+                      updateAutoBattlerUI();
+                      autoBattlerLog('\u23f9 Stopped.');
+                  }
+
+                  function runAutoBattleRound() {
+                      if (!autoBattlerRunning || autoBattlerBusy) return;
+                      autoBattlerBusy = true;
+                      var stageId = gameState.autoBattlerStage;
+                      var stage = CAMPAIGN_ROADMAP.find(function(s) { return s.stageId === stageId; });
+                      if (!stage) { stopAutoBattler(); autoBattlerBusy = false; return; }
+                      var fighters = typeof getBattleFighterPool === 'function' ? getBattleFighterPool() : [];
+                      if (!fighters || fighters.length === 0) { autoBattlerLog('\u26a0 No team. Stopping.'); stopAutoBattler(); autoBattlerBusy = false; return; }
+                      var fighter = fighters[0];
+                      var fighterLevel = fighter.level || 1;
+                      var levelMul = 1 + ((fighterLevel - 1) * 0.05);
+                      var fighterAtk = (fighter.atk || 50) * levelMul;
+                      var fighterDef = fighter.def || 50;
+                      var fighterHPBase = Math.max(1, Math.round((fighter.hp + (fighter.hpBonus || 0)) * levelMul));
+                      var teamCount = fighters.length;
+                      var remainingHP = fighterHPBase * teamCount;
+                      var teamSize = Math.max(1, Math.min(4, stage.teamSize || 1));
+                      var playerWins = true;
+                      for (var i = 0; i < teamSize; i++) {
+                          var eLvl = stage.level + (i * 4);
+                          var eHP = 60 + (eLvl * 3);
+                          var eAtk = 50 + (eLvl * 1.2);
+                          var playerDmg = Math.max(3, Math.round(((2 * fighterLevel / 5 + 2) * 60 * (fighterAtk / Math.max(1, eAtk * 0.8))) / 50 + 2));
+                          var enemyDmg = Math.max(3, Math.round(((2 * eLvl / 5 + 2) * 60 * (eAtk / Math.max(1, fighterDef))) / 50 + 2));
+                          var turns = Math.ceil(eHP / playerDmg);
+                          remainingHP -= turns * enemyDmg;
+                          if (remainingHP <= 0) { playerWins = false; break; }
+                      }
+                      if (playerWins) {
+                          var reward = stage.reward;
+                          var xpAward = stage.level * 18;
+                          addCoins(reward);
+                          addXP(Math.round(reward / 2));
+                          fighter.xp = (fighter.xp || 0) + xpAward;
+                          var nxtXp = (fighter.level || 1) * 100;
+                          var leveled = false;
+                          while (fighter.xp >= nxtXp) {
+                              fighter.xp -= nxtXp;
+                              fighter.level = (fighter.level || 1) + 1;
+                              nxtXp = fighter.level * 100;
+                              if (typeof applyLevelUpMoves === 'function') applyLevelUpMoves(fighter);
+                              leveled = true;
+                          }
+                          autoBattlerLog('\u2705 Stage ' + stageId + ' won! +' + formatNum(reward) + ' coins' + (leveled ? ' | ' + fighter.name + ' \u2192 Lv' + fighter.level : ''));
+                          saveProgress();
+                      } else {
+                          autoBattlerLog('\u274c Stage ' + stageId + ': defeat \u2014 your team may be too weak.');
+                      }
+                      autoBattlerBusy = false;
+                  }
+
+                    // ==========================================
                 // BOOTSTRAP INIT
                 // ==========================================
                 window.onload = function() {
@@ -5195,6 +5418,7 @@ const CAMPAIGN_ROADMAP = [
                                 updateTargetRarityObjective();
                                 renderRoadmap();
                                 renderHeldItemsShop();
+                                updateAutoBattlerUI();
                                 
                                 // Hide loading screen with fade out
                                 loadingScreen.style.transition = 'opacity 0.5s ease-out';
