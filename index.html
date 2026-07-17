@@ -1728,18 +1728,33 @@
                     'tm25': [1,43,46,48,69,102,104,114,131,152,175,252,280,387,390,393,495,633,650,704,722,810,906]
                 };
 
+                // Maps evolved form ID → direct pre-evolution ID so TM/move checks walk the chain
+                const PRE_EVO_MAP = {
+                    26:25, 36:35, 38:37, 40:39, 44:43, 45:44,
+                    59:58, 62:61, 78:77, 87:86, 91:90, 101:100,
+                    121:120, 134:133, 135:133, 136:133,
+                    175:174, 196:133, 197:133, 281:280, 468:175, 700:133
+                };
+
                 function canLearnTM(pokemon, tmKey) {
                     const tm = TM_DB[tmKey];
                     if (!tm) return false;
                     const moveSlug = tm.move;
-                    const lvlMoves = LEVELUP_MOVES[pokemon.id];
-                    if (lvlMoves) {
-                        for (const lvlSet of Object.values(lvlMoves)) {
-                            if (lvlSet.includes(moveSlug)) return true;
+                    // Walk the pre-evolution chain (up to 4 steps) so evolved forms inherit compatibility
+                    let checkId = pokemon.id;
+                    for (let depth = 0; depth < 4; depth++) {
+                        const lvlMoves = LEVELUP_MOVES[checkId];
+                        if (lvlMoves) {
+                            for (const lvlSet of Object.values(lvlMoves)) {
+                                if (lvlSet.includes(moveSlug)) return true;
+                            }
                         }
+                        const extra = TM_COMPAT[tmKey];
+                        if (extra && extra.includes(checkId)) return true;
+                        const preEvo = PRE_EVO_MAP[checkId];
+                        if (!preEvo) break;
+                        checkId = preEvo;
                     }
-                    const extra = TM_COMPAT[tmKey];
-                    if (extra && extra.includes(pokemon.id)) return true;
                     return false;
                 }
 
@@ -1908,7 +1923,29 @@
                     885: {1:["tackle","quick-attack"],5:["bite"],9:["dragon-rage"],13:["twister"],17:["dragon-claw"],21:["take-down"],25:["outrage"]},
                     906: {1:["scratch","growl"],5:["vine-whip"],9:["razor-leaf"],13:["bite"],17:["seed-bomb"],21:["body-slam"],25:["energy-ball"]},
                     909: {1:["tackle","leer"],5:["ember"],9:["bite"],13:["flame-charge"],17:["headbutt"],21:["flamethrower"],25:["crunch"]},
-                    912: {1:["pound","growl"],5:["water-gun"],9:["quick-attack"],13:["water-pulse"],17:["icy-wind"],21:["aqua-tail"],25:["ice-beam"]}
+                    912: {1:["pound","growl"],5:["water-gun"],9:["quick-attack"],13:["water-pulse"],17:["icy-wind"],21:["aqua-tail"],25:["ice-beam"]},
+                    // ── Evolved forms (stone & level-up evolutions reachable in-game) ──
+                    26:  {1:["thunder-shock","tail-whip"],12:["quick-attack","thunder-wave"],20:["spark","electro-ball"],28:["discharge","double-kick"],35:["thunderbolt"],45:["thunder","body-slam"]},
+                    36:  {1:["pound","sing"],8:["double-slap","defense-curl"],15:["disarming-voice","body-slam"],20:["swift","moonblast"],28:["take-down"],35:["play-rough"]},
+                    38:  {1:["ember","tail-whip"],12:["quick-attack","confuse-ray"],20:["flame-wheel"],28:["flamethrower","crunch"],35:["slash","fire-spin"],45:["body-slam"]},
+                    40:  {1:["pound","sing"],8:["double-slap","defense-curl"],15:["disarming-voice","body-slam"],20:["swift","moonblast"],28:["take-down"],35:["play-rough"]},
+                    44:  {1:["absorb","acid"],8:["sleep-powder","mega-drain"],15:["stun-spore","sludge"],20:["giga-drain"],25:["sludge-bomb"],32:["energy-ball"]},
+                    45:  {1:["absorb","acid"],8:["sleep-powder","mega-drain"],15:["stun-spore","sludge"],20:["giga-drain"],25:["sludge-bomb"],32:["energy-ball"],38:["solar-beam"]},
+                    59:  {1:["bite","leer"],12:["take-down","flame-wheel"],20:["crunch","flamethrower"],28:["quick-attack","slash"],35:["body-slam","fire-fang"],45:["fire-spin"]},
+                    62:  {1:["water-gun","bubble"],10:["body-slam","water-pulse"],20:["headbutt","take-down"],28:["surf","karate-chop"],35:["hydro-pump"],42:["seismic-toss"]},
+                    78:  {1:["ember","tail-whip"],12:["quick-attack","flame-wheel"],20:["slash","flamethrower"],28:["take-down","fire-fang"],35:["body-slam"],45:["fire-spin"]},
+                    87:  {1:["headbutt","growl"],8:["icy-wind","ice-shard"],16:["aurora-beam"],20:["aqua-tail","take-down"],25:["ice-beam"],30:["body-slam","surf"]},
+                    91:  {1:["icy-wind","withdraw"],8:["ice-shard","water-gun"],16:["aurora-beam","water-pulse"],22:["ice-beam","crunch"],28:["body-slam"],35:["hydro-pump"]},
+                    101: {1:["tackle","thunder-shock"],8:["spark","electro-ball"],15:["swift"],20:["discharge","take-down"],25:["thunderbolt"],30:["thunder","body-slam"]},
+                    121: {1:["tackle","harden"],8:["water-gun","swift"],15:["rapid-spin","water-pulse"],20:["power-gem","psychic"],25:["ice-beam"],30:["hydro-pump"]},
+                    134: {25:["water-pulse","quick-attack"],28:["aurora-beam"],32:["aqua-tail","body-slam"],36:["surf"],40:["ice-beam"],45:["hydro-pump"]},
+                    135: {25:["quick-attack","double-kick"],28:["thunder-wave","pin-missile"],32:["electro-ball","discharge"],36:["thunderbolt"],40:["thunder","body-slam"]},
+                    136: {25:["fire-fang","quick-attack"],28:["flame-wheel","bite"],32:["body-slam","flamethrower"],36:["slash"],40:["fire-spin","crunch"]},
+                    196: {25:["quick-attack","psybeam"],28:["swift","confusion"],32:["psychic"],36:["dazzling-gleam"],40:["shadow-ball","body-slam"]},
+                    197: {25:["bite","quick-attack"],28:["feint-attack","crunch"],32:["sucker-punch"],36:["shadow-ball","body-slam"],40:["take-down"]},
+                    281: {1:["growl","confusion"],8:["double-slap","disarming-voice"],15:["psybeam","charm"],20:["swift","psychic"],25:["dazzling-gleam"],30:["moonblast"]},
+                    468: {1:["growl","charm"],8:["pound","swift"],15:["disarming-voice","ancient-power"],20:["dazzling-gleam","aerial-ace"],25:["moonblast","wing-attack"],30:["play-rough","body-slam"]},
+                    700: {25:["quick-attack","disarming-voice"],28:["charm","swift"],32:["moonblast","body-slam"],36:["dazzling-gleam","play-rough"],40:["take-down"]}
                 };
 
                 const HOLD_ITEMS_DB = {
@@ -3709,7 +3746,12 @@ const CAMPAIGN_ROADMAP = [
                 }
 
                 function applyLevelUpMoves(pokemon) {
-                    const moveData = LEVELUP_MOVES[pokemon.id];
+                    // Fall back to pre-evolution move table if evolved form has no dedicated entry
+                    let moveData = LEVELUP_MOVES[pokemon.id];
+                    if (!moveData) {
+                        const preEvo = PRE_EVO_MAP[pokemon.id];
+                        if (preEvo) moveData = LEVELUP_MOVES[preEvo];
+                    }
                     if (!moveData) return [];
                     const level = pokemon.level || 1;
                     const newMoves = [];
@@ -4446,6 +4488,11 @@ const CAMPAIGN_ROADMAP = [
                         pokemon.speed = evolved.speed || 60;
                         if (logBox) logBox.innerHTML += `<div class="text-pink-400 font-black animate-pulse mt-1">🌟 ${oldName} evolved into <span class="text-white">${evolved.name.toUpperCase()}</span>!</div>`;
                         showNotification('✨ EVOLUTION!', `Eevee evolved into ${evolved.name}!`, 'success');
+                        // Teach evolved-form moves at current level
+                        const evoNewMoves = applyLevelUpMoves(pokemon);
+                        if (evoNewMoves.length > 0 && logBox) {
+                            evoNewMoves.forEach(m => logBox.innerHTML += `<div class="text-cyan-400 font-bold mt-1">📖 ${pokemon.name} learned <span class="text-white capitalize">${m.replace(/-/g,' ')}</span>!</div>`);
+                        }
                         saveProgress();
                     } catch(e) { /* silent — evolution is cosmetic if fetch fails */ }
                 }
@@ -4645,6 +4692,7 @@ const CAMPAIGN_ROADMAP = [
                         logBox.innerHTML += `<div class="text-cyan-400 font-bold mt-1 animate-pulse">⚡ Go, <span class="text-white font-black">${nextFighter.name}</span>! (${nextIndex + 1}/${playerTeam.length})</div>`;
                         logBox.scrollTop = logBox.scrollHeight;
 
+                        renderStatStagesUI();
                         renderBattleMoves(nextFighter);
                         gameState.battle.active = true;
                         disableMoveButtons(false);
@@ -5260,8 +5308,10 @@ const CAMPAIGN_ROADMAP = [
                         pokemon.spAtk = evolvedData.spAtk || evolvedData.atk;
                         pokemon.spDef = evolvedData.spDef || evolvedData.def;
                         pokemon.speed = evolvedData.speed || 60;
-                        pokemon.moves = pokemon.moves && pokemon.moves.length ? pokemon.moves : evolvedData.moves;
+                        pokemon.moves = pokemon.moves && pokemon.moves.length ? pokemon.moves : (evolvedData.moves || []);
                         pokemon.evoStoneUsed = true;
+                        // Teach moves appropriate to evolved form at current level
+                        applyLevelUpMoves(pokemon);
                         gameState.inventoryItems[itemKey] = owned - 1;
                         showNotification('Evolved', `${pokemon.name} evolved with ${item.name}.`, 'success');
                     } else {
