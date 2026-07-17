@@ -2087,20 +2087,20 @@ const CAMPAIGN_ROADMAP = [
                     if (statPoke)   statPoke.textContent   = gameState.pcBox ? gameState.pcBox.length : 0;
                     if (statLvl)    statLvl.textContent    = gameState.level || 1;
 
-                    // Badge case — per generation with arrows
+                    // Badge case — per generation with arrows (show all regions 1-9)
                     const REGION_NAMES_P = ['','Kanto','Johto','Hoenn','Sinnoh','Unova','Kalos','Alola','Galar','Paldea'];
-                    const unlocked = gameState.unlockedRegions || [1];
-                    // clamp profileGenIndex
+                    const ALL_REGIONS = [1,2,3,4,5,6,7,8,9];
+                    // clamp profileGenIndex to all regions
                     if (!gameState.profileGenIndex || gameState.profileGenIndex < 0) gameState.profileGenIndex = 0;
-                    if (gameState.profileGenIndex >= unlocked.length) gameState.profileGenIndex = unlocked.length - 1;
-                    const currentRegionId = unlocked[gameState.profileGenIndex];
+                    if (gameState.profileGenIndex >= ALL_REGIONS.length) gameState.profileGenIndex = ALL_REGIONS.length - 1;
+                    const currentRegionId = ALL_REGIONS[gameState.profileGenIndex];
                     const regionGyms = gymStages.filter(s => s.regionId === currentRegionId);
                     const earnedInRegion = regionGyms.filter(s => gameState.gymBadges.includes(s.stageId)).length;
 
                     const badgeCase = document.getElementById('profileBadgeCase');
                     if (badgeCase) {
                         const prevOk = gameState.profileGenIndex > 0;
-                        const nextOk = gameState.profileGenIndex < unlocked.length - 1;
+                        const nextOk = gameState.profileGenIndex < ALL_REGIONS.length - 1;
                         badgeCase.innerHTML = `
                             <div class="w-full flex items-center justify-between mb-3">
                                 <button onclick="window.profileRegionNav(-1)" class="text-slate-400 hover:text-white px-3 py-1 rounded-lg border border-slate-800 text-[11px] disabled:opacity-30 transition" ${prevOk?'':'disabled'}>◀ Prev</button>
@@ -2110,7 +2110,7 @@ const CAMPAIGN_ROADMAP = [
                                 </div>
                                 <button onclick="window.profileRegionNav(1)" class="text-slate-400 hover:text-white px-3 py-1 rounded-lg border border-slate-800 text-[11px] disabled:opacity-30 transition" ${nextOk?'':'disabled'}>Next ▶</button>
                             </div>
-                            <div id="profileBadgeGrid" class="grid grid-cols-4 gap-4 w-full"></div>
+                            <div id="profileBadgeGrid" class="grid grid-cols-4 gap-3 w-full"></div>
                         `;
                         const grid = document.getElementById('profileBadgeGrid');
                         regionGyms.forEach(stage => {
@@ -2136,8 +2136,8 @@ const CAMPAIGN_ROADMAP = [
                 }
 
                 window.profileRegionNav = function(dir) {
-                    const unlocked = gameState.unlockedRegions || [1];
-                    gameState.profileGenIndex = Math.max(0, Math.min(unlocked.length - 1, (gameState.profileGenIndex||0) + dir));
+                    const ALL_REGIONS = [1,2,3,4,5,6,7,8,9];
+                    gameState.profileGenIndex = Math.max(0, Math.min(ALL_REGIONS.length - 1, (gameState.profileGenIndex||0) + dir));
                     window.openProfileModal();
                 };
 
