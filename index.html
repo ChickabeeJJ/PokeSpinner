@@ -126,45 +126,165 @@
             .ball-selector-btn:hover .pokeball-svg svg, .ball-selector-btn.active .pokeball-svg svg { transform:scale(1.12) rotate(-12deg); }
 
             /* ===== LIGHT MODE ===== */
-            body.light-mode { background-color:#eef2f7!important; color:#0f172a!important; }
-            body.light-mode .scanlines { opacity:0.03!important; }
-            body.light-mode header { background-color:rgba(255,255,255,0.97)!important; border-color:#dde3ef!important; box-shadow:0 1px 12px rgba(0,0,0,0.07); }
+            /* ═══ COMPREHENSIVE LIGHT MODE ═══════════════════════════════════════════ */
+            body.light-mode { background-color:#f0f4f8!important; color:#0f172a!important; }
+            body.light-mode .scanlines { opacity:0.02!important; }
+
+            /* Structural surfaces */
+            body.light-mode header { background-color:rgba(255,255,255,0.97)!important; border-color:#dde3ef!important; box-shadow:0 1px 12px rgba(0,0,0,0.07)!important; }
             body.light-mode footer { background-color:#f8fafc!important; border-color:#dde3ef!important; }
-            body.light-mode nav.sticky { background-color:#eef2f7!important; }
-            body.light-mode .bg-slate-950 { background-color:#ffffff!important; }
-            body.light-mode .bg-slate-900 { background-color:#f1f5f9!important; }
-            body.light-mode .bg-slate-800 { background-color:#e2e8f0!important; }
-            body.light-mode [class*="bg-slate-950\/"] { background-color:rgba(255,255,255,0.95)!important; }
-            body.light-mode [class*="bg-slate-900\/"] { background-color:rgba(241,245,249,0.9)!important; }
-            body.light-mode [class*="bg-slate-955"] { background-color:rgba(255,255,255,0.95)!important; }
-            body.light-mode .text-white { color:#0f172a!important; }
-            body.light-mode .text-slate-200 { color:#1e293b!important; }
-            body.light-mode .text-slate-300 { color:#334155!important; }
-            body.light-mode .text-slate-400 { color:#64748b!important; }
-            body.light-mode .text-slate-500 { color:#94a3b8!important; }
-            body.light-mode .text-slate-600 { color:#94a3b8!important; }
-            body.light-mode .border-slate-900 { border-color:#dde3ef!important; }
-            body.light-mode .border-slate-800 { border-color:#cbd5e1!important; }
-            body.light-mode .border-slate-850 { border-color:#d1d5db!important; }
-            body.light-mode .border-slate-950 { border-color:#e2e8f0!important; }
-            body.light-mode input,body.light-mode select,body.light-mode textarea { background-color:#f1f5f9!important; color:#0f172a!important; border-color:#cbd5e1!important; }
-            body.light-mode #battleLog { background-color:#f8fafc!important; border-color:#e2e8f0!important; color:#475569!important; }
+            body.light-mode nav.sticky { background-color:#f0f4f8!important; border-color:#dde3ef!important; }
+            body.light-mode main { background-color:#f0f4f8!important; }
+
+            /* All dark bg utilities */
+            body.light-mode .bg-slate-950, body.light-mode [class="bg-slate-950"] { background-color:#ffffff!important; }
+            body.light-mode .bg-slate-900  { background-color:#f1f5f9!important; }
+            body.light-mode .bg-slate-800  { background-color:#e2e8f0!important; }
+            body.light-mode .bg-slate-700  { background-color:#cbd5e1!important; }
+            body.light-mode [class*="bg-slate-950\/"]{ background-color:rgba(255,255,255,0.95)!important; }
+            body.light-mode [class*="bg-slate-900\/"]{ background-color:rgba(241,245,249,0.90)!important; }
+            body.light-mode [class*="bg-slate-955"]   { background-color:rgba(255,255,255,0.97)!important; }
+            body.light-mode [class*="bg-black\/"]    { background-color:rgba(200,210,225,0.60)!important; }
+
+            /* Gradient backgrounds → soft light gradients */
+            body.light-mode [class*="from-slate-950"],[class*="from-slate-900"],[class*="from-black"] { --tw-gradient-from:#f1f5f9!important; }
+            body.light-mode [class*="to-slate-950"],[class*="to-slate-900"],[class*="to-black"]     { --tw-gradient-to:#e2e8f0!important; }
+            body.light-mode [class*="via-slate-950"],[class*="via-slate-900"]                       { --tw-gradient-via:#f8fafc!important; }
+
+            /* All text colours */
+            body.light-mode .text-white    { color:#0f172a!important; }
+            body.light-mode .text-slate-100{ color:#1e293b!important; }
+            body.light-mode .text-slate-200{ color:#1e293b!important; }
+            body.light-mode .text-slate-300{ color:#334155!important; }
+            body.light-mode .text-slate-400{ color:#475569!important; }
+            body.light-mode .text-slate-500{ color:#64748b!important; }
+            body.light-mode .text-slate-600{ color:#64748b!important; }
+
+            /* Borders */
+            body.light-mode .border-slate-950{ border-color:#e2e8f0!important; }
+            body.light-mode .border-slate-900{ border-color:#dde3ef!important; }
+            body.light-mode .border-slate-800{ border-color:#cbd5e1!important; }
+            body.light-mode .border-slate-850{ border-color:#d1d5db!important; }
+            body.light-mode [class*="border-white\/"]{ border-color:rgba(148,163,184,0.4)!important; }
+
+            /* Form elements */
+            body.light-mode input, body.light-mode select, body.light-mode textarea {
+                background-color:#ffffff!important; color:#0f172a!important;
+                border-color:#cbd5e1!important; }
+            body.light-mode option { background-color:#ffffff!important; color:#0f172a!important; }
+
+            /* Specific panels */
+            body.light-mode #battleLog { background-color:#f8fafc!important; border-color:#e2e8f0!important; color:#334155!important; }
+            body.light-mode #wildDisplayBox { background-color:#f1f5f9!important; border-color:#e2e8f0!important; }
+            body.light-mode #pokemonPlatform { background-color:#e2e8f0!important; }
+
+            /* Navigation buttons */
+            body.light-mode .nav-btn:not(.active) { background-color:#ffffff!important; border-color:#e2e8f0!important; color:#475569!important; }
+            body.light-mode .nav-btn:not(.active):hover { background-color:#f1f5f9!important; color:#0f172a!important; }
+            body.light-mode .nav-btn.active { color:#ffffff!important; }
+
+            /* Modals */
+            body.light-mode #settingsModal > div,
+            body.light-mode #dataTransferModal > div,
+            body.light-mode #profileModal > div,
+            body.light-mode #pcMoveLearnModal > div { background-color:#ffffff!important; border-color:#e2e8f0!important; }
+            body.light-mode [id$="Modal"] > div > div { background-color:#f8fafc!important; }
+            body.light-mode .fixed.inset-0.bg-black\/70 { background-color:rgba(100,116,139,0.55)!important; }
+            body.light-mode .fixed.inset-0.bg-black\/80 { background-color:rgba(100,116,139,0.60)!important; }
+
+            /* Toast */
             body.light-mode #customToast { background-color:rgba(255,255,255,0.98)!important; border-color:#e2e8f0!important; }
             body.light-mode #customToast .text-white { color:#0f172a!important; }
             body.light-mode #customToast .text-slate-300 { color:#475569!important; }
-            body.light-mode #settingsModal > div,body.light-mode #dataTransferModal > div { background-color:#ffffff!important; border-color:#e2e8f0!important; }
-            body.light-mode #settingsModal .bg-slate-900\/50 { background-color:#f8fafc!important; }
-            body.light-mode .nav-btn:not(.active) { background-color:#ffffff!important; border-color:#e2e8f0!important; color:#64748b!important; }
-            body.light-mode .nav-btn:not(.active):hover { background-color:#f1f5f9!important; color:#0f172a!important; }
+
+            /* Cards and panels */
+            body.light-mode .rounded-3xl, body.light-mode .rounded-2xl { border-color:#e2e8f0!important; }
+            body.light-mode [style*="background:linear-gradient"][style*="#0d1220"],
+            body.light-mode [style*="background:linear-gradient"][style*="#0a0f1e"],
+            body.light-mode [style*="background:rgba(255,255,255,0.04)"] {
+                background:rgba(241,245,249,0.9)!important; }
+            body.light-mode [style*="background:rgba(255,255,255,0.03)"] { background:rgba(241,245,249,0.7)!important; }
+            body.light-mode [style*="border:1px solid rgba(255,255,255,0.08)"] { border-color:rgba(148,163,184,0.3)!important; }
+            body.light-mode [style*="border:3px solid rgba(255,255,255,0.12)"] { border-color:rgba(148,163,184,0.5)!important; }
+
+            /* Stat stages panel */
+            body.light-mode #statStagesPanel { background:rgba(241,245,249,0.9)!important; border-color:#e2e8f0!important; }
+
+            /* Buttons - ensure text visible */
+            body.light-mode button:not([class*="themed"]):not([class*="bg-rose"]):not([class*="bg-emerald"]):not([class*="bg-blue"]):not([class*="bg-purple"]):not([class*="bg-green"]):not([class*="bg-cyan"]):not([class*="bg-amber"]):not([class*="bg-yellow"]):not([class*="bg-red"]):not([class*="bg-pink"]):not([class*="bg-indigo"]):not([class*="bg-violet"]):not([class*="bg-teal"]):not([class*="bg-orange"]) {
+                color:#0f172a!important; }
+            body.light-mode .theme-btn { background-color:#f8fafc!important; border-color:#e2e8f0!important; }
+            body.light-mode .theme-btn span.text-white { color:#0f172a!important; }
+            body.light-mode #settingsToggleBtn, body.light-mode #profileToggleBtn { background-color:rgba(241,245,249,0.98)!important; border-color:#e2e8f0!important; }
+
+            /* Move buttons in battle */
+            body.light-mode #battleMovesGrid button { background-color:#f1f5f9!important; color:#0f172a!important; }
+
+            /* Battle arena background */
+            body.light-mode #battleArenaActive .bg-slate-950 { background-color:#ffffff!important; }
+
+            /* Scrollbar */
             body.light-mode ::-webkit-scrollbar-track { background:#e2e8f0; }
             body.light-mode ::-webkit-scrollbar-thumb { background:#94a3b8; border-radius:4px; }
             body.light-mode ::-webkit-scrollbar-thumb:hover { background:#64748b; }
-            body.light-mode #wildDisplayBox { background-color:#f1f5f9!important; border-color:#e2e8f0!important; }
-            body.light-mode .theme-btn { background-color:#f8fafc!important; }
-            body.light-mode .theme-btn span.text-white { color:#0f172a!important; }
-            body.light-mode #settingsToggleBtn { background-color:rgba(241,245,249,0.98)!important; border-color:#e2e8f0!important; color:#64748b!important; }
-            body.light-mode .rounded-3xl { border-color:#e2e8f0!important; }
-            body.light-mode .rounded-2xl.border.bg-slate-950 { background-color:#ffffff!important; }
+
+            /* Pokémon card badges and chips */
+            body.light-mode [class*="glow-"] { box-shadow:0 0 12px rgba(0,0,0,0.15)!important; }
+            body.light-mode [class*="text-[7px]"], body.light-mode [class*="text-[8px]"],
+            body.light-mode [class*="text-[9px]"], body.light-mode [class*="text-[10px]"] { color:#475569!important; }
+            body.light-mode .text-slate-400[class*="text-["], body.light-mode .font-mono { color:#475569!important; }
+
+            /* PC grid cards */
+            body.light-mode #pcGrid > div { background-color:#ffffff!important; border-color:#e2e8f0!important; }
+            body.light-mode #pcGrid select, body.light-mode #pcGrid input { background-color:#f1f5f9!important; }
+
+            /* Journey / roadmap cards */
+            body.light-mode #roadmapTrainerGrid > div, body.light-mode #roadmapGymGrid > div { background-color:#ffffff!important; }
+
+            /* HP bars - keep colored */
+            body.light-mode #bossHPBar, body.light-mode #playerFighterHPBar { filter:saturate(1.2); }
+
+            /* Cutscene overlay stays dark */
+            body.light-mode #rareCutscene { background:rgba(0,0,0,0.92)!important; }
+
+            /* ===== RARE ENCOUNTER CUTSCENE ===== */
+            #rareCutscene {
+                position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.92);
+                display:flex; flex-direction:column; align-items:center; justify-content:center;
+                pointer-events:all; transition:opacity 0.4s ease;
+            }
+            #rareCutscene.hidden { opacity:0; pointer-events:none; }
+            @keyframes cutsceneFlash {
+                0%,100% { opacity:1; } 10%,30%,50% { opacity:0; } 20%,40% { opacity:1; }
+            }
+            @keyframes cutsceneScale {
+                0% { transform:scale(0.2) rotate(-15deg); opacity:0; }
+                60% { transform:scale(1.15) rotate(3deg); opacity:1; }
+                80% { transform:scale(0.95) rotate(-1deg); }
+                100% { transform:scale(1) rotate(0deg); }
+            }
+            @keyframes cutsceneGlow {
+                0%,100% { filter:drop-shadow(0 0 20px rgba(255,200,50,0.7)); }
+                50% { filter:drop-shadow(0 0 60px rgba(255,200,50,1)); }
+            }
+            @keyframes cutsceneShinyGlow {
+                0%,100% { filter:drop-shadow(0 0 20px rgba(236,72,153,0.8)) hue-rotate(100deg) saturate(1.5); }
+                50% { filter:drop-shadow(0 0 60px rgba(236,72,153,1)) hue-rotate(140deg) saturate(2); }
+            }
+            #cutsceneSprite { animation: cutsceneScale 0.7s cubic-bezier(0.175,0.885,0.32,1.275) forwards; }
+            #cutsceneSprite.is-shiny { animation: cutsceneScale 0.7s cubic-bezier(0.175,0.885,0.32,1.275) forwards, cutsceneShinyGlow 1.5s ease-in-out infinite; }
+            #cutsceneSprite.is-legendary { animation: cutsceneScale 0.7s cubic-bezier(0.175,0.885,0.32,1.275) forwards, cutsceneGlow 1.5s ease-in-out infinite; }
+            #cutsceneBg { position:absolute; inset:0; animation:cutsceneFlash 0.8s ease-in-out; background:radial-gradient(circle at center, rgba(255,220,80,0.25), transparent 70%); }
+            #cutsceneBg.shiny { background:radial-gradient(circle at center, rgba(236,72,153,0.3), transparent 70%); }
+            #cutsceneLabel {
+                font-size:1.6rem; font-weight:900; letter-spacing:0.15em; text-transform:uppercase;
+                text-align:center; margin-top:1rem;
+                animation: cutsceneScale 0.6s 0.2s cubic-bezier(0.175,0.885,0.32,1.275) both;
+            }
+            #cutsceneLabel.shiny { color:#f472b6; text-shadow:0 0 20px rgba(244,114,182,0.8); }
+            #cutsceneLabel.legendary { color:#fbbf24; text-shadow:0 0 20px rgba(251,191,36,0.8); }
+            #cutsceneSub { font-size:0.75rem; letter-spacing:0.1em; color:rgba(255,255,255,0.55); margin-top:0.4rem; text-transform:uppercase; animation: cutsceneScale 0.5s 0.4s both; }
+            #cutsceneSkip { margin-top:2rem; font-size:0.7rem; color:rgba(255,255,255,0.3); cursor:pointer; animation: cutsceneScale 0.5s 1.5s both; }
 
             /* ===== VIBE GLOW PULSE ===== */
             @keyframes vibeGlow {
@@ -1653,6 +1773,8 @@
                             ...(rawState.inventoryItems || {})
                         },
                         unlockedStages: rawState.unlockedStages ?? 1,
+                        unlockedRegions: Array.isArray(rawState.unlockedRegions) ? rawState.unlockedRegions : [1],
+                        profileGenIndex: rawState.profileGenIndex || 0,
                         selectedBall: rawState.selectedBall || 'poke',
                         activeBattleStage: rawState.activeBattleStage || null,
                         battleType: rawState.battleType || 'campaign',
@@ -1686,18 +1808,161 @@
                 }
 
 
-                const CAMPAIGN_ROADMAP = [
-                    { stageId: 1,  name: "Viridian Forest",   trainer: "Bug Catcher Rick",        pokemonId: 10,  bossName: "Caterpie",  level: 5,  reward: 60,  icon: "🐛", teamSize: 1 },
-                    { stageId: 2,  name: "Pewter Gym",         trainer: "Gym Leader Brock",        pokemonId: 95,  bossName: "Onix",      level: 12, reward: 120, icon: "🪨", teamSize: 2, isGym: true,  badgeName: "Boulder Badge", badgeColor: "#9ca3af", badgeEmoji: "🪨" },
-                    { stageId: 3,  name: "Cerulean Route",     trainer: "Lass Haley",              pokemonId: 39,  bossName: "Jigglypuff",level: 18, reward: 150, icon: "🎈", teamSize: 2 },
-                    { stageId: 4,  name: "Cerulean Gym",       trainer: "Gym Leader Misty",        pokemonId: 120, bossName: "Staryu",    level: 24, reward: 180, icon: "⭐", teamSize: 2, isGym: true,  badgeName: "Cascade Badge", badgeColor: "#38bdf8", badgeEmoji: "💧" },
-                    { stageId: 5,  name: "Vermilion Gym",      trainer: "Gym Leader Lt. Surge",    pokemonId: 26,  bossName: "Raichu",    level: 32, reward: 220, icon: "⚡", teamSize: 3, isGym: true,  badgeName: "Thunder Badge", badgeColor: "#facc15", badgeEmoji: "⚡" },
-                    { stageId: 6,  name: "Lavender Tower",     trainer: "Channeler Patricia",      pokemonId: 93,  bossName: "Haunter",   level: 40, reward: 260, icon: "👻", teamSize: 3 },
-                    { stageId: 7,  name: "Celadon Gym",        trainer: "Gym Leader Erika",        pokemonId: 45,  bossName: "Vileplume", level: 48, reward: 300, icon: "🌸", teamSize: 3, isGym: true,  badgeName: "Rainbow Badge", badgeColor: "#34d399", badgeEmoji: "🌿" },
-                    { stageId: 8,  name: "Saffron Gym",        trainer: "Gym Leader Sabrina",      pokemonId: 65,  bossName: "Alakazam",  level: 55, reward: 350, icon: "🥄", teamSize: 4, isGym: true,  badgeName: "Marsh Badge",   badgeColor: "#c084fc", badgeEmoji: "🔮" },
-                    { stageId: 9,  name: "Seafoam Caverns",    trainer: "Feral Articuno",          pokemonId: 144, bossName: "Articuno",  level: 70, reward: 500, icon: "❄️", teamSize: 4 },
-                    { stageId: 10, name: "Indigo Plateau",     trainer: "Champion Lance",          pokemonId: 149, bossName: "Dragonite", level: 85, reward: 800, icon: "🐉", teamSize: 4 }
-                ];
+const CAMPAIGN_ROADMAP = [
+    { stageId:1, name:"Viridian Forest", trainer:"Bug Catcher Rick", pokemonId:10, bossName:"Caterpie", level:5, reward:60, icon:"🐛", teamSize:1, regionId:1 },
+    { stageId:2, name:"Pewter City Gym", trainer:"Gym Leader Brock", pokemonId:95, bossName:"Onix", level:12, reward:120, icon:"🪨", teamSize:2, regionId:1, isGym:true, badgeName:"Boulder Badge", badgeColor:"#9ca3af", badgeEmoji:"🪨" },
+    { stageId:3, name:"Cerulean Route", trainer:"Lass Haley", pokemonId:39, bossName:"Jigglypuff", level:18, reward:150, icon:"🎈", teamSize:2, regionId:1 },
+    { stageId:4, name:"Cerulean City Gym", trainer:"Gym Leader Misty", pokemonId:121, bossName:"Starmie", level:24, reward:180, icon:"💧", teamSize:2, regionId:1, isGym:true, badgeName:"Cascade Badge", badgeColor:"#38bdf8", badgeEmoji:"💧" },
+    { stageId:5, name:"Vermilion City Gym", trainer:"Gym Leader Lt. Surge", pokemonId:26, bossName:"Raichu", level:32, reward:220, icon:"⚡", teamSize:3, regionId:1, isGym:true, badgeName:"Thunder Badge", badgeColor:"#facc15", badgeEmoji:"⚡" },
+    { stageId:6, name:"Lavender Town", trainer:"Channeler Patricia", pokemonId:93, bossName:"Haunter", level:38, reward:250, icon:"👻", teamSize:3, regionId:1 },
+    { stageId:7, name:"Celadon City Gym", trainer:"Gym Leader Erika", pokemonId:45, bossName:"Vileplume", level:44, reward:290, icon:"🌸", teamSize:3, regionId:1, isGym:true, badgeName:"Rainbow Badge", badgeColor:"#34d399", badgeEmoji:"🌿" },
+    { stageId:8, name:"Fuchsia City Gym", trainer:"Gym Leader Koga", pokemonId:110, bossName:"Weezing", level:50, reward:340, icon:"☠️", teamSize:4, regionId:1, isGym:true, badgeName:"Soul Badge", badgeColor:"#a78bfa", badgeEmoji:"🔴" },
+    { stageId:9, name:"Saffron City Gym", trainer:"Gym Leader Sabrina", pokemonId:65, bossName:"Alakazam", level:55, reward:390, icon:"🥄", teamSize:4, regionId:1, isGym:true, badgeName:"Marsh Badge", badgeColor:"#c084fc", badgeEmoji:"🔮" },
+    { stageId:10, name:"Cinnabar Island Gym", trainer:"Gym Leader Blaine", pokemonId:59, bossName:"Arcanine", level:60, reward:440, icon:"🔥", teamSize:4, regionId:1, isGym:true, badgeName:"Volcano Badge", badgeColor:"#f97316", badgeEmoji:"🌋" },
+    { stageId:11, name:"Viridian City Gym", trainer:"Gym Leader Giovanni", pokemonId:34, bossName:"Nidoking", level:65, reward:520, icon:"🌍", teamSize:4, regionId:1, isGym:true, badgeName:"Earth Badge", badgeColor:"#78716c", badgeEmoji:"🌍" },
+    { stageId:12, name:"Victory Road", trainer:"Rival Gary Oak", pokemonId:65, bossName:"Alakazam", level:68, reward:620, icon:"🏔️", teamSize:4, regionId:1 },
+    { stageId:13, name:"Indigo Plateau", trainer:"Elite Four Lorelei", pokemonId:131, bossName:"Lapras", level:72, reward:720, icon:"🧊", teamSize:4, regionId:1, isElite4:true },
+    { stageId:14, name:"Indigo Plateau", trainer:"Elite Four Bruno", pokemonId:68, bossName:"Machamp", level:76, reward:780, icon:"💪", teamSize:4, regionId:1, isElite4:true },
+    { stageId:15, name:"Indigo Plateau", trainer:"Elite Four Agatha", pokemonId:94, bossName:"Gengar", level:80, reward:840, icon:"👻", teamSize:4, regionId:1, isElite4:true },
+    { stageId:16, name:"Indigo Plateau", trainer:"Elite Four Lance", pokemonId:149, bossName:"Dragonite", level:82, reward:900, icon:"🐉", teamSize:4, regionId:1, isElite4:true },
+    { stageId:17, name:"Champion's Chamber", trainer:"Kanto Champion Blue", pokemonId:9, bossName:"Blastoise", level:85, reward:1100, icon:"👑", teamSize:6, regionId:1, isChampion:true },
+    { stageId:18, name:"New Bark Town", trainer:"School Kid Jack", pokemonId:163, bossName:"Hoothoot", level:28, reward:1200, icon:"🦉", teamSize:1, regionId:2 },
+    { stageId:19, name:"Violet City Gym", trainer:"Gym Leader Falkner", pokemonId:164, bossName:"Noctowl", level:32, reward:1350, icon:"🪶", teamSize:2, regionId:2, isGym:true, badgeName:"Zephyr Badge", badgeColor:"#94a3b8", badgeEmoji:"🪶" },
+    { stageId:20, name:"Azalea Route", trainer:"Bug Catcher Benny", pokemonId:167, bossName:"Spinarak", level:37, reward:1450, icon:"🕷️", teamSize:2, regionId:2 },
+    { stageId:21, name:"Azalea Town Gym", trainer:"Gym Leader Bugsy", pokemonId:212, bossName:"Scizor", level:40, reward:1550, icon:"🐛", teamSize:2, regionId:2, isGym:true, badgeName:"Hive Badge", badgeColor:"#86efac", badgeEmoji:"🌿" },
+    { stageId:22, name:"Goldenrod City Gym", trainer:"Gym Leader Whitney", pokemonId:241, bossName:"Miltank", level:44, reward:1680, icon:"🐄", teamSize:3, regionId:2, isGym:true, badgeName:"Plain Badge", badgeColor:"#fde68a", badgeEmoji:"🌸" },
+    { stageId:23, name:"Ecruteak City", trainer:"Kimono Girl Naoko", pokemonId:197, bossName:"Umbreon", level:48, reward:1780, icon:"🌑", teamSize:3, regionId:2 },
+    { stageId:24, name:"Ecruteak City Gym", trainer:"Gym Leader Morty", pokemonId:200, bossName:"Misdreavus", level:52, reward:1900, icon:"👻", teamSize:3, regionId:2, isGym:true, badgeName:"Fog Badge", badgeColor:"#c4b5fd", badgeEmoji:"🌫️" },
+    { stageId:25, name:"Cianwood City Gym", trainer:"Gym Leader Chuck", pokemonId:214, bossName:"Heracross", level:57, reward:2050, icon:"🥊", teamSize:4, regionId:2, isGym:true, badgeName:"Storm Badge", badgeColor:"#93c5fd", badgeEmoji:"⚡" },
+    { stageId:26, name:"Olivine City Gym", trainer:"Gym Leader Jasmine", pokemonId:208, bossName:"Steelix", level:62, reward:2200, icon:"⚙️", teamSize:4, regionId:2, isGym:true, badgeName:"Mineral Badge", badgeColor:"#d1d5db", badgeEmoji:"🔩" },
+    { stageId:27, name:"Mahogany Town Gym", trainer:"Gym Leader Pryce", pokemonId:221, bossName:"Piloswine", level:66, reward:2350, icon:"❄️", teamSize:4, regionId:2, isGym:true, badgeName:"Glacier Badge", badgeColor:"#bae6fd", badgeEmoji:"❄️" },
+    { stageId:28, name:"Blackthorn City Gym", trainer:"Gym Leader Clair", pokemonId:230, bossName:"Kingdra", level:70, reward:2500, icon:"🐲", teamSize:4, regionId:2, isGym:true, badgeName:"Rising Badge", badgeColor:"#c084fc", badgeEmoji:"🌊" },
+    { stageId:29, name:"Mt. Silver", trainer:"Rival Silver", pokemonId:160, bossName:"Feraligatr", level:74, reward:2650, icon:"⚔️", teamSize:4, regionId:2 },
+    { stageId:30, name:"Johto Elite Four", trainer:"Elite Four Will", pokemonId:178, bossName:"Xatu", level:77, reward:2800, icon:"🧠", teamSize:4, regionId:2, isElite4:true },
+    { stageId:31, name:"Johto Elite Four", trainer:"Elite Four Koga", pokemonId:169, bossName:"Crobat", level:80, reward:2950, icon:"☠️", teamSize:4, regionId:2, isElite4:true },
+    { stageId:32, name:"Johto Elite Four", trainer:"Elite Four Bruno", pokemonId:237, bossName:"Hitmontop", level:83, reward:3100, icon:"💪", teamSize:4, regionId:2, isElite4:true },
+    { stageId:33, name:"Johto Elite Four", trainer:"Elite Four Karen", pokemonId:197, bossName:"Umbreon", level:86, reward:3300, icon:"🌑", teamSize:4, regionId:2, isElite4:true },
+    { stageId:34, name:"Champion's Chamber", trainer:"Johto Champion Lance", pokemonId:149, bossName:"Dragonite", level:90, reward:3800, icon:"👑", teamSize:6, regionId:2, isChampion:true },
+    { stageId:35, name:"Route 101", trainer:"Youngster Calvin", pokemonId:263, bossName:"Zigzagoon", level:36, reward:3900, icon:"🌿", teamSize:1, regionId:3 },
+    { stageId:36, name:"Rustboro City Gym", trainer:"Gym Leader Roxanne", pokemonId:299, bossName:"Nosepass", level:40, reward:4100, icon:"🪨", teamSize:2, regionId:3, isGym:true, badgeName:"Stone Badge", badgeColor:"#d1d5db", badgeEmoji:"🪨" },
+    { stageId:37, name:"Dewford Town", trainer:"Fisherman Ivan", pokemonId:318, bossName:"Carvanha", level:44, reward:4250, icon:"🎣", teamSize:2, regionId:3 },
+    { stageId:38, name:"Dewford Town Gym", trainer:"Gym Leader Brawly", pokemonId:297, bossName:"Hariyama", level:47, reward:4400, icon:"🥊", teamSize:3, regionId:3, isGym:true, badgeName:"Knuckle Badge", badgeColor:"#fb923c", badgeEmoji:"✊" },
+    { stageId:39, name:"Mauville City Gym", trainer:"Gym Leader Wattson", pokemonId:310, bossName:"Manectric", level:52, reward:4600, icon:"⚡", teamSize:3, regionId:3, isGym:true, badgeName:"Dynamo Badge", badgeColor:"#fde047", badgeEmoji:"⚡" },
+    { stageId:40, name:"Lavaridge Route", trainer:"Hiker Clarke", pokemonId:324, bossName:"Torkoal", level:56, reward:4750, icon:"🏔️", teamSize:3, regionId:3 },
+    { stageId:41, name:"Lavaridge Town Gym", trainer:"Gym Leader Flannery", pokemonId:324, bossName:"Torkoal", level:58, reward:4900, icon:"🔥", teamSize:3, regionId:3, isGym:true, badgeName:"Heat Badge", badgeColor:"#f87171", badgeEmoji:"🌋" },
+    { stageId:42, name:"Petalburg City Gym", trainer:"Gym Leader Norman", pokemonId:289, bossName:"Slaking", level:62, reward:5100, icon:"🐻", teamSize:4, regionId:3, isGym:true, badgeName:"Balance Badge", badgeColor:"#a3e635", badgeEmoji:"⚖️" },
+    { stageId:43, name:"Fortree City Gym", trainer:"Gym Leader Winona", pokemonId:334, bossName:"Altaria", level:66, reward:5300, icon:"🦅", teamSize:4, regionId:3, isGym:true, badgeName:"Feather Badge", badgeColor:"#7dd3fc", badgeEmoji:"🪶" },
+    { stageId:44, name:"Mossdeep City Gym", trainer:"Gym Leader Tate&Liza", pokemonId:338, bossName:"Solrock", level:70, reward:5500, icon:"🌞", teamSize:4, regionId:3, isGym:true, badgeName:"Mind Badge", badgeColor:"#e9d5ff", badgeEmoji:"🧠" },
+    { stageId:45, name:"Sootopolis City Gym", trainer:"Gym Leader Wallace", pokemonId:350, bossName:"Milotic", level:74, reward:5700, icon:"💎", teamSize:4, regionId:3, isGym:true, badgeName:"Rain Badge", badgeColor:"#93c5fd", badgeEmoji:"💧" },
+    { stageId:46, name:"Victory Road", trainer:"Wally", pokemonId:282, bossName:"Gardevoir", level:77, reward:5900, icon:"🌀", teamSize:4, regionId:3 },
+    { stageId:47, name:"Ever Grande City", trainer:"Elite Four Sidney", pokemonId:359, bossName:"Absol", level:80, reward:6100, icon:"🌑", teamSize:4, regionId:3, isElite4:true },
+    { stageId:48, name:"Ever Grande City", trainer:"Elite Four Phoebe", pokemonId:356, bossName:"Dusclops", level:83, reward:6300, icon:"👻", teamSize:4, regionId:3, isElite4:true },
+    { stageId:49, name:"Ever Grande City", trainer:"Elite Four Glacia", pokemonId:365, bossName:"Walrein", level:86, reward:6500, icon:"❄️", teamSize:4, regionId:3, isElite4:true },
+    { stageId:50, name:"Ever Grande City", trainer:"Elite Four Drake", pokemonId:373, bossName:"Salamence", level:89, reward:6700, icon:"🐉", teamSize:4, regionId:3, isElite4:true },
+    { stageId:51, name:"Champion's Chamber", trainer:"Hoenn Champion Steven", pokemonId:376, bossName:"Metagross", level:92, reward:7500, icon:"👑", teamSize:6, regionId:3, isChampion:true },
+    { stageId:52, name:"Route 201", trainer:"Youngster Barry", pokemonId:396, bossName:"Starly", level:42, reward:7600, icon:"🐦", teamSize:1, regionId:4 },
+    { stageId:53, name:"Oreburgh City Gym", trainer:"Gym Leader Roark", pokemonId:409, bossName:"Rampardos", level:46, reward:7850, icon:"⛏️", teamSize:2, regionId:4, isGym:true, badgeName:"Coal Badge", badgeColor:"#78716c", badgeEmoji:"⛏️" },
+    { stageId:54, name:"Eterna Forest", trainer:"Ace Trainer Molly", pokemonId:407, bossName:"Roserade", level:50, reward:8050, icon:"🌹", teamSize:2, regionId:4 },
+    { stageId:55, name:"Eterna City Gym", trainer:"Gym Leader Gardenia", pokemonId:407, bossName:"Roserade", level:53, reward:8250, icon:"🌹", teamSize:3, regionId:4, isGym:true, badgeName:"Forest Badge", badgeColor:"#86efac", badgeEmoji:"🌿" },
+    { stageId:56, name:"Veilstone City Gym", trainer:"Gym Leader Maylene", pokemonId:448, bossName:"Lucario", level:58, reward:8500, icon:"🥋", teamSize:3, regionId:4, isGym:true, badgeName:"Cobble Badge", badgeColor:"#fca5a5", badgeEmoji:"🥊" },
+    { stageId:57, name:"Route 214", trainer:"Cyclist Ariel", pokemonId:25, bossName:"Pikachu", level:61, reward:8700, icon:"🚲", teamSize:3, regionId:4 },
+    { stageId:58, name:"Pastoria City Gym", trainer:"Gym Leader Crasher Wake", pokemonId:419, bossName:"Floatzel", level:65, reward:8950, icon:"🌊", teamSize:3, regionId:4, isGym:true, badgeName:"Fen Badge", badgeColor:"#7dd3fc", badgeEmoji:"💧" },
+    { stageId:59, name:"Hearthome City Gym", trainer:"Gym Leader Fantina", pokemonId:429, bossName:"Mismagius", level:69, reward:9200, icon:"👻", teamSize:4, regionId:4, isGym:true, badgeName:"Relic Badge", badgeColor:"#d8b4fe", badgeEmoji:"👻" },
+    { stageId:60, name:"Canalave City Gym", trainer:"Gym Leader Byron", pokemonId:411, bossName:"Bastiodon", level:73, reward:9500, icon:"🏰", teamSize:4, regionId:4, isGym:true, badgeName:"Mine Badge", badgeColor:"#94a3b8", badgeEmoji:"⛏️" },
+    { stageId:61, name:"Snowpoint City Gym", trainer:"Gym Leader Candice", pokemonId:478, bossName:"Froslass", level:77, reward:9800, icon:"❄️", teamSize:4, regionId:4, isGym:true, badgeName:"Icicle Badge", badgeColor:"#bae6fd", badgeEmoji:"❄️" },
+    { stageId:62, name:"Sunyshore City Gym", trainer:"Gym Leader Volkner", pokemonId:466, bossName:"Electivire", level:81, reward:10200, icon:"⚡", teamSize:4, regionId:4, isGym:true, badgeName:"Beacon Badge", badgeColor:"#fde047", badgeEmoji:"⚡" },
+    { stageId:63, name:"Victory Road", trainer:"Rival Barry", pokemonId:392, bossName:"Infernape", level:83, reward:10500, icon:"🔥", teamSize:4, regionId:4 },
+    { stageId:64, name:"Pokémon League", trainer:"Elite Four Aaron", pokemonId:416, bossName:"Vespiquen", level:85, reward:10800, icon:"🐝", teamSize:4, regionId:4, isElite4:true },
+    { stageId:65, name:"Pokémon League", trainer:"Elite Four Bertha", pokemonId:450, bossName:"Hippowdon", level:88, reward:11100, icon:"🏜️", teamSize:4, regionId:4, isElite4:true },
+    { stageId:66, name:"Pokémon League", trainer:"Elite Four Flint", pokemonId:392, bossName:"Infernape", level:91, reward:11400, icon:"🔥", teamSize:4, regionId:4, isElite4:true },
+    { stageId:67, name:"Pokémon League", trainer:"Elite Four Lucian", pokemonId:475, bossName:"Gallade", level:94, reward:11800, icon:"🔮", teamSize:4, regionId:4, isElite4:true },
+    { stageId:68, name:"Champion's Chamber", trainer:"Sinnoh Champion Cynthia", pokemonId:445, bossName:"Garchomp", level:97, reward:13000, icon:"👑", teamSize:6, regionId:4, isChampion:true },
+    { stageId:69, name:"Route 1", trainer:"Youngster Joey", pokemonId:504, bossName:"Patrat", level:48, reward:13100, icon:"🐾", teamSize:1, regionId:5 },
+    { stageId:70, name:"Striaton City Gym", trainer:"Gym Leader Cilan", pokemonId:512, bossName:"Simisage", level:52, reward:13400, icon:"🌿", teamSize:2, regionId:5, isGym:true, badgeName:"Trio Badge", badgeColor:"#86efac", badgeEmoji:"🌿" },
+    { stageId:71, name:"Nacrene Route", trainer:"School Kid Marcy", pokemonId:522, bossName:"Blitzle", level:56, reward:13700, icon:"⚡", teamSize:2, regionId:5 },
+    { stageId:72, name:"Nacrene City Gym", trainer:"Gym Leader Lenora", pokemonId:505, bossName:"Watchog", level:59, reward:14000, icon:"🔍", teamSize:3, regionId:5, isGym:true, badgeName:"Basic Badge", badgeColor:"#e2e8f0", badgeEmoji:"🔎" },
+    { stageId:73, name:"Castelia City Gym", trainer:"Gym Leader Burgh", pokemonId:542, bossName:"Leavanny", level:63, reward:14300, icon:"🦋", teamSize:3, regionId:5, isGym:true, badgeName:"Insect Badge", badgeColor:"#86efac", badgeEmoji:"🐛" },
+    { stageId:74, name:"Desert Resort", trainer:"Ace Trainer", pokemonId:554, bossName:"Darumaka", level:67, reward:14600, icon:"🔥", teamSize:3, regionId:5 },
+    { stageId:75, name:"Nimbasa City Gym", trainer:"Gym Leader Elesa", pokemonId:523, bossName:"Zebstrika", level:70, reward:14900, icon:"⚡", teamSize:3, regionId:5, isGym:true, badgeName:"Bolt Badge", badgeColor:"#fde047", badgeEmoji:"⚡" },
+    { stageId:76, name:"Driftveil City Gym", trainer:"Gym Leader Clay", pokemonId:530, bossName:"Excadrill", level:74, reward:15200, icon:"⛏️", teamSize:4, regionId:5, isGym:true, badgeName:"Quake Badge", badgeColor:"#d97706", badgeEmoji:"🏜️" },
+    { stageId:77, name:"Mistralton City Gym", trainer:"Gym Leader Skyla", pokemonId:581, bossName:"Swanna", level:78, reward:15500, icon:"🦢", teamSize:4, regionId:5, isGym:true, badgeName:"Jet Badge", badgeColor:"#7dd3fc", badgeEmoji:"🪶" },
+    { stageId:78, name:"Icirrus City Gym", trainer:"Gym Leader Brycen", pokemonId:614, bossName:"Beartic", level:82, reward:15800, icon:"🐻", teamSize:4, regionId:5, isGym:true, badgeName:"Freeze Badge", badgeColor:"#bae6fd", badgeEmoji:"❄️" },
+    { stageId:79, name:"Opelucid City Gym", trainer:"Gym Leader Drayden", pokemonId:612, bossName:"Haxorus", level:86, reward:16200, icon:"🐉", teamSize:4, regionId:5, isGym:true, badgeName:"Legend Badge", badgeColor:"#d8b4fe", badgeEmoji:"🐉" },
+    { stageId:80, name:"Victory Road", trainer:"Cheren", pokemonId:497, bossName:"Serperior", level:88, reward:16500, icon:"🌀", teamSize:4, regionId:5 },
+    { stageId:81, name:"Unova League", trainer:"Elite Four Shauntal", pokemonId:609, bossName:"Chandelure", level:90, reward:16800, icon:"👻", teamSize:4, regionId:5, isElite4:true },
+    { stageId:82, name:"Unova League", trainer:"Elite Four Grimsley", pokemonId:625, bossName:"Bisharp", level:92, reward:17100, icon:"⚔️", teamSize:4, regionId:5, isElite4:true },
+    { stageId:83, name:"Unova League", trainer:"Elite Four Caitlin", pokemonId:518, bossName:"Musharna", level:94, reward:17400, icon:"🌸", teamSize:4, regionId:5, isElite4:true },
+    { stageId:84, name:"Unova League", trainer:"Elite Four Marshal", pokemonId:534, bossName:"Conkeldurr", level:96, reward:17700, icon:"💪", teamSize:4, regionId:5, isElite4:true },
+    { stageId:85, name:"Champion's Chamber", trainer:"Unova Champion Alder", pokemonId:637, bossName:"Volcarona", level:99, reward:20000, icon:"👑", teamSize:6, regionId:5, isChampion:true },
+    { stageId:86, name:"Aquacorde Town", trainer:"Youngster Tai", pokemonId:659, bossName:"Bunnelby", level:52, reward:20100, icon:"🐰", teamSize:1, regionId:6 },
+    { stageId:87, name:"Santalune City Gym", trainer:"Gym Leader Viola", pokemonId:666, bossName:"Vivillon", level:55, reward:20400, icon:"🦋", teamSize:2, regionId:6, isGym:true, badgeName:"Bug Badge", badgeColor:"#86efac", badgeEmoji:"🐛" },
+    { stageId:88, name:"Route 7", trainer:"Hiker Lalo", pokemonId:679, bossName:"Honedge", level:59, reward:20700, icon:"⚔️", teamSize:2, regionId:6 },
+    { stageId:89, name:"Cyllage City Gym", trainer:"Gym Leader Grant", pokemonId:698, bossName:"Amaura", level:62, reward:21000, icon:"🦕", teamSize:2, regionId:6, isGym:true, badgeName:"Cliff Badge", badgeColor:"#94a3b8", badgeEmoji:"🪨" },
+    { stageId:90, name:"Shalour City Gym", trainer:"Gym Leader Korrina", pokemonId:701, bossName:"Hawlucha", level:66, reward:21400, icon:"🦅", teamSize:3, regionId:6, isGym:true, badgeName:"Rumble Badge", badgeColor:"#fb923c", badgeEmoji:"🥊" },
+    { stageId:91, name:"Route 12", trainer:"Roller Skater", pokemonId:702, bossName:"Dedenne", level:69, reward:21700, icon:"⚡", teamSize:3, regionId:6 },
+    { stageId:92, name:"Coumarine City Gym", trainer:"Gym Leader Ramos", pokemonId:673, bossName:"Gogoat", level:72, reward:22000, icon:"🐐", teamSize:3, regionId:6, isGym:true, badgeName:"Plant Badge", badgeColor:"#86efac", badgeEmoji:"🌿" },
+    { stageId:93, name:"Lumiose City Gym", trainer:"Gym Leader Clemont", pokemonId:695, bossName:"Heliolisk", level:75, reward:22400, icon:"⚡", teamSize:4, regionId:6, isGym:true, badgeName:"Voltage Badge", badgeColor:"#fde047", badgeEmoji:"⚡" },
+    { stageId:94, name:"Laverre City Gym", trainer:"Gym Leader Valerie", pokemonId:700, bossName:"Sylveon", level:78, reward:22800, icon:"🎀", teamSize:4, regionId:6, isGym:true, badgeName:"Fairy Badge", badgeColor:"#f9a8d4", badgeEmoji:"🎀" },
+    { stageId:95, name:"Anistar City Gym", trainer:"Gym Leader Olympia", pokemonId:678, bossName:"Meowstic", level:81, reward:23200, icon:"🔮", teamSize:4, regionId:6, isGym:true, badgeName:"Psychic Badge", badgeColor:"#c084fc", badgeEmoji:"🔮" },
+    { stageId:96, name:"Snowbelle City Gym", trainer:"Gym Leader Wulfric", pokemonId:713, bossName:"Avalugg", level:84, reward:23600, icon:"❄️", teamSize:4, regionId:6, isGym:true, badgeName:"Iceberg Badge", badgeColor:"#bae6fd", badgeEmoji:"❄️" },
+    { stageId:97, name:"Victory Road", trainer:"Rival Calem", pokemonId:655, bossName:"Delphox", level:86, reward:24000, icon:"🔥", teamSize:4, regionId:6 },
+    { stageId:98, name:"Kalos League", trainer:"Elite Four Malva", pokemonId:663, bossName:"Talonflame", level:88, reward:24400, icon:"🔥", teamSize:4, regionId:6, isElite4:true },
+    { stageId:99, name:"Kalos League", trainer:"Elite Four Siebold", pokemonId:692, bossName:"Clawitzer", level:90, reward:24800, icon:"💧", teamSize:4, regionId:6, isElite4:true },
+    { stageId:100, name:"Kalos League", trainer:"Elite Four Wikstrom", pokemonId:681, bossName:"Aegislash", level:92, reward:25200, icon:"⚔️", teamSize:4, regionId:6, isElite4:true },
+    { stageId:101, name:"Kalos League", trainer:"Elite Four Drasna", pokemonId:715, bossName:"Noivern", level:94, reward:25600, icon:"🐉", teamSize:4, regionId:6, isElite4:true },
+    { stageId:102, name:"Champion's Chamber", trainer:"Kalos Champion Diantha", pokemonId:706, bossName:"Goodra", level:97, reward:28000, icon:"👑", teamSize:6, regionId:6, isChampion:true },
+    { stageId:103, name:"Hau'oli City", trainer:"Preschooler Mia", pokemonId:736, bossName:"Grubbin", level:56, reward:28100, icon:"🐛", teamSize:1, regionId:7 },
+    { stageId:104, name:"Verdant Cavern Trial", trainer:"Captain Ilima", pokemonId:735, bossName:"Gumshoos", level:59, reward:28500, icon:"🔍", teamSize:2, regionId:7, isGym:true, badgeName:"Normalium Z", badgeColor:"#e2e8f0", badgeEmoji:"⚪" },
+    { stageId:105, name:"Brooklet Hill", trainer:"Fisherman Eugene", pokemonId:746, bossName:"Wishiwashi", level:63, reward:28900, icon:"🐟", teamSize:2, regionId:7 },
+    { stageId:106, name:"Brooklet Hill Trial", trainer:"Captain Lana", pokemonId:752, bossName:"Araquanid", level:66, reward:29400, icon:"🕷️", teamSize:2, regionId:7, isGym:true, badgeName:"Waterium Z", badgeColor:"#7dd3fc", badgeEmoji:"💧" },
+    { stageId:107, name:"Wela Volcano Trial", trainer:"Captain Kiawe", pokemonId:758, bossName:"Salazzle", level:70, reward:29900, icon:"🔥", teamSize:3, regionId:7, isGym:true, badgeName:"Firium Z", badgeColor:"#f87171", badgeEmoji:"🔥" },
+    { stageId:108, name:"Lush Jungle Route", trainer:"Hiker Calhoun", pokemonId:744, bossName:"Rockruff", level:73, reward:30400, icon:"🐾", teamSize:3, regionId:7 },
+    { stageId:109, name:"Lush Jungle Trial", trainer:"Captain Mallow", pokemonId:754, bossName:"Lurantis", level:75, reward:30900, icon:"🌺", teamSize:3, regionId:7, isGym:true, badgeName:"Grassium Z", badgeColor:"#86efac", badgeEmoji:"🌿" },
+    { stageId:110, name:"Hokulani Observatory", trainer:"Captain Sophocles", pokemonId:777, bossName:"Togedemaru", level:78, reward:31500, icon:"⚡", teamSize:4, regionId:7, isGym:true, badgeName:"Electrium Z", badgeColor:"#fde047", badgeEmoji:"⚡" },
+    { stageId:111, name:"Thrifty Megamart", trainer:"Captain Acerola", pokemonId:778, bossName:"Mimikyu", level:81, reward:32100, icon:"👻", teamSize:4, regionId:7, isGym:true, badgeName:"Ghostium Z", badgeColor:"#d8b4fe", badgeEmoji:"👻" },
+    { stageId:112, name:"Seafolk Village", trainer:"Captain Mina", pokemonId:742, bossName:"Ribombee", level:84, reward:32700, icon:"🎀", teamSize:4, regionId:7, isGym:true, badgeName:"Fairium Z", badgeColor:"#f9a8d4", badgeEmoji:"🎀" },
+    { stageId:113, name:"Poni Island Kahuna", trainer:"Kahuna Hapu", pokemonId:749, bossName:"Mudsdale", level:87, reward:33300, icon:"🐎", teamSize:4, regionId:7, isGym:true, badgeName:"Groundium Z", badgeColor:"#d97706", badgeEmoji:"🏜️" },
+    { stageId:114, name:"Vast Poni Canyon", trainer:"Rival Hau", pokemonId:26, bossName:"Raichu", level:89, reward:33900, icon:"⚡", teamSize:4, regionId:7 },
+    { stageId:115, name:"Alola League", trainer:"Elite Four Hala", pokemonId:740, bossName:"Crabominable", level:91, reward:34500, icon:"🦀", teamSize:4, regionId:7, isElite4:true },
+    { stageId:116, name:"Alola League", trainer:"Elite Four Olivia", pokemonId:745, bossName:"Lycanroc", level:93, reward:35100, icon:"🌕", teamSize:4, regionId:7, isElite4:true },
+    { stageId:117, name:"Alola League", trainer:"Elite Four Nanu", pokemonId:53, bossName:"Persian", level:95, reward:35700, icon:"🌑", teamSize:4, regionId:7, isElite4:true },
+    { stageId:118, name:"Alola League", trainer:"Elite Four Kahili", pokemonId:733, bossName:"Toucannon", level:97, reward:36300, icon:"🦜", teamSize:4, regionId:7, isElite4:true },
+    { stageId:119, name:"Champion's Chamber", trainer:"Alola Champion Kukui", pokemonId:727, bossName:"Incineroar", level:100, reward:40000, icon:"👑", teamSize:6, regionId:7, isChampion:true },
+    { stageId:120, name:"Postwick Route", trainer:"Schoolboy Reece", pokemonId:831, bossName:"Wooloo", level:62, reward:40100, icon:"🐑", teamSize:1, regionId:8 },
+    { stageId:121, name:"Turffield Gym", trainer:"Gym Leader Milo", pokemonId:830, bossName:"Eldegoss", level:65, reward:40600, icon:"🌿", teamSize:2, regionId:8, isGym:true, badgeName:"Grass Badge", badgeColor:"#86efac", badgeEmoji:"🌿" },
+    { stageId:122, name:"Route 2", trainer:"Camper Liam", pokemonId:833, bossName:"Chewtle", level:68, reward:41100, icon:"🐊", teamSize:2, regionId:8 },
+    { stageId:123, name:"Hulbury Gym", trainer:"Gym Leader Nessa", pokemonId:834, bossName:"Drednaw", level:71, reward:41600, icon:"💧", teamSize:2, regionId:8, isGym:true, badgeName:"Water Badge", badgeColor:"#7dd3fc", badgeEmoji:"💧" },
+    { stageId:124, name:"Motostoke Gym", trainer:"Gym Leader Kabu", pokemonId:851, bossName:"Centiskorch", level:75, reward:42200, icon:"🔥", teamSize:3, regionId:8, isGym:true, badgeName:"Fire Badge", badgeColor:"#f87171", badgeEmoji:"🔥" },
+    { stageId:125, name:"Stow-on-Side Route", trainer:"Cyclist", pokemonId:848, bossName:"Toxel", level:78, reward:42800, icon:"⚡", teamSize:3, regionId:8 },
+    { stageId:126, name:"Stow-on-Side Gym", trainer:"Gym Leader Bea", pokemonId:865, bossName:"Sirfetch'd", level:81, reward:43400, icon:"⚔️", teamSize:3, regionId:8, isGym:true, badgeName:"Fighting Badge", badgeColor:"#fb923c", badgeEmoji:"🥊" },
+    { stageId:127, name:"Ballonlea Gym", trainer:"Gym Leader Opal", pokemonId:869, bossName:"Alcremie", level:84, reward:44100, icon:"🎂", teamSize:4, regionId:8, isGym:true, badgeName:"Fairy Badge", badgeColor:"#f9a8d4", badgeEmoji:"🎀" },
+    { stageId:128, name:"Circhester Gym", trainer:"Gym Leader Gordie", pokemonId:839, bossName:"Coalossal", level:87, reward:44800, icon:"🏔️", teamSize:4, regionId:8, isGym:true, badgeName:"Rock Badge", badgeColor:"#d97706", badgeEmoji:"🪨" },
+    { stageId:129, name:"Spikemuth Gym", trainer:"Gym Leader Piers", pokemonId:862, bossName:"Obstagoon", level:90, reward:45500, icon:"🎸", teamSize:4, regionId:8, isGym:true, badgeName:"Dark Badge", badgeColor:"#334155", badgeEmoji:"🌑" },
+    { stageId:130, name:"Hammerlocke Gym", trainer:"Gym Leader Raihan", pokemonId:884, bossName:"Duraludon", level:93, reward:46300, icon:"🐉", teamSize:4, regionId:8, isGym:true, badgeName:"Dragon Badge", badgeColor:"#c084fc", badgeEmoji:"🐉" },
+    { stageId:131, name:"Route to League", trainer:"Rival Hop", pokemonId:832, bossName:"Dubwool", level:94, reward:47000, icon:"🐑", teamSize:4, regionId:8 },
+    { stageId:132, name:"Galar League", trainer:"Semi-Final Bede", pokemonId:858, bossName:"Hatterene", level:95, reward:47700, icon:"🔮", teamSize:4, regionId:8, isElite4:true },
+    { stageId:133, name:"Galar League", trainer:"Semi-Final Marnie", pokemonId:877, bossName:"Morpeko", level:96, reward:48400, icon:"🌑", teamSize:4, regionId:8, isElite4:true },
+    { stageId:134, name:"Galar League", trainer:"Champion Cup Nessa", pokemonId:834, bossName:"Drednaw", level:97, reward:49100, icon:"💧", teamSize:4, regionId:8, isElite4:true },
+    { stageId:135, name:"Galar League", trainer:"Champion Cup Bea", pokemonId:865, bossName:"Sirfetch'd", level:98, reward:49800, icon:"⚔️", teamSize:4, regionId:8, isElite4:true },
+    { stageId:136, name:"Champion's Chamber", trainer:"Galar Champion Leon", pokemonId:887, bossName:"Dragapult", level:100, reward:55000, icon:"👑", teamSize:6, regionId:8, isChampion:true },
+    { stageId:137, name:"Poco Path", trainer:"Student Miriam", pokemonId:915, bossName:"Lechonk", level:66, reward:55100, icon:"🐷", teamSize:1, regionId:9 },
+    { stageId:138, name:"Cortondo Gym", trainer:"Gym Leader Katy", pokemonId:920, bossName:"Lokix", level:69, reward:55800, icon:"🐛", teamSize:2, regionId:9, isGym:true, badgeName:"Bug Badge", badgeColor:"#86efac", badgeEmoji:"🐛" },
+    { stageId:139, name:"Artazon Route", trainer:"Student", pokemonId:921, bossName:"Pawmi", level:72, reward:56500, icon:"⚡", teamSize:2, regionId:9 },
+    { stageId:140, name:"Artazon Gym", trainer:"Gym Leader Brassius", pokemonId:948, bossName:"Arboliva", level:74, reward:57200, icon:"🌿", teamSize:2, regionId:9, isGym:true, badgeName:"Grass Badge", badgeColor:"#86efac", badgeEmoji:"🌿" },
+    { stageId:141, name:"Levincia Gym", trainer:"Gym Leader Iono", pokemonId:939, bossName:"Bellibolt", level:77, reward:58000, icon:"⚡", teamSize:3, regionId:9, isGym:true, badgeName:"Electric Badge", badgeColor:"#fde047", badgeEmoji:"⚡" },
+    { stageId:142, name:"Cascarrafa Route", trainer:"Fisherman", pokemonId:963, bossName:"Finizen", level:80, reward:58800, icon:"🐬", teamSize:3, regionId:9 },
+    { stageId:143, name:"Cascarrafa Gym", trainer:"Gym Leader Kofu", pokemonId:977, bossName:"Dondozo", level:83, reward:59600, icon:"💧", teamSize:3, regionId:9, isGym:true, badgeName:"Water Badge", badgeColor:"#7dd3fc", badgeEmoji:"💧" },
+    { stageId:144, name:"Medali Gym", trainer:"Gym Leader Larry", pokemonId:930, bossName:"Flamigo", level:86, reward:60400, icon:"🦢", teamSize:4, regionId:9, isGym:true, badgeName:"Normal Badge", badgeColor:"#e2e8f0", badgeEmoji:"⚪" },
+    { stageId:145, name:"Montenevera Gym", trainer:"Gym Leader Ryme", pokemonId:975, bossName:"Houndstone", level:89, reward:61300, icon:"👻", teamSize:4, regionId:9, isGym:true, badgeName:"Ghost Badge", badgeColor:"#d8b4fe", badgeEmoji:"👻" },
+    { stageId:146, name:"Alfornada Gym", trainer:"Gym Leader Tulip", pokemonId:956, bossName:"Espathra", level:92, reward:62200, icon:"🔮", teamSize:4, regionId:9, isGym:true, badgeName:"Psychic Badge", badgeColor:"#c084fc", badgeEmoji:"🔮" },
+    { stageId:147, name:"Glaseado Gym", trainer:"Gym Leader Grusha", pokemonId:974, bossName:"Cetitan", level:95, reward:63200, icon:"❄️", teamSize:4, regionId:9, isGym:true, badgeName:"Ice Badge", badgeColor:"#bae6fd", badgeEmoji:"❄️" },
+    { stageId:148, name:"Academy Ace", trainer:"Nemona", pokemonId:908, bossName:"Meowscarada", level:97, reward:64000, icon:"🎭", teamSize:4, regionId:9 },
+    { stageId:149, name:"Pokémon League", trainer:"Elite Four Rika", pokemonId:980, bossName:"Clodsire", level:97, reward:64800, icon:"🌍", teamSize:4, regionId:9, isElite4:true },
+    { stageId:150, name:"Pokémon League", trainer:"Elite Four Poppy", pokemonId:959, bossName:"Tinkaton", level:98, reward:65600, icon:"🔨", teamSize:4, regionId:9, isElite4:true },
+    { stageId:151, name:"Pokémon League", trainer:"Elite Four Larry", pokemonId:930, bossName:"Flamigo", level:99, reward:66400, icon:"🦢", teamSize:4, regionId:9, isElite4:true },
+    { stageId:152, name:"Pokémon League", trainer:"Elite Four Hassel", pokemonId:998, bossName:"Baxcalibur", level:100, reward:67200, icon:"🐉", teamSize:4, regionId:9, isElite4:true },
+    { stageId:153, name:"Champion's Chamber", trainer:"Paldea Champion Geeta", pokemonId:970, bossName:"Glimmora", level:100, reward:75000, icon:"👑", teamSize:6, regionId:9, isChampion:true },
+];
 
                 let gameState = {
                     coins: 100,
@@ -1716,6 +1981,8 @@
                     catchMinigame: { active: false, ringScale: 1.0, contracting: true, score: 0 },
                     inventoryItems: { oran_berry: 0, leftovers: 0, choice_band: 0, wise_glasses: 0, antidote: 0, burn_heal: 0, ice_heal: 0, awakening: 0, paralyze_heal: 0, full_heal: 0, full_restore: 0, fire_stone: 0, water_stone: 0, thunder_stone: 0, leaf_stone: 0, ice_stone: 0, dawn_stone: 0, dusk_stone: 0, moon_stone: 0, shiny_stone: 0, assault_vest: 0, exp_share: 0, scope_lens: 0, weakness_policy: 0, life_orb: 0, potion: 0, super_potion: 0, hyper_potion: 0, max_potion: 0, ether: 0, max_ether: 0, elixir: 0, max_elixir: 0, attack_boost: 0, defense_boost: 0, speed_boost: 0, special_boost: 0, ability_capsule: 0, nature_mint: 0, vitamin_a: 0, vitamin_b: 0, vitamin_c: 0, vitamin_d: 0, vitamin_e: 0, vitamin_f: 0 },
                     unlockedStages: 1, 
+                    unlockedRegions: [1],
+                    profileGenIndex: 0,
                     activeBattleStage: null,
                     battleType: 'trainers',
                     endlessRunDefeats: 0,
@@ -1734,17 +2001,27 @@
 
                 function saveUsernameFromProfile(value) {
                     gameState.username = (value || '').trim().substring(0, 16);
+                    // Dedicated localStorage for fast load (no full parse needed)
+                    try { localStorage.setItem('pokemon_spinner_trainer_name', gameState.username); } catch(e) {}
                     // Update the name/avatar live in the modal
                     const nameEl   = document.getElementById('profileNameDisplay');
                     const avatarEl = document.getElementById('profileAvatarModal');
-                    const display  = gameState.username || 'Anonymous';
+                    const display  = gameState.username || 'Trainer';
                     if (nameEl)   nameEl.textContent   = display;
                     if (avatarEl) avatarEl.textContent  = display.substring(0,1).toUpperCase() || '?';
                     updateProfileBtn();
+                    // Also update header trainer name chip if visible
+                    const headerName = document.getElementById('headerTrainerName');
+                    if (headerName) headerName.textContent = gameState.username || '';
                     saveProgress();
                 }
 
                 function updateProfileBtn() {
+                    // Merge saved name from dedicated key if gameState hasn't loaded yet
+                    if (!gameState.username) {
+                        const saved = localStorage.getItem('pokemon_spinner_trainer_name');
+                        if (saved) gameState.username = saved;
+                    }
                     // Highlight the profile button when a name is set
                     const btn = document.getElementById('profileToggleBtn');
                     if (btn) {
@@ -1764,7 +2041,7 @@
                     const nameDis  = document.getElementById('profileNameDisplay');
                     const avatarDis = document.getElementById('profileAvatarModal');
                     const pInput   = document.getElementById('profileUsernameInput');
-                    const name = gameState.username || 'Anonymous';
+                    const name = gameState.username || localStorage.getItem('pokemon_spinner_trainer_name') || 'Trainer';
                     if (nameDis)   nameDis.textContent   = name;
                     if (avatarDis) avatarDis.textContent  = name.substring(0, 1).toUpperCase() || '?';
                     if (pInput)    pInput.value           = gameState.username || '';
@@ -1779,28 +2056,59 @@
                     if (statPoke)   statPoke.textContent   = gameState.pcBox ? gameState.pcBox.length : 0;
                     if (statLvl)    statLvl.textContent    = gameState.level || 1;
 
-                    // Badge case
+                    // Badge case — per generation with arrows
+                    const REGION_NAMES_P = ['','Kanto','Johto','Hoenn','Sinnoh','Unova','Kalos','Alola','Galar','Paldea'];
+                    const unlocked = gameState.unlockedRegions || [1];
+                    // clamp profileGenIndex
+                    if (!gameState.profileGenIndex || gameState.profileGenIndex < 0) gameState.profileGenIndex = 0;
+                    if (gameState.profileGenIndex >= unlocked.length) gameState.profileGenIndex = unlocked.length - 1;
+                    const currentRegionId = unlocked[gameState.profileGenIndex];
+                    const regionGyms = gymStages.filter(s => s.regionId === currentRegionId);
+                    const earnedInRegion = regionGyms.filter(s => gameState.gymBadges.includes(s.stageId)).length;
+
                     const badgeCase = document.getElementById('profileBadgeCase');
                     if (badgeCase) {
-                        badgeCase.innerHTML = '';
-                        gymStages.forEach(stage => {
+                        const prevOk = gameState.profileGenIndex > 0;
+                        const nextOk = gameState.profileGenIndex < unlocked.length - 1;
+                        badgeCase.innerHTML = `
+                            <div class="w-full flex items-center justify-between mb-3">
+                                <button onclick="window.profileRegionNav(-1)" class="text-slate-400 hover:text-white px-3 py-1 rounded-lg border border-slate-800 text-[11px] disabled:opacity-30 transition" ${prevOk?'':'disabled'}>◀ Prev</button>
+                                <div class="text-center">
+                                    <div class="text-xs font-black text-white uppercase tracking-widest">${REGION_NAMES_P[currentRegionId]}</div>
+                                    <div class="text-[9px] text-slate-500">Gen ${currentRegionId} · ${earnedInRegion}/${regionGyms.length} badges</div>
+                                </div>
+                                <button onclick="window.profileRegionNav(1)" class="text-slate-400 hover:text-white px-3 py-1 rounded-lg border border-slate-800 text-[11px] disabled:opacity-30 transition" ${nextOk?'':'disabled'}>Next ▶</button>
+                            </div>
+                            <div id="profileBadgeGrid" class="grid grid-cols-4 gap-3 w-full"></div>
+                        `;
+                        const grid = document.getElementById('profileBadgeGrid');
+                        regionGyms.forEach(stage => {
                             const earned = gameState.gymBadges.includes(stage.stageId);
                             const div = document.createElement('div');
                             div.className = 'flex flex-col items-center gap-1 ' + (earned ? 'badge-earned' : 'badge-locked');
                             div.innerHTML = `
-                                <div class="w-10 h-10 rounded-full flex items-center justify-center text-lg border-2 ${earned ? 'border-yellow-400/60' : 'border-slate-700'}" style="background:${earned ? 'rgba(234,179,8,0.15)' : 'rgba(255,255,255,0.03)'}">
+                                <div class="w-11 h-11 rounded-full flex items-center justify-center text-xl border-2 ${earned ? 'border-yellow-400/60' : 'border-slate-700'}" style="background:${earned ? 'rgba(234,179,8,0.15)' : 'rgba(255,255,255,0.03)'}">
                                     ${stage.badgeEmoji}
                                 </div>
-                                <span class="text-[7px] font-bold text-center leading-tight ${earned ? 'text-yellow-300' : 'text-slate-600'} uppercase tracking-wide max-w-[44px] truncate">${stage.badgeName.replace(' Badge','')}</span>
+                                <span class="text-[7px] font-bold text-center leading-tight ${earned ? 'text-yellow-300' : 'text-slate-600'} uppercase tracking-wide max-w-[44px] truncate">${stage.badgeName.replace(/ Badge| Z$/,'')}</span>
                             `;
-                            badgeCase.appendChild(div);
+                            if (grid) grid.appendChild(div);
                         });
+                        if (regionGyms.length === 0) {
+                            if (grid) grid.innerHTML = '<div class="col-span-4 text-[10px] text-slate-500 text-center py-4">No gym badges in this region yet.</div>';
+                        }
                     }
 
                     const modal = document.getElementById('profileModal');
                     modal.classList.remove('hidden');
                     modal.classList.add('flex');
                 }
+
+                window.profileRegionNav = function(dir) {
+                    const unlocked = gameState.unlockedRegions || [1];
+                    gameState.profileGenIndex = Math.max(0, Math.min(unlocked.length - 1, (gameState.profileGenIndex||0) + dir));
+                    window.openProfileModal();
+                };
 
                 window.closeProfileModal = function closeProfileModal() {
                     const modal = document.getElementById('profileModal');
@@ -2298,6 +2606,8 @@
                             catchMinigame: { active: false, ringScale: 1.0, contracting: true, score: 0 },
                             inventoryItems: { oran_berry: 0, leftovers: 0, choice_band: 0, wise_glasses: 0, antidote: 0, burn_heal: 0, ice_heal: 0, awakening: 0, paralyze_heal: 0, full_heal: 0, full_restore: 0, fire_stone: 0, water_stone: 0, thunder_stone: 0, leaf_stone: 0, ice_stone: 0, dawn_stone: 0, dusk_stone: 0, moon_stone: 0, shiny_stone: 0, assault_vest: 0, exp_share: 0, scope_lens: 0, weakness_policy: 0, life_orb: 0, potion: 0, super_potion: 0, hyper_potion: 0, max_potion: 0, ether: 0, max_ether: 0, elixir: 0, max_elixir: 0, attack_boost: 0, defense_boost: 0, speed_boost: 0, special_boost: 0, ability_capsule: 0, nature_mint: 0, vitamin_a: 0, vitamin_b: 0, vitamin_c: 0, vitamin_d: 0, vitamin_e: 0, vitamin_f: 0 },
                             unlockedStages: 1, 
+                            unlockedRegions: [1],
+                            profileGenIndex: 0,
                             activeBattleStage: null,
                             battleType: 'trainers',
                             endlessRunDefeats: 0,
@@ -2651,38 +2961,27 @@
                 }
 
                 function getRadarGenRange() {
-                    const stages = gameState.unlockedStages;
-                    if (stages <= 2) return { min: 1, max: 151, name: "KANTO REGION (GEN 1)" };
-                    else if (stages <= 4) return { min: 1, max: 251, name: "JOHTO REGION (GEN 1-2)" };
-                    else if (stages <= 6) return { min: 1, max: 386, name: "HOENN REGION (GEN 1-3)" };
-                    else if (stages <= 8) return { min: 1, max: 649, name: "SINNOH/UNOVA (GEN 1-5)" };
-                    else if (stages <= 9) return { min: 1, max: 809, name: "KALOS/ALOLA (GEN 1-7)" };
-                    else return { min: 1, max: 1025, name: "GALAR/PALDEA (ALL GEN 1-9)" };
+                    const REGION_MAX  = [0,151,251,386,493,649,721,809,905,1025];
+                    const REGION_NAME = ['','Kanto','Johto','Hoenn','Sinnoh','Unova','Kalos','Alola','Galar','Paldea'];
+                    const unlocked = gameState.unlockedRegions || [1];
+                    const maxR = Math.max(...unlocked);
+                    const names = unlocked.map(r=>REGION_NAME[r]).join('/');
+                    return { min: 1, max: REGION_MAX[maxR], name: names.toUpperCase() + ' REGION' };
                 }
 
                 function updateScanningRegionUI() {
                     const range = getRadarGenRange();
                     const badge = document.getElementById('regionBadge');
-                    if (badge) {
-                        badge.textContent = range.name;
-                        if (gameState.unlockedStages <= 2) badge.className = "bg-green-500/10 text-green-400 border border-green-500/30 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block mb-1";
-                        else if (gameState.unlockedStages <= 4) badge.className = "bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block mb-1";
-                        else if (gameState.unlockedStages <= 6) badge.className = "bg-red-500/10 text-red-400 border border-red-500/30 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block mb-1";
-                        else if (gameState.unlockedStages <= 8) badge.className = "bg-purple-500/10 text-purple-400 border border-purple-500/30 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block mb-1";
-                        else badge.className = "bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block mb-1";
-                    }
+                    if (!badge) return;
+                    badge.textContent = range.name;
+                    const maxR = Math.max(...(gameState.unlockedRegions||[1]));
+                    const palettes = ['','bg-green-500/10 text-green-400 border-green-500/30','bg-blue-500/10 text-blue-400 border-blue-500/30','bg-red-500/10 text-red-400 border-red-500/30','bg-stone-500/10 text-stone-400 border-stone-500/30','bg-indigo-500/10 text-indigo-400 border-indigo-500/30','bg-purple-500/10 text-purple-400 border-purple-500/30','bg-teal-500/10 text-teal-400 border-teal-500/30','bg-orange-500/10 text-orange-400 border-orange-500/30','bg-rose-500/10 text-rose-400 border-rose-500/30'];
+                    badge.className = `${palettes[maxR]||palettes[1]} border text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block mb-1`;
                 }
 
                 function getActiveGens() {
-                    const stages = gameState.unlockedStages;
-                    const gens = ['gen1'];
-                    if (stages > 2) gens.push('gen2');
-                    if (stages > 4) gens.push('gen3');
-                    if (stages > 6) gens.push('gen4');
-                    if (stages > 7) gens.push('gen5');
-                    if (stages > 8) gens.push('gen6', 'gen7');
-                    if (stages > 9) gens.push('gen8', 'gen9');
-                    return gens;
+                    const GEN_KEY = ['','gen1','gen2','gen3','gen4','gen5','gen6','gen7','gen8','gen9'];
+                    return (gameState.unlockedRegions || [1]).map(r => GEN_KEY[r]);
                 }
 
                 function getWedgePokemonId(rarity) {
@@ -2861,13 +3160,75 @@
                     catchBtn.className = "w-full py-4 bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-slate-950 font-black uppercase rounded-2xl shadow-xl transition duration-150 flex items-center justify-center gap-2 cursor-pointer";
                     catchBtn.innerHTML = `<i class="fas fa-crosshairs text-lg"></i> <span>LOCK SIGNATURE (Click Ring)</span>`;
 
-                    document.getElementById('timingRingContainer').classList.remove('hidden');
-                    gameState.catchMinigame.active = true;
-                    gameState.catchMinigame.ringScale = 1.0;
-                    gameState.catchMinigame.contracting = true;
-
-                    if (!animationFrameId) animationFrameId = requestAnimationFrame(gameLoop);
+                    // ── Rare encounter cutscene (shiny or legendary) ──
+                    if (gameState.encounterShiny || isSpecialLegendary) {
+                        window.showRareCutscene(pokemon, gameState.encounterShiny, isSpecialLegendary, function() {
+                            document.getElementById('timingRingContainer').classList.remove('hidden');
+                            gameState.catchMinigame.active = true;
+                            gameState.catchMinigame.ringScale = 1.0;
+                            gameState.catchMinigame.contracting = true;
+                            if (!animationFrameId) animationFrameId = requestAnimationFrame(gameLoop);
+                        });
+                    } else {
+                        document.getElementById('timingRingContainer').classList.remove('hidden');
+                        gameState.catchMinigame.active = true;
+                        gameState.catchMinigame.ringScale = 1.0;
+                        gameState.catchMinigame.contracting = true;
+                        if (!animationFrameId) animationFrameId = requestAnimationFrame(gameLoop);
+                    }
                 }
+
+                // ── Rare encounter cutscene JS ────────────────────────────────────────
+                window._cutsceneCallback = null;
+                window._cutsceneTimeout = null;
+
+                window.showRareCutscene = function(pokemon, isShiny, isLegendary, callback) {
+                    const overlay  = document.getElementById('rareCutscene');
+                    const bg       = document.getElementById('cutsceneBg');
+                    const sprite   = document.getElementById('cutsceneSprite');
+                    const label    = document.getElementById('cutsceneLabel');
+                    const sub      = document.getElementById('cutsceneSub');
+                    if (!overlay) { if (callback) callback(); return; }
+
+                    // Reset classes
+                    sprite.className = ''; bg.className = ''; label.className = '';
+                    sprite.src = pokemon.sprite || '';
+                    if (isShiny) {
+                        sprite.classList.add('is-shiny');
+                        bg.classList.add('shiny');
+                        label.textContent = '✨ SHINY ENCOUNTER! ✨';
+                        label.classList.add('shiny');
+                    } else {
+                        sprite.classList.add('is-legendary');
+                        label.textContent = '⭐ LEGENDARY ENCOUNTER! ⭐';
+                        label.classList.add('legendary');
+                    }
+                    sub.textContent = pokemon.name ? pokemon.name.toUpperCase() + ' APPEARED!' : '';
+
+                    overlay.classList.remove('hidden');
+                    overlay.style.opacity = '1';
+                    window._cutsceneCallback = callback;
+
+                    // Auto-dismiss after 3.2 seconds
+                    clearTimeout(window._cutsceneTimeout);
+                    window._cutsceneTimeout = setTimeout(window.dismissCutscene, 3200);
+                };
+
+                window.dismissCutscene = function() {
+                    clearTimeout(window._cutsceneTimeout);
+                    const overlay = document.getElementById('rareCutscene');
+                    if (!overlay) return;
+                    overlay.style.opacity = '0';
+                    setTimeout(() => {
+                        overlay.classList.add('hidden');
+                        overlay.style.opacity = '1';
+                        if (window._cutsceneCallback) {
+                            const cb = window._cutsceneCallback;
+                            window._cutsceneCallback = null;
+                            cb();
+                        }
+                    }, 400);
+                };
 
                 window.triggerCatchMinigame = function() {
                     if (!gameState.catchMinigame.active || !gameState.currentEncounter) return;
@@ -3092,7 +3453,12 @@
                             ? `<span class="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full ${hasBadge ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/40' : 'bg-slate-800 text-slate-500 border border-slate-700'}">
                                 ${hasBadge ? '🏅 ' + stage.badgeName : '🔒 Badge Locked'}
                                </span>`
+                            : stage.isElite4 ? '<span class="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40">⚔️ Elite Four</span>'
+                            : stage.isChampion ? '<span class="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-yellow-500/20 text-yellow-200 border border-yellow-400/60">👑 Champion</span>'
                             : '';
+                        // Extra border styling for Elite4 / Champion
+                        if (!isCleared && stage.isElite4)   { card.style.borderColor='rgba(168,85,247,0.5)'; card.style.boxShadow='inset 0 0 0 1px rgba(168,85,247,0.15), 0 0 18px rgba(168,85,247,0.1)'; }
+                        if (!isCleared && stage.isChampion) { card.style.borderColor='rgba(234,179,8,0.7)';  card.style.boxShadow='inset 0 0 0 1px rgba(234,179,8,0.25), 0 0 24px rgba(234,179,8,0.18)'; }
 
                         card.innerHTML = `
                             <div class="flex justify-between items-start gap-1">
@@ -3124,10 +3490,15 @@
                     trainerGrid.innerHTML = "";
                     gymGrid.innerHTML     = "";
 
+                    // Filter by current unlockedRegions for trainer view; all reachable for gym view
+                    const maxUnlocked = gameState.unlockedStages;
                     CAMPAIGN_ROADMAP.forEach(stage => {
+                        // Only show stages up to current unlocked + a few ahead
+                        if (stage.stageId > maxUnlocked + 3) return;
                         const card = buildStageCard(stage);
-                        if (stage.isGym) gymGrid.appendChild(card);
-                        else             trainerGrid.appendChild(card);
+                        // Gym tab: gym leaders, Elite 4, and Champions
+                        if (stage.isGym || stage.isElite4 || stage.isChampion) gymGrid.appendChild(card);
+                        else trainerGrid.appendChild(card);
                     });
                 }
 
@@ -3628,6 +3999,36 @@
                     addCoins(rewardCoins);
                     addXP(Math.round(rewardCoins / 2));
 
+                    // ── Exp. Share: team members holding exp_share get 50% XP ──
+                    if (gameState.team && gameState.pcBox) {
+                        const expShareAmt = Math.round(xpAward * 0.5);
+                        gameState.team.forEach(uid => {
+                            if (!uid) return;
+                            const tm = gameState.pcBox.find(p => p.uid === uid);
+                            if (!tm || !tm.heldItem || tm.heldItem !== 'exp_share' || tm.uid === fighter.uid) return;
+                            tm.xp = (tm.xp || 0) + expShareAmt;
+                            let tmNext = (tm.level||1) * 100;
+                            while (tm.xp >= tmNext) {
+                                tm.xp -= tmNext; tm.level = (tm.level||1)+1; tmNext = tm.level*100;
+                                applyLevelUpMoves(tm);
+                            }
+                            const logB = document.getElementById('battleLog');
+                            if (logB) logB.innerHTML += `<div class="text-amber-300 mt-1 text-[10px]">📡 ${tm.name} (Exp. Share) +${expShareAmt} XP → Lv${tm.level}</div>`;
+                        });
+                    }
+
+                    // ── Region unlock when champion is beaten ──
+                    if (stage && stage.isChampion) {
+                        const REGION_NAMES_ARR = ['','Kanto','Johto','Hoenn','Sinnoh','Unova','Kalos','Alola','Galar','Paldea'];
+                        const nextR = (stage.regionId||1) + 1;
+                        if (nextR <= 9 && !(gameState.unlockedRegions||[1]).includes(nextR)) {
+                            if (!gameState.unlockedRegions) gameState.unlockedRegions = [1];
+                            gameState.unlockedRegions.push(nextR);
+                            setTimeout(() => showNotification(`🌍 ${REGION_NAMES_ARR[nextR]} UNLOCKED!`,
+                                `Johto & beyond Pokémon now appear in the Spinner!`, 'success'), 1500);
+                        }
+                    }
+
                     if (gameState.battle.fighterPokemon) {
                         gameState.battle.fighterPokemon.battleCount = (gameState.battle.fighterPokemon.battleCount || 0) + 1;
                         gameState.battle.fighterPokemon.friendship = Math.min(255, (gameState.battle.fighterPokemon.friendship || 50) + 3);
@@ -3864,25 +4265,29 @@
 
                     slotsContainer.innerHTML = '';
                     if (summary) {
+                        const q = (gameState._teamSearch||'').toLowerCase();
+                        const filteredCount = gameState.pcBox.filter(p=>!q||p.name.toLowerCase().includes(q)).length;
                         summary.innerHTML = gameState.pcBox.length
-                            ? '<div class="text-[10px] text-slate-400">Pick a Pokémon for each slot from the list below. Empty slots are fine.</div>'
+                            ? `<div class="mb-3"><input type="text" id="teamSearchInput" oninput="window.filterTeamSearch(this.value)" placeholder="🔍 Filter Pokémon…" value="${gameState._teamSearch||''}" class="w-full bg-slate-900 border border-slate-800 px-3 py-2 rounded-xl text-[11px] text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500"></div><div class="text-[10px] text-slate-400">Showing ${filteredCount} of ${gameState.pcBox.length} Pokémon · Pick a slot below.</div>`
                             : '<div class="text-[10px] text-slate-500">Catch Pokémon in the scanner before building a team.</div>';
                     }
 
+                    const q = (gameState._teamSearch||'').toLowerCase();
+                    const visiblePc = gameState.pcBox.filter(p=>!q||p.name.toLowerCase().includes(q));
                     const teamSlots = Array.isArray(gameState.team) ? gameState.team : [];
                     for (let slotIndex = 0; slotIndex < 6; slotIndex += 1) {
                         const selectedUid = teamSlots[slotIndex] || null;
                         const selectedPokemon = selectedUid ? gameState.pcBox.find(p => p.uid === selectedUid) : null;
                         const card = document.createElement('div');
                         card.className = 'rounded-xl border border-slate-900 bg-slate-950/80 p-3';
-                        const optionsMarkup = ['<option value="">— Empty Slot —</option>'].concat(gameState.pcBox.map(pk => `<option value="${pk.uid}" ${selectedUid === pk.uid ? 'selected' : ''}>${pk.name} (Lv ${pk.level || 1})</option>`)).join('');
+                        const optionsMarkup = ['<option value="">— Empty Slot —</option>'].concat(visiblePc.map(pk => `<option value="${pk.uid}" ${selectedUid === pk.uid ? 'selected' : ''}>${pk.isShiny?'✨ ':''}${pk.name} Lv${pk.level||1}${pk.heldItem?' ['+pk.heldItem.replace(/_/g,' ')+']':''}</option>`)).join('');
                         card.innerHTML = `
                             <div class="flex items-center justify-between gap-2 mb-2">
                                 <div>
                                     <div class="text-[9px] uppercase tracking-widest text-slate-500">${slotIndex === 0 ? 'Lead' : `Slot ${slotIndex + 1}`}</div>
-                                    <div class="text-sm font-bold text-white">${selectedPokemon ? selectedPokemon.name : 'Open Slot'}</div>
+                                    <div class="text-sm font-bold text-white">${selectedPokemon ? (selectedPokemon.isShiny?'✨ ':'')+selectedPokemon.name : 'Open Slot'}</div>
                                 </div>
-                                ${selectedPokemon ? `<button onclick="window.clearTeamSlot(${slotIndex})" class="text-[10px] text-slate-400 hover:text-white">Clear</button>` : ''}
+                                ${selectedPokemon ? `<button onclick="window.clearTeamSlot(${slotIndex})" class="text-[10px] text-slate-400 hover:text-rose-400 transition">Clear</button>` : ''}
                             </div>
                             <select onchange="window.setTeamSlot(${slotIndex}, this.value)" class="w-full bg-slate-900 border border-slate-800 text-[11px] rounded-lg p-2 text-slate-200 focus:outline-none focus:border-cyan-500">
                                 ${optionsMarkup}
@@ -3895,6 +4300,14 @@
                     if (teamBadgeInline) teamBadgeInline.textContent = `${teamSlots.filter(Boolean).length}/6 selected`;
                     updateUI();
                 }
+
+                window.filterTeamSearch = function(val) {
+                    gameState._teamSearch = val;
+                    renderTeamView();
+                    // Keep focus on the search input
+                    const inp = document.getElementById('teamSearchInput');
+                    if (inp) { inp.focus(); const l=inp.value.length; inp.setSelectionRange(l,l); }
+                };
 
                 window.setTeamSlot = function(slotIndex, uid) {
                     const normalizedUid = uid ? Number(uid) : null;
@@ -4058,10 +4471,34 @@
                                 <div class="flex flex-col gap-2">${consumableMarkup}</div>
                             </div>
                             ${pk.isShiny ? '<span class="absolute top-2 right-2 text-[7px] bg-pink-500 text-white px-1 rounded uppercase font-black">Shiny</span>' : ''}
+                            <div class="mt-2 pt-2 border-t border-slate-900">
+                                <button onclick="window.releasePokemon(${pk.uid})" class="w-full py-1.5 text-[9px] uppercase font-bold tracking-widest rounded-lg border border-rose-900/50 text-rose-400 hover:bg-rose-950/60 hover:border-rose-700 transition duration-150">
+                                    🗑️ Release Pokémon
+                                </button>
+                            </div>
                         `;
                         grid.appendChild(card);
                     });
                 }
+
+                window.releasePokemon = function(uid) {
+                    const pk = gameState.pcBox.find(p => p.uid === uid);
+                    if (!pk) return;
+                    const isOnTeam = (gameState.team||[]).some(id => id === uid);
+                    const msg = isOnTeam
+                        ? `Release ${pk.name} back into the wild? It is on your active team and will be removed.`
+                        : `Release ${pk.name} back into the wild? This cannot be undone.`;
+                    if (!confirm(msg)) return;
+                    gameState.pcBox = gameState.pcBox.filter(p => p.uid !== uid);
+                    if (gameState.team) gameState.team = gameState.team.map(id => id === uid ? null : id);
+                    saveProgress();
+                    renderPCBox();
+                    renderTeamView();
+                    renderFighterSelectionGrid();
+                    const pcBadge = document.getElementById('pcCountBadge');
+                    if (pcBadge) pcBadge.textContent = gameState.pcBox.length;
+                    showNotification(`${pk.name} Released`, `${pk.name} was released back to the wild.`, 'info');
+                };
 
                 window.equipItem = function(pokemonUid, itemKey) {
                     initAudio();
