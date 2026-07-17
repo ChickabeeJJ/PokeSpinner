@@ -216,6 +216,8 @@
             body.light-mode .theme-btn { background-color:#f8fafc!important; border-color:#e2e8f0!important; }
             body.light-mode .theme-btn span.text-white { color:#0f172a!important; }
             body.light-mode #settingsToggleBtn, body.light-mode #profileToggleBtn { background-color:rgba(241,245,249,0.98)!important; border-color:#e2e8f0!important; }
+              #settingsToggleBtn { box-shadow: 0 0 10px rgba(34,211,238,0.18), 0 0 20px rgba(34,211,238,0.07); }
+              #profileToggleBtn  { box-shadow: 0 0 10px rgba(168,85,247,0.18), 0 0 20px rgba(168,85,247,0.07); }
 
             /* Move buttons in battle */
             body.light-mode #battleMovesGrid button { background-color:#f1f5f9!important; color:#0f172a!important; }
@@ -1307,6 +1309,15 @@
                         <p class="text-xs text-slate-400">Purchase scanner gear, balls, and equippable passive Hold Items to power up your roadmap campaign!</p>
                     </div>
 
+                    <!-- Jump-to navigation -->
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-[9px] uppercase tracking-widest font-bold text-slate-500 self-center mr-1">Jump to:</span>
+                        <button onclick="document.getElementById('shop-anchor-items').scrollIntoView({behavior:'smooth',block:'start'})" class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide bg-slate-900 border border-slate-800 text-slate-300 hover:border-cyan-500/50 hover:text-cyan-300 rounded-lg transition">🔵 Items</button>
+                        <button onclick="document.getElementById('shop-anchor-consumables').scrollIntoView({behavior:'smooth',block:'start'})" class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide bg-slate-900 border border-slate-800 text-slate-300 hover:border-emerald-500/50 hover:text-emerald-300 rounded-lg transition">💊 Consumables</button>
+                        <button onclick="document.getElementById('shop-anchor-tms').scrollIntoView({behavior:'smooth',block:'start'})" class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide bg-slate-900 border border-slate-800 text-slate-300 hover:border-violet-500/50 hover:text-violet-300 rounded-lg transition">📀 TMs</button>
+                        <button onclick="document.getElementById('shop-anchor-premium').scrollIntoView({behavior:'smooth',block:'start'})" class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide bg-slate-900 border border-slate-800 text-slate-300 hover:border-amber-500/50 hover:text-amber-300 rounded-lg transition">⭐ Premium</button>
+                    </div>
+
                     <div class="space-y-6">
                         <div class="rounded-2xl border border-slate-900 bg-slate-950/70 p-4">
                             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
@@ -1331,7 +1342,7 @@
                         </div>
 
                         <div>
-                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Scanning Devices (radar wedge & capture modifiers)</h3>
+                            <h3 id="shop-anchor-items" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Scanning Devices (radar wedge & capture modifiers)</h3>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <!-- Great Ball -->
                                 <div class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-blue-500/50 transition">
@@ -1377,19 +1388,26 @@
                         </div>
 
                         <div>
-                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Held Items (Equip to your partners for passive boosts)</h3>
+                            <h3 id="shop-anchor-held" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Held Items (Equip to your partners for passive boosts)</h3>
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="heldItemsShopList">
                             </div>
                         </div>
 
                         <div>
-                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Consumables & Evolution Stones (Use directly in your PC)</h3>
+                            <h3 id="shop-anchor-consumables" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Consumables & Evolution Stones (Use directly in your PC)</h3>
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="consumablesShopList">
                             </div>
                         </div>
 
+                        <div id="shop-tms-section">
+                            <h3 id="shop-anchor-tms" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Technical Machines (TMs)</h3>
+                            <p class="text-[10px] text-slate-500 mb-3">One-time purchase — reuse the TM infinitely from your PC. Only compatible Pokémon can learn each TM.</p>
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-3" id="tmShopList">
+                            </div>
+                        </div>
+
                         <div id="autoBattlerShopSection">
-                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Premium Upgrades</h3>
+                            <h3 id="shop-anchor-premium" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Premium Upgrades</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div id="autoBattlerShopCard" class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-amber-500/50 transition">
                                     <div>
@@ -1403,6 +1421,20 @@
                                     <div class="mt-4 flex items-center justify-between">
                                         <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> 50.00k</span>
                                         <button id="autoBattlerBuyBtn" onclick="buyAutoBattler()" class="px-2.5 py-1.5 bg-amber-700 hover:bg-amber-600 text-white text-[10px] uppercase font-bold rounded-lg transition">Buy</button>
+                                    </div>
+                                </div>
+                                <div id="shinyCharmShopCard" class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-pink-500/50 transition">
+                                    <div>
+                                        <div class="flex justify-between items-start">
+                                            <span class="p-2 bg-pink-950/40 text-pink-400 rounded-lg text-xs"><i class="fas fa-sparkles"></i></span>
+                                            <span id="shinyCharmOwned" class="text-[9px] font-mono text-slate-400">Not Owned</span>
+                                        </div>
+                                        <h4 class="text-xs font-extrabold mt-3 text-white">Shiny Charm</h4>
+                                        <p class="text-[10px] text-slate-400 mt-1">A mysterious charm said to make it far easier to encounter Shiny Pokémon. Raises shiny odds by +15%.</p>
+                                    </div>
+                                    <div class="mt-4 flex items-center justify-between">
+                                        <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> 35.00k</span>
+                                        <button id="shinyCharmBuyBtn" onclick="buyShinyCharm()" class="px-2.5 py-1.5 bg-pink-700 hover:bg-pink-600 text-white text-[10px] uppercase font-bold rounded-lg transition">Buy</button>
                                     </div>
                                 </div>
                             </div>
@@ -1633,6 +1665,81 @@
                     "sludge": { type: "poison", power: 65, category: "special" },
                     "mud-bomb": { type: "ground", power: 65, category: "special" }
                 };
+
+                // ==========================================
+                // TECHNICAL MACHINE DATABASE
+                // ==========================================
+                const TM_DB = {
+                    tm01: { num:'01', name:'Body Slam',    move:'body-slam',    type:'normal',   power:85,  cost:700,  desc:'A full-body tackle. 30% chance to paralyze the target.' },
+                    tm02: { num:'02', name:'Dragon Claw',  move:'dragon-claw',  type:'dragon',   power:80,  cost:700,  desc:'Rakes with sharp dragon claws. Reliable damage.' },
+                    tm03: { num:'03', name:'Water Pulse',  move:'water-pulse',  type:'water',    power:60,  cost:400,  desc:'Attacks with a pulsing wave of water. May confuse.' },
+                    tm04: { num:'04', name:'Aerial Ace',   move:'aerial-ace',   type:'flying',   power:60,  cost:400,  desc:'A swift aerial attack that never misses.' },
+                    tm05: { num:'05', name:'Flamethrower', move:'flamethrower', type:'fire',     power:90,  cost:800,  desc:'Shoots a stream of fire. May burn the target.' },
+                    tm06: { num:'06', name:'Thunderbolt',  move:'thunderbolt',  type:'electric', power:90,  cost:800,  desc:'A strong electric blast. May paralyze the target.' },
+                    tm07: { num:'07', name:'Ice Beam',     move:'ice-beam',     type:'ice',      power:90,  cost:800,  desc:'A frigid beam of ice. May freeze the target.' },
+                    tm08: { num:'08', name:'Earthquake',   move:'earthquake',   type:'ground',   power:100, cost:1000, desc:'A powerful tremor hits all adjacent foes.' },
+                    tm09: { num:'09', name:'Psychic',      move:'psychic',      type:'psychic',  power:90,  cost:800,  desc:'A telekinetic blast. May lower the foe\'s Sp. Def.' },
+                    tm10: { num:'10', name:'Shadow Ball',  move:'shadow-ball',  type:'ghost',    power:80,  cost:700,  desc:'Hurls a shadowy blob. May lower the foe\'s Sp. Def.' },
+                    tm11: { num:'11', name:'Energy Ball',  move:'energy-ball',  type:'grass',    power:90,  cost:800,  desc:'Draws on nature\'s power. May lower foe\'s Sp. Def.' },
+                    tm12: { num:'12', name:'Sludge Bomb',  move:'sludge-bomb',  type:'poison',   power:90,  cost:800,  desc:'Unsanitary sludge attack. May poison the target.' },
+                    tm13: { num:'13', name:'Dig',          move:'dig',          type:'ground',   power:80,  cost:600,  desc:'Burrows underground, then strikes the next turn.' },
+                    tm14: { num:'14', name:'Rock Slide',   move:'rock-slide',   type:'rock',     power:75,  cost:600,  desc:'Drops large boulders. May cause flinching.' },
+                    tm15: { num:'15', name:'Surf',         move:'surf',         type:'water',    power:90,  cost:800,  desc:'A powerful wave attack that hits all nearby foes.' },
+                    tm16: { num:'16', name:'Fly',          move:'fly',          type:'flying',   power:90,  cost:700,  desc:'Soars high, then strikes on the following turn.' },
+                    tm17: { num:'17', name:'Poison Jab',   move:'poison-jab',   type:'poison',   power:80,  cost:600,  desc:'Stabs with a poisonous spike. May poison.' },
+                    tm18: { num:'18', name:'Iron Head',    move:'iron-head',    type:'steel',    power:80,  cost:700,  desc:'Slams with a hard metallic head. May flinch.' },
+                    tm19: { num:'19', name:'Flash Cannon', move:'flash-cannon', type:'steel',    power:80,  cost:700,  desc:'Gathers and fires light. May lower Sp. Def.' },
+                    tm20: { num:'20', name:'Discharge',    move:'discharge',    type:'electric', power:80,  cost:600,  desc:'A burst of electricity. May paralyze nearby foes.' },
+                    tm21: { num:'21', name:'Thunder',      move:'thunder',      type:'electric', power:110, cost:1000, desc:'A brutal lightning strike. May paralyze. 70% accurate.' },
+                    tm22: { num:'22', name:'Seed Bomb',    move:'seed-bomb',    type:'grass',    power:80,  cost:600,  desc:'Hurls a barrage of seeds. Direct and reliable.' },
+                    tm23: { num:'23', name:'Aqua Tail',    move:'aqua-tail',    type:'water',    power:90,  cost:700,  desc:'Strikes with a powerful water-coated tail.' },
+                    tm24: { num:'24', name:'Outrage',      move:'outrage',      type:'dragon',   power:120, cost:1200, desc:'Rampages 2-3 turns at full power, then confused.' },
+                    tm25: { num:'25', name:'Solar Beam',   move:'solar-beam',   type:'grass',    power:120, cost:1200, desc:'Charges one turn, then fires a blazing beam of light.' }
+                };
+
+                // Additional TM compatibility (Pokemon that can learn by TM but not by level-up in this game)
+                const TM_COMPAT = {
+                    'tm01': [19,21,25,27,29,32,35,37,39,43,46,48,52,56,58,63,66,79,86,88,96,100,102,104,109,111,114,116,118,120,133,137,142,147,152,155,158,175,179,246,252,255,258,280,304,328,371,374,387,390,393,443,447,495,498,501,633,650,653,656,704,722,725,728,810,813,816,885,906,909,912],
+                    'tm02': [4,16,23,41,116,131,142,147,246,328,371,374,443,633,704,782,885],
+                    'tm03': [7,54,60,72,79,86,90,98,116,118,120,131,147,152,155,158,179,258,280,328,371,393,501,656,704,728,816,912],
+                    'tm04': [16,21,27,41,43,46,48,52,56,84,100,116,120,137,142,147,152,175,252,255,280,374,390,393,447,495,633,650,653,656,722,725,728,810,813],
+                    'tm05': [4,37,58,77,109,131,155,179,246,255,258,371,387,390,443,495,498,633,650,653,722,725,810,813,906,909],
+                    'tm06': [25,63,79,81,86,100,131,133,137,142,147,152,155,179,246,252,280,374,387,447,495,633,650,656,704,722,810,885],
+                    'tm07': [7,54,60,72,79,86,90,98,116,118,120,131,147,152,155,158,179,252,258,280,328,371,393,443,501,656,704,728,816,912],
+                    'tm08': [27,50,58,74,79,100,108,111,118,129,131,147,246,258,304,328,349,371,374,387,443,447,495,633,650,704,782,810],
+                    'tm09': [48,54,60,63,79,92,96,102,120,131,133,137,142,147,175,179,246,280,374,447,495,633,650,653,656,704,722,725,728,810],
+                    'tm10': [48,54,63,79,92,96,102,133,137,142,252,280,374,447,633,650,653,656,704,722,725,728,810],
+                    'tm11': [1,43,46,48,69,102,104,108,114,131,133,152,175,252,280,387,390,393,495,633,650,704,722,810,906],
+                    'tm12': [23,29,32,43,69,72,88,98,109,114,131,246,252,328,387,495,650,704],
+                    'tm13': [27,50,74,100,104,111,131,246,258,304,328,387,443,447,495,633,704,782],
+                    'tm14': [74,104,111,118,131,142,147,246,304,328,349,371,374,387,443,633,704,782,810],
+                    'tm15': [7,54,60,72,79,86,90,98,116,118,120,129,131,147,152,155,158,179,258,280,349,393,443,501,633,656,704,728,816,885],
+                    'tm16': [16,21,41,63,84,116,120,131,137,142,147,252,255,280,374,393,447,495,633,650,653,656,704,722,810],
+                    'tm17': [23,29,32,43,69,72,88,98,109,114,246,252,304,328,387,495,650,704],
+                    'tm18': [74,81,100,104,111,131,142,246,304,328,349,371,374,387,443,633,704,782,810,885],
+                    'tm19': [74,81,100,104,111,131,137,246,304,328,349,371,374,443,704,782,810,885],
+                    'tm20': [25,81,100,133,137,147,175,179,252,280,374,447,633,704,810],
+                    'tm21': [25,81,100,131,133,137,147,175,179,252,280,374,447,633,704,810,885],
+                    'tm22': [1,46,69,102,104,108,114,131,152,175,252,280,387,390,393,495,633,650,704,722,810,906],
+                    'tm23': [7,54,60,72,79,86,90,98,116,118,120,129,131,147,152,158,258,349,393,501,656,728,816],
+                    'tm24': [4,16,23,41,116,131,142,147,246,328,371,374,443,633,704,782,885],
+                    'tm25': [1,43,46,48,69,102,104,114,131,152,175,252,280,387,390,393,495,633,650,704,722,810,906]
+                };
+
+                function canLearnTM(pokemon, tmKey) {
+                    const tm = TM_DB[tmKey];
+                    if (!tm) return false;
+                    const moveSlug = tm.move;
+                    const lvlMoves = LEVELUP_MOVES[pokemon.id];
+                    if (lvlMoves) {
+                        for (const lvlSet of Object.values(lvlMoves)) {
+                            if (lvlSet.includes(moveSlug)) return true;
+                        }
+                    }
+                    const extra = TM_COMPAT[tmKey];
+                    if (extra && extra.includes(pokemon.id)) return true;
+                    return false;
+                }
 
                 const BASIC_POKEMON_POOLS = {
                     Common: {
@@ -1913,7 +2020,9 @@
                         gymBadges: Array.isArray(rawState.gymBadges) ? rawState.gymBadges : [],
                         endlessModeUnlocked: rawState.endlessModeUnlocked || false,
                         autoBattler: rawState.autoBattler || false,
-                        autoBattlerStage: rawState.autoBattlerStage || null
+                        autoBattlerStage: rawState.autoBattlerStage || null,
+                        tmsOwned: (rawState.tmsOwned && typeof rawState.tmsOwned === 'object') ? rawState.tmsOwned : {},
+                        shinyCharm: !!rawState.shinyCharm
                     };
                     return normalized;
                 }
@@ -2116,7 +2225,9 @@ const CAMPAIGN_ROADMAP = [
                     battle: { active: false, bossPokemon: null, fighterPokemon: null, fighterHP: 0, bossHP: 0, fighterMaxHP: 0, bossMaxHP: 0, oranUsed: false, bossOranUsed: false, statStages: { player: {atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss: {atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} }, statusConds: { player: null, boss: null } },
                     dexUI: { page: 1, pageSize: 9, total: 1025, search: "", rarity: "all" },
                     autoBattler: false,
-                    autoBattlerStage: null
+                    autoBattlerStage: null,
+                    tmsOwned: {},
+                    shinyCharm: false
                 };
 
                 // ==========================================
@@ -2732,7 +2843,9 @@ const CAMPAIGN_ROADMAP = [
                             battle: { active: false, bossPokemon: null, fighterPokemon: null, fighterHP: 0, bossHP: 0, fighterMaxHP: 0, bossMaxHP: 0, oranUsed: false, bossOranUsed: false, statStages: { player: {atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss: {atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} }, statusConds: { player: null, boss: null } },
                             dexUI: { page: 1, pageSize: 9, total: 1025, search: "", rarity: "all" },
                             autoBattler: false,
-                            autoBattlerStage: null
+                            autoBattlerStage: null,
+                            tmsOwned: {},
+                            shinyCharm: false
                         };
                         
                         // Reset theme to default
@@ -2745,7 +2858,9 @@ const CAMPAIGN_ROADMAP = [
                         renderPCBox();
                         renderPokedex();
                         renderHeldItemsShop();
+                        renderTMShop();
                         updateAutoBattlerUI();
+                        updateShinyCharmUI();
                         
                         closeSettingsModal();
                         showNotification('Data Cleared', 'All progress has been reset', 'success');
@@ -2817,7 +2932,7 @@ const CAMPAIGN_ROADMAP = [
 
                     if (viewName === 'pokedex') renderPokedex();
                     else if (viewName === 'battle') { resetBattleScreen(); renderRoadmap(); }
-                    else if (viewName === 'shop') { renderHeldItemsShop(); updateAutoBattlerUI(); }
+                    else if (viewName === 'shop') { renderHeldItemsShop(); renderTMShop(); updateAutoBattlerUI(); updateShinyCharmUI(); }
                     else if (viewName === 'pc') renderPCBox();
                     else if (viewName === 'team') renderTeamView();
                     else if (viewName === 'roulette' && !animationFrameId) {
@@ -3226,7 +3341,7 @@ const CAMPAIGN_ROADMAP = [
                     pokemon.rarity = rarity;
                     pokemon.isSpecialLegendary = isSpecialLegendary;
                     gameState.currentEncounter = pokemon;
-                    gameState.encounterShiny = (Math.random() < 0.05);
+                    gameState.encounterShiny = (Math.random() < (0.05 + (gameState.shinyCharm ? 0.15 : 0)));
 
                     const encounterTag = document.getElementById('encounterStatus');
                     encounterTag.className = `border text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block animate-bounce`;
@@ -4985,6 +5100,19 @@ const CAMPAIGN_ROADMAP = [
                             </div>
                             ${pk.isShiny ? '<span class="absolute top-2 right-2 text-[7px] bg-pink-500 text-white px-1 rounded uppercase font-black">Shiny</span>' : ''}
                             <div class="mt-2 pt-2 border-t border-slate-900">
+                                <div class="text-[7px] text-slate-500 uppercase font-bold mb-1">Teach TM</div>
+                                ${(function() {
+                                    const ownedTms = Object.keys(gameState.tmsOwned || {}).filter(k => gameState.tmsOwned[k] && canLearnTM(pk, k));
+                                    if (!ownedTms.length) return '<div class="text-[8px] text-slate-600 italic">No compatible TMs owned — buy TMs in the Shop.</div>';
+                                    const opts = ownedTms.map(k => { const t = TM_DB[k]; return `<option value="${k}">TM${t.num} ${t.name} (${t.type}/${t.power||'—'})</option>`; }).join('');
+                                    return `<div class="flex gap-1.5 flex-wrap">
+                                        <select id="pcTmSelect-${pk.uid}" class="flex-1 min-w-0 bg-slate-900 border border-slate-800 text-[9px] rounded p-1 text-slate-300 focus:outline-none focus:border-violet-500"><option value="">Choose TM</option>${opts}</select>
+                                        <select id="pcTmSlot-${pk.uid}" class="w-16 bg-slate-900 border border-slate-800 text-[9px] rounded p-1 text-slate-300 focus:outline-none focus:border-violet-500">${[0,1,2,3].map(i=>`<option value="${i}">Slot ${i+1}</option>`).join('')}</select>
+                                        <button onclick="window.teachTM(${pk.uid},document.getElementById('pcTmSelect-${pk.uid}').value,parseInt(document.getElementById('pcTmSlot-${pk.uid}').value))" class="px-2 py-1 bg-violet-700 hover:bg-violet-600 text-white text-[9px] uppercase font-bold rounded">Teach</button>
+                                    </div>`;
+                                })()}
+                            </div>
+                            <div class="mt-2 pt-2 border-t border-slate-900">
                                 <button onclick="window.releasePokemon(${pk.uid})" class="w-full py-1.5 text-[9px] uppercase font-bold tracking-widest rounded-lg border border-rose-900/50 text-rose-400 hover:bg-rose-950/60 hover:border-rose-700 transition duration-150">
                                     🗑️ Release Pokémon
                                 </button>
@@ -4994,7 +5122,33 @@ const CAMPAIGN_ROADMAP = [
                     });
                 }
 
-                window.releasePokemon = function(uid) {
+                window.teachTM = function(pokemonUid, tmKey, slotIndex) {
+                      if (!tmKey) { showNotification('Select TM', 'Choose a TM from the dropdown first.', 'error'); return; }
+                      const tm = TM_DB[tmKey];
+                      if (!tm) return;
+                      if (!gameState.tmsOwned || !gameState.tmsOwned[tmKey]) {
+                          showNotification('TM Not Owned', 'Buy this TM in the Shop first.', 'error'); return;
+                      }
+                      const pk = gameState.pcBox.find(p => p.uid === pokemonUid);
+                      if (!pk) return;
+                      if (!canLearnTM(pk, tmKey)) {
+                          showNotification('Incompatible', pk.name + ' cannot learn ' + tm.name + '.', 'error'); return;
+                      }
+                      if (pk.moves.includes(tm.move)) {
+                          showNotification('Already Known', pk.name + ' already knows ' + tm.name + '.', 'info'); return;
+                      }
+                      const slot = (typeof slotIndex === 'number' && slotIndex >= 0 && slotIndex <= 3) ? slotIndex : 0;
+                      if (pk.moves.length > slot) {
+                          pk.moves[slot] = tm.move;
+                      } else {
+                          pk.moves.push(tm.move);
+                      }
+                      saveProgress();
+                      showNotification('\uD83D\uDCC0 TM Taught!', pk.name + ' learned ' + tm.name + '! (TM reusable)', 'success');
+                      renderPCBox();
+                  };
+
+                  window.releasePokemon = function(uid) {
                     const pk = gameState.pcBox.find(p => p.uid === uid);
                     if (!pk) return;
                     const isOnTeam = (gameState.team||[]).some(id => id === uid);
@@ -5183,6 +5337,63 @@ const CAMPAIGN_ROADMAP = [
                     window.buyShopItem(itemKey);
                 };
 
+                function renderTMShop() {
+                    const container = document.getElementById('tmShopList');
+                    if (!container) return;
+                    container.innerHTML = '';
+                    const TYPE_COLORS = { normal:'text-slate-300',fire:'text-orange-400',water:'text-blue-400',grass:'text-green-400',electric:'text-yellow-400',ice:'text-cyan-300',psychic:'text-pink-400',ghost:'text-purple-400',dragon:'text-indigo-400',dark:'text-stone-400',steel:'text-slate-300',fairy:'text-pink-300',poison:'text-violet-400',ground:'text-amber-600',rock:'text-yellow-700',flying:'text-sky-400',bug:'text-lime-400',fighting:'text-red-400' };
+                    const TYPE_BG = { normal:'bg-slate-800',fire:'bg-orange-950/60',water:'bg-blue-950/60',grass:'bg-green-950/60',electric:'bg-yellow-950/60',ice:'bg-cyan-950/60',psychic:'bg-pink-950/60',ghost:'bg-purple-950/60',dragon:'bg-indigo-950/60',dark:'bg-stone-900/60',steel:'bg-slate-900/60',fairy:'bg-pink-950/40',poison:'bg-violet-950/60',ground:'bg-amber-950/60',rock:'bg-yellow-950/50',flying:'bg-sky-950/60',bug:'bg-lime-950/60',fighting:'bg-red-950/60' };
+                    Object.keys(TM_DB).forEach(key => {
+                        const tm = TM_DB[key];
+                        const owned = !!(gameState.tmsOwned && gameState.tmsOwned[key]);
+                        const typeColor = TYPE_COLORS[tm.type] || 'text-slate-300';
+                        const typeBg   = TYPE_BG[tm.type]    || 'bg-slate-800';
+                        const card = document.createElement('div');
+                        card.className = `bg-slate-950 border ${owned ? 'border-violet-600/50' : 'border-slate-900'} p-3 rounded-2xl flex flex-col justify-between hover:border-violet-500/40 transition`;
+                        card.innerHTML = `
+                            <div>
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="text-[8px] font-black font-mono px-1.5 py-0.5 rounded ${typeBg} ${typeColor} uppercase tracking-wider">TM${tm.num}</span>
+                                    <span class="text-[9px] font-mono ${owned ? 'text-violet-400 font-bold' : 'text-slate-500'}">${owned ? '📀 Owned' : 'Not Owned'}</span>
+                                </div>
+                                <span class="${typeBg} ${typeColor} text-[9px] font-bold uppercase tracking-wide px-2 py-0.5 rounded inline-block mb-1.5">${tm.type}</span>
+                                <h4 class="text-xs font-extrabold text-white">${tm.name}</h4>
+                                <p class="text-[9px] text-slate-400 mt-1 leading-relaxed line-clamp-2">${tm.desc}</p>
+                                <div class="text-[9px] font-mono text-slate-500 mt-1">PWR: <span class="text-slate-300">${tm.power > 0 ? tm.power : '—'}</span></div>
+                            </div>
+                            <div class="mt-3 flex items-center justify-between">
+                                <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i>${formatNum(tm.cost)}</span>
+                                ${owned
+                                    ? '<span class="text-[9px] text-violet-400 font-bold">∞ Use</span>'
+                                    : `<button onclick="window.buyTM('${key}')" class="px-2 py-1 bg-violet-800 hover:bg-violet-700 text-white text-[9px] uppercase font-bold rounded-lg transition">Buy</button>`
+                                }
+                            </div>`;
+                        container.appendChild(card);
+                    });
+                }
+
+                window.buyTM = function(tmKey) {
+                    initAudio();
+                    const tm = TM_DB[tmKey];
+                    if (!tm) return;
+                    if (gameState.tmsOwned && gameState.tmsOwned[tmKey]) {
+                        showNotification('Already Owned', `TM${tm.num} ${tm.name} is already in your collection.`, 'info');
+                        return;
+                    }
+                    if (gameState.coins < tm.cost) {
+                        showNotification('No Funds Available', `Requires ${formatNum(tm.cost)} Coins.`, 'error');
+                        return;
+                    }
+                    spendCoins(tm.cost);
+                    if (!gameState.tmsOwned) gameState.tmsOwned = {};
+                    gameState.tmsOwned[tmKey] = true;
+                    saveProgress();
+                    playConfirmSound();
+                    showNotification(`TM${tm.num} Acquired!`, `${tm.name} can now be taught in your PC — unlimited uses!`, 'success');
+                    updateUI();
+                    renderTMShop();
+                };
+
                 window.buyBall = function(ballType) {
                     initAudio();
                     let cost = 50;
@@ -5365,7 +5576,43 @@ const CAMPAIGN_ROADMAP = [
                       autoBattlerBusy = false;
                   }
 
-                    // ==========================================
+                // ==========================================
+                // MODULE 10: SHINY CHARM
+                // ==========================================
+                function updateShinyCharmUI() {
+                    const owned = !!gameState.shinyCharm;
+                    const ownedEl = document.getElementById('shinyCharmOwned');
+                    const buyBtn  = document.getElementById('shinyCharmBuyBtn');
+                    const card    = document.getElementById('shinyCharmShopCard');
+                    if (ownedEl) ownedEl.textContent = owned ? '\u2728 Owned' : 'Not Owned';
+                    if (card && owned) card.classList.add('border-pink-600/50');
+                    if (buyBtn) {
+                        if (owned) {
+                            buyBtn.textContent = 'Owned';
+                            buyBtn.disabled = true;
+                            buyBtn.className = 'px-2.5 py-1.5 bg-slate-700 text-slate-400 text-[10px] uppercase font-bold rounded-lg cursor-not-allowed';
+                        } else {
+                            buyBtn.textContent = 'Buy';
+                            buyBtn.disabled = false;
+                            buyBtn.className = 'px-2.5 py-1.5 bg-pink-700 hover:bg-pink-600 text-white text-[10px] uppercase font-bold rounded-lg transition';
+                        }
+                    }
+                }
+
+                window.buyShinyCharm = function() {
+                    initAudio();
+                    if (gameState.shinyCharm) { showNotification('Already Owned', 'Shiny Charm is already active!', 'info'); return; }
+                    const cost = 35000;
+                    if (gameState.coins < cost) { showNotification('No Funds Available', 'Requires ' + formatNum(cost) + ' Coins.', 'error'); return; }
+                    spendCoins(cost);
+                    gameState.shinyCharm = true;
+                    saveProgress();
+                    playConfirmSound();
+                    showNotification('\u2728 Shiny Charm!', 'Shiny encounter rate raised to 20%! Good luck, trainer!', 'shiny');
+                    updateShinyCharmUI();
+                };
+
+                // ==========================================
                 // BOOTSTRAP INIT
                 // ==========================================
                 window.onload = function() {
@@ -5419,6 +5666,8 @@ const CAMPAIGN_ROADMAP = [
                                 renderRoadmap();
                                 renderHeldItemsShop();
                                 updateAutoBattlerUI();
+                                  updateShinyCharmUI();
+                                  renderTMShop();
                                 
                                 // Hide loading screen with fade out
                                 loadingScreen.style.transition = 'opacity 0.5s ease-out';
