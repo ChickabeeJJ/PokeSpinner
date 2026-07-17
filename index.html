@@ -3914,15 +3914,18 @@ const CAMPAIGN_ROADMAP = [
                 }
 
                 async function selectFighterAndBegin(pokemon) {
-                    const BATTLE_ENTRY_COST = 50;
-                    if (gameState.coins < BATTLE_ENTRY_COST) {
-                        showNotification('Not Enough Coins', `Battle entry requires ${BATTLE_ENTRY_COST} Coins.`, 'error');
-                        return;
-                    }
-                    spendCoins(BATTLE_ENTRY_COST);
-                    showNotification('Entry Fee Paid', `-${BATTLE_ENTRY_COST} Coins — good luck, trainer!`, 'info');
                     playConfirmSound();
                     const stage = gameState.activeBattleStage;
+                    // 50-coin fee only for endless simulation (no active stage)
+                    if (!stage) {
+                        const BATTLE_ENTRY_COST = 50;
+                        if (gameState.coins < BATTLE_ENTRY_COST) {
+                            showNotification('Not Enough Coins', `Endless simulation entry requires ${BATTLE_ENTRY_COST} Coins.`, 'error');
+                            return;
+                        }
+                        spendCoins(BATTLE_ENTRY_COST);
+                        showNotification('Entry Fee Paid', `-${BATTLE_ENTRY_COST} Coins — good luck, trainer!`, 'info');
+                    }
                     let enemyProfile = null;
                     let enemyTeam = [];
                     document.getElementById('wildPokemonLoading').classList.remove('hidden');
