@@ -492,12 +492,6 @@
                     <h1 class="font-black tracking-tight text-transparent bg-clip-text mb-1" style="font-size:2.8rem;line-height:1;background-image:linear-gradient(135deg,#f43f5e 0%,#ec4899 40%,#fb923c 80%,#fbbf24 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 2px 16px rgba(244,63,94,0.5));">POKÉMON</h1>
                     <h1 class="font-black tracking-widest text-white" style="font-size:1.5rem;line-height:1;letter-spacing:0.35em;text-shadow:0 0 20px rgba(244,63,94,0.6),0 2px 8px rgba(0,0,0,0.8);">SPINNER</h1>
                 </div>
-                <!-- Elite badge -->
-                <div class="flex items-center gap-2 mb-8">
-                    <div style="height:1px;width:40px;background:linear-gradient(to right,transparent,rgba(244,63,94,0.6));"></div>
-                    <span class="text-[10px] font-black uppercase tracking-[0.4em]" style="color:#ec4899;">Elite Edition</span>
-                    <div style="height:1px;width:40px;background:linear-gradient(to left,transparent,rgba(244,63,94,0.6));"></div>
-                </div>
 
                 <!-- Progress bar — chunky with glow -->
                 <div class="w-full mb-3 relative">
@@ -594,7 +588,7 @@
                             <i class="fas fa-certificate text-yellow-400 text-sm"></i>
                             <span class="text-xs font-bold text-white uppercase tracking-widest">Gym Badge Case</span>
                         </div>
-                        <div id="profileBadgeCase" class="grid grid-cols-5 gap-3"></div>
+                        <div id="profileBadgeCase" class="flex flex-col gap-3"></div>
                     </div>
 
                     <!-- Stats row -->
@@ -1149,6 +1143,9 @@
                                 <div id="effectivenessIndicator" class="text-[10px] font-bold text-slate-500 italic"></div>
                             </div>
                             <div id="battleMovesGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+
+                            <!-- Switch Pokémon row (populated by JS) -->
+                            <div id="battleSwitchRow" class="flex items-center gap-2 flex-wrap"></div>
 
                             <!-- STAT STAGES PANEL -->
                             <div id="statStagesPanel" class="hidden rounded-xl border border-slate-800 p-3" style="background:rgba(255,255,255,0.03);">
@@ -1779,7 +1776,13 @@
                 };
 
                 function shouldExcludeFromLevelUp(pokemonId) {
-                    return STONE_EVO_POKEMON.has(pokemonId);
+                    // Only warn for pre-evolution forms that can still stone-evolve,
+                    // not for already-evolved forms that happen to be in the set.
+                    const stoneTargets = new Set();
+                    for (const pairs of Object.values(STONE_EVOLUTION_MAP)) {
+                        for (const {to} of pairs) stoneTargets.add(to);
+                    }
+                    return STONE_EVO_POKEMON.has(pokemonId) && !stoneTargets.has(pokemonId);
                 }
 
                 function getDefaultInventoryItems() {
@@ -2030,7 +2033,8 @@ const CAMPAIGN_ROADMAP = [
                     saveProgress();
                 }
 
-                function saveUsernameFromProfile(value) {
+                // Expose so oninput="saveUsernameFromProfile(...)" can reach it from HTML attribute scope
+                window.saveUsernameFromProfile = function saveUsernameFromProfile(value) {
                     gameState.username = (value || '').trim().substring(0, 16);
                     // Dedicated localStorage for fast load (no full parse needed)
                     try { localStorage.setItem('pokemon_spinner_trainer_name', gameState.username); } catch(e) {}
@@ -2110,7 +2114,7 @@ const CAMPAIGN_ROADMAP = [
                                 </div>
                                 <button onclick="window.profileRegionNav(1)" class="text-slate-400 hover:text-white px-3 py-1 rounded-lg border border-slate-800 text-[11px] disabled:opacity-30 transition" ${nextOk?'':'disabled'}>Next ▶</button>
                             </div>
-                            <div id="profileBadgeGrid" class="grid grid-cols-4 gap-3 w-full"></div>
+                            <div id="profileBadgeGrid" class="grid grid-cols-4 gap-4 w-full"></div>
                         `;
                         const grid = document.getElementById('profileBadgeGrid');
                         regionGyms.forEach(stage => {
@@ -3326,7 +3330,7 @@ const CAMPAIGN_ROADMAP = [
                     overlay.style.opacity = '0';
                     setTimeout(() => {
                         overlay.classList.add('hidden');
-                        overlay.style.opacity = '1';
+                        overlay.style.opacity = ''; // clear inline style so CSS class controls opacity
                         if (window._cutsceneCallback) {
                             const cb = window._cutsceneCallback;
                             window._cutsceneCallback = null;
@@ -3763,6 +3767,8 @@ const CAMPAIGN_ROADMAP = [
                     // Reset per-battle stat stages and status conditions
                     gameState.battle.statStages = { player:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} };
                     gameState.battle.statusConds = { player: null, boss: null };
+                    gameState.battle.choiceBandMove = null;
+                    gameState.battle.faintedUids = new Set();
 
                     document.getElementById('fighterSelector').classList.add('hidden');
                     document.getElementById('battleArenaActive').classList.remove('hidden');
@@ -3798,20 +3804,30 @@ const CAMPAIGN_ROADMAP = [
                     grid.innerHTML = "";
                     const moves = pokemon.moves && pokemon.moves.length ? pokemon.moves : ["tackle", "quick-attack"];
 
+                    // Choice Band: show which move is locked
+                    const choiceLocked = pokemon.heldItem === 'choice_band' && gameState.battle.choiceBandMove;
+
                     moves.forEach(move => {
                         const spec = MOVES_DB[move] || { type: "normal", power: 40, category: "physical" };
                         const isStatus = spec.category === 'status';
+                        const isChoiceLocked = choiceLocked && move === gameState.battle.choiceBandMove;
+                        const isChoiceBlocked = choiceLocked && move !== gameState.battle.choiceBandMove;
                         const moveBtn = document.createElement('button');
-                        const borderCol = isStatus ? 'border-violet-800 hover:border-violet-500' : 'border-slate-800 hover:border-blue-500';
-                        moveBtn.className = `py-3 px-4 bg-slate-900 ${borderCol} border rounded-xl text-xs font-bold text-slate-200 capitalize transition duration-150 flex flex-col justify-center items-center gap-0.5`;
+                        let borderCol = isStatus ? 'border-violet-800 hover:border-violet-500' : 'border-slate-800 hover:border-blue-500';
+                        if (isChoiceLocked) borderCol = 'border-amber-500 hover:border-amber-400';
+                        moveBtn.className = `py-3 px-4 bg-slate-900 ${borderCol} border rounded-xl text-xs font-bold text-slate-200 capitalize transition duration-150 flex flex-col justify-center items-center gap-0.5${isChoiceBlocked ? ' opacity-30 pointer-events-none' : ''}`;
                         const pwrText = isStatus
                             ? `<span class="text-[8px] text-violet-400 font-mono">${spec.type.toUpperCase()} | STATUS</span>`
                             : `<span class="text-[8px] text-slate-500 font-mono">${spec.type.toUpperCase()} | PWR ${spec.power}</span>`;
                         const statusIcon = isStatus ? '<span class="text-violet-500 text-[8px]">✨ </span>' : '';
+                        const lockIcon  = isChoiceLocked ? '<span class="text-[7px] text-amber-400 font-black">🔒 LOCKED</span>' : '';
                         moveBtn.onclick = () => executeBattleTurn(move);
-                        moveBtn.innerHTML = `${statusIcon}<span class="capitalize">${move.replace(/-/g, ' ')}</span>${pwrText}`;
+                        moveBtn.innerHTML = `${statusIcon}<span class="capitalize">${move.replace(/-/g, ' ')}</span>${pwrText}${lockIcon}`;
                         grid.appendChild(moveBtn);
                     });
+
+                    // Render switch-out options below the move grid
+                    renderSwitchOptions(pokemon);
                 }
 
                 // ── Stat-stage helpers ────────────────────────────────────────
@@ -4026,7 +4042,21 @@ const CAMPAIGN_ROADMAP = [
                     const fighter = gameState.battle.fighterPokemon;
                     const boss = gameState.battle.bossPokemon;
 
-                    if (fighter.speed >= boss.speed) {
+                    // Choice Band: lock holder into the first move they used this battle
+                    if (fighter.heldItem === 'choice_band') {
+                        if (!gameState.battle.choiceBandMove) {
+                            gameState.battle.choiceBandMove = moveName;
+                        } else {
+                            moveName = gameState.battle.choiceBandMove;
+                        }
+                    }
+
+                    // Speed comparison uses current stat stages
+                    const _ss = gameState.battle.statStages || { player:{speed:0}, boss:{speed:0} };
+                    const fighterSpeed = (fighter.speed || 50) * stageMultiplier((_ss.player||{}).speed || 0);
+                    const bossSpeed    = (boss.speed    || 50) * stageMultiplier((_ss.boss  ||{}).speed || 0);
+
+                    if (fighterSpeed >= bossSpeed) {
                         resolveMoveAttack(fighter, boss, moveName, true);
                         if (gameState.battle.bossHP > 0) {
                             setTimeout(() => {
@@ -4055,6 +4085,135 @@ const CAMPAIGN_ROADMAP = [
                         if (state) btn.classList.add('opacity-40');
                         else btn.classList.remove('opacity-40');
                     }
+                }
+
+                // ── Switch Pokémon ─────────────────────────────────────────────────────
+                function renderSwitchOptions(activePokemon) {
+                    const switchRow = document.getElementById('battleSwitchRow');
+                    if (!switchRow) return;
+                    const playerTeam = gameState.battle.playerTeam || [];
+                    const fainted = gameState.battle.faintedUids || new Set();
+                    const available = playerTeam.filter(p => p && p.uid !== activePokemon.uid && !fainted.has(p.uid));
+                    if (available.length === 0) { switchRow.innerHTML = ''; return; }
+                    switchRow.innerHTML =
+                        '<div class="text-[9px] text-slate-500 uppercase tracking-widest font-bold w-full mt-1">Switch (costs 1 turn):</div>' +
+                        available.map(p =>
+                            `<button onclick="window.switchBattlePokemon(${p.uid})" class="flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-900 border border-slate-700 hover:border-cyan-500 text-[10px] text-slate-300 rounded-lg transition">` +
+                            `<img src="${p.sprite}" class="w-4 h-4 object-contain" style="image-rendering:pixelated">` +
+                            `${p.isShiny?'✨ ':''}${p.name} Lv${p.level||1}</button>`
+                        ).join('');
+                }
+
+                window.switchBattlePokemon = function(uid) {
+                    if (!gameState.battle.active) return;
+                    const playerTeam = gameState.battle.playerTeam || [];
+                    const newFighter = playerTeam.find(p => p && p.uid == uid);
+                    if (!newFighter) return;
+
+                    const boss = gameState.battle.bossPokemon;
+                    const logBox = document.getElementById('battleLog');
+
+                    // Update active fighter
+                    const newIndex = playerTeam.findIndex(p => p && p.uid == uid);
+                    const lvlMult = 1 + (((newFighter.level || 1) - 1) * 0.05);
+                    const newHP = Math.max(1, Math.round((newFighter.hp + (newFighter.hpBonus || 0)) * lvlMult));
+                    gameState.battle.playerTeamIndex = newIndex;
+                    gameState.battle.fighterPokemon = newFighter;
+                    gameState.battle.fighterHP = newHP;
+                    gameState.battle.fighterMaxHP = newHP;
+                    gameState.battle.oranUsed = false;
+                    gameState.battle.choiceBandMove = null; // choice band resets on switch
+
+                    document.getElementById('playerFighterSprite').src = newFighter.sprite;
+                    document.getElementById('playerFighterName').textContent = (newFighter.isShiny ? '✨ ' : '') + newFighter.name;
+                    document.getElementById('playerFighterLevelBadge').textContent = 'LVL ' + (newFighter.level || 1);
+                    document.getElementById('playerFighterHPText').textContent = newHP + '/' + newHP;
+                    document.getElementById('playerFighterHPBar').style.width = '100%';
+                    document.getElementById('playerFighterHPBar').className = 'bg-green-500 h-full transition-all duration-300';
+                    document.getElementById('playerHeldItemBadge').innerHTML = newFighter.heldItem && HOLD_ITEMS_DB[newFighter.heldItem]
+                        ? `<span class="bg-cyan-900/80 border border-cyan-700 text-cyan-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase"><i class="fas fa-briefcase"></i> ${HOLD_ITEMS_DB[newFighter.heldItem].name}</span>`
+                        : '';
+
+                    logBox.innerHTML += `<div class="text-amber-400 font-bold mt-2">🔄 Switched to <span class="text-white">${newFighter.name}</span>! ${boss.name} attacks during the switch!</div>`;
+                    logBox.scrollTop = logBox.scrollHeight;
+
+                    // Enemy gets a free attack as the cost of switching
+                    disableMoveButtons(true);
+                    const switchRow = document.getElementById('battleSwitchRow');
+                    if (switchRow) switchRow.innerHTML = '';
+                    setTimeout(() => {
+                        const bossMove = boss.moves[Math.floor(Math.random() * boss.moves.length)];
+                        resolveMoveAttack(boss, newFighter, bossMove, false);
+                        disableMoveButtons(false);
+                        renderBattleMoves(newFighter);
+                    }, 700);
+                };
+
+                // ── Endless mode: spawn the next challenger ────────────────────────────
+                async function spawnNextEndlessEnemy(fighter) {
+                    const fighterLevel = fighter.level || 1;
+                    const endlessEnemyLevel = Math.max(1, Math.ceil((fighterLevel - 0.7) + ((gameState.endlessRunDefeats || 0) * 0.1)));
+                    const genRange = getRadarGenRange();
+                    const idDiff = genRange.max - genRange.min;
+                    const randomEnemyId = Math.floor(Math.random() * (idDiff + 1)) + genRange.min;
+                    const logBox = document.getElementById('battleLog');
+                    if (logBox) { logBox.innerHTML += `<div class="text-cyan-400 font-bold mt-2">⚡ Preparing next challenger… (Round ${gameState.endlessRunDefeats + 1})</div>`; logBox.scrollTop = logBox.scrollHeight; }
+                    try {
+                        const newEnemy = await fetchPokemonData(randomEnemyId);
+                        newEnemy.hp    = newEnemy.hp    + (endlessEnemyLevel * 3);
+                        newEnemy.atk   = newEnemy.atk   + (endlessEnemyLevel * 1.2);
+                        newEnemy.def   = newEnemy.def   + (endlessEnemyLevel * 1);
+                        newEnemy.spAtk = (newEnemy.spAtk || newEnemy.atk) + (endlessEnemyLevel * 1.2);
+                        newEnemy.spDef = (newEnemy.spDef || newEnemy.def) + (endlessEnemyLevel * 1);
+                        newEnemy.name  = 'Simulated ' + newEnemy.name;
+                        newEnemy.level = endlessEnemyLevel;
+                        if (endlessEnemyLevel >= 20) newEnemy.heldItem = 'oran_berry';
+
+                        gameState.battle.bossPokemon   = newEnemy;
+                        gameState.battle.bossHP        = newEnemy.hp;
+                        gameState.battle.bossMaxHP     = newEnemy.hp;
+                        gameState.battle.bossOranUsed  = false;
+                        gameState.battle.enemyTeam     = [newEnemy];
+                        gameState.battle.enemyTeamIndex = 0;
+                        gameState.battle.active        = true;
+                        gameState.battle.statStages    = { player:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} };
+                        gameState.battle.choiceBandMove = null;
+
+                        document.getElementById('bossSprite').src     = newEnemy.sprite;
+                        document.getElementById('bossName').textContent         = newEnemy.name;
+                        document.getElementById('bossLevelBadge').textContent   = `LVL ${newEnemy.level}`;
+                        document.getElementById('bossHPText').textContent       = `${newEnemy.hp}/${newEnemy.hp}`;
+                        document.getElementById('bossHPBar').style.width        = '100%';
+                        if (logBox) { logBox.innerHTML += `<div class="text-amber-400 font-bold mt-2">⚔️ ${newEnemy.name} appeared! Defeat it to keep going!</div>`; logBox.scrollTop = logBox.scrollHeight; }
+                        disableMoveButtons(false);
+                        renderBattleMoves(fighter);
+                    } catch(e) {
+                        resetBattleScreen(); renderRoadmap(); updateUI();
+                    }
+                }
+
+                // ── Eevee level-up evolution at level 20 ──────────────────────────────
+                async function checkEeveeLevelUpEvolution(pokemon, logBox) {
+                    const eeveeLvlUpEvos = [700, 196, 197]; // Sylveon, Espeon, Umbreon
+                    const targetId = eeveeLvlUpEvos[Math.floor(Math.random() * eeveeLvlUpEvos.length)];
+                    try {
+                        const evolved = await fetchPokemonData(targetId);
+                        const oldName = pokemon.name;
+                        pokemon.id    = evolved.id;
+                        pokemon.name  = evolved.name;
+                        pokemon.type1 = evolved.type1;
+                        pokemon.type2 = evolved.type2;
+                        pokemon.sprite = evolved.sprite;
+                        pokemon.hp    = evolved.hp;
+                        pokemon.atk   = evolved.atk;
+                        pokemon.def   = evolved.def;
+                        pokemon.spAtk = evolved.spAtk || evolved.atk;
+                        pokemon.spDef = evolved.spDef || evolved.def;
+                        pokemon.speed = evolved.speed || 60;
+                        if (logBox) logBox.innerHTML += `<div class="text-pink-400 font-black animate-pulse mt-1">🌟 ${oldName} evolved into <span class="text-white">${evolved.name.toUpperCase()}</span>!</div>`;
+                        showNotification('✨ EVOLUTION!', `Eevee evolved into ${evolved.name}!`, 'success');
+                        saveProgress();
+                    } catch(e) { /* silent — evolution is cosmetic if fetch fails */ }
                 }
 
                 function handleBattleVictory() {
@@ -4132,39 +4291,36 @@ const CAMPAIGN_ROADMAP = [
                         }
                     }
 
+                    // Eevee level-up evolution at level 20 (if not already stone-evolved)
+                    if (fighter.id === 133 && fighter.level >= 20 && !fighter.evoStoneUsed) {
+                        checkEeveeLevelUpEvolution(fighter, document.getElementById('battleLog'));
+                    }
+
                     addCoins(rewardCoins);
                     addXP(Math.round(rewardCoins / 2));
 
-                    // ── Exp. Share — Gen 6+ style ──────────────────────────────────────
-                    // If ANY party member holds exp_share, ALL non-battling members
-                    // receive 50% XP (mirrors the cartridge Gen 6+ behaviour).
+                    // ── Exp. Share — only the Pokémon holding exp_share gets 50 % XP ──
                     if (gameState.team && gameState.pcBox) {
-                        const anyExpShare = (gameState.team || []).some(uid => {
-                            if (!uid) return false;
+                        const logB = document.getElementById('battleLog');
+                        gameState.team.forEach(uid => {
+                            if (!uid) return;
                             const tm = gameState.pcBox.find(p => p.uid === uid);
-                            return tm && tm.heldItem === 'exp_share';
-                        });
-                        if (anyExpShare) {
+                            if (!tm || tm.uid === fighter.uid) return; // active battler already earned full XP
+                            if (tm.heldItem !== 'exp_share') return;  // only the holder benefits
                             const expShareAmt = Math.round(xpAward * 0.5);
-                            const logB = document.getElementById('battleLog');
-                            gameState.team.forEach(uid => {
-                                if (!uid) return;
-                                const tm = gameState.pcBox.find(p => p.uid === uid);
-                                if (!tm || tm.uid === fighter.uid) return; // Active battler already got full XP above
-                                tm.xp = (tm.xp || 0) + expShareAmt;
-                                let tmNext = (tm.level||1) * 100;
-                                let tmLeveled = false;
-                                while (tm.xp >= tmNext) {
-                                    tm.xp -= tmNext; tm.level = (tm.level||1)+1; tmNext = tm.level*100;
-                                    const newMs = applyLevelUpMoves(tm);
-                                    if (newMs.length > 0 && logB) {
-                                        newMs.forEach(m => logB.innerHTML += `<div class="text-cyan-300 mt-0.5 text-[9px]">📖 ${tm.name} learned <span class="capitalize">${m.replace(/-/g,' ')}</span>!</div>`);
-                                    }
-                                    tmLeveled = true;
+                            tm.xp = (tm.xp || 0) + expShareAmt;
+                            let tmNext = (tm.level||1) * 100;
+                            let tmLeveled = false;
+                            while (tm.xp >= tmNext) {
+                                tm.xp -= tmNext; tm.level = (tm.level||1)+1; tmNext = tm.level*100;
+                                const newMs = applyLevelUpMoves(tm);
+                                if (newMs.length > 0 && logB) {
+                                    newMs.forEach(m => logB.innerHTML += `<div class="text-cyan-300 mt-0.5 text-[9px]">📖 ${tm.name} learned <span class="capitalize">${m.replace(/-/g,' ')}</span>!</div>`);
                                 }
-                                if (logB) logB.innerHTML += `<div class="text-amber-300 mt-1 text-[10px]">📡 ${tm.name} +${expShareAmt} XP (Exp. Share)${tmLeveled?' → Lv'+tm.level:''}</div>`;
-                            });
-                        }
+                                tmLeveled = true;
+                            }
+                            if (logB) logB.innerHTML += `<div class="text-amber-300 mt-1 text-[10px]">📡 ${tm.name} +${expShareAmt} XP (Exp. Share)${tmLeveled?' → Lv'+tm.level:''}</div>`;
+                        });
                     }
 
                     // ── Region unlock when champion is beaten ──
@@ -4193,7 +4349,12 @@ const CAMPAIGN_ROADMAP = [
                     logBox.scrollTop = logBox.scrollHeight;
 
                     saveProgress();
-                    setTimeout(() => { resetBattleScreen(); renderRoadmap(); updateUI(); updateScanningRegionUI(); }, 3500);
+                    if (!stage) {
+                        // Endless mode: spawn the next challenger instead of returning to the selector
+                        setTimeout(() => spawnNextEndlessEnemy(fighter), 3500);
+                    } else {
+                        setTimeout(() => { resetBattleScreen(); renderRoadmap(); updateUI(); updateScanningRegionUI(); }, 3500);
+                    }
                 }
 
                 function handleBattleDefeat() {
@@ -4204,6 +4365,12 @@ const CAMPAIGN_ROADMAP = [
 
                     logBox.innerHTML += `<div class="text-red-400 font-bold mt-2">💀 ${faintedName} fainted!</div>`;
                     logBox.scrollTop = logBox.scrollHeight;
+
+                    // Track fainted Pokémon so the switch UI can exclude them
+                    if (gameState.battle.fighterPokemon) {
+                        if (!gameState.battle.faintedUids) gameState.battle.faintedUids = new Set();
+                        gameState.battle.faintedUids.add(gameState.battle.fighterPokemon.uid);
+                    }
 
                     // Check for next alive team member
                     let nextIndex = -1;
@@ -4221,6 +4388,7 @@ const CAMPAIGN_ROADMAP = [
                         gameState.battle.fighterHP = nextHP;
                         gameState.battle.fighterMaxHP = nextHP;
                         gameState.battle.oranUsed = false;
+                        gameState.battle.choiceBandMove = null; // reset choice band when pokemon faints/switches
 
                         // Update player side UI
                         document.getElementById('playerFighterSprite').src = nextFighter.sprite;
@@ -4262,6 +4430,8 @@ const CAMPAIGN_ROADMAP = [
                     // Clear per-battle stat stages and status conditions
                     gameState.battle.statStages = { player:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} };
                     gameState.battle.statusConds = { player: null, boss: null };
+                    gameState.battle.choiceBandMove = null;
+                    gameState.battle.faintedUids = new Set();
                     const panel = document.getElementById('statStagesPanel');
                     if (panel) panel.classList.add('hidden');
                 }
@@ -4431,13 +4601,21 @@ const CAMPAIGN_ROADMAP = [
                         const card = document.createElement('div');
                         card.className = 'rounded-xl border border-slate-900 bg-slate-950/80 p-3';
                         const optionsMarkup = ['<option value="">— Empty Slot —</option>'].concat(visiblePc.map(pk => `<option value="${pk.uid}" ${selectedUid === pk.uid ? 'selected' : ''}>${pk.isShiny?'✨ ':''}${pk.name} Lv${pk.level||1}${pk.heldItem?' ['+pk.heldItem.replace(/_/g,' ')+']':''}</option>`)).join('');
+                        const _spriteEl = selectedPokemon
+                            ? `<img src="${selectedPokemon.sprite}" class="w-10 h-10 object-contain flex-shrink-0" style="image-rendering:pixelated" onerror="this.style.display='none'">`
+                            : `<div class="w-10 h-10 rounded-full border border-slate-800 bg-slate-900/60 flex items-center justify-center text-slate-600 text-xl flex-shrink-0">?</div>`;
+                        const _infoEl = selectedPokemon
+                            ? `<div class="text-[9px] text-slate-400 capitalize">${selectedPokemon.type1}${selectedPokemon.type2?'/'+selectedPokemon.type2:''} · ${selectedPokemon.xp||0}/${(selectedPokemon.level||1)*100} XP</div>`
+                            : '';
                         card.innerHTML = `
-                            <div class="flex items-center justify-between gap-2 mb-2">
-                                <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                ${_spriteEl}
+                                <div class="flex-1 min-w-0">
                                     <div class="text-[9px] uppercase tracking-widest text-slate-500">${slotIndex === 0 ? 'Lead' : `Slot ${slotIndex + 1}`}</div>
-                                    <div class="text-sm font-bold text-white">${selectedPokemon ? (selectedPokemon.isShiny?'✨ ':'')+selectedPokemon.name : 'Open Slot'}</div>
+                                    <div class="text-sm font-bold text-white truncate">${selectedPokemon ? (selectedPokemon.isShiny?'✨ ':'')+selectedPokemon.name : 'Open Slot'}</div>
+                                    ${_infoEl}
                                 </div>
-                                ${selectedPokemon ? `<button onclick="window.clearTeamSlot(${slotIndex})" class="text-[10px] text-slate-400 hover:text-rose-400 transition">Clear</button>` : ''}
+                                ${selectedPokemon ? `<button onclick="window.clearTeamSlot(${slotIndex})" class="text-[10px] text-slate-400 hover:text-rose-400 transition flex-shrink-0">Clear</button>` : ''}
                             </div>
                             <select onchange="window.setTeamSlot(${slotIndex}, this.value)" class="w-full bg-slate-900 border border-slate-800 text-[11px] rounded-lg p-2 text-slate-200 focus:outline-none focus:border-cyan-500">
                                 ${optionsMarkup}
