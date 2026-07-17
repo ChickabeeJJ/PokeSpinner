@@ -364,6 +364,38 @@
                 --theme-chip-color: #fb923c;
                 --theme-chip-border: rgba(249,115,22,0.4);
             }
+            body[data-theme="electric"] {
+                --theme-c1: #eab308;
+                --theme-c2: #facc15;
+                --theme-c3: #f59e0b;
+                --theme-chip-bg: rgba(234,179,8,0.18);
+                --theme-chip-color: #fde047;
+                --theme-chip-border: rgba(234,179,8,0.4);
+            }
+            body[data-theme="midnight"] {
+                --theme-c1: #6366f1;
+                --theme-c2: #8b5cf6;
+                --theme-c3: #3b82f6;
+                --theme-chip-bg: rgba(99,102,241,0.18);
+                --theme-chip-color: #a5b4fc;
+                --theme-chip-border: rgba(99,102,241,0.4);
+            }
+            body[data-theme="dragon"] {
+                --theme-c1: #7c3aed;
+                --theme-c2: #a855f7;
+                --theme-c3: #ec4899;
+                --theme-chip-bg: rgba(124,58,237,0.18);
+                --theme-chip-color: #c084fc;
+                --theme-chip-border: rgba(124,58,237,0.4);
+            }
+            body[data-theme="steel"] {
+                --theme-c1: #64748b;
+                --theme-c2: #94a3b8;
+                --theme-c3: #0ea5e9;
+                --theme-chip-bg: rgba(100,116,139,0.18);
+                --theme-chip-color: #cbd5e1;
+                --theme-chip-border: rgba(100,116,139,0.4);
+            }
             /* Utility classes that use theme variables */
             .themed-gradient {
                 background: linear-gradient(135deg, var(--theme-c1), var(--theme-c2)) !important;
@@ -506,16 +538,7 @@
             </div>
         </div>
 
-        <!-- AUDIO TOGGLE, SUPPORT & SETTINGS -->
-        <div class="fixed top-4 right-4 z-50 flex flex-row gap-2 items-center">
-            <!-- Profile button -->
-            <button id="profileToggleBtn" onclick="openProfileModal()" title="Trainer Profile" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-full hover:bg-slate-800 transition duration-200 focus:outline-none shadow-lg flex items-center justify-center" style="min-width:44px;min-height:44px;">
-                <i class="fas fa-user text-lg text-purple-400" id="profileBtnIcon"></i>
-            </button>
-            <button id="settingsToggleBtn" onclick="openSettingsModal()" class="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-full hover:bg-slate-800 transition duration-200 text-cyan-400 focus:outline-none shadow-lg">
-                <i class="fas fa-cog text-lg"></i>
-            </button>
-        </div>
+        <!-- Profile / Settings buttons are in the header to avoid overlap -->
 
         <!-- CUSTOM NOTIFICATION MODAL -->
         <div id="customToast" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 bg-slate-900/95 border-2 border-slate-850 px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 transition-all duration-300 opacity-0 translate-y-[-50px] pointer-events-none max-w-md w-[90%]">
@@ -662,7 +685,7 @@
                         </div>
                     </div>
 
-                    <!-- Theme Selector — big visual cards -->
+                    <!-- Theme Selector -->
                     <div class="p-4 rounded-2xl" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
                         <div class="flex items-center justify-between mb-3">
                             <div class="flex items-center gap-2">
@@ -671,50 +694,62 @@
                             </div>
                             <span id="activeThemeLabel" class="themed-chip text-[9px] uppercase tracking-widest font-black px-2 py-0.5 rounded-full" style="border:1px solid var(--theme-chip-border);">Rose</span>
                         </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <!-- Rose -->
-                            <button onclick="setTheme('default')" class="theme-btn group relative rounded-2xl overflow-hidden transition-all duration-200" data-theme="default" data-label="Rose">
-                                <div class="h-16 w-full" style="background:linear-gradient(135deg,#f43f5e,#ec4899,#fb923c);"></div>
-                                <div class="px-3 py-2 flex items-center justify-between" style="background:rgba(0,0,0,0.4);">
-                                    <span class="text-xs font-bold text-white">🌹 Rose</span>
-                                    <div class="theme-check w-5 h-5 rounded-full border-2 border-white/30 flex items-center justify-center" style="display:none;">
-                                        <i class="fas fa-check text-white text-[10px]"></i>
-                                    </div>
+                        <div class="grid grid-cols-4 gap-2">
+                            <button onclick="setTheme('default')" class="theme-btn group relative rounded-xl overflow-hidden" data-theme="default">
+                                <div class="h-10 w-full" style="background:linear-gradient(135deg,#f43f5e,#ec4899,#fb923c);"></div>
+                                <div class="py-1.5 text-center" style="background:rgba(0,0,0,0.5);">
+                                    <span class="text-[10px] font-bold text-white">🌹 Rose</span>
                                 </div>
-                                <div class="theme-active-ring absolute inset-0 rounded-2xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 3px #f43f5e, 0 0 20px rgba(244,63,94,0.4);"></div>
+                                <div class="theme-active-ring absolute inset-0 rounded-xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 2px #f43f5e,0 0 14px rgba(244,63,94,0.5);"></div>
                             </button>
-                            <!-- Ocean -->
-                            <button onclick="setTheme('ocean')" class="theme-btn group relative rounded-2xl overflow-hidden transition-all duration-200" data-theme="ocean" data-label="Ocean">
-                                <div class="h-16 w-full" style="background:linear-gradient(135deg,#06b6d4,#3b82f6,#6366f1);"></div>
-                                <div class="px-3 py-2 flex items-center justify-between" style="background:rgba(0,0,0,0.4);">
-                                    <span class="text-xs font-bold text-white">🌊 Ocean</span>
-                                    <div class="theme-check w-5 h-5 rounded-full border-2 border-white/30 flex items-center justify-center" style="display:none;">
-                                        <i class="fas fa-check text-white text-[10px]"></i>
-                                    </div>
+                            <button onclick="setTheme('ocean')" class="theme-btn group relative rounded-xl overflow-hidden" data-theme="ocean">
+                                <div class="h-10 w-full" style="background:linear-gradient(135deg,#06b6d4,#3b82f6,#6366f1);"></div>
+                                <div class="py-1.5 text-center" style="background:rgba(0,0,0,0.5);">
+                                    <span class="text-[10px] font-bold text-white">🌊 Ocean</span>
                                 </div>
-                                <div class="theme-active-ring absolute inset-0 rounded-2xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 3px #06b6d4, 0 0 20px rgba(6,182,212,0.4);"></div>
+                                <div class="theme-active-ring absolute inset-0 rounded-xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 2px #06b6d4,0 0 14px rgba(6,182,212,0.5);"></div>
                             </button>
-                            <!-- Forest -->
-                            <button onclick="setTheme('forest')" class="theme-btn group relative rounded-2xl overflow-hidden transition-all duration-200" data-theme="forest" data-label="Forest">
-                                <div class="h-16 w-full" style="background:linear-gradient(135deg,#10b981,#22c55e,#14b8a6);"></div>
-                                <div class="px-3 py-2 flex items-center justify-between" style="background:rgba(0,0,0,0.4);">
-                                    <span class="text-xs font-bold text-white">🌿 Forest</span>
-                                    <div class="theme-check w-5 h-5 rounded-full border-2 border-white/30 flex items-center justify-center" style="display:none;">
-                                        <i class="fas fa-check text-white text-[10px]"></i>
-                                    </div>
+                            <button onclick="setTheme('forest')" class="theme-btn group relative rounded-xl overflow-hidden" data-theme="forest">
+                                <div class="h-10 w-full" style="background:linear-gradient(135deg,#10b981,#22c55e,#14b8a6);"></div>
+                                <div class="py-1.5 text-center" style="background:rgba(0,0,0,0.5);">
+                                    <span class="text-[10px] font-bold text-white">🌿 Forest</span>
                                 </div>
-                                <div class="theme-active-ring absolute inset-0 rounded-2xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 3px #10b981, 0 0 20px rgba(16,185,129,0.4);"></div>
+                                <div class="theme-active-ring absolute inset-0 rounded-xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 2px #10b981,0 0 14px rgba(16,185,129,0.5);"></div>
                             </button>
-                            <!-- Sunset -->
-                            <button onclick="setTheme('sunset')" class="theme-btn group relative rounded-2xl overflow-hidden transition-all duration-200" data-theme="sunset" data-label="Sunset">
-                                <div class="h-16 w-full" style="background:linear-gradient(135deg,#f97316,#f59e0b,#ef4444);"></div>
-                                <div class="px-3 py-2 flex items-center justify-between" style="background:rgba(0,0,0,0.4);">
-                                    <span class="text-xs font-bold text-white">🌅 Sunset</span>
-                                    <div class="theme-check w-5 h-5 rounded-full border-2 border-white/30 flex items-center justify-center" style="display:none;">
-                                        <i class="fas fa-check text-white text-[10px]"></i>
-                                    </div>
+                            <button onclick="setTheme('sunset')" class="theme-btn group relative rounded-xl overflow-hidden" data-theme="sunset">
+                                <div class="h-10 w-full" style="background:linear-gradient(135deg,#f97316,#f59e0b,#ef4444);"></div>
+                                <div class="py-1.5 text-center" style="background:rgba(0,0,0,0.5);">
+                                    <span class="text-[10px] font-bold text-white">🌅 Sunset</span>
                                 </div>
-                                <div class="theme-active-ring absolute inset-0 rounded-2xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 3px #f97316, 0 0 20px rgba(249,115,22,0.4);"></div>
+                                <div class="theme-active-ring absolute inset-0 rounded-xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 2px #f97316,0 0 14px rgba(249,115,22,0.5);"></div>
+                            </button>
+                            <button onclick="setTheme('electric')" class="theme-btn group relative rounded-xl overflow-hidden" data-theme="electric">
+                                <div class="h-10 w-full" style="background:linear-gradient(135deg,#eab308,#facc15,#f59e0b);"></div>
+                                <div class="py-1.5 text-center" style="background:rgba(0,0,0,0.5);">
+                                    <span class="text-[10px] font-bold text-white">⚡ Electric</span>
+                                </div>
+                                <div class="theme-active-ring absolute inset-0 rounded-xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 2px #eab308,0 0 14px rgba(234,179,8,0.5);"></div>
+                            </button>
+                            <button onclick="setTheme('midnight')" class="theme-btn group relative rounded-xl overflow-hidden" data-theme="midnight">
+                                <div class="h-10 w-full" style="background:linear-gradient(135deg,#6366f1,#8b5cf6,#3b82f6);"></div>
+                                <div class="py-1.5 text-center" style="background:rgba(0,0,0,0.5);">
+                                    <span class="text-[10px] font-bold text-white">🌙 Midnight</span>
+                                </div>
+                                <div class="theme-active-ring absolute inset-0 rounded-xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 2px #6366f1,0 0 14px rgba(99,102,241,0.5);"></div>
+                            </button>
+                            <button onclick="setTheme('dragon')" class="theme-btn group relative rounded-xl overflow-hidden" data-theme="dragon">
+                                <div class="h-10 w-full" style="background:linear-gradient(135deg,#7c3aed,#a855f7,#ec4899);"></div>
+                                <div class="py-1.5 text-center" style="background:rgba(0,0,0,0.5);">
+                                    <span class="text-[10px] font-bold text-white">🐉 Dragon</span>
+                                </div>
+                                <div class="theme-active-ring absolute inset-0 rounded-xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 2px #7c3aed,0 0 14px rgba(124,58,237,0.5);"></div>
+                            </button>
+                            <button onclick="setTheme('steel')" class="theme-btn group relative rounded-xl overflow-hidden" data-theme="steel">
+                                <div class="h-10 w-full" style="background:linear-gradient(135deg,#64748b,#94a3b8,#0ea5e9);"></div>
+                                <div class="py-1.5 text-center" style="background:rgba(0,0,0,0.5);">
+                                    <span class="text-[10px] font-bold text-white">🔩 Steel</span>
+                                </div>
+                                <div class="theme-active-ring absolute inset-0 rounded-xl pointer-events-none" style="display:none;box-shadow:inset 0 0 0 2px #94a3b8,0 0 14px rgba(148,163,184,0.5);"></div>
                             </button>
                         </div>
                     </div>
@@ -791,6 +826,16 @@
                                 <div id="xpBar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-full rounded-full transition-all duration-300" style="width: 10%;"></div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Profile & Settings — in-header so they never block content -->
+                    <div class="flex gap-1.5 border-l border-slate-850 pl-4 items-center">
+                        <button id="profileToggleBtn" onclick="openProfileModal()" title="Trainer Profile" class="bg-slate-900/80 border border-slate-800 p-2 rounded-full hover:bg-slate-800 transition duration-200 focus:outline-none flex items-center justify-center">
+                            <i class="fas fa-user text-sm text-purple-400" id="profileBtnIcon"></i>
+                        </button>
+                        <button id="settingsToggleBtn" onclick="openSettingsModal()" class="bg-slate-900/80 border border-slate-800 p-2 rounded-full hover:bg-slate-800 transition duration-200 text-cyan-400 focus:outline-none">
+                            <i class="fas fa-cog text-sm"></i>
+                        </button>
                     </div>
 
                     <div id="ballSelectorMini" class="flex gap-2 border-l border-slate-850 pl-4">
@@ -1189,12 +1234,13 @@
                             </div>
                             <div id="teamSlotsContainer" class="space-y-3"></div>
                         </div>
-                        <div class="bg-slate-950/70 border border-slate-900 rounded-2xl p-4">
-                            <div class="mb-4">
+                        <div class="bg-slate-950/70 border border-slate-900 rounded-2xl p-4 flex flex-col" style="min-height:300px;">
+                            <div class="mb-2 flex items-center justify-between">
                                 <h3 class="text-sm font-bold text-slate-300 uppercase tracking-widest">Choose from PC</h3>
-                                <p class="text-[10px] text-slate-500 mt-1">Select any caught Pokémon from your PC for each team slot.</p>
+                                <span id="teamActiveSlotBanner" class="text-[9px] text-cyan-400 font-bold px-2 py-0.5 rounded-full border border-cyan-800 bg-cyan-950/40 hidden">Picking Slot…</span>
                             </div>
-                            <div id="teamPcSummary" class="text-[10px] text-slate-400">Loading team roster...</div>
+                            <div id="teamPcSummary" class="mb-2"></div>
+                            <div id="teamPcBrowser" class="overflow-y-auto flex-1 grid grid-cols-2 gap-2 content-start" style="max-height:450px;"></div>
                         </div>
                     </div>
                 </div>
@@ -2543,7 +2589,7 @@ const CAMPAIGN_ROADMAP = [
                     });
 
                     // Active theme label chip — text only; colours come from CSS variables
-                    const labels = { default:'Rose', ocean:'Ocean', forest:'Forest', sunset:'Sunset' };
+                    const labels = { default:'Rose', ocean:'Ocean', forest:'Forest', sunset:'Sunset', electric:'Electric', midnight:'Midnight', dragon:'Dragon', steel:'Steel' };
                     const labelEl = document.getElementById('activeThemeLabel');
                     if (labelEl) labelEl.textContent = labels[currentTheme] || 'Rose';
 
@@ -2572,26 +2618,14 @@ const CAMPAIGN_ROADMAP = [
                 };
 
                 const THEMES = {
-                    default: {
-                        primary: 'from-rose-500 via-pink-500 to-amber-400',
-                        accent: 'rose',
-                        glow: 'rgba(234, 179, 8, 0.65)'
-                    },
-                    ocean: {
-                        primary: 'from-cyan-500 via-blue-500 to-indigo-500',
-                        accent: 'cyan',
-                        glow: 'rgba(6, 182, 212, 0.65)'
-                    },
-                    forest: {
-                        primary: 'from-emerald-500 via-green-500 to-teal-500',
-                        accent: 'emerald',
-                        glow: 'rgba(16, 185, 129, 0.65)'
-                    },
-                    sunset: {
-                        primary: 'from-orange-500 via-amber-500 to-red-500',
-                        accent: 'orange',
-                        glow: 'rgba(249, 115, 22, 0.65)'
-                    }
+                    default:  { primary:'from-rose-500 via-pink-500 to-amber-400',    accent:'rose',    glow:'rgba(244,63,94,0.65)'   },
+                    ocean:    { primary:'from-cyan-500 via-blue-500 to-indigo-500',    accent:'cyan',    glow:'rgba(6,182,212,0.65)'   },
+                    forest:   { primary:'from-emerald-500 via-green-500 to-teal-500',  accent:'emerald', glow:'rgba(16,185,129,0.65)'  },
+                    sunset:   { primary:'from-orange-500 via-amber-500 to-red-500',    accent:'orange',  glow:'rgba(249,115,22,0.65)'  },
+                    electric: { primary:'from-yellow-400 via-amber-400 to-orange-400', accent:'yellow',  glow:'rgba(234,179,8,0.65)'   },
+                    midnight: { primary:'from-indigo-500 via-violet-500 to-blue-500',  accent:'indigo',  glow:'rgba(99,102,241,0.65)'  },
+                    dragon:   { primary:'from-violet-600 via-purple-500 to-pink-500',  accent:'violet',  glow:'rgba(124,58,237,0.65)'  },
+                    steel:    { primary:'from-slate-500 via-slate-400 to-sky-400',     accent:'slate',   glow:'rgba(148,163,184,0.65)' }
                 };
 
                 function setTheme(themeName, silent = false) {
@@ -2609,7 +2643,7 @@ const CAMPAIGN_ROADMAP = [
                     localStorage.setItem('pokemon_radar_theme', themeName);
 
                     if (!silent) {
-                        const labels = { default:'Rose', ocean:'Ocean', forest:'Forest', sunset:'Sunset' };
+                        const labels = { default:'Rose', ocean:'Ocean', forest:'Forest', sunset:'Sunset', electric:'Electric', midnight:'Midnight', dragon:'Dragon', steel:'Steel' };
                         showNotification('Theme Changed', `Applied ${labels[themeName] || themeName} theme`, 'success');
                     }
                 }
@@ -3921,6 +3955,27 @@ const CAMPAIGN_ROADMAP = [
                     const attackerSide = isPlayerAttacker ? 'player' : 'boss';
                     const defenderSide = isPlayerAttacker ? 'boss'   : 'player';
 
+                    // Names mapped to absolute sides (fixes "self buff shown as foe's" & vice-versa)
+                    const playerName = isPlayerAttacker ? attacker.name : defender.name;
+                    const bossName   = isPlayerAttacker ? defender.name : attacker.name;
+
+                    // ── SLEEP check — blocks ALL move types ─────────────
+                    const sc = gameState.battle.statusConds || {};
+                    if (sc[attackerSide] === 'sleep') {
+                        if (Math.random() < 0.6) {
+                            logBox.innerHTML += `<div class="text-indigo-400 mt-1 italic">💤 ${attacker.name} is fast asleep!</div>`;
+                            if (Math.random() < 0.33) {
+                                gameState.battle.statusConds[attackerSide] = null;
+                                logBox.innerHTML += `<div class="text-indigo-300 mt-0.5">😲 ${attacker.name} woke up!</div>`;
+                                renderStatStagesUI();
+                            }
+                            logBox.scrollTop = logBox.scrollHeight;
+                            return;
+                        }
+                        // Small chance (40%) to act through sleep — considered "tossing and turning"
+                        logBox.innerHTML += `<div class="text-indigo-300 mt-0.5 text-[9px] italic">(${attacker.name} stirs in its sleep…)</div>`;
+                    }
+
                     // ── STATUS (non-damaging) moves ─────────────────────
                     if (moveSpec.category === 'status' && moveSpec.effect) {
                         const eff = moveSpec.effect;
@@ -3933,32 +3988,18 @@ const CAMPAIGN_ROADMAP = [
                             logBox.innerHTML += `<div class="text-green-400 mt-1 font-bold">💚 ${attacker.name} restored all HP!</div>`;
                         } else if (eff.status) {
                             const tSide = eff.target === 'self' ? attackerSide : defenderSide;
-                            applyStatusCond(tSide, eff.status, logBox, attacker.name, defender.name);
+                            applyStatusCond(tSide, eff.status, logBox, playerName, bossName);
                         } else if (eff.stat) {
                             const tSide = eff.target === 'self' ? attackerSide : defenderSide;
-                            applyStatStage(tSide, eff.stat, eff.stages, logBox, attacker.name, defender.name);
+                            applyStatStage(tSide, eff.stat, eff.stages, logBox, playerName, bossName);
                         }
                         if (effIndicator) effIndicator.textContent = '';
                         logBox.scrollTop = logBox.scrollHeight;
                         return;
                     }
                     if (moveSpec.category === 'status') {
-                        // Status move with no effect data — just show a message
                         playBeep();
                         logBox.innerHTML += `<div class="text-violet-400 mt-1">✨ ${attacker.name} used <span class="text-white capitalize font-bold">${moveName.replace(/-/g,' ')}</span>! But nothing happened...</div>`;
-                        logBox.scrollTop = logBox.scrollHeight;
-                        return;
-                    }
-
-                    // ── DAMAGING moves ──────────────────────────────────
-                    // Sleep check
-                    const sc = gameState.battle.statusConds || {};
-                    if (sc[attackerSide] === 'sleep' && Math.random() < 0.5) {
-                        logBox.innerHTML += `<div class="text-indigo-400 mt-1 italic">💤 ${attacker.name} is fast asleep!</div>`;
-                        if (Math.random() < 0.33) {
-                            gameState.battle.statusConds[attackerSide] = null;
-                            logBox.innerHTML += `<div class="text-indigo-300 mt-0.5">😲 ${attacker.name} woke up!</div>`;
-                        }
                         logBox.scrollTop = logBox.scrollHeight;
                         return;
                     }
@@ -4122,7 +4163,10 @@ const CAMPAIGN_ROADMAP = [
                     gameState.battle.fighterHP = newHP;
                     gameState.battle.fighterMaxHP = newHP;
                     gameState.battle.oranUsed = false;
-                    gameState.battle.choiceBandMove = null; // choice band resets on switch
+                    gameState.battle.choiceBandMove = null;
+                    // Incoming Pokémon has clean status & stat stages
+                    gameState.battle.statusConds.player = null;
+                    gameState.battle.statStages.player = { atk:0, def:0, spAtk:0, spDef:0, speed:0, accuracy:0 };
 
                     document.getElementById('playerFighterSprite').src = newFighter.sprite;
                     document.getElementById('playerFighterName').textContent = (newFighter.isShiny ? '✨ ' : '') + newFighter.name;
@@ -4388,7 +4432,10 @@ const CAMPAIGN_ROADMAP = [
                         gameState.battle.fighterHP = nextHP;
                         gameState.battle.fighterMaxHP = nextHP;
                         gameState.battle.oranUsed = false;
-                        gameState.battle.choiceBandMove = null; // reset choice band when pokemon faints/switches
+                        gameState.battle.choiceBandMove = null;
+                        // Incoming Pokémon arrives with clean status & stat stages
+                        gameState.battle.statusConds.player = null;
+                        gameState.battle.statStages.player = { atk:0, def:0, spAtk:0, spDef:0, speed:0, accuracy:0 };
 
                         // Update player side UI
                         document.getElementById('playerFighterSprite').src = nextFighter.sprite;
@@ -4580,48 +4627,105 @@ const CAMPAIGN_ROADMAP = [
 
                 function renderTeamView() {
                     const slotsContainer = document.getElementById('teamSlotsContainer');
-                    const summary = document.getElementById('teamPcSummary');
+                    const summary        = document.getElementById('teamPcSummary');
+                    const browser        = document.getElementById('teamPcBrowser');
                     if (!slotsContainer) return;
 
-                    slotsContainer.innerHTML = '';
-                    if (summary) {
-                        const q = (gameState._teamSearch||'').toLowerCase();
-                        const filteredCount = gameState.pcBox.filter(p=>!q||p.name.toLowerCase().includes(q)).length;
-                        summary.innerHTML = gameState.pcBox.length
-                            ? `<div class="mb-3"><input type="text" id="teamSearchInput" oninput="window.filterTeamSearch(this.value)" placeholder="🔍 Filter Pokémon…" value="${gameState._teamSearch||''}" class="w-full bg-slate-900 border border-slate-800 px-3 py-2 rounded-xl text-[11px] text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500"></div><div class="text-[10px] text-slate-400">Showing ${filteredCount} of ${gameState.pcBox.length} Pokémon · Pick a slot below.</div>`
-                            : '<div class="text-[10px] text-slate-500">Catch Pokémon in the scanner before building a team.</div>';
-                    }
+                    const activeSlot = (gameState._activeTeamSlot !== null && gameState._activeTeamSlot !== undefined)
+                        ? gameState._activeTeamSlot : null;
+                    const q          = (gameState._teamSearch || '').toLowerCase();
+                    const teamSlots  = Array.isArray(gameState.team) ? gameState.team : [];
+                    const activeUids = new Set(teamSlots.filter(Boolean));
+                    const filteredPc = gameState.pcBox.filter(p => !q || p.name.toLowerCase().includes(q));
 
-                    const q = (gameState._teamSearch||'').toLowerCase();
-                    const visiblePc = gameState.pcBox.filter(p=>!q||p.name.toLowerCase().includes(q));
-                    const teamSlots = Array.isArray(gameState.team) ? gameState.team : [];
-                    for (let slotIndex = 0; slotIndex < 6; slotIndex += 1) {
-                        const selectedUid = teamSlots[slotIndex] || null;
-                        const selectedPokemon = selectedUid ? gameState.pcBox.find(p => p.uid === selectedUid) : null;
+                    // ── Left panel: 6 compact slot cards ──────────────────
+                    slotsContainer.innerHTML = '';
+                    for (let i = 0; i < 6; i++) {
+                        const uid = teamSlots[i] || null;
+                        const pk  = uid ? gameState.pcBox.find(p => p.uid === uid) : null;
+                        const isActive = activeSlot === i;
                         const card = document.createElement('div');
-                        card.className = 'rounded-xl border border-slate-900 bg-slate-950/80 p-3';
-                        const optionsMarkup = ['<option value="">— Empty Slot —</option>'].concat(visiblePc.map(pk => `<option value="${pk.uid}" ${selectedUid === pk.uid ? 'selected' : ''}>${pk.isShiny?'✨ ':''}${pk.name} Lv${pk.level||1}${pk.heldItem?' ['+pk.heldItem.replace(/_/g,' ')+']':''}</option>`)).join('');
-                        const _spriteEl = selectedPokemon
-                            ? `<img src="${selectedPokemon.sprite}" class="w-10 h-10 object-contain flex-shrink-0" style="image-rendering:pixelated" onerror="this.style.display='none'">`
-                            : `<div class="w-10 h-10 rounded-full border border-slate-800 bg-slate-900/60 flex items-center justify-center text-slate-600 text-xl flex-shrink-0">?</div>`;
-                        const _infoEl = selectedPokemon
-                            ? `<div class="text-[9px] text-slate-400 capitalize">${selectedPokemon.type1}${selectedPokemon.type2?'/'+selectedPokemon.type2:''} · ${selectedPokemon.xp||0}/${(selectedPokemon.level||1)*100} XP</div>`
-                            : '';
+                        card.className = `rounded-xl border p-2.5 flex items-center gap-2 transition-all duration-150 ${isActive ? 'border-cyan-500 bg-cyan-950/20 shadow-md shadow-cyan-900/30' : 'border-slate-900 bg-slate-950/80 hover:border-slate-700'}`;
+
+                        const spriteHtml = pk
+                            ? `<img src="${pk.sprite}" class="w-9 h-9 object-contain flex-shrink-0" style="image-rendering:pixelated" onerror="this.style.display='none'">`
+                            : `<div class="w-9 h-9 rounded-lg border border-slate-800 bg-slate-900/60 flex items-center justify-center text-slate-600 font-bold text-xs flex-shrink-0">${i+1}</div>`;
+                        const nameHtml = pk
+                            ? `<div class="text-xs font-bold text-white truncate">${pk.isShiny?'✨ ':''}${pk.name}</div>
+                               <div class="text-[9px] text-slate-400 capitalize">${pk.type1}${pk.type2?'/'+pk.type2:''} · Lv${pk.level||1}</div>`
+                            : `<div class="text-xs text-slate-500">Open slot</div>`;
+                        const slotLabel = i === 0 ? 'Lead' : `Slot ${i+1}`;
+
                         card.innerHTML = `
-                            <div class="flex items-center gap-2 mb-2">
-                                ${_spriteEl}
-                                <div class="flex-1 min-w-0">
-                                    <div class="text-[9px] uppercase tracking-widest text-slate-500">${slotIndex === 0 ? 'Lead' : `Slot ${slotIndex + 1}`}</div>
-                                    <div class="text-sm font-bold text-white truncate">${selectedPokemon ? (selectedPokemon.isShiny?'✨ ':'')+selectedPokemon.name : 'Open Slot'}</div>
-                                    ${_infoEl}
-                                </div>
-                                ${selectedPokemon ? `<button onclick="window.clearTeamSlot(${slotIndex})" class="text-[10px] text-slate-400 hover:text-rose-400 transition flex-shrink-0">Clear</button>` : ''}
+                            ${spriteHtml}
+                            <div class="flex-1 min-w-0">
+                                <div class="text-[8px] uppercase tracking-widest text-slate-600 mb-0.5">${slotLabel}</div>
+                                ${nameHtml}
                             </div>
-                            <select onchange="window.setTeamSlot(${slotIndex}, this.value)" class="w-full bg-slate-900 border border-slate-800 text-[11px] rounded-lg p-2 text-slate-200 focus:outline-none focus:border-cyan-500">
-                                ${optionsMarkup}
-                            </select>
+                            <div class="flex gap-1 flex-shrink-0">
+                                ${pk ? `<button onclick="window.clearTeamSlot(${i})" class="text-[9px] text-slate-500 hover:text-rose-400 px-1.5 py-1 rounded border border-slate-800 hover:border-rose-800 transition" title="Clear slot">✕</button>` : ''}
+                                <button onclick="window.pickTeamSlot(${i})" title="${isActive ? 'Cancel picking' : 'Pick a Pokémon for this slot'}"
+                                    class="text-[9px] font-bold px-2 py-1 rounded border transition ${isActive ? 'bg-cyan-600 border-cyan-500 text-white' : 'bg-slate-900 border-slate-700 text-cyan-400 hover:border-cyan-600 hover:bg-slate-800'}">
+                                    ${isActive ? '✓ Active' : 'Pick →'}
+                                </button>
+                            </div>
                         `;
                         slotsContainer.appendChild(card);
+                    }
+
+                    // ── Right panel: banner + search + PC grid ────────────
+                    const banner = document.getElementById('teamActiveSlotBanner');
+                    if (banner) {
+                        if (activeSlot !== null) {
+                            const slotName = activeSlot === 0 ? 'Lead' : `Slot ${activeSlot + 1}`;
+                            banner.textContent = `Picking for ${slotName}`;
+                            banner.classList.remove('hidden');
+                        } else {
+                            banner.classList.add('hidden');
+                        }
+                    }
+
+                    if (summary) {
+                        if (gameState.pcBox.length === 0) {
+                            summary.innerHTML = '<div class="text-[10px] text-slate-500 mb-2">Catch Pokémon in the scanner first.</div>';
+                        } else {
+                            summary.innerHTML = `
+                                <div class="flex items-center gap-2 mb-2">
+                                    <input type="text" id="teamSearchInput" oninput="window.filterTeamSearch(this.value)"
+                                        placeholder="🔍 Search name…" value="${gameState._teamSearch||''}"
+                                        class="flex-1 bg-slate-900 border border-slate-800 px-2.5 py-1.5 rounded-xl text-[11px] text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500">
+                                    <span class="text-[9px] text-slate-500 whitespace-nowrap">${filteredPc.length}/${gameState.pcBox.length}</span>
+                                </div>
+                                ${activeSlot === null ? '<div class="text-[9px] text-slate-600 mb-1">← Click <span class="text-cyan-500 font-bold">Pick →</span> on a slot, then tap a Pokémon below.</div>' : ''}
+                            `;
+                        }
+                    }
+
+                    if (browser) {
+                        browser.innerHTML = '';
+                        if (gameState.pcBox.length === 0) return;
+                        filteredPc.forEach(pk => {
+                            const inSlot = activeUids.has(pk.uid);
+                            const cell = document.createElement('button');
+                            cell.className = `flex items-center gap-2 p-2 rounded-xl border transition-all text-left w-full ${inSlot ? 'border-cyan-700/60 bg-cyan-950/20' : 'border-slate-800 bg-slate-950/60 hover:border-cyan-500 hover:bg-slate-900'}`;
+                            cell.title = inSlot ? `${pk.name} is already on your team` : `Add ${pk.name} to selected slot`;
+                            cell.onclick = () => {
+                                if (activeSlot === null) {
+                                    showNotification('Select a slot first', 'Click "Pick →" on any team slot first.', 'info');
+                                    return;
+                                }
+                                window.selectPcForSlot(pk.uid);
+                            };
+                            cell.innerHTML = `
+                                <img src="${pk.sprite}" class="w-8 h-8 object-contain flex-shrink-0" style="image-rendering:pixelated" onerror="this.style.display='none'">
+                                <div class="min-w-0 flex-1">
+                                    <div class="text-[10px] font-bold text-white truncate">${pk.isShiny?'✨ ':''}${pk.name}</div>
+                                    <div class="text-[8px] text-slate-400 capitalize">${pk.type1} · Lv${pk.level||1}</div>
+                                </div>
+                                ${inSlot ? '<span class="text-[8px] text-cyan-400 flex-shrink-0">✓</span>' : ''}
+                            `;
+                            browser.appendChild(cell);
+                        });
                     }
 
                     const teamBadgeInline = document.getElementById('teamCountBadgeInline');
@@ -4629,10 +4733,29 @@ const CAMPAIGN_ROADMAP = [
                     updateUI();
                 }
 
+                window.pickTeamSlot = function(slotIndex) {
+                    // Toggle: clicking the active slot again cancels picking
+                    if (gameState._activeTeamSlot === slotIndex) {
+                        gameState._activeTeamSlot = null;
+                    } else {
+                        gameState._activeTeamSlot = slotIndex;
+                    }
+                    renderTeamView();
+                    // Scroll PC browser into view on mobile
+                    const b = document.getElementById('teamPcBrowser');
+                    if (b) b.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                };
+
+                window.selectPcForSlot = function(uid) {
+                    const slotIndex = gameState._activeTeamSlot;
+                    if (slotIndex === null || slotIndex === undefined) return;
+                    gameState._activeTeamSlot = null; // clear before re-render triggered by setTeamSlot
+                    window.setTeamSlot(slotIndex, uid);
+                };
+
                 window.filterTeamSearch = function(val) {
                     gameState._teamSearch = val;
                     renderTeamView();
-                    // Keep focus on the search input
                     const inp = document.getElementById('teamSearchInput');
                     if (inp) { inp.focus(); const l=inp.value.length; inp.setSelectionRange(l,l); }
                 };
@@ -4930,6 +5053,15 @@ const CAMPAIGN_ROADMAP = [
                 // ==========================================
                 // MODULE 8: MART SHOP
                 // ==========================================
+
+                // These consumables exist in-game but are not sold in the shop (too granular / clutters UI)
+                const SHOP_HIDDEN_CONSUMABLES = new Set([
+                    'potion','super_potion','hyper_potion','max_potion',
+                    'ether','max_ether','elixir','max_elixir',
+                    'attack_boost','defense_boost','speed_boost','special_boost',
+                    'vitamin_a','vitamin_b','vitamin_c','vitamin_d','vitamin_e','vitamin_f'
+                ]);
+
                 function renderHeldItemsShop() {
                     const heldContainer = document.getElementById('heldItemsShopList');
                     const consumablesContainer = document.getElementById('consumablesShopList');
@@ -4938,6 +5070,7 @@ const CAMPAIGN_ROADMAP = [
 
                     Object.keys(HOLD_ITEMS_DB).forEach(key => {
                         const item = HOLD_ITEMS_DB[key];
+                        if (SHOP_HIDDEN_CONSUMABLES.has(key)) return; // removed from shop
                         const count = gameState.inventoryItems[key] || 0;
                         const card = document.createElement('div');
                         const targetContainer = item.type === 'held_item' ? heldContainer : consumablesContainer;
