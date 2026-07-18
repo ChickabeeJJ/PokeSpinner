@@ -900,7 +900,7 @@
                 </button>
                 <button onclick="switchView('pokedex')" id="nav-pokedex" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
                     <i class="fas fa-book text-blue-400"></i>
-                    <span data-i18n="nav.pokedex">Registered Pokédex</span> <span id="dexProgressBadge" class="ml-auto text-[10px] bg-slate-900 px-2 py-0.5 rounded-full">0/1025</span></span>
+                    <span data-i18n="nav.pokedex" class="flex-1 text-left truncate">Registered Pokédex</span> <span id="dexProgressBadge" class="shrink-0 text-[10px] bg-slate-900 px-2 py-0.5 rounded-full">0/1025</span>
                 </button>
                 <button onclick="switchView('pc')" id="nav-pc" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
                     <i class="fas fa-box text-emerald-400"></i>
@@ -7290,7 +7290,7 @@ const CAMPAIGN_ROADMAP = [
                             starter.moves = [...new Set(available)].slice(0, 4);
                         }
                         if (starter.moves.length === 0) starter.moves = ['tackle'];
-                        gameState.pc.push(starter);
+                        gameState.pcBox.push(starter);
                         gameState.starterSelected = true;
                         if (overlay) overlay.style.display = 'none';
                         showNotification('✨ Partner Chosen!', `${starter.name} joined your team at Lv 5!`, 'success');
@@ -7354,15 +7354,11 @@ const CAMPAIGN_ROADMAP = [
                                 }
 
                                 loadSavedProgress();
-                                // Show starter selection only for a truly new game —
-                                // skip if starterSelected is already true OR if the
-                                // player already has any Pokémon in their PC/pokedex
-                                // (handles older saves where the flag wasn't set yet).
+                                // Show starter selection only for a truly new game.
+                                // starterSelected covers normal flow; pcBox.length covers
+                                // older saves that may not have the flag set yet.
                                 const hasExistingData = gameState.starterSelected ||
-                                    (gameState.pc && gameState.pc.length > 0) ||
-                                    (gameState.pcBox && gameState.pcBox.length > 0) ||
-                                    (gameState.team && gameState.team.length > 0) ||
-                                    (gameState.pokedex && gameState.pokedex.length > 0);
+                                    (gameState.pcBox && gameState.pcBox.length > 0);
                                 if (!hasExistingData) {
                                     setTimeout(() => showStarterSelectionScreen(), 900);
                                 }
