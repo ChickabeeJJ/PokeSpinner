@@ -1665,7 +1665,19 @@
                     "giga-drain": { type: "grass", power: 75, category: "special" },
                     "energy-ball": { type: "grass", power: 90, category: "special" },
                     "sludge": { type: "poison", power: 65, category: "special" },
-                    "mud-bomb": { type: "ground", power: 65, category: "special" }
+                    "mud-bomb":     { type: "ground",  power: 65, category: "special" },
+                    // ── Setup / Status TM moves ──────────────────────────────────────────
+                    "calm-mind":    { type: "psychic",  power: 0,  category: "status", effect: { target: "self",  multiStat: [{stat:"spAtk",stages:1},{stat:"spDef",stages:1}] } },
+                    "swords-dance": { type: "normal",   power: 0,  category: "status", effect: { target: "self",  stat: "atk",   stages: 2 } },
+                    "nasty-plot":   { type: "dark",     power: 0,  category: "status", effect: { target: "self",  stat: "spAtk", stages: 2 } },
+                    "bulk-up":      { type: "fighting", power: 0,  category: "status", effect: { target: "self",  multiStat: [{stat:"atk",stages:1},{stat:"def",stages:1}] } },
+                    "agility":      { type: "psychic",  power: 0,  category: "status", effect: { target: "self",  stat: "speed", stages: 2 } },
+                    "toxic":        { type: "poison",   power: 0,  category: "status", effect: { target: "foe",   status: "poison" } },
+                    "will-o-wisp":  { type: "fire",     power: 0,  category: "status", effect: { target: "foe",   status: "burn" } },
+                    "screech":      { type: "normal",   power: 0,  category: "status", effect: { target: "foe",   stat: "def",   stages: -2 } },
+                    "charm":        { type: "fairy",    power: 0,  category: "status", effect: { target: "foe",   stat: "atk",   stages: -2 } },
+                    "cotton-spore": { type: "grass",    power: 0,  category: "status", effect: { target: "foe",   stat: "speed", stages: -2 } },
+                    "tickle":       { type: "normal",   power: 0,  category: "status", effect: { target: "foe",   multiStat: [{stat:"atk",stages:-1},{stat:"def",stages:-1}] } }
                 };
 
                 // ==========================================
@@ -1696,44 +1708,141 @@
                     tm22: { num:'22', name:'Seed Bomb',    move:'seed-bomb',    type:'grass',    power:80,  cost:600,  desc:'Hurls a barrage of seeds. Direct and reliable.' },
                     tm23: { num:'23', name:'Aqua Tail',    move:'aqua-tail',    type:'water',    power:90,  cost:700,  desc:'Strikes with a powerful water-coated tail.' },
                     tm24: { num:'24', name:'Outrage',      move:'outrage',      type:'dragon',   power:120, cost:1200, desc:'Rampages 2-3 turns at full power, then confused.' },
-                    tm25: { num:'25', name:'Solar Beam',   move:'solar-beam',   type:'grass',    power:120, cost:1200, desc:'Charges one turn, then fires a blazing beam of light.' }
+                    tm25: { num:'25', name:'Solar Beam',   move:'solar-beam',   type:'grass',    power:120, cost:1200, desc:'Charges one turn, then fires a blazing beam of light.' },
+                    tm26: { num:'26', name:'Calm Mind',    move:'calm-mind',    type:'psychic',  power:0,   cost:900,  desc:'Quietly focuses the mind. Raises Sp. Atk and Sp. Def by 1.' },
+                    tm27: { num:'27', name:'Swords Dance', move:'swords-dance', type:'normal',   power:0,   cost:800,  desc:'A frenetic dance. Sharply raises the user\'s Attack by 2.' },
+                    tm28: { num:'28', name:'Nasty Plot',   move:'nasty-plot',   type:'dark',     power:0,   cost:800,  desc:'Thinks bad thoughts. Sharply raises the user\'s Sp. Atk by 2.' },
+                    tm29: { num:'29', name:'Bulk Up',      move:'bulk-up',      type:'fighting', power:0,   cost:800,  desc:'Bulks up the body. Raises the user\'s Attack and Defense by 1.' },
+                    tm30: { num:'30', name:'Agility',      move:'agility',      type:'psychic',  power:0,   cost:700,  desc:'Relaxes the body. Sharply raises the user\'s Speed by 2 stages.' },
+                    tm31: { num:'31', name:'Toxic',        move:'toxic',        type:'poison',   power:0,   cost:600,  desc:'Poisons the target. Poison damage stacks each turn.' },
+                    tm32: { num:'32', name:'Will-O-Wisp',  move:'will-o-wisp',  type:'fire',     power:0,   cost:600,  desc:'Shoots a sinister flame that inflicts a burn on the target.' },
+                    tm33: { num:'33', name:'Screech',      move:'screech',      type:'normal',   power:0,   cost:500,  desc:'An earsplitting screech that harshly lowers the foe\'s Defense by 2.' }
                 };
 
                 // Additional TM compatibility (Pokemon that can learn by TM but not by level-up in this game)
+                // Legendaries 143-151, 243-251 now have LEVELUP_MOVES so many moves auto-detect;
+                // entries here cover TMs whose move is NOT in those level-up tables.
+                const LEGENDARY_ALL = [143,144,145,146,149,150,151,243,244,245,249,250,251,377,378,379,380,381,382,383,384,385,386,480,481,482,483,484,485,487,488,490,491,492,493];
                 const TM_COMPAT = {
-                    'tm01': [19,21,25,27,29,32,35,37,39,43,46,48,52,56,58,63,66,79,86,88,96,100,102,104,109,111,114,116,118,120,133,137,142,147,152,155,158,175,179,246,252,255,258,280,304,328,371,374,387,390,393,443,447,495,498,501,633,650,653,656,704,722,725,728,810,813,816,885,906,909,912],
-                    'tm02': [4,16,23,41,116,131,142,147,246,328,371,374,443,633,704,782,885],
-                    'tm03': [7,54,60,72,79,86,90,98,116,118,120,131,147,152,155,158,179,258,280,328,371,393,501,656,704,728,816,912],
-                    'tm04': [16,21,27,41,43,46,48,52,56,84,100,116,120,137,142,147,152,175,252,255,280,374,390,393,447,495,633,650,653,656,722,725,728,810,813],
-                    'tm05': [4,37,58,77,109,131,155,179,246,255,258,371,387,390,443,495,498,633,650,653,722,725,810,813,906,909],
-                    'tm06': [25,63,79,81,86,100,131,133,137,142,147,152,155,179,246,252,280,374,387,447,495,633,650,656,704,722,810,885],
-                    'tm07': [7,54,60,72,79,86,90,98,116,118,120,131,147,152,155,158,179,252,258,280,328,371,393,443,501,656,704,728,816,912],
-                    'tm08': [27,50,58,74,79,100,108,111,118,129,131,147,246,258,304,328,349,371,374,387,443,447,495,633,650,704,782,810],
-                    'tm09': [48,54,60,63,79,92,96,102,120,131,133,137,142,147,175,179,246,280,374,447,495,633,650,653,656,704,722,725,728,810],
-                    'tm10': [48,54,63,79,92,96,102,133,137,142,252,280,374,447,633,650,653,656,704,722,725,728,810],
-                    'tm11': [1,43,46,48,69,102,104,108,114,131,133,152,175,252,280,387,390,393,495,633,650,704,722,810,906],
-                    'tm12': [23,29,32,43,69,72,88,98,109,114,131,246,252,328,387,495,650,704],
-                    'tm13': [27,50,74,100,104,111,131,246,258,304,328,387,443,447,495,633,704,782],
-                    'tm14': [74,104,111,118,131,142,147,246,304,328,349,371,374,387,443,633,704,782,810],
-                    'tm15': [7,54,60,72,79,86,90,98,116,118,120,129,131,147,152,155,158,179,258,280,349,393,443,501,633,656,704,728,816,885],
-                    'tm16': [16,21,41,63,84,116,120,131,137,142,147,252,255,280,374,393,447,495,633,650,653,656,704,722,810],
-                    'tm17': [23,29,32,43,69,72,88,98,109,114,246,252,304,328,387,495,650,704],
-                    'tm18': [74,81,100,104,111,131,142,246,304,328,349,371,374,387,443,633,704,782,810,885],
-                    'tm19': [74,81,100,104,111,131,137,246,304,328,349,371,374,443,704,782,810,885],
-                    'tm20': [25,81,100,133,137,147,175,179,252,280,374,447,633,704,810],
-                    'tm21': [25,81,100,131,133,137,147,175,179,252,280,374,447,633,704,810,885],
-                    'tm22': [1,46,69,102,104,108,114,131,152,175,252,280,387,390,393,495,633,650,704,722,810,906],
-                    'tm23': [7,54,60,72,79,86,90,98,116,118,120,129,131,147,152,158,258,349,393,501,656,728,816],
-                    'tm24': [4,16,23,41,116,131,142,147,246,328,371,374,443,633,704,782,885],
-                    'tm25': [1,43,46,48,69,102,104,114,131,152,175,252,280,387,390,393,495,633,650,704,722,810,906]
+                    'tm01': [19,21,25,27,29,32,35,37,39,43,46,48,52,56,58,63,66,79,86,88,96,100,102,104,109,111,114,116,118,120,133,137,142,143,147,150,151,152,155,158,175,179,243,244,245,246,249,250,252,255,258,280,304,328,371,374,387,390,393,443,447,495,498,501,633,650,653,656,704,722,725,728,810,813,816,885,906,909,912],
+                    'tm02': [4,16,23,41,116,131,142,147,149,150,151,246,328,371,374,443,633,704,782,885],
+                    'tm03': [7,54,60,72,79,86,90,98,116,118,120,131,147,150,151,152,155,158,179,245,249,258,280,328,371,393,501,656,704,728,816,912],
+                    'tm04': [16,21,27,41,43,46,48,52,56,84,100,116,120,137,142,147,149,150,151,152,175,252,255,280,374,390,393,447,495,633,650,653,656,722,725,728,810,813],
+                    'tm05': [4,37,58,77,109,131,146,150,151,155,179,244,246,250,255,258,371,387,390,443,495,498,633,650,653,722,725,810,813,906,909],
+                    'tm06': [25,63,79,81,86,100,131,133,137,142,143,147,150,151,152,155,179,243,245,246,249,252,280,374,387,447,495,633,650,656,704,722,810,885],
+                    'tm07': [7,54,60,72,79,86,90,98,116,118,120,131,144,147,149,150,151,152,155,158,179,245,249,252,258,280,328,371,393,443,501,656,704,728,816,912],
+                    'tm08': [27,50,58,74,79,100,108,111,118,129,131,143,147,149,150,151,246,258,304,328,349,371,374,387,383,443,447,495,633,650,704,782,810],
+                    'tm09': [48,54,60,63,79,92,96,102,120,131,133,137,142,147,150,151,175,179,243,246,249,250,251,280,374,447,495,633,650,653,656,704,722,725,728,810],
+                    'tm10': [48,54,63,79,92,96,102,133,137,142,150,151,243,244,249,252,280,374,447,633,650,653,656,704,722,725,728,810],
+                    'tm11': [1,43,46,48,69,102,104,108,114,131,133,150,151,152,175,251,252,280,387,390,393,495,633,650,704,722,810,906],
+                    'tm12': [23,29,32,43,69,72,88,98,109,114,131,150,151,246,252,328,387,495,650,704],
+                    'tm13': [27,50,74,100,104,111,131,143,149,150,151,246,258,304,328,387,443,447,495,633,704,782],
+                    'tm14': [74,104,111,118,131,142,147,149,150,151,246,304,328,349,371,374,387,443,633,704,782,810],
+                    'tm15': [7,54,60,72,79,86,90,98,116,118,120,129,131,143,144,147,149,150,151,152,155,158,179,245,249,258,280,349,393,443,501,633,656,704,728,816,885],
+                    'tm16': [16,21,41,63,84,116,120,131,137,142,144,145,146,147,149,150,151,252,255,280,374,393,447,495,633,650,653,656,704,722,810],
+                    'tm17': [23,29,32,43,69,72,88,98,109,114,150,151,246,252,304,328,387,495,650,704],
+                    'tm18': [74,81,100,104,111,131,142,143,149,150,151,246,304,328,349,371,374,387,443,633,704,782,810,885],
+                    'tm19': [74,81,100,104,111,131,137,143,149,150,151,246,304,328,349,371,374,443,704,782,810,885],
+                    'tm20': [25,81,100,133,137,143,145,147,150,151,175,179,243,252,280,374,447,633,704,810],
+                    'tm21': [25,81,100,131,133,137,143,145,147,150,151,175,179,243,252,280,374,447,633,704,810,885],
+                    'tm22': [1,46,69,102,104,108,114,131,150,151,152,175,251,252,280,387,390,393,495,633,650,704,722,810,906],
+                    'tm23': [7,54,60,72,79,86,90,98,116,118,120,129,131,147,149,150,151,152,158,245,258,349,393,501,656,728,816],
+                    'tm24': [4,16,23,41,116,131,142,147,149,150,151,246,328,371,374,443,633,704,782,885],
+                    'tm25': [1,43,46,48,69,102,104,114,131,146,150,151,152,175,250,251,252,280,387,390,393,495,633,650,704,722,810,906],
+                    // ── New status TMs ──────────────────────────────────────────────────────
+                    // TM26 Calm Mind — psychic/special sweepers
+                    'tm26': [63,64,65,79,80,92,93,94,96,97,120,121,122,124,131,133,144,145,146,147,148,149,150,151,175,196,243,244,245,249,250,251,280,281,374,443,447,495,633,650,653,656,704,722,725,728,810],
+                    // TM27 Swords Dance — physical attackers
+                    'tm27': [4,6,19,21,27,52,56,58,66,84,92,104,111,112,118,123,127,128,129,130,131,142,143,147,148,149,150,151,252,255,304,387,390,443,447,495,498,633,650,653,722,810],
+                    // TM28 Nasty Plot — special attackers / dark types
+                    'tm28': [52,92,93,94,131,150,151,198,215,228,243,249,251,280,495,650,653,656,704,722,728,810],
+                    // TM29 Bulk Up — fighting and bulky physical
+                    'tm29': [56,57,58,66,67,68,106,107,108,143,148,149,150,151,252,255,304,387,390,447,498,632,633,650,810],
+                    // TM30 Agility — fast or setup-oriented
+                    'tm30': [25,63,65,81,84,100,116,133,135,145,148,149,150,151,179,243,280,374,443,447,495,633,650,704,722,810,885],
+                    // TM31 Toxic — wide compatibility (most non-Poison/Steel)
+                    'tm31': [1,4,7,10,13,16,19,21,23,25,27,29,32,35,37,39,41,43,46,48,50,52,54,56,58,60,63,66,72,74,77,79,81,84,86,88,90,92,96,98,100,102,104,108,109,111,114,116,118,120,129,131,133,137,142,143,144,145,146,147,148,149,150,151,152,155,158,175,179,243,244,245,246,249,250,251,252,255,258,280,304,328,349,371,374,387,390,393,443,447,495,498,501,633,650,653,656,704,722,725,728,810,813,816,885,906,909,912],
+                    // TM32 Will-O-Wisp — fire types and ghost types
+                    'tm32': [4,6,37,38,58,77,78,92,93,94,109,110,146,150,151,155,156,157,244,250,255,256,257,390,391,392,495,498,499,500,650,651,652,722,723,724,810,813,814],
+                    // TM33 Screech — wide compatibility
+                    'tm33': [10,13,19,21,23,25,27,29,32,37,39,41,43,46,48,52,56,58,60,63,66,72,74,77,79,84,86,88,90,92,96,98,100,104,108,109,111,114,116,118,120,129,131,142,143,147,148,149,150,151,152,155,158,175,179,246,252,255,258,280,304,328,371,387,390,393,443,447,495,498,501,633,650,653,656,704,722,725,728,810,813,816,885,906,909,912]
                 };
 
                 // Maps evolved form ID → direct pre-evolution ID so TM/move checks walk the chain
                 const PRE_EVO_MAP = {
-                    26:25, 36:35, 38:37, 40:39, 44:43, 45:44,
-                    59:58, 62:61, 78:77, 87:86, 91:90, 101:100,
-                    121:120, 134:133, 135:133, 136:133,
-                    175:174, 196:133, 197:133, 281:280, 468:175, 700:133
+                    // Gen 1 starters
+                    2:1,   3:2,   5:4,   6:5,   8:7,   9:8,
+                    // Bugs
+                    11:10, 12:11, 14:13, 15:14,
+                    // Birds / misc
+                    17:16, 18:17, 20:19, 22:21, 24:23,
+                    // Sandshrew, Nidoran lines
+                    28:27, 30:29, 31:30, 33:32, 34:33,
+                    // Clefairy, Vulpix, Jigglypuff (already had some)
+                    36:35, 38:37, 40:39,
+                    // Zubat line, Oddish line
+                    42:41, 44:43, 45:44,
+                    // Paras, Venonat, Diglett, Meowth, Psyduck, Mankey
+                    47:46, 49:48, 51:50, 53:52, 55:54, 57:56,
+                    // Growlithe, Poliwag line
+                    59:58, 61:60, 62:61,
+                    // Abra line, Machop line, Bellsprout line
+                    64:63, 65:64, 67:66, 68:67, 70:69, 71:70,
+                    // Tentacool, Geodude line
+                    73:72, 75:74, 76:75,
+                    // Ponyta, Slowpoke, Magnemite, Doduo
+                    78:77, 80:79, 82:81, 85:84,
+                    // Seel, Grimer, Shellder, Gastly line
+                    87:86, 89:88, 91:90, 93:92, 94:93,
+                    // Drowzee, Krabby, Voltorb, Exeggcute, Cubone
+                    97:96, 99:98, 101:100, 103:102, 105:104,
+                    // Koffing, Rhyhorn, Horsea, Goldeen, Staryu
+                    110:109, 112:111, 117:116, 119:118, 121:120,
+                    // Eevee evolutions
+                    134:133, 135:133, 136:133, 196:133, 197:133, 700:133,
+                    // Omanyte, Kabuto
+                    139:138, 141:140,
+                    // Dragon line
+                    148:147, 149:148,
+                    // Gen 2 starters + misc
+                    153:152, 154:153, 156:155, 157:156, 159:158, 160:159,
+                    // Togepi, Mareep line
+                    175:174, 176:175, 180:179, 181:180,
+                    // Flaaffy→Mareep (already 180:179)
+                    // Snubbull, Houndour, Larvitar line
+                    210:209, 229:228, 247:246, 248:247,
+                    // Ralts line
+                    281:280, 282:281,
+                    // Togekiss
+                    468:175,
+                    // Gen 3 starters
+                    253:252, 254:253, 256:255, 257:256, 259:258, 260:259,
+                    // Beldum line
+                    375:374, 376:375,
+                    // Bagon line
+                    372:371, 373:372,
+                    // Gen 4 starters
+                    388:387, 389:388, 391:390, 392:391, 394:393, 395:394,
+                    // Gible line
+                    444:443, 445:444,
+                    // Riolu
+                    448:447,
+                    // Gen 5 starters
+                    496:495, 497:496, 499:498, 500:499, 502:501, 503:502,
+                    // Deino line
+                    634:633, 635:634,
+                    // Gen 6 starters
+                    651:650, 652:651, 654:653, 655:654, 657:656, 658:657,
+                    // Gen 7 starters
+                    723:722, 724:723, 726:725, 727:726, 729:728, 730:729,
+                    // Jangmo-o line
+                    783:782, 784:783,
+                    // Gen 8 starters
+                    811:810, 812:811, 814:813, 815:814, 817:816, 818:817,
+                    // Dreepy line
+                    886:885, 887:886,
+                    // Gen 9 starters
+                    907:906, 908:907, 910:909, 911:910, 913:912, 914:913
                 };
 
                 function canLearnTM(pokemon, tmKey) {
@@ -1945,7 +2054,30 @@
                     197: {25:["bite","quick-attack"],28:["feint-attack","crunch"],32:["sucker-punch"],36:["shadow-ball","body-slam"],40:["take-down"]},
                     281: {1:["growl","confusion"],8:["double-slap","disarming-voice"],15:["psybeam","charm"],20:["swift","psychic"],25:["dazzling-gleam"],30:["moonblast"]},
                     468: {1:["growl","charm"],8:["pound","swift"],15:["disarming-voice","ancient-power"],20:["dazzling-gleam","aerial-ace"],25:["moonblast","wing-attack"],30:["play-rough","body-slam"]},
-                    700: {25:["quick-attack","disarming-voice"],28:["charm","swift"],32:["moonblast","body-slam"],36:["dazzling-gleam","play-rough"],40:["take-down"]}
+                    700: {25:["quick-attack","disarming-voice"],28:["charm","swift"],32:["moonblast","body-slam"],36:["dazzling-gleam","play-rough"],40:["take-down"]},
+                    // ── Key Pokémon missing from level-up tables ──────────────────────────
+                    // Snorlax
+                    143: {1:["tackle","yawn"],10:["body-slam"],18:["crunch"],25:["earthquake"],30:["take-down"]},
+                    // Legendary birds
+                    144: {1:["peck","growl"],5:["ice-shard"],10:["icy-wind"],15:["ice-beam"],20:["aerial-ace"],25:["blizzard"],30:["ancient-power"]},
+                    145: {1:["peck","thunder-shock"],5:["thunder-wave"],10:["discharge"],15:["thunderbolt"],20:["aerial-ace"],25:["thunder"],30:["ancient-power"]},
+                    146: {1:["peck","ember"],5:["fire-spin"],10:["flame-charge"],15:["flamethrower"],20:["aerial-ace"],25:["fire-fang"],30:["ancient-power"]},
+                    // Dragonair & Dragonite (Dratini 147 already defined; chain walks cover most moves)
+                    148: {1:["wrap","leer"],5:["twister"],9:["thunder-wave"],15:["aqua-tail"],20:["dragon-claw"],25:["ice-beam"]},
+                    149: {1:["fire-punch","thunder-punch"],5:["wing-attack"],10:["dragon-claw"],15:["ice-beam"],20:["thunder"],25:["outrage"],30:["hyper-beam"]},
+                    // Mewtwo — can learn almost all TMs
+                    150: {1:["confusion","disable"],5:["psybeam"],10:["psychic"],15:["shadow-ball"],20:["thunderbolt"],25:["ice-beam"],30:["flamethrower"],35:["swift"],40:["hyper-beam"]},
+                    // Mew — universal learner
+                    151: {1:["pound","growl"],5:["psychic"],10:["thunderbolt"],15:["ice-beam"],20:["flamethrower"],25:["energy-ball"],30:["shadow-ball"],35:["earth-power"],40:["surf"]},
+                    // Legendary beasts
+                    243: {1:["thunder-shock","leer"],8:["thunder-wave"],15:["thunderbolt"],20:["discharge"],25:["crunch"],30:["thunder"],35:["swift"],40:["hyper-beam"]},
+                    244: {1:["ember","leer"],8:["fire-fang"],15:["flamethrower"],20:["crunch"],25:["fire-spin"],30:["swift"],35:["body-slam"],40:["hyper-beam"]},
+                    245: {1:["water-gun","leer"],8:["ice-shard"],15:["surf"],20:["ice-beam"],25:["crunch"],30:["aqua-tail"],35:["blizzard"],40:["hydro-pump"]},
+                    // Lugia & Ho-Oh
+                    249: {1:["gust","water-gun"],8:["aerial-ace"],15:["surf"],20:["ice-beam"],25:["psychic"],30:["shadow-ball"],35:["hydro-pump"]},
+                    250: {1:["gust","ember"],8:["aerial-ace"],15:["flamethrower"],20:["ancient-power"],25:["solar-beam"],30:["fire-spin"],35:["brave-bird"]},
+                    // Celebi
+                    251: {1:["confusion","growl"],5:["energy-ball"],10:["psychic"],15:["leaf-storm","ancient-power"],20:["shadow-ball"],25:["seed-bomb"]}
                 };
 
                 const HOLD_ITEMS_DB = {
@@ -4155,10 +4287,11 @@ const CAMPAIGN_ROADMAP = [
                         if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player: {}, boss: {} };
                         gameState.battle.statusMeta[side] = { sleepTurns: -1 }; // -1 so first increment lands at 0
                     }
-                    const msgs = { sleep:`💤 fell asleep!`, para:`⚡ became paralysed!`, leech:`🌱 was seeded!` };
-                    const cols = { sleep:'text-indigo-400', para:'text-yellow-400', leech:'text-emerald-400' };
+                    const msgs = { sleep:`💤 fell asleep!`, para:`⚡ became paralyzed!`, leech:`🌱 was seeded!`, burn:`🔥 was burned!`, poison:`☠️ was poisoned!`, freeze:`🧊 was frozen solid!` };
+                    const cols = { sleep:'text-indigo-400', para:'text-yellow-400', leech:'text-emerald-400', burn:'text-orange-400', poison:'text-purple-400', freeze:'text-blue-300' };
                     logBox.innerHTML += `<div class="${cols[cond]||'text-slate-400'} mt-1 font-bold">${ownerName} ${msgs[cond]||cond}</div>`;
-                    if (cond === 'para') applyStatStage(side, 'speed', -2, logBox, myName, foeName);
+                    if (cond === 'para')  applyStatStage(side, 'speed', -2, logBox, myName, foeName);
+                    if (cond === 'burn')  applyStatStage(side, 'atk',   -1, logBox, myName, foeName);
                 }
 
                 function resolveMoveAttack(attacker, defender, moveName, isPlayerAttacker) {
@@ -4203,6 +4336,20 @@ const CAMPAIGN_ROADMAP = [
                         }
                     }
 
+                    // ── FREEZE check — 80% stay frozen, 20% thaw ────────────
+                    if (sc[attackerSide] === 'freeze') {
+                        if (Math.random() < 0.8) {
+                            logBox.innerHTML += `<div class="text-blue-300 mt-1 italic">🧊 ${attacker.name} is frozen solid and can't move!</div>`;
+                            logBox.scrollTop = logBox.scrollHeight;
+                            return;
+                        }
+                        gameState.battle.statusConds[attackerSide] = null;
+                        if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player:{}, boss:{} };
+                        gameState.battle.statusMeta[attackerSide] = {};
+                        logBox.innerHTML += `<div class="text-blue-200 mt-0.5">🌡️ ${attacker.name} thawed out!</div>`;
+                        renderStatStagesUI();
+                    }
+
                     // ── STATUS (non-damaging) moves ─────────────────────
                     if (moveSpec.category === 'status' && moveSpec.effect) {
                         const eff = moveSpec.effect;
@@ -4216,6 +4363,10 @@ const CAMPAIGN_ROADMAP = [
                         } else if (eff.status) {
                             const tSide = eff.target === 'self' ? attackerSide : defenderSide;
                             applyStatusCond(tSide, eff.status, logBox, playerName, bossName);
+                        } else if (eff.multiStat) {
+                            // Multi-stat changes (e.g. Calm Mind, Bulk Up)
+                            const tSide = eff.target === 'self' ? attackerSide : defenderSide;
+                            eff.multiStat.forEach(({ stat, stages }) => applyStatStage(tSide, stat, stages, logBox, playerName, bossName));
                         } else if (eff.stat) {
                             const tSide = eff.target === 'self' ? attackerSide : defenderSide;
                             applyStatStage(tSide, eff.stat, eff.stages, logBox, playerName, bossName);
@@ -4330,7 +4481,12 @@ const CAMPAIGN_ROADMAP = [
                             setTimeout(() => {
                                 const bossMove = boss.moves[Math.floor(Math.random() * boss.moves.length)];
                                 resolveMoveAttack(boss, fighter, bossMove, false);
+                                // End-of-turn: burn/poison/leech after both moves
+                                if (gameState.battle.active) setTimeout(() => applyEndOfTurnEffects(), 400);
                             }, 800);
+                        } else {
+                            // Boss fainted to player's first move — still run end-of-turn (poison ticks etc.)
+                            // handleBattleVictory already called; skip to avoid double-trigger
                         }
                     } else {
                         disableMoveButtons(true);
@@ -4341,9 +4497,75 @@ const CAMPAIGN_ROADMAP = [
                             setTimeout(() => {
                                 resolveMoveAttack(fighter, boss, moveName, true);
                                 disableMoveButtons(false);
+                                // End-of-turn: burn/poison/leech after both moves
+                                if (gameState.battle.active) setTimeout(() => applyEndOfTurnEffects(), 400);
                             }, 800);
                         } else disableMoveButtons(false);
                     }
+                }
+
+                function applyEndOfTurnEffects() {
+                    if (!gameState.battle.active) return;
+                    const logBox = document.getElementById('battleLog');
+                    const sc = gameState.battle.statusConds || {};
+                    // ── Burn damage (1/16 max HP) ────────────────────────────────────────
+                    if (sc.player === 'burn' && gameState.battle.fighterHP > 0) {
+                        const d = Math.max(1, Math.round(gameState.battle.fighterMaxHP / 16));
+                        gameState.battle.fighterHP = Math.max(0, gameState.battle.fighterHP - d);
+                        document.getElementById('playerFighterHPBar').style.width = `${(gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100}%`;
+                        document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
+                        if (logBox) logBox.innerHTML += `<div class="text-orange-400 mt-1 text-[10px] italic">🔥 ${gameState.battle.fighterPokemon.name} is hurt by its burn! (−${d})</div>`;
+                        if (gameState.battle.fighterHP <= 0) { if (logBox) logBox.scrollTop = logBox.scrollHeight; handleBattleDefeat(); return; }
+                    }
+                    if (sc.boss === 'burn' && gameState.battle.bossHP > 0) {
+                        const d = Math.max(1, Math.round(gameState.battle.bossMaxHP / 16));
+                        gameState.battle.bossHP = Math.max(0, gameState.battle.bossHP - d);
+                        document.getElementById('bossHPBar').style.width = `${(gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100}%`;
+                        document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossMaxHP}`;
+                        if (logBox) logBox.innerHTML += `<div class="text-orange-400 mt-1 text-[10px] italic">🔥 ${gameState.battle.bossPokemon.name} is hurt by its burn! (−${d})</div>`;
+                        if (gameState.battle.bossHP <= 0) { if (logBox) logBox.scrollTop = logBox.scrollHeight; handleBattleVictory(); return; }
+                    }
+                    // ── Poison damage (1/8 max HP) ───────────────────────────────────────
+                    if (sc.player === 'poison' && gameState.battle.fighterHP > 0) {
+                        const d = Math.max(1, Math.round(gameState.battle.fighterMaxHP / 8));
+                        gameState.battle.fighterHP = Math.max(0, gameState.battle.fighterHP - d);
+                        document.getElementById('playerFighterHPBar').style.width = `${(gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100}%`;
+                        document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
+                        if (logBox) logBox.innerHTML += `<div class="text-purple-400 mt-1 text-[10px] italic">☠️ ${gameState.battle.fighterPokemon.name} is hurt by poison! (−${d})</div>`;
+                        if (gameState.battle.fighterHP <= 0) { if (logBox) logBox.scrollTop = logBox.scrollHeight; handleBattleDefeat(); return; }
+                    }
+                    if (sc.boss === 'poison' && gameState.battle.bossHP > 0) {
+                        const d = Math.max(1, Math.round(gameState.battle.bossMaxHP / 8));
+                        gameState.battle.bossHP = Math.max(0, gameState.battle.bossHP - d);
+                        document.getElementById('bossHPBar').style.width = `${(gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100}%`;
+                        document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossMaxHP}`;
+                        if (logBox) logBox.innerHTML += `<div class="text-purple-400 mt-1 text-[10px] italic">☠️ ${gameState.battle.bossPokemon.name} is hurt by poison! (−${d})</div>`;
+                        if (gameState.battle.bossHP <= 0) { if (logBox) logBox.scrollTop = logBox.scrollHeight; handleBattleVictory(); return; }
+                    }
+                    // ── Leech Seed (1/16 HP drain, heals user) ──────────────────────────
+                    if (sc.boss === 'leech' && gameState.battle.bossHP > 0) {
+                        const d = Math.max(1, Math.round(gameState.battle.bossMaxHP / 16));
+                        gameState.battle.bossHP = Math.max(0, gameState.battle.bossHP - d);
+                        gameState.battle.fighterHP = Math.min(gameState.battle.fighterMaxHP, gameState.battle.fighterHP + d);
+                        document.getElementById('bossHPBar').style.width = `${(gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100}%`;
+                        document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossMaxHP}`;
+                        document.getElementById('playerFighterHPBar').style.width = `${(gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100}%`;
+                        document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
+                        if (logBox) logBox.innerHTML += `<div class="text-emerald-400 mt-1 text-[10px] italic">🌱 Leech Seed drained ${d} HP from ${gameState.battle.bossPokemon.name}!</div>`;
+                        if (gameState.battle.bossHP <= 0) { if (logBox) logBox.scrollTop = logBox.scrollHeight; handleBattleVictory(); return; }
+                    }
+                    if (sc.player === 'leech' && gameState.battle.fighterHP > 0) {
+                        const d = Math.max(1, Math.round(gameState.battle.fighterMaxHP / 16));
+                        gameState.battle.fighterHP = Math.max(0, gameState.battle.fighterHP - d);
+                        gameState.battle.bossHP = Math.min(gameState.battle.bossMaxHP, gameState.battle.bossHP + d);
+                        document.getElementById('playerFighterHPBar').style.width = `${(gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100}%`;
+                        document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
+                        document.getElementById('bossHPBar').style.width = `${(gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100}%`;
+                        document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossMaxHP}`;
+                        if (logBox) logBox.innerHTML += `<div class="text-emerald-400 mt-1 text-[10px] italic">🌱 Leech Seed drained ${d} HP from ${gameState.battle.fighterPokemon.name}!</div>`;
+                        if (gameState.battle.fighterHP <= 0) { if (logBox) logBox.scrollTop = logBox.scrollHeight; handleBattleDefeat(); return; }
+                    }
+                    if (logBox) logBox.scrollTop = logBox.scrollHeight;
                 }
 
                 function disableMoveButtons(state) {
@@ -4661,10 +4883,11 @@ const CAMPAIGN_ROADMAP = [
                         gameState.battle.faintedUids.add(gameState.battle.fighterPokemon.uid);
                     }
 
-                    // Check for next alive team member
+                    // Check for next alive team member — search the ENTIRE team, not just forward
+                    const faintedSet = gameState.battle.faintedUids || new Set();
                     let nextIndex = -1;
-                    for (let i = currentIndex + 1; i < playerTeam.length; i++) {
-                        if (playerTeam[i]) { nextIndex = i; break; }
+                    for (let i = 0; i < playerTeam.length; i++) {
+                        if (playerTeam[i] && !faintedSet.has(playerTeam[i].uid)) { nextIndex = i; break; }
                     }
 
                     if (nextIndex !== -1) {
