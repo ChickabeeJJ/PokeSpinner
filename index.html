@@ -2740,14 +2740,14 @@ const CAMPAIGN_ROADMAP = [
                             soundToggleBtn.classList.remove('text-yellow-400');
                             soundToggleBtn.classList.add('text-slate-400');
                         }
-                        if (settingsSoundText) settingsSoundText.textContent = "Sound Off";
+                        if (settingsSoundText) settingsSoundText.textContent = t('settings.soundOff');
                     } else {
                         if (soundIcon) soundIcon.className = "fas fa-volume-up text-lg text-yellow-400";
                         if (soundToggleBtn) {
                             soundToggleBtn.classList.remove('text-slate-400');
                             soundToggleBtn.classList.add('text-yellow-400');
                         }
-                        if (settingsSoundText) settingsSoundText.textContent = "Sound On";
+                        if (settingsSoundText) settingsSoundText.textContent = t('settings.soundOn');
                         initAudio(); // Warm up context on unmute
                     }
                 };
@@ -3049,6 +3049,108 @@ const CAMPAIGN_ROADMAP = [
                     'common.exp':    'EXP',
                     'shop.title':    'Gear & Item Mart',
                     'shop.buy':      'Buy 1',
+                    'scanner.selectBall':  'Select a ball and scan!',
+                    'scanner.scanning':    'Scanning Quantum Channels...',
+                    'scanner.frequencies': 'Spinner scanning frequencies...',
+                    'scanner.lockSig':     'LOCK SIGNATURE (Click Ring)',
+                    'scanner.scanDone':    'Scan Completed',
+                    'scanner.radarLocked': 'Radar Locked: ',
+                    'scanner.legendary':   'LEGENDARY APPEARANCE!',
+                    'scanner.signalLost':  'SIGNAL LOST',
+                    'scanner.registered':  'REGISTERED!',
+                    'scanner.capturedWith':'Captured with ',
+                    'scanner.perfectMatch':'Perfect Match Bonus!',
+                    'scanner.outOfStock':  'Out of stock',
+                    'scanner.noStockMsg':  'Purchase additional scanning devices!',
+                    'scanner.cantCatch':   "Can't catch!",
+                    'scanner.noPokeBall':  "Standard Poké Balls cannot capture legendary Pokémon! Use a Great Ball or higher.",
+                    'scanner.legendaryAppeared': 'LEGENDARY APPEARED!',
+                    'scanner.legendaryAppearedMsg': 'A rare Legendary Pokémon has appeared!',
+                    'scanner.lockLost':    'LOCK LOST!',
+                    'scanner.lockLostMsg': 'Encounter signature resolved. Signal faded.',
+                    'scanner.targetEscaped': 'Target escaped radar tracking. Hit green Excellent circle zone for maximum success.',
+                    'scanner.shiny':       'SHINY',
+                    'timing.excellent':    'EXCELLENT TIMING LOCK!',
+                    'timing.great':        'GREAT TIMING LOCK!',
+                    'timing.good':         'GOOD LOCK',
+                    'timing.legendary':    'LEGENDARY CAPTURE GUARANTEED!',
+                    'battle.combatInit':   'Combat initiated: Engagement vs ',
+                    'battle.superEff':     'Super effective! 💥',
+                    'battle.notVeryEff':   'Not very effective... 🛡️',
+                    'battle.immune':       'Immune!',
+                    'battle.wontHigher':   "won't go any higher!",
+                    'battle.wontLower':    "won't go any lower!",
+                    'battle.switchCost':   'Switch (costs 1 turn):',
+                    'battle.switchedTo':   'Switched to',
+                    'battle.attacksDuring':'attacks during the switch!',
+                    'battle.sentOut':      'sent out',
+                    'battle.lvl':          'LVL',
+                    'battle.leadBadge':    'Lead',
+                    'battle.item':         'Item',
+                    'battle.shinyBadge':   'Shiny',
+                    'battle.noItem':       'No Item',
+                    'battle.noTeamMsg':    'No team members selected. Open Team screen and assign at least one Pokémon.',
+                    'battle.hint':         '💡 Hint',
+                    'stage.cleared':       'Cleared ✓',
+                    'stage.fight':         'FIGHT ⚔️',
+                    'stage.badgeLocked':   '🔒 Badge Locked',
+                    'stage.elite4':        'Elite Four',
+                    'stage.champion':      'Champion',
+                    'stage.team':          'Team:',
+                    'dex.signalLost':      'Signal Lost',
+                    'dex.no':              'No.',
+                    'dex.page':            'Page',
+                    'dex.of':              'of',
+                    'dex.battles':         'Battles',
+                    'pc.xpProgress':       'XP PROGRESS',
+                    'pc.of':               'of',
+                    'pc.pokemon':          'Pokémon',
+                    'pc.holdItem':         'Hold Item',
+                    'pc.moveRelearn':      'Move Relearn',
+                    'pc.consumables':      'Consumables',
+                    'pc.teachTm':          'Teach TM',
+                    'pc.noTms':            'No compatible TMs owned — buy TMs in the Shop.',
+                    'pc.release':          '🗑️ Release Pokémon',
+                    'pc.moves':            'Moves',
+                    'pc.slot':             'Slot',
+                    'pc.noPokemon':        'No Pokémon in PC',
+                    'pc.noPokemonMsg':     'Catch some Pokémon using the Quantum Scanner!',
+                    'pc.chooseItem':       'Choose item',
+                    'pc.chooseTm':         'Choose TM',
+                    'pc.teach':            'Teach',
+                    'pc.use':              'Use',
+                    'pc.noConsumables':    'No one-time items owned.',
+                    'pc.searchPlaceholder':'🔍 Search name…',
+                    'team.lead':           'Lead',
+                    'team.slot':           'Slot',
+                    'team.openSlot':       'Open slot',
+                    'team.pickPrompt':     '← Click Pick → on a slot, then tap a Pokémon below.',
+                    'team.catchFirst':     'Catch Pokémon in the scanner first.',
+                    'team.pickingFor':     'Picking for',
+                    'team.active':         '✓ Active',
+                    'team.pick':           'Pick →',
+                    'team.selected':       'selected',
+                    'shop.ownedLabel':     'Owned:',
+                    'shop.notOwned':       'Not Owned',
+                    'shop.tmOwned':        '📀 Owned',
+                    'shop.pwr':            'PWR:',
+                    'shop.infiniteUse':    '∞ Use',
+                    'autoBattler.stop':    'Stop Auto Battle',
+                    'autoBattler.start':   'Start Auto Battle',
+                    'autoBattler.running': 'RUNNING',
+                    'autoBattler.idle':    'IDLE',
+                    'autoBattler.owned':   '✅ Owned',
+                    'autoBattler.selectStage': '-- Select a stage --',
+                    'gym.correct':         '✅ Correct! The gym is now open!',
+                    'gym.wrong':           '❌ Wrong answer. Try again!',
+                    'starter.gen':         'Gen',
+                    'starter.select':      'Select',
+                    'starter.loading':     'Loading starter data…',
+                    'common.owned':        'Owned',
+                    'common.battles':      'Battles',
+                    'common.type':         'Type',
+                    'common.level':        'Level',
+                    'common.lv':           'LVL',
                   },
                   ja: {
                     'nav.scanner':  'クォンタムスキャナー',
@@ -3086,6 +3188,108 @@ const CAMPAIGN_ROADMAP = [
                     'common.exp':    '経験値',
                     'shop.title':    'アイテムショップ',
                     'shop.buy':      '購入',
+                    'scanner.selectBall':  'ボールを選んでスキャン！',
+                    'scanner.scanning':    '量子チャンネルをスキャン中...',
+                    'scanner.frequencies': 'スピナーが周波数をスキャン中...',
+                    'scanner.lockSig':     'シグナルをロック（リングをクリック）',
+                    'scanner.scanDone':    'スキャン完了',
+                    'scanner.radarLocked': 'レーダーロック中: ',
+                    'scanner.legendary':   '伝説のポケモン出現！',
+                    'scanner.signalLost':  'シグナルロスト',
+                    'scanner.registered':  '登録完了！',
+                    'scanner.capturedWith':'捕獲方法: ',
+                    'scanner.perfectMatch':'完璧な一致ボーナス！',
+                    'scanner.outOfStock':  '在庫切れ',
+                    'scanner.noStockMsg':  'スキャン機器を購入してください！',
+                    'scanner.cantCatch':   '捕まえられない！',
+                    'scanner.noPokeBall':  'モンスターボールでは伝説のポケモンを捕まえられません！グレートボール以上を使ってください。',
+                    'scanner.legendaryAppeared': '伝説のポケモンが現れた！',
+                    'scanner.legendaryAppearedMsg': 'レアな伝説のポケモンが現れた！',
+                    'scanner.lockLost':    'ロック失敗！',
+                    'scanner.lockLostMsg': 'エンカウントシグナルが消えました。',
+                    'scanner.targetEscaped': 'ターゲットが逃げました。緑のエクセレントゾーンを狙ってください。',
+                    'scanner.shiny':       'ひかる',
+                    'timing.excellent':    'エクセレントタイミング！',
+                    'timing.great':        'グレートタイミング！',
+                    'timing.good':         'グッドロック',
+                    'timing.legendary':    '伝説捕獲確定！',
+                    'battle.combatInit':   'バトル開始: 対戦相手 ',
+                    'battle.superEff':     'ばつぐんだ！💥',
+                    'battle.notVeryEff':   'いまひとつ... 🛡️',
+                    'battle.immune':       '効果なし！',
+                    'battle.wontHigher':   'これ以上上がらない！',
+                    'battle.wontLower':    'これ以上下がらない！',
+                    'battle.switchCost':   '交代（1ターン消費）:',
+                    'battle.switchedTo':   '交代しました',
+                    'battle.attacksDuring':'交代中に攻撃された！',
+                    'battle.sentOut':      'を繰り出した！',
+                    'battle.lvl':          'Lv.',
+                    'battle.leadBadge':    'リード',
+                    'battle.item':         'アイテム',
+                    'battle.shinyBadge':   'ひかる',
+                    'battle.noItem':       'アイテムなし',
+                    'battle.noTeamMsg':    'チームメンバーが選ばれていません。チーム画面で少なくとも1匹を選んでください。',
+                    'battle.hint':         '💡 ヒント',
+                    'stage.cleared':       'クリア済み ✓',
+                    'stage.fight':         'バトル ⚔️',
+                    'stage.badgeLocked':   '🔒 バッジ未獲得',
+                    'stage.elite4':        'エリートフォー',
+                    'stage.champion':      'チャンピオン',
+                    'stage.team':          'チーム:',
+                    'dex.signalLost':      'シグナルロスト',
+                    'dex.no':              'No.',
+                    'dex.page':            'ページ',
+                    'dex.of':              '/',
+                    'dex.battles':         'バトル数',
+                    'pc.xpProgress':       'EXP進捗',
+                    'pc.of':               '/',
+                    'pc.pokemon':          'ポケモン',
+                    'pc.holdItem':         'もちもの',
+                    'pc.moveRelearn':      'わざの再学習',
+                    'pc.consumables':      '消耗品',
+                    'pc.teachTm':          'わざマシンを教える',
+                    'pc.noTms':            '対応するわざマシンを所持していません。ショップで購入してください。',
+                    'pc.release':          '🗑️ ポケモンを逃がす',
+                    'pc.moves':            'わざ',
+                    'pc.slot':             'スロット',
+                    'pc.noPokemon':        'PCにポケモンがいません',
+                    'pc.noPokemonMsg':     'クォンタムスキャナーでポケモンを捕まえましょう！',
+                    'pc.chooseItem':       'アイテムを選択',
+                    'pc.chooseTm':         'わざマシンを選択',
+                    'pc.teach':            '教える',
+                    'pc.use':              '使う',
+                    'pc.noConsumables':    '消耗品を所持していません。',
+                    'pc.searchPlaceholder':'🔍 名前で検索…',
+                    'team.lead':           'リード',
+                    'team.slot':           'スロット',
+                    'team.openSlot':       '空きスロット',
+                    'team.pickPrompt':     '← スロットをクリックしてポケモンを選んでください。',
+                    'team.catchFirst':     '先にポケモンを捕まえてください。',
+                    'team.pickingFor':     '選択中:',
+                    'team.active':         '✓ アクティブ',
+                    'team.pick':           '選択 →',
+                    'team.selected':       '選択済み',
+                    'shop.ownedLabel':     '所持:',
+                    'shop.notOwned':       '未所持',
+                    'shop.tmOwned':        '📀 所持済み',
+                    'shop.pwr':            '威力:',
+                    'shop.infiniteUse':    '∞ 使用可能',
+                    'autoBattler.stop':    'オートバトル停止',
+                    'autoBattler.start':   'オートバトル開始',
+                    'autoBattler.running': '実行中',
+                    'autoBattler.idle':    'アイドル',
+                    'autoBattler.owned':   '✅ 所持済み',
+                    'autoBattler.selectStage': '-- ステージを選択 --',
+                    'gym.correct':         '✅ 正解！ジムに入れます！',
+                    'gym.wrong':           '❌ 不正解。もう一度！',
+                    'starter.gen':         '世代',
+                    'starter.select':      '選択',
+                    'starter.loading':     'スターターデータを読み込み中…',
+                    'common.owned':        '所持済み',
+                    'common.battles':      'バトル数',
+                    'common.type':         'タイプ',
+                    'common.level':        'レベル',
+                    'common.lv':           'Lv.',
                   },
                   ko: {
                     'nav.scanner':  '퀀텀 스캐너',
@@ -3123,6 +3327,108 @@ const CAMPAIGN_ROADMAP = [
                     'common.exp':    '경험치',
                     'shop.title':    '아이템 마트',
                     'shop.buy':      '구매',
+                    'scanner.selectBall':  '볼을 선택하고 스캔하세요!',
+                    'scanner.scanning':    '퀀텀 채널 스캔 중...',
+                    'scanner.frequencies': '스피너가 주파수를 스캔 중...',
+                    'scanner.lockSig':     '시그널 잠금 (링 클릭)',
+                    'scanner.scanDone':    '스캔 완료',
+                    'scanner.radarLocked': '레이더 잠금: ',
+                    'scanner.legendary':   '전설 포켓몬 출현!',
+                    'scanner.signalLost':  '시그널 손실',
+                    'scanner.registered':  '등록 완료!',
+                    'scanner.capturedWith':'포획 방법: ',
+                    'scanner.perfectMatch':'완벽한 매칭 보너스!',
+                    'scanner.outOfStock':  '재고 없음',
+                    'scanner.noStockMsg':  '추가 스캔 장치를 구매하세요!',
+                    'scanner.cantCatch':   '잡을 수 없습니다!',
+                    'scanner.noPokeBall':  '일반 포켓볼로는 전설 포켓몬을 잡을 수 없습니다! 슈퍼볼 이상을 사용하세요.',
+                    'scanner.legendaryAppeared': '전설 포켓몬 출현!',
+                    'scanner.legendaryAppearedMsg': '희귀한 전설 포켓몬이 나타났습니다!',
+                    'scanner.lockLost':    '잠금 실패!',
+                    'scanner.lockLostMsg': '인카운터 시그널이 사라졌습니다.',
+                    'scanner.targetEscaped': '대상이 레이더를 벗어났습니다. 초록색 엑설런트 구역을 노리세요.',
+                    'scanner.shiny':       '빛나는',
+                    'timing.excellent':    '엑설런트 타이밍!',
+                    'timing.great':        '그레이트 타이밍!',
+                    'timing.good':         '굿 잠금',
+                    'timing.legendary':    '전설 포획 확정!',
+                    'battle.combatInit':   '배틀 시작: 상대 ',
+                    'battle.superEff':     '효과가 매우 좋다! 💥',
+                    'battle.notVeryEff':   '효과가 별로... 🛡️',
+                    'battle.immune':       '효과 없음!',
+                    'battle.wontHigher':   '더 이상 오르지 않는다!',
+                    'battle.wontLower':    '더 이상 내려가지 않는다!',
+                    'battle.switchCost':   '교체 (1턴 소모):',
+                    'battle.switchedTo':   '교체했습니다',
+                    'battle.attacksDuring':'교체 중 공격받았습니다!',
+                    'battle.sentOut':      '을/를 내보냈다!',
+                    'battle.lvl':          'Lv.',
+                    'battle.leadBadge':    '선봉',
+                    'battle.item':         '아이템',
+                    'battle.shinyBadge':   '빛나는',
+                    'battle.noItem':       '아이템 없음',
+                    'battle.noTeamMsg':    '팀원이 없습니다. 팀 화면에서 포켓몬을 배치하세요.',
+                    'battle.hint':         '💡 힌트',
+                    'stage.cleared':       '클리어 ✓',
+                    'stage.fight':         '배틀 ⚔️',
+                    'stage.badgeLocked':   '🔒 배지 미획득',
+                    'stage.elite4':        '사천왕',
+                    'stage.champion':      '챔피언',
+                    'stage.team':          '팀:',
+                    'dex.signalLost':      '시그널 손실',
+                    'dex.no':              'No.',
+                    'dex.page':            '페이지',
+                    'dex.of':              '/',
+                    'dex.battles':         '배틀 수',
+                    'pc.xpProgress':       'EXP 진행',
+                    'pc.of':               '/',
+                    'pc.pokemon':          '포켓몬',
+                    'pc.holdItem':         '지닌 도구',
+                    'pc.moveRelearn':      '기술 재학습',
+                    'pc.consumables':      '소모품',
+                    'pc.teachTm':          'TM 가르치기',
+                    'pc.noTms':            '호환 TM이 없습니다. 상점에서 구매하세요.',
+                    'pc.release':          '🗑️ 포켓몬 놓아주기',
+                    'pc.moves':            '기술',
+                    'pc.slot':             '슬롯',
+                    'pc.noPokemon':        'PC에 포켓몬이 없습니다',
+                    'pc.noPokemonMsg':     '퀀텀 스캐너로 포켓몬을 잡으세요!',
+                    'pc.chooseItem':       '아이템 선택',
+                    'pc.chooseTm':         'TM 선택',
+                    'pc.teach':            '가르치기',
+                    'pc.use':              '사용',
+                    'pc.noConsumables':    '소모품이 없습니다.',
+                    'pc.searchPlaceholder':'🔍 이름 검색…',
+                    'team.lead':           '선봉',
+                    'team.slot':           '슬롯',
+                    'team.openSlot':       '빈 슬롯',
+                    'team.pickPrompt':     '← 슬롯을 클릭하고 포켓몬을 선택하세요.',
+                    'team.catchFirst':     '먼저 포켓몬을 잡으세요.',
+                    'team.pickingFor':     '선택 중:',
+                    'team.active':         '✓ 활성',
+                    'team.pick':           '선택 →',
+                    'team.selected':       '선택됨',
+                    'shop.ownedLabel':     '보유:',
+                    'shop.notOwned':       '미보유',
+                    'shop.tmOwned':        '📀 보유',
+                    'shop.pwr':            '위력:',
+                    'shop.infiniteUse':    '∞ 사용 가능',
+                    'autoBattler.stop':    '자동 배틀 중지',
+                    'autoBattler.start':   '자동 배틀 시작',
+                    'autoBattler.running': '실행 중',
+                    'autoBattler.idle':    '대기',
+                    'autoBattler.owned':   '✅ 보유',
+                    'autoBattler.selectStage': '-- 스테이지 선택 --',
+                    'gym.correct':         '✅ 정답! 체육관에 입장할 수 있습니다!',
+                    'gym.wrong':           '❌ 틀렸습니다. 다시 시도하세요!',
+                    'starter.gen':         '세대',
+                    'starter.select':      '선택',
+                    'starter.loading':     '스타터 데이터 로딩 중…',
+                    'common.owned':        '보유',
+                    'common.battles':      '배틀 수',
+                    'common.type':         '타입',
+                    'common.level':        '레벨',
+                    'common.lv':           'Lv.',
                   },
                   fr: {
                     'nav.scanner':  'Scanner Quantique',
@@ -3160,6 +3466,108 @@ const CAMPAIGN_ROADMAP = [
                     'common.exp':    'EXP',
                     'shop.title':    'Boutique',
                     'shop.buy':      'Acheter',
+                    'scanner.selectBall':  'Choisissez une Ball et scannez !',
+                    'scanner.scanning':    'Balayage des canaux quantiques...',
+                    'scanner.frequencies': 'Détection des fréquences en cours...',
+                    'scanner.lockSig':     'VERROUILLER SIGNATURE (Cliquer le Cercle)',
+                    'scanner.scanDone':    'Scan terminé',
+                    'scanner.radarLocked': 'Radar verrouillé : ',
+                    'scanner.legendary':   'POKÉMON LÉGENDAIRE !',
+                    'scanner.signalLost':  'SIGNAL PERDU',
+                    'scanner.registered':  'ENREGISTRÉ !',
+                    'scanner.capturedWith':"Capturé avec ",
+                    'scanner.perfectMatch':'Bonus cible parfaite !',
+                    'scanner.outOfStock':  'Rupture de stock',
+                    'scanner.noStockMsg':  "Achetez des appareils de scan supplémentaires !",
+                    'scanner.cantCatch':   "Impossible d'attraper !",
+                    'scanner.noPokeBall':  "Les Poké Balls standard ne peuvent pas capturer des légendaires !",
+                    'scanner.legendaryAppeared': 'LÉGENDAIRE APPARU !',
+                    'scanner.legendaryAppearedMsg': 'Un rare Pokémon légendaire est apparu !',
+                    'scanner.lockLost':    'VERROU PERDU !',
+                    'scanner.lockLostMsg': "Signal d'encre résolu. Signal évanoui.",
+                    'scanner.targetEscaped': 'La cible a échappé au radar. Visez la zone verte Excellent.',
+                    'scanner.shiny':       'CHROMATIQUE',
+                    'timing.excellent':    'TIMING EXCELLENT !',
+                    'timing.great':        'SUPER TIMING !',
+                    'timing.good':         'BON VERROU',
+                    'timing.legendary':    'CAPTURE LÉGENDAIRE GARANTIE !',
+                    'battle.combatInit':   'Combat engagé : Affrontement vs ',
+                    'battle.superEff':     "C'est super efficace ! 💥",
+                    'battle.notVeryEff':   'Pas très efficace... 🛡️',
+                    'battle.immune':       'Immunisé !',
+                    'battle.wontHigher':   'ne peut pas monter davantage !',
+                    'battle.wontLower':    'ne peut pas descendre davantage !',
+                    'battle.switchCost':   'Changer (coûte 1 tour) :',
+                    'battle.switchedTo':   'Changement pour',
+                    'battle.attacksDuring':'attaque pendant le changement !',
+                    'battle.sentOut':      'envoie',
+                    'battle.lvl':          'Nv.',
+                    'battle.leadBadge':    'Chef',
+                    'battle.item':         'Objet',
+                    'battle.shinyBadge':   'Chromatique',
+                    'battle.noItem':       'Aucun objet',
+                    'battle.noTeamMsg':    "Aucun membre d'équipe sélectionné.",
+                    'battle.hint':         '💡 Indice',
+                    'stage.cleared':       'Terminé ✓',
+                    'stage.fight':         'COMBAT ⚔️',
+                    'stage.badgeLocked':   '🔒 Badge verrouillé',
+                    'stage.elite4':        'Élite Quatre',
+                    'stage.champion':      'Champion',
+                    'stage.team':          'Équipe :',
+                    'dex.signalLost':      'Signal perdu',
+                    'dex.no':              'No.',
+                    'dex.page':            'Page',
+                    'dex.of':              'sur',
+                    'dex.battles':         'Combats',
+                    'pc.xpProgress':       'PROGRESSION EXP',
+                    'pc.of':               'sur',
+                    'pc.pokemon':          'Pokémon',
+                    'pc.holdItem':         'Objet tenu',
+                    'pc.moveRelearn':      'Réapprendre des attaques',
+                    'pc.consumables':      'Consommables',
+                    'pc.teachTm':          'Enseigner une CT',
+                    'pc.noTms':            'Aucune CT compatible — achetez-en dans la Boutique.',
+                    'pc.release':          '🗑️ Relâcher le Pokémon',
+                    'pc.moves':            'Attaques',
+                    'pc.slot':             'Slot',
+                    'pc.noPokemon':        'Aucun Pokémon en PC',
+                    'pc.noPokemonMsg':     'Capturez des Pokémon avec le Scanner Quantique !',
+                    'pc.chooseItem':       'Choisir un objet',
+                    'pc.chooseTm':         'Choisir une CT',
+                    'pc.teach':            'Enseigner',
+                    'pc.use':              'Utiliser',
+                    'pc.noConsumables':    'Aucun consommable disponible.',
+                    'pc.searchPlaceholder':'🔍 Rechercher…',
+                    'team.lead':           'Chef',
+                    'team.slot':           'Slot',
+                    'team.openSlot':       'Slot libre',
+                    'team.pickPrompt':     '← Cliquez sur Choisir → puis sélectionnez un Pokémon.',
+                    'team.catchFirst':     "Capturez d'abord des Pokémon dans le scanner.",
+                    'team.pickingFor':     'Sélection pour',
+                    'team.active':         '✓ Actif',
+                    'team.pick':           'Choisir →',
+                    'team.selected':       'sélectionné(s)',
+                    'shop.ownedLabel':     'Possédé :',
+                    'shop.notOwned':       'Non possédé',
+                    'shop.tmOwned':        '📀 Possédé',
+                    'shop.pwr':            'PUIS :',
+                    'shop.infiniteUse':    '∞ Utilisation',
+                    'autoBattler.stop':    'Arrêter le combat auto',
+                    'autoBattler.start':   'Lancer le combat auto',
+                    'autoBattler.running': 'EN COURS',
+                    'autoBattler.idle':    'EN ATTENTE',
+                    'autoBattler.owned':   '✅ Possédé',
+                    'autoBattler.selectStage': '-- Choisir un chapitre --',
+                    'gym.correct':         "✅ Correct ! L'arène est ouverte !",
+                    'gym.wrong':           '❌ Mauvaise réponse. Réessayez !',
+                    'starter.gen':         'Gén.',
+                    'starter.select':      'Choisir',
+                    'starter.loading':     'Chargement des départs…',
+                    'common.owned':        'Possédé',
+                    'common.battles':      'Combats',
+                    'common.type':         'Type',
+                    'common.level':        'Niveau',
+                    'common.lv':           'Nv.',
                   },
                   de: {
                     'nav.scanner':  'Quanten-Scanner',
@@ -3197,6 +3605,108 @@ const CAMPAIGN_ROADMAP = [
                     'common.exp':    'EP',
                     'shop.title':    'Artikel-Shop',
                     'shop.buy':      'Kaufen',
+                    'scanner.selectBall':  'Ball wählen und scannen!',
+                    'scanner.scanning':    'Quanten-Kanäle werden gescannt...',
+                    'scanner.frequencies': 'Frequenzen werden gescannt...',
+                    'scanner.lockSig':     'SIGNATUR SPERREN (Ring klicken)',
+                    'scanner.scanDone':    'Scan abgeschlossen',
+                    'scanner.radarLocked': 'Radar gesperrt: ',
+                    'scanner.legendary':   'LEGENDÄRES POKÉMON!',
+                    'scanner.signalLost':  'SIGNAL VERLOREN',
+                    'scanner.registered':  'REGISTRIERT!',
+                    'scanner.capturedWith':'Gefangen mit ',
+                    'scanner.perfectMatch':'Perfekter-Treffer-Bonus!',
+                    'scanner.outOfStock':  'Nicht vorrätig',
+                    'scanner.noStockMsg':  'Kaufe weitere Scan-Geräte!',
+                    'scanner.cantCatch':   'Kann nicht gefangen werden!',
+                    'scanner.noPokeBall':  'Standard-Pokébälle können keine legendären Pokémon fangen!',
+                    'scanner.legendaryAppeared': 'LEGENDÄRES ERSCHIENEN!',
+                    'scanner.legendaryAppearedMsg': 'Ein seltenes legendäres Pokémon ist erschienen!',
+                    'scanner.lockLost':    'SPERRE VERLOREN!',
+                    'scanner.lockLostMsg': 'Begegnungssignal aufgelöst.',
+                    'scanner.targetEscaped': 'Ziel entkam dem Radar. Treffe die grüne Ausgezeichnet-Zone.',
+                    'scanner.shiny':       'SHINY',
+                    'timing.excellent':    'AUSGEZEICHNETES TIMING!',
+                    'timing.great':        'SUPER TIMING!',
+                    'timing.good':         'GUT GESPERRT',
+                    'timing.legendary':    'LEGENDÄRER FANG GARANTIERT!',
+                    'battle.combatInit':   'Kampf gestartet: Gefecht gegen ',
+                    'battle.superEff':     'Sehr effektiv! 💥',
+                    'battle.notVeryEff':   'Nicht sehr effektiv... 🛡️',
+                    'battle.immune':       'Immun!',
+                    'battle.wontHigher':   'kann nicht weiter steigen!',
+                    'battle.wontLower':    'kann nicht weiter sinken!',
+                    'battle.switchCost':   'Wechseln (kostet 1 Zug):',
+                    'battle.switchedTo':   'Gewechselt zu',
+                    'battle.attacksDuring':'greift während des Wechsels an!',
+                    'battle.sentOut':      'schickt',
+                    'battle.lvl':          'Lv.',
+                    'battle.leadBadge':    'Anführer',
+                    'battle.item':         'Item',
+                    'battle.shinyBadge':   'Shiny',
+                    'battle.noItem':       'Kein Item',
+                    'battle.noTeamMsg':    'Keine Teammitglieder ausgewählt.',
+                    'battle.hint':         '💡 Tipp',
+                    'stage.cleared':       'Geschafft ✓',
+                    'stage.fight':         'KAMPF ⚔️',
+                    'stage.badgeLocked':   '🔒 Orden gesperrt',
+                    'stage.elite4':        'Elite Vier',
+                    'stage.champion':      'Champion',
+                    'stage.team':          'Team:',
+                    'dex.signalLost':      'Signal verloren',
+                    'dex.no':              'Nr.',
+                    'dex.page':            'Seite',
+                    'dex.of':              'von',
+                    'dex.battles':         'Kämpfe',
+                    'pc.xpProgress':       'EP-FORTSCHRITT',
+                    'pc.of':               'von',
+                    'pc.pokemon':          'Pokémon',
+                    'pc.holdItem':         'Haltbares Item',
+                    'pc.moveRelearn':      'Attacken neu lernen',
+                    'pc.consumables':      'Verbrauchsgüter',
+                    'pc.teachTm':          'TM beibringen',
+                    'pc.noTms':            'Keine kompatiblen TMs vorhanden — kaufe TMs im Shop.',
+                    'pc.release':          '🗑️ Pokémon freilassen',
+                    'pc.moves':            'Attacken',
+                    'pc.slot':             'Slot',
+                    'pc.noPokemon':        'Keine Pokémon im PC',
+                    'pc.noPokemonMsg':     'Fange Pokémon mit dem Quanten-Scanner!',
+                    'pc.chooseItem':       'Item wählen',
+                    'pc.chooseTm':         'TM wählen',
+                    'pc.teach':            'Beibringen',
+                    'pc.use':              'Verwenden',
+                    'pc.noConsumables':    'Keine Verbrauchsgüter vorhanden.',
+                    'pc.searchPlaceholder':'🔍 Name suchen…',
+                    'team.lead':           'Anführer',
+                    'team.slot':           'Slot',
+                    'team.openSlot':       'Freier Slot',
+                    'team.pickPrompt':     '← Klicke auf Auswählen → und wähle dann ein Pokémon.',
+                    'team.catchFirst':     'Fange zuerst Pokémon im Scanner.',
+                    'team.pickingFor':     'Auswahl für',
+                    'team.active':         '✓ Aktiv',
+                    'team.pick':           'Auswählen →',
+                    'team.selected':       'ausgewählt',
+                    'shop.ownedLabel':     'Besessen:',
+                    'shop.notOwned':       'Nicht besessen',
+                    'shop.tmOwned':        '📀 Besessen',
+                    'shop.pwr':            'STÄRKE:',
+                    'shop.infiniteUse':    '∞ Nutzung',
+                    'autoBattler.stop':    'Auto-Kampf stoppen',
+                    'autoBattler.start':   'Auto-Kampf starten',
+                    'autoBattler.running': 'LÄUFT',
+                    'autoBattler.idle':    'BEREIT',
+                    'autoBattler.owned':   '✅ Besessen',
+                    'autoBattler.selectStage': '-- Arena wählen --',
+                    'gym.correct':         '✅ Richtig! Die Arena ist geöffnet!',
+                    'gym.wrong':           '❌ Falsche Antwort. Versuche es nochmal!',
+                    'starter.gen':         'Gen.',
+                    'starter.select':      'Wählen',
+                    'starter.loading':     'Starter-Daten werden geladen…',
+                    'common.owned':        'Besessen',
+                    'common.battles':      'Kämpfe',
+                    'common.type':         'Typ',
+                    'common.level':        'Level',
+                    'common.lv':           'Lv.',
                   },
                   es: {
                     'nav.scanner':  'Escáner Cuántico',
@@ -3234,6 +3744,108 @@ const CAMPAIGN_ROADMAP = [
                     'common.exp':    'EXP',
                     'shop.title':    'Tienda',
                     'shop.buy':      'Comprar',
+                    'scanner.selectBall':  '¡Selecciona una Ball y escanea!',
+                    'scanner.scanning':    'Escaneando canales cuánticos...',
+                    'scanner.frequencies': 'Escaneando frecuencias...',
+                    'scanner.lockSig':     'BLOQUEAR FIRMA (Clic en el anillo)',
+                    'scanner.scanDone':    'Escaneo completado',
+                    'scanner.radarLocked': 'Radar bloqueado: ',
+                    'scanner.legendary':   '¡POKÉMON LEGENDARIO!',
+                    'scanner.signalLost':  'SEÑAL PERDIDA',
+                    'scanner.registered':  '¡REGISTRADO!',
+                    'scanner.capturedWith':'Capturado con ',
+                    'scanner.perfectMatch':'¡Bono de coincidencia perfecta!',
+                    'scanner.outOfStock':  'Sin existencias',
+                    'scanner.noStockMsg':  '¡Compra más dispositivos de escaneo!',
+                    'scanner.cantCatch':   '¡No se puede atrapar!',
+                    'scanner.noPokeBall':  '¡Las Poké Ball estándar no pueden capturar legendarios!',
+                    'scanner.legendaryAppeared': '¡APARECIÓ UN LEGENDARIO!',
+                    'scanner.legendaryAppearedMsg': '¡Ha aparecido un raro Pokémon legendario!',
+                    'scanner.lockLost':    '¡BLOQUEO PERDIDO!',
+                    'scanner.lockLostMsg': 'La señal de encuentro se ha disuelto.',
+                    'scanner.targetEscaped': 'El objetivo escapó del radar. Apunta a la zona verde Excellent.',
+                    'scanner.shiny':       'VARIOCOLOR',
+                    'timing.excellent':    '¡TIMING EXCELENTE!',
+                    'timing.great':        '¡GRAN TIMING!',
+                    'timing.good':         'BUEN BLOQUEO',
+                    'timing.legendary':    '¡CAPTURA LEGENDARIA GARANTIZADA!',
+                    'battle.combatInit':   'Combate iniciado: Enfrentamiento vs ',
+                    'battle.superEff':     '¡Es muy eficaz! 💥',
+                    'battle.notVeryEff':   'No es muy eficaz... 🛡️',
+                    'battle.immune':       '¡No afecta!',
+                    'battle.wontHigher':   '¡no puede subir más!',
+                    'battle.wontLower':    '¡no puede bajar más!',
+                    'battle.switchCost':   'Cambiar (cuesta 1 turno):',
+                    'battle.switchedTo':   'Cambiado a',
+                    'battle.attacksDuring':'¡ataca durante el cambio!',
+                    'battle.sentOut':      'envía a',
+                    'battle.lvl':          'Nv.',
+                    'battle.leadBadge':    'Líder',
+                    'battle.item':         'Objeto',
+                    'battle.shinyBadge':   'Variocolor',
+                    'battle.noItem':       'Sin objeto',
+                    'battle.noTeamMsg':    'No hay miembros en el equipo.',
+                    'battle.hint':         '💡 Pista',
+                    'stage.cleared':       'Completado ✓',
+                    'stage.fight':         'COMBATE ⚔️',
+                    'stage.badgeLocked':   '🔒 Medalla bloqueada',
+                    'stage.elite4':        'Alto Mando',
+                    'stage.champion':      'Campeón',
+                    'stage.team':          'Equipo:',
+                    'dex.signalLost':      'Señal perdida',
+                    'dex.no':              'Nº',
+                    'dex.page':            'Página',
+                    'dex.of':              'de',
+                    'dex.battles':         'Combates',
+                    'pc.xpProgress':       'PROGRESO EXP',
+                    'pc.of':               'de',
+                    'pc.pokemon':          'Pokémon',
+                    'pc.holdItem':         'Objeto equipado',
+                    'pc.moveRelearn':      'Reaprender movimientos',
+                    'pc.consumables':      'Consumibles',
+                    'pc.teachTm':          'Enseñar MT',
+                    'pc.noTms':            'No hay MTs compatibles — compra MTs en la Tienda.',
+                    'pc.release':          '🗑️ Liberar Pokémon',
+                    'pc.moves':            'Movimientos',
+                    'pc.slot':             'Ranura',
+                    'pc.noPokemon':        'No hay Pokémon en el PC',
+                    'pc.noPokemonMsg':     '¡Atrapa Pokémon con el Escáner Cuántico!',
+                    'pc.chooseItem':       'Elegir objeto',
+                    'pc.chooseTm':         'Elegir MT',
+                    'pc.teach':            'Enseñar',
+                    'pc.use':              'Usar',
+                    'pc.noConsumables':    'No hay consumibles disponibles.',
+                    'pc.searchPlaceholder':'🔍 Buscar nombre…',
+                    'team.lead':           'Líder',
+                    'team.slot':           'Ranura',
+                    'team.openSlot':       'Ranura vacía',
+                    'team.pickPrompt':     '← Haz clic en Elegir → y selecciona un Pokémon.',
+                    'team.catchFirst':     'Primero atrapa Pokémon en el escáner.',
+                    'team.pickingFor':     'Eligiendo para',
+                    'team.active':         '✓ Activo',
+                    'team.pick':           'Elegir →',
+                    'team.selected':       'seleccionado(s)',
+                    'shop.ownedLabel':     'Poseído:',
+                    'shop.notOwned':       'No poseído',
+                    'shop.tmOwned':        '📀 Poseído',
+                    'shop.pwr':            'FRZ:',
+                    'shop.infiniteUse':    '∞ Uso',
+                    'autoBattler.stop':    'Detener combate auto',
+                    'autoBattler.start':   'Iniciar combate auto',
+                    'autoBattler.running': 'EN CURSO',
+                    'autoBattler.idle':    'EN ESPERA',
+                    'autoBattler.owned':   '✅ Poseído',
+                    'autoBattler.selectStage': '-- Seleccionar capítulo --',
+                    'gym.correct':         '✅ ¡Correcto! ¡El gimnasio está abierto!',
+                    'gym.wrong':           '❌ Respuesta incorrecta. ¡Inténtalo de nuevo!',
+                    'starter.gen':         'Gen.',
+                    'starter.select':      'Elegir',
+                    'starter.loading':     'Cargando datos de inicial…',
+                    'common.owned':        'Poseído',
+                    'common.battles':      'Combates',
+                    'common.type':         'Tipo',
+                    'common.level':        'Nivel',
+                    'common.lv':           'Nv.',
                   },
                   it: {
                     'nav.scanner':  'Scanner Quantistico',
@@ -3271,6 +3883,108 @@ const CAMPAIGN_ROADMAP = [
                     'common.exp':    'ESP',
                     'shop.title':    'Negozio',
                     'shop.buy':      'Acquista',
+                    'scanner.selectBall':  'Scegli una Ball e scansiona!',
+                    'scanner.scanning':    'Scansione dei canali quantistici...',
+                    'scanner.frequencies': 'Scansione delle frequenze...',
+                    'scanner.lockSig':     'BLOCCA FIRMA (Clicca il Cerchio)',
+                    'scanner.scanDone':    'Scansione completata',
+                    'scanner.radarLocked': 'Radar bloccato: ',
+                    'scanner.legendary':   'POKÉMON LEGGENDARIO!',
+                    'scanner.signalLost':  'SEGNALE PERSO',
+                    'scanner.registered':  'REGISTRATO!',
+                    'scanner.capturedWith':'Catturato con ',
+                    'scanner.perfectMatch':'Bonus abbinamento perfetto!',
+                    'scanner.outOfStock':  'Esaurito',
+                    'scanner.noStockMsg':  'Acquista altri dispositivi di scansione!',
+                    'scanner.cantCatch':   'Impossibile catturare!',
+                    'scanner.noPokeBall':  'Le Poké Ball standard non possono catturare Pokémon leggendari!',
+                    'scanner.legendaryAppeared': 'LEGGENDARIO APPARSO!',
+                    'scanner.legendaryAppearedMsg': 'Un raro Pokémon leggendario è apparso!',
+                    'scanner.lockLost':    'BLOCCO PERSO!',
+                    'scanner.lockLostMsg': 'Segnale incontro dissolto.',
+                    'scanner.targetEscaped': "L'obiettivo è sfuggito al radar.",
+                    'scanner.shiny':       'CROMATICO',
+                    'timing.excellent':    'TIMING ECCELLENTE!',
+                    'timing.great':        'OTTIMO TIMING!',
+                    'timing.good':         'BUON BLOCCO',
+                    'timing.legendary':    'CATTURA LEGGENDARIA GARANTITA!',
+                    'battle.combatInit':   'Combattimento avviato: Scontro vs ',
+                    'battle.superEff':     'Molto efficace! 💥',
+                    'battle.notVeryEff':   'Non molto efficace... 🛡️',
+                    'battle.immune':       'Immunizzato!',
+                    'battle.wontHigher':   'non può salire ulteriormente!',
+                    'battle.wontLower':    'non può scendere ulteriormente!',
+                    'battle.switchCost':   'Cambia (costa 1 turno):',
+                    'battle.switchedTo':   'Cambiato con',
+                    'battle.attacksDuring':'attacca durante il cambio!',
+                    'battle.sentOut':      'invia',
+                    'battle.lvl':          'Lv.',
+                    'battle.leadBadge':    'Leader',
+                    'battle.item':         'Strumento',
+                    'battle.shinyBadge':   'Cromatico',
+                    'battle.noItem':       'Nessuno strumento',
+                    'battle.noTeamMsg':    'Nessun membro nel gruppo.',
+                    'battle.hint':         '💡 Suggerimento',
+                    'stage.cleared':       'Completato ✓',
+                    'stage.fight':         'COMBATTI ⚔️',
+                    'stage.badgeLocked':   '🔒 Medaglia bloccata',
+                    'stage.elite4':        'Elite Quattro',
+                    'stage.champion':      'Campione',
+                    'stage.team':          'Gruppo:',
+                    'dex.signalLost':      'Segnale perso',
+                    'dex.no':              'N.',
+                    'dex.page':            'Pagina',
+                    'dex.of':              'di',
+                    'dex.battles':         'Battaglie',
+                    'pc.xpProgress':       'PROGRESSI EXP',
+                    'pc.of':               'di',
+                    'pc.pokemon':          'Pokémon',
+                    'pc.holdItem':         'Strumento tenuto',
+                    'pc.moveRelearn':      'Reimparare mosse',
+                    'pc.consumables':      'Consumabili',
+                    'pc.teachTm':          'Insegnare MT',
+                    'pc.noTms':            'Nessuna MT compatibile — acquista MT nel Negozio.',
+                    'pc.release':          '🗑️ Libera Pokémon',
+                    'pc.moves':            'Mosse',
+                    'pc.slot':             'Slot',
+                    'pc.noPokemon':        'Nessun Pokémon nel PC',
+                    'pc.noPokemonMsg':     'Cattura Pokémon con lo Scanner Quantistico!',
+                    'pc.chooseItem':       'Scegli oggetto',
+                    'pc.chooseTm':         'Scegli MT',
+                    'pc.teach':            'Insegna',
+                    'pc.use':              'Usa',
+                    'pc.noConsumables':    'Nessun consumabile disponibile.',
+                    'pc.searchPlaceholder':'🔍 Cerca nome…',
+                    'team.lead':           'Leader',
+                    'team.slot':           'Slot',
+                    'team.openSlot':       'Slot libero',
+                    'team.pickPrompt':     '← Clicca Scegli → e poi seleziona un Pokémon.',
+                    'team.catchFirst':     'Prima cattura Pokémon nello scanner.',
+                    'team.pickingFor':     'Selezione per',
+                    'team.active':         '✓ Attivo',
+                    'team.pick':           'Scegli →',
+                    'team.selected':       'selezionato/i',
+                    'shop.ownedLabel':     'Posseduto:',
+                    'shop.notOwned':       'Non posseduto',
+                    'shop.tmOwned':        '📀 Posseduto',
+                    'shop.pwr':            'POT:',
+                    'shop.infiniteUse':    '∞ Uso',
+                    'autoBattler.stop':    'Ferma combattimento auto',
+                    'autoBattler.start':   'Avvia combattimento auto',
+                    'autoBattler.running': 'IN ESECUZIONE',
+                    'autoBattler.idle':    'IN ATTESA',
+                    'autoBattler.owned':   '✅ Posseduto',
+                    'autoBattler.selectStage': '-- Seleziona stadio --',
+                    'gym.correct':         '✅ Corretto! La palestra è aperta!',
+                    'gym.wrong':           '❌ Risposta errata. Riprova!',
+                    'starter.gen':         'Gen.',
+                    'starter.select':      'Scegli',
+                    'starter.loading':     'Caricamento dati iniziali…',
+                    'common.owned':        'Posseduto',
+                    'common.battles':      'Battaglie',
+                    'common.type':         'Tipo',
+                    'common.level':        'Livello',
+                    'common.lv':           'Lv.',
                   },
                   zh: {
                     'nav.scanner':  '量子扫描仪',
@@ -3308,6 +4022,108 @@ const CAMPAIGN_ROADMAP = [
                     'common.exp':    '经验值',
                     'shop.title':    '道具商店',
                     'shop.buy':      '购买',
+                    'scanner.selectBall':  '选择精灵球并扫描！',
+                    'scanner.scanning':    '正在扫描量子频道...',
+                    'scanner.frequencies': '正在扫描旋转频率...',
+                    'scanner.lockSig':     '锁定信号（点击圆环）',
+                    'scanner.scanDone':    '扫描完成',
+                    'scanner.radarLocked': '雷达锁定：',
+                    'scanner.legendary':   '传说宝可梦出现！',
+                    'scanner.signalLost':  '信号丢失',
+                    'scanner.registered':  '已登记！',
+                    'scanner.capturedWith':'捕获方式：',
+                    'scanner.perfectMatch':'完美匹配奖励！',
+                    'scanner.outOfStock':  '缺货',
+                    'scanner.noStockMsg':  '请购买更多扫描设备！',
+                    'scanner.cantCatch':   '无法捕获！',
+                    'scanner.noPokeBall':  '普通精灵球无法捕获传说宝可梦！',
+                    'scanner.legendaryAppeared': '传说宝可梦出现！',
+                    'scanner.legendaryAppearedMsg': '罕见的传说宝可梦出现了！',
+                    'scanner.lockLost':    '锁定失败！',
+                    'scanner.lockLostMsg': '遭遇信号已消散。',
+                    'scanner.targetEscaped': '目标逃离雷达。请瞄准绿色优秀区域。',
+                    'scanner.shiny':       '闪光',
+                    'timing.excellent':    '时机绝佳！',
+                    'timing.great':        '时机很好！',
+                    'timing.good':         '时机良好',
+                    'timing.legendary':    '传说捕获确定！',
+                    'battle.combatInit':   '战斗开始：对战 ',
+                    'battle.superEff':     '非常有效！💥',
+                    'battle.notVeryEff':   '效果不太好... 🛡️',
+                    'battle.immune':       '无效！',
+                    'battle.wontHigher':   '已无法再升高！',
+                    'battle.wontLower':    '已无法再降低！',
+                    'battle.switchCost':   '替换（消耗1回合）：',
+                    'battle.switchedTo':   '已替换为',
+                    'battle.attacksDuring':'替换时被攻击！',
+                    'battle.sentOut':      '派出了',
+                    'battle.lvl':          'Lv.',
+                    'battle.leadBadge':    '先锋',
+                    'battle.item':         '道具',
+                    'battle.shinyBadge':   '闪光',
+                    'battle.noItem':       '无道具',
+                    'battle.noTeamMsg':    '没有选择队伍成员。',
+                    'battle.hint':         '💡 提示',
+                    'stage.cleared':       '已通关 ✓',
+                    'stage.fight':         '战斗 ⚔️',
+                    'stage.badgeLocked':   '🔒 徽章未获得',
+                    'stage.elite4':        '四天王',
+                    'stage.champion':      '冠军',
+                    'stage.team':          '队伍：',
+                    'dex.signalLost':      '信号丢失',
+                    'dex.no':              'No.',
+                    'dex.page':            '第',
+                    'dex.of':              '页/共',
+                    'dex.battles':         '战斗次数',
+                    'pc.xpProgress':       '经验值进度',
+                    'pc.of':               '/',
+                    'pc.pokemon':          '宝可梦',
+                    'pc.holdItem':         '携带道具',
+                    'pc.moveRelearn':      '重新学习招式',
+                    'pc.consumables':      '消耗品',
+                    'pc.teachTm':          '教授技术机',
+                    'pc.noTms':            '没有兼容的技术机——请在商店购买。',
+                    'pc.release':          '🗑️ 放生宝可梦',
+                    'pc.moves':            '招式',
+                    'pc.slot':             '槽位',
+                    'pc.noPokemon':        'PC中没有宝可梦',
+                    'pc.noPokemonMsg':     '用量子扫描仪捕获宝可梦吧！',
+                    'pc.chooseItem':       '选择道具',
+                    'pc.chooseTm':         '选择技术机',
+                    'pc.teach':            '教授',
+                    'pc.use':              '使用',
+                    'pc.noConsumables':    '没有消耗品。',
+                    'pc.searchPlaceholder':'🔍 搜索名字…',
+                    'team.lead':           '先锋',
+                    'team.slot':           '槽位',
+                    'team.openSlot':       '空槽位',
+                    'team.pickPrompt':     '← 点击选择 → 然后选一只宝可梦。',
+                    'team.catchFirst':     '请先用扫描仪捕获宝可梦。',
+                    'team.pickingFor':     '为以下槽位选择：',
+                    'team.active':         '✓ 已激活',
+                    'team.pick':           '选择 →',
+                    'team.selected':       '已选',
+                    'shop.ownedLabel':     '已拥有：',
+                    'shop.notOwned':       '未拥有',
+                    'shop.tmOwned':        '📀 已拥有',
+                    'shop.pwr':            '威力：',
+                    'shop.infiniteUse':    '∞ 可重复使用',
+                    'autoBattler.stop':    '停止自动战斗',
+                    'autoBattler.start':   '开始自动战斗',
+                    'autoBattler.running': '运行中',
+                    'autoBattler.idle':    '空闲',
+                    'autoBattler.owned':   '✅ 已拥有',
+                    'autoBattler.selectStage': '-- 选择关卡 --',
+                    'gym.correct':         '✅ 正确！道馆已开放！',
+                    'gym.wrong':           '❌ 答案错误，请再试一次！',
+                    'starter.gen':         '世代',
+                    'starter.select':      '选择',
+                    'starter.loading':     '正在加载初始宝可梦数据…',
+                    'common.owned':        '已拥有',
+                    'common.battles':      '战斗次数',
+                    'common.type':         '属性',
+                    'common.level':        '等级',
+                    'common.lv':           'Lv.',
                   },
                   pt: {
                     'nav.scanner':  'Scanner Quântico',
@@ -3345,6 +4161,108 @@ const CAMPAIGN_ROADMAP = [
                     'common.exp':    'EXP',
                     'shop.title':    'Loja de Itens',
                     'shop.buy':      'Comprar',
+                    'scanner.selectBall':  'Selecione uma Ball e escaneie!',
+                    'scanner.scanning':    'Escaneando canais quânticos...',
+                    'scanner.frequencies': 'Escaneando frequências...',
+                    'scanner.lockSig':     'TRAVAR ASSINATURA (Clicar no Anel)',
+                    'scanner.scanDone':    'Escaneamento concluído',
+                    'scanner.radarLocked': 'Radar travado: ',
+                    'scanner.legendary':   'POKÉMON LENDÁRIO!',
+                    'scanner.signalLost':  'SINAL PERDIDO',
+                    'scanner.registered':  'REGISTRADO!',
+                    'scanner.capturedWith':'Capturado com ',
+                    'scanner.perfectMatch':'Bônus de combinação perfeita!',
+                    'scanner.outOfStock':  'Sem estoque',
+                    'scanner.noStockMsg':  'Compre dispositivos de escaneamento adicionais!',
+                    'scanner.cantCatch':   'Não é possível capturar!',
+                    'scanner.noPokeBall':  'Poké Balls padrão não podem capturar lendários!',
+                    'scanner.legendaryAppeared': 'LENDÁRIO APARECEU!',
+                    'scanner.legendaryAppearedMsg': 'Um raro Pokémon lendário apareceu!',
+                    'scanner.lockLost':    'TRAVA PERDIDA!',
+                    'scanner.lockLostMsg': 'Sinal de encontro dissipado.',
+                    'scanner.targetEscaped': 'O alvo escapou do radar. Acerte a zona verde Excelente.',
+                    'scanner.shiny':       'SHINY',
+                    'timing.excellent':    'TIMING EXCELENTE!',
+                    'timing.great':        'ÓTIMO TIMING!',
+                    'timing.good':         'BOA TRAVA',
+                    'timing.legendary':    'CAPTURA LENDÁRIA GARANTIDA!',
+                    'battle.combatInit':   'Combate iniciado: Confronto vs ',
+                    'battle.superEff':     'É muito eficaz! 💥',
+                    'battle.notVeryEff':   'Não é muito eficaz... 🛡️',
+                    'battle.immune':       'Imune!',
+                    'battle.wontHigher':   'não pode subir mais!',
+                    'battle.wontLower':    'não pode descer mais!',
+                    'battle.switchCost':   'Trocar (custa 1 turno):',
+                    'battle.switchedTo':   'Trocado para',
+                    'battle.attacksDuring':'ataca durante a troca!',
+                    'battle.sentOut':      'enviou',
+                    'battle.lvl':          'Nv.',
+                    'battle.leadBadge':    'Líder',
+                    'battle.item':         'Item',
+                    'battle.shinyBadge':   'Shiny',
+                    'battle.noItem':       'Sem item',
+                    'battle.noTeamMsg':    'Nenhum membro selecionado.',
+                    'battle.hint':         '💡 Dica',
+                    'stage.cleared':       'Concluído ✓',
+                    'stage.fight':         'LUTAR ⚔️',
+                    'stage.badgeLocked':   '🔒 Insígnia bloqueada',
+                    'stage.elite4':        'Elite Quatro',
+                    'stage.champion':      'Campeão',
+                    'stage.team':          'Equipe:',
+                    'dex.signalLost':      'Sinal perdido',
+                    'dex.no':              'Nº',
+                    'dex.page':            'Página',
+                    'dex.of':              'de',
+                    'dex.battles':         'Batalhas',
+                    'pc.xpProgress':       'PROGRESSO EXP',
+                    'pc.of':               'de',
+                    'pc.pokemon':          'Pokémon',
+                    'pc.holdItem':         'Item segurado',
+                    'pc.moveRelearn':      'Reaprender movimentos',
+                    'pc.consumables':      'Consumíveis',
+                    'pc.teachTm':          'Ensinar MT',
+                    'pc.noTms':            'Nenhuma MT compatível — compre MTs na Loja.',
+                    'pc.release':          '🗑️ Soltar Pokémon',
+                    'pc.moves':            'Movimentos',
+                    'pc.slot':             'Slot',
+                    'pc.noPokemon':        'Nenhum Pokémon no PC',
+                    'pc.noPokemonMsg':     'Capture Pokémon com o Scanner Quântico!',
+                    'pc.chooseItem':       'Escolher item',
+                    'pc.chooseTm':         'Escolher MT',
+                    'pc.teach':            'Ensinar',
+                    'pc.use':              'Usar',
+                    'pc.noConsumables':    'Nenhum consumível disponível.',
+                    'pc.searchPlaceholder':'🔍 Pesquisar nome…',
+                    'team.lead':           'Líder',
+                    'team.slot':           'Slot',
+                    'team.openSlot':       'Slot vazio',
+                    'team.pickPrompt':     '← Clique em Escolher → e selecione um Pokémon.',
+                    'team.catchFirst':     'Capture Pokémon no scanner primeiro.',
+                    'team.pickingFor':     'Selecionando para',
+                    'team.active':         '✓ Ativo',
+                    'team.pick':           'Escolher →',
+                    'team.selected':       'selecionado(s)',
+                    'shop.ownedLabel':     'Possuído:',
+                    'shop.notOwned':       'Não possuído',
+                    'shop.tmOwned':        '📀 Possuído',
+                    'shop.pwr':            'POD:',
+                    'shop.infiniteUse':    '∞ Uso',
+                    'autoBattler.stop':    'Parar combate auto',
+                    'autoBattler.start':   'Iniciar combate auto',
+                    'autoBattler.running': 'EM EXECUÇÃO',
+                    'autoBattler.idle':    'INATIVO',
+                    'autoBattler.owned':   '✅ Possuído',
+                    'autoBattler.selectStage': '-- Selecionar estágio --',
+                    'gym.correct':         '✅ Correto! O ginásio está aberto!',
+                    'gym.wrong':           '❌ Resposta errada. Tente novamente!',
+                    'starter.gen':         'Ger.',
+                    'starter.select':      'Selecionar',
+                    'starter.loading':     'Carregando dados dos iniciais…',
+                    'common.owned':        'Possuído',
+                    'common.battles':      'Batalhas',
+                    'common.type':         'Tipo',
+                    'common.level':        'Nível',
+                    'common.lv':           'Nv.',
                   },
                 };
 
@@ -3518,16 +4436,16 @@ const CAMPAIGN_ROADMAP = [
                 function updateSettingsUI() {
                     // Sound label
                     const settingsSoundText = document.getElementById('settingsSoundText');
-                    if (settingsSoundText) settingsSoundText.textContent = audioMuted ? "Sound Off" : "Sound On";
+                    if (settingsSoundText) settingsSoundText.textContent = audioMuted ? t('settings.soundOff') : t('settings.soundOn');
 
                     // Light/dark label
                     const darkText = document.getElementById('darkModeSettingsText');
                     const darkIcon = document.getElementById('darkModeIconSettings');
                     if (isLightMode) {
-                        if (darkText) darkText.textContent = 'Dark Mode';
+                        if (darkText) darkText.textContent = t('settings.darkMode');
                         if (darkIcon) darkIcon.className = 'fas fa-moon text-purple-400';
                     } else {
-                        if (darkText) darkText.textContent = 'Light Mode';
+                        if (darkText) darkText.textContent = t('settings.lightMode');
                         if (darkIcon) darkIcon.className = 'fas fa-sun text-yellow-400';
                     }
 
@@ -3795,7 +4713,7 @@ const CAMPAIGN_ROADMAP = [
                     const teamBadge = document.getElementById('teamCountBadge');
                     if (teamBadge) teamBadge.textContent = `${gameState.team.filter(Boolean).length}/6`;
                     const teamBadgeInline = document.getElementById('teamCountBadgeInline');
-                    if (teamBadgeInline) teamBadgeInline.textContent = `${gameState.team.filter(Boolean).length}/6 selected`;
+                    if (teamBadgeInline) teamBadgeInline.textContent = `${gameState.team.filter(Boolean).length}/6 ${t('team.selected')}`;
                     updateScanningRegionUI();
                 }
 
@@ -4050,7 +4968,7 @@ const CAMPAIGN_ROADMAP = [
                     
                     const selected = gameState.selectedBall;
                     if (gameState.balls[selected] <= 0) {
-                        showNotification("Out of stock", "Purchase additional scanning devices!", "error");
+                        showNotification(t('scanner.outOfStock'), t('scanner.noStockMsg'), 'error');
                         return;
                     }
 
@@ -4073,12 +4991,12 @@ const CAMPAIGN_ROADMAP = [
                         if (LEGENDARY_MYTHICAL_POKEMON.includes(encId)) {
                             gameState.balls[selected] += 1; // refund
                             updateUI();
-                            showNotification("Can't catch!", "Standard Poké Balls cannot capture legendary Pokémon! Use a Great Ball or higher.", 'error');
+                            showNotification(t('scanner.cantCatch'), t('scanner.noPokeBall'), 'error');
                             // Re-enable spin
                             document.getElementById('spinBtn').disabled = false;
                             document.getElementById('spinBtn').className = "flex-1 py-4 px-6 themed-gradient text-white font-black uppercase rounded-2xl shadow-xl transition duration-150 tracking-wider cursor-pointer";
                             document.getElementById('stopBtn').disabled = true;
-                            document.getElementById('encounterStatus').textContent = "Select a ball and scan!";
+                            document.getElementById('encounterStatus').textContent = t('scanner.selectBall');
                             return;
                         }
                     }
@@ -4094,8 +5012,8 @@ const CAMPAIGN_ROADMAP = [
                     if (!animationFrameId) animationFrameId = requestAnimationFrame(gameLoop);
 
                     document.getElementById('encounterStatus').className = "bg-rose-600/15 text-rose-500 border border-rose-500/20 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-bold inline-block animate-pulse";
-                    document.getElementById('encounterStatus').textContent = "Scanning Quantum Channels...";
-                    document.getElementById('wildPokemonName').textContent = "Spinner scanning frequencies...";
+                    document.getElementById('encounterStatus').textContent = t('scanner.scanning');
+                    document.getElementById('wildPokemonName').textContent = t('scanner.frequencies');
                     document.getElementById('wildPokemonGraphic').style.opacity = "0.1";
                 };
 
@@ -4171,10 +5089,10 @@ const CAMPAIGN_ROADMAP = [
                     if (isSpecialLegendary) {
                         // Special legendary encounter with custom animation
                         encounterTag.classList.add('bg-yellow-500/10', 'text-yellow-400', 'border-yellow-500/30');
-                        encounterTag.innerHTML = `<i class="fas fa-star mr-1"></i> LEGENDARY APPEARANCE!`;
+                        encounterTag.innerHTML = `<i class="fas fa-star mr-1"></i> ${t('scanner.legendary')}`;
                         platformEl.className = "absolute bottom-6 w-32 h-6 bg-yellow-500/30 rounded-full blur-lg glow-legendary-special";
                         graphicEl.classList.add('legendary-entry-animation');
-                        showNotification("LEGENDARY APPEARED!", "A rare Legendary Pokémon has appeared!", "shiny");
+                        showNotification(t('scanner.legendaryAppeared'), t('scanner.legendaryAppearedMsg'), 'shiny');
                     } else if (rarity === 'Legendary') {
                         encounterTag.classList.add('bg-yellow-500/10', 'text-yellow-400', 'border-yellow-500/30');
                         platformEl.className = "absolute bottom-6 w-32 h-6 bg-yellow-500/20 rounded-full blur-md animate-pulse";
@@ -4193,11 +5111,11 @@ const CAMPAIGN_ROADMAP = [
                     let targetBonusMessage = targetStruck ? "⚡ TARGET FOCUS MATCHED (+100% Coins!) ⚡" : "";
 
                     if (!isSpecialLegendary) {
-                        encounterTag.innerHTML = `<i class="fas fa-satellite-dish mr-1"></i> Radar Locked: ${rarity}`;
+                        encounterTag.innerHTML = `<i class="fas fa-satellite-dish mr-1"></i> ${t('scanner.radarLocked')}${rarity}`;
                     }
                     
                     if (gameState.encounterShiny) {
-                        nameEl.innerHTML = `<i class="fas fa-sparkles text-pink-500 animate-spin"></i> SHINY ${pokemon.name.toUpperCase()} <i class="fas fa-sparkles text-pink-500"></i>`;
+                        nameEl.innerHTML = `<i class="fas fa-sparkles text-pink-500 animate-spin"></i> ${t('scanner.shiny') || 'SHINY'} ${pokemon.name.toUpperCase()} <i class="fas fa-sparkles text-pink-500"></i>`;
                         graphicEl.className = "w-36 h-36 object-contain z-10 transform translate-y-2 transition-all duration-300 filter drop-shadow-[0_0_15px_rgba(236,72,153,0.8)] opacity-100";
                         graphicEl.style.filter = "hue-rotate(120deg) saturate(1.5)";
                     } else {
@@ -4214,14 +5132,14 @@ const CAMPAIGN_ROADMAP = [
                     graphicEl.src = pokemon.sprite;
                     
                     // Show level for special legendary encounters
-                    const levelText = isSpecialLegendary ? ` | <span class="text-slate-300 font-bold">Level:</span> 50` : ` | <span class="text-slate-300 font-bold">HP:</span> ${pokemon.hp}`;
+                    const levelText = isSpecialLegendary ? ` | <span class="text-slate-300 font-bold">${t('common.level') || 'Level'}:</span> 50` : ` | <span class="text-slate-300 font-bold">${t('common.hp')}:</span> ${pokemon.hp}`;
                     const catchRateText = isSpecialLegendary ? ` | <span class="text-emerald-400 font-extrabold text-[9px]">100% CATCH RATE!</span>` : '';
-                    detailsEl.innerHTML = `<span class="text-slate-300 font-bold">Type:</span> ${pokemon.type1.toUpperCase()}${pokemon.type2 ? ' / ' + pokemon.type2.toUpperCase() : ''}${levelText}<br><span class="text-yellow-400 font-extrabold text-[9px]">${targetBonusMessage}</span>${catchRateText}`;
+                    detailsEl.innerHTML = `<span class="text-slate-300 font-bold">${t('common.type') || 'Type'}:</span> ${pokemon.type1.toUpperCase()}${pokemon.type2 ? ' / ' + pokemon.type2.toUpperCase() : ''}${levelText}<br><span class="text-yellow-400 font-extrabold text-[9px]">${targetBonusMessage}</span>${catchRateText}`;
 
                     const catchBtn = document.getElementById('catchBtn');
                     catchBtn.disabled = false;
                     catchBtn.className = "w-full py-4 bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-slate-950 font-black uppercase rounded-2xl shadow-xl transition duration-150 flex items-center justify-center gap-2 cursor-pointer";
-                    catchBtn.innerHTML = `<i class="fas fa-crosshairs text-lg"></i> <span>LOCK SIGNATURE (Click Ring)</span>`;
+                    catchBtn.innerHTML = `<i class="fas fa-crosshairs text-lg"></i> <span>${t('scanner.lockSig')}</span>`;
 
                     // ── Rare encounter cutscene (shiny or legendary) ──
                     if (gameState.encounterShiny || isSpecialLegendary) {
@@ -4376,15 +5294,15 @@ const CAMPAIGN_ROADMAP = [
                     let catchPhrase = "Scanned";
                     let accuracyModifier = 1.0;
 
-                    if (scoreScale <= 0.35) { catchPhrase = "EXCELLENT TIMING LOCK!"; accuracyModifier = 2.5; playSuccessCapture(); }
-                    else if (scoreScale <= 0.7) { catchPhrase = "GREAT TIMING LOCK!"; accuracyModifier = 1.6; playBeep(); }
-                    else { catchPhrase = "GOOD LOCK"; accuracyModifier = 1.0; playBeep(); }
+                    if (scoreScale <= 0.35) { catchPhrase = t('timing.excellent'); accuracyModifier = 2.5; playSuccessCapture(); }
+                    else if (scoreScale <= 0.7) { catchPhrase = t('timing.great'); accuracyModifier = 1.6; playBeep(); }
+                    else { catchPhrase = t('timing.good'); accuracyModifier = 1.0; playBeep(); }
 
                     const pokemon = gameState.currentEncounter;
                     
                     // Special legendary encounters have 100% catch rate
                     if (pokemon.isSpecialLegendary) {
-                        catchPhrase = "LEGENDARY CAPTURE GUARANTEED!";
+                        catchPhrase = t('timing.legendary');
                         accuracyModifier = 999.0; // Effectively 100% catch rate
                         playSuccessCapture();
                     }
@@ -4438,20 +5356,20 @@ const CAMPAIGN_ROADMAP = [
 
                         showNotification("CAPTURED!", `${pokemon.name} registered. Gained +${coinGain} Coins.`, gameState.encounterShiny ? 'shiny' : 'success');
                         graphicEl.className = "w-36 h-36 object-contain z-10 transform scale-50 opacity-30 transition-all duration-300 rotate-12";
-                        nameEl.innerHTML = `<span class="text-green-400">REGISTERED!</span> ${pokemon.name.toUpperCase()}`;
-                        detailsEl.innerHTML = `<span class="text-slate-400">Captured with ${catchPhrase}!</span><br><span class="text-yellow-400 font-bold">+${coinGain} Coins | +${coinGain/2} XP</span> ${matchedBonus ? '(Perfect Match Bonus!)' : ''}`;
+                        nameEl.innerHTML = `<span class="text-green-400">${t('scanner.registered')}</span> ${pokemon.name.toUpperCase()}`;
+                        detailsEl.innerHTML = `<span class="text-slate-400">${t('scanner.capturedWith')}${catchPhrase}!</span><br><span class="text-yellow-400 font-bold">+${coinGain} ${t('common.coins')} | +${coinGain/2} ${t('common.exp')}</span> ${matchedBonus ? '(' + t('scanner.perfectMatch') + ')' : ''}`;
                     } else {
                         playFailCapture();
                         showNotification("LOCK LOST!", `Encounter signature resolved. Signal faded.`, 'error');
                         graphicEl.className = "w-36 h-36 object-contain z-10 transform translate-x-20 opacity-0 transition-all duration-500";
-                        nameEl.innerHTML = `<span class="text-red-500">SIGNAL LOST</span> ${pokemon.name}`;
-                        detailsEl.innerHTML = `<span class="text-slate-500">Target escaped radar tracking. Hit green Excellent circle zone for maximum success.</span>`;
+                        nameEl.innerHTML = `<span class="text-red-500">${t('scanner.signalLost')}</span> ${pokemon.name}`;
+                        detailsEl.innerHTML = `<span class="text-slate-500">${t('scanner.targetEscaped')}</span>`;
                     }
 
                     const catchBtn = document.getElementById('catchBtn');
                     catchBtn.disabled = true;
                     catchBtn.className = "w-full py-4 bg-slate-900 text-slate-500 font-extrabold uppercase rounded-2xl border border-slate-800 tracking-wider flex items-center justify-center gap-2 cursor-not-allowed";
-                    catchBtn.innerHTML = `<i class="fas fa-radar text-lg"></i> <span>Scan Completed</span>`;
+                    catchBtn.innerHTML = `<i class="fas fa-radar text-lg"></i> <span>${t('scanner.scanDone')}</span>`;
                     
                     gameState.currentEncounter = null;
                     updateTargetRarityObjective();
@@ -4612,10 +5530,10 @@ const CAMPAIGN_ROADMAP = [
 
                         const gymBadgeTag = stage.isGym
                             ? `<span class="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full ${hasBadge ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/40' : 'bg-slate-800 text-slate-500 border border-slate-700'}">
-                                ${hasBadge ? '🏅 ' + stage.badgeName : '🔒 Badge Locked'}
+                                ${hasBadge ? '🏅 ' + stage.badgeName : t('stage.badgeLocked')}
                                </span>`
-                            : stage.isElite4 ? '<span class="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40">⚔️ Elite Four</span>'
-                            : stage.isChampion ? '<span class="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-yellow-500/20 text-yellow-200 border border-yellow-400/60">👑 Champion</span>'
+                            : stage.isElite4 ? `<span class="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40">⚔️ ${t('stage.elite4')}</span>`
+                            : stage.isChampion ? `<span class="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-yellow-500/20 text-yellow-200 border border-yellow-400/60">👑 ${t('stage.champion')}</span>`
                             : '';
                         // Extra border styling for Elite4 / Champion
                         if (!isCleared && stage.isElite4)   { card.style.borderColor='rgba(168,85,247,0.5)'; card.style.boxShadow='inset 0 0 0 1px rgba(168,85,247,0.15), 0 0 18px rgba(168,85,247,0.1)'; }
@@ -4623,23 +5541,22 @@ const CAMPAIGN_ROADMAP = [
 
                         card.innerHTML = `
                             <div class="flex justify-between items-start gap-1">
-                                <span class="text-[9px] font-mono tracking-wide text-slate-400 uppercase">Stage ${stage.stageId}</span>
                                 <span class="text-xs leading-none">${stage.icon}</span>
                             </div>
                             <div class="my-1 space-y-0.5">
                                 <h4 class="text-xs font-black truncate">${stage.name}</h4>
                                 <p class="text-[10px] text-slate-400 truncate">${stage.trainer}</p>
-                                <p class="text-[9px] text-slate-500">Team: ${stage.teamSize || 1}</p>
+                                <p class="text-[9px] text-slate-500">${t('stage.team')} ${stage.teamSize || 1}</p>
                                 ${gymBadgeTag}
                             </div>
                             <div class="pt-2 border-t border-slate-800 flex justify-between items-center">
-                                <span class="text-[9px] bg-slate-950 px-2 py-0.5 rounded font-bold">LVL ${stage.level}</span>
-                                <span class="text-[10px] ${isCleared ? 'text-emerald-400' : stage.isGym ? 'text-yellow-300' : 'text-rose-400'} font-extrabold">${isCleared ? 'Cleared ✓' : 'FIGHT ⚔️'}</span>
+                                <span class="text-[9px] bg-slate-950 px-2 py-0.5 rounded font-bold">${t('battle.lvl')} ${stage.level}</span>
+                                <span class="text-[10px] ${isCleared ? 'text-emerald-400' : stage.isGym ? 'text-yellow-300' : 'text-rose-400'} font-extrabold">${isCleared ? t('stage.cleared') : t('stage.fight')}</span>
                             </div>
                         `;
                     } else {
                         card.className = "p-4 rounded-2xl border border-slate-900 bg-slate-950/20 text-slate-600 flex flex-col justify-center items-center h-44 opacity-30 select-none";
-                        card.innerHTML = `<i class="fas fa-lock text-xl mb-2"></i><span class="text-[10px] font-bold font-mono">Stage ${stage.stageId}</span>`;
+                        card.innerHTML = `<i class="fas fa-lock text-xl mb-2"></i>`;
                     }
                     return card;
                 }
@@ -4716,7 +5633,7 @@ const CAMPAIGN_ROADMAP = [
                     if (fighterPool.length === 0) {
                         grid.innerHTML = `
                             <div class="col-span-full rounded-2xl border border-slate-800 bg-slate-900/50 p-6 text-center text-sm text-slate-400">
-                                No team members are currently selected. Open the Team screen and assign at least one Pokémon to begin.
+                                ${t('battle.noTeamMsg')}
                             </div>
                         `;
                         return;
@@ -4727,11 +5644,11 @@ const CAMPAIGN_ROADMAP = [
                         card.className = "bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-2xl p-4 text-center cursor-pointer transition duration-150 relative flex flex-col justify-between";
                         card.onclick = () => selectFighterAndBegin(pk);
 
-                        let itemStr = pk.heldItem ? HOLD_ITEMS_DB[pk.heldItem].name : "No Item";
+                        let itemStr = pk.heldItem ? HOLD_ITEMS_DB[pk.heldItem].name : t('battle.noItem');
                         let currentLevel = pk.level || 1;
                         let badge = '';
                         if (gameState.team && gameState.team.some(Boolean) && index === 0) {
-                            badge = '<span class="absolute top-2 left-2 text-[7px] bg-cyan-500 text-white px-1 rounded uppercase font-black tracking-widest">Lead</span>';
+                            badge = `<span class="absolute top-2 left-2 text-[7px] bg-cyan-500 text-white px-1 rounded uppercase font-black tracking-widest">${t('battle.leadBadge')}</span>`;
                         }
 
                         card.innerHTML = `
@@ -4740,10 +5657,10 @@ const CAMPAIGN_ROADMAP = [
                             </div>
                             <div>
                                 <div class="text-xs font-bold text-white truncate">${pk.name}</div>
-                                <div class="text-[9px] text-slate-400 font-mono mt-1">Level ${currentLevel} | Item: <span class="text-cyan-400 font-bold">${itemStr}</span></div>
+                                <div class="text-[9px] text-slate-400 font-mono mt-1">${t('common.lv')} ${currentLevel} | ${t('battle.item')}: <span class="text-cyan-400 font-bold">${itemStr}</span></div>
                             </div>
                             ${badge}
-                            ${pk.isShiny ? '<span class="absolute top-2 right-2 text-[7px] bg-pink-500 text-white px-1 rounded uppercase font-black tracking-widest">Shiny</span>' : ''}
+                            ${pk.isShiny ? `<span class="absolute top-2 right-2 text-[7px] bg-pink-500 text-white px-1 rounded uppercase font-black tracking-widest">${t('battle.shinyBadge')}</span>` : ''}
                         `;
                         grid.appendChild(card);
                     });
@@ -4835,13 +5752,13 @@ const CAMPAIGN_ROADMAP = [
 
                     document.getElementById('bossSprite').src = enemyProfile.sprite;
                     document.getElementById('bossName').textContent = enemyProfile.name;
-                    document.getElementById('bossLevelBadge').textContent = `LVL ${enemyProfile.level}`;
+                    document.getElementById('bossLevelBadge').textContent = `${t('battle.lvl')} ${enemyProfile.level}`;
                     document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossHP}`;
                     document.getElementById('bossHPBar').style.width = "100%";
 
                     document.getElementById('playerFighterSprite').src = pokemon.sprite;
                     document.getElementById('playerFighterName').textContent = `${pokemon.isShiny ? '✨ ' : ''}${pokemon.name}`;
-                    document.getElementById('playerFighterLevelBadge').textContent = `LVL ${pokemon.level || 1}`;
+                    document.getElementById('playerFighterLevelBadge').textContent = `${t('battle.lvl')} ${pokemon.level || 1}`;
                     document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${scaledHP}`;
                     document.getElementById('playerFighterHPBar').style.width = "100%";
 
@@ -4852,7 +5769,7 @@ const CAMPAIGN_ROADMAP = [
                         ? `<span class="bg-yellow-900/80 border border-yellow-700 text-yellow-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase">${HOLD_ITEMS_DB[enemyProfile.heldItem].name}</span>`
                         : "";
 
-                    document.getElementById('battleLog').innerHTML = `<div class="text-cyan-400">Combat initiated: Engagement vs <span class="font-bold text-white">${enemyProfile.name}</span>!</div>`;
+                    document.getElementById('battleLog').innerHTML = `<div class="text-cyan-400">${t('battle.combatInit')}<span class="font-bold text-white">${enemyProfile.name}</span>!</div>`;
                     document.getElementById('effectivenessIndicator').textContent = "";
 
                     gameState.battle.active = true;
@@ -4904,7 +5821,7 @@ const CAMPAIGN_ROADMAP = [
                     const change = stages[stat] - prev;
                     const ownerName = side === 'player' ? atkName : defName;
                     if (change === 0) {
-                        logBox.innerHTML += `<div class="text-slate-500 mt-1 italic text-[10px]">${ownerName}'s ${stat} won't go any ${delta > 0 ? 'higher' : 'lower'}!</div>`;
+                        logBox.innerHTML += `<div class="text-slate-500 mt-1 italic text-[10px]">${ownerName}'s ${stat} ${delta > 0 ? t('battle.wontHigher') : t('battle.wontLower')}</div>`;
                     } else {
                         const sharply = Math.abs(change) >= 2 ? ' sharply' : '';
                         const dir = change > 0 ? '⬆ rose' : '⬇ fell';
@@ -5169,9 +6086,9 @@ const CAMPAIGN_ROADMAP = [
                         gameState.battle.bossHP -= calculatedDamage;
                         if (gameState.battle.bossHP < 0) gameState.battle.bossHP = 0;
 
-                        if (typeMod > 1.0) { playCritStrike(); if(effIndicator) effIndicator.textContent = "Super effective! 💥"; }
-                        else if (typeMod < 1.0 && typeMod > 0) { playNormalHit(); if(effIndicator) effIndicator.textContent = "Not very effective... 🛡️"; }
-                        else if (typeMod === 0) { playBeep(); if(effIndicator) effIndicator.textContent = "Immune!"; }
+                        if (typeMod > 1.0) { playCritStrike(); if(effIndicator) effIndicator.textContent = t('battle.superEff'); }
+                        else if (typeMod < 1.0 && typeMod > 0) { playNormalHit(); if(effIndicator) effIndicator.textContent = t('battle.notVeryEff'); }
+                        else if (typeMod === 0) { playBeep(); if(effIndicator) effIndicator.textContent = t('battle.immune'); }
                         else { playNormalHit(); if(effIndicator) effIndicator.textContent = ''; }
 
                         logBox.innerHTML += `<div class="text-blue-400 mt-1">⚔️ ${attacker.name} used <span class="text-white capitalize font-bold">${moveName.replace(/-/g,' ')}</span>! Dealt <span class="font-black">${calculatedDamage}</span> dmg.</div>`;
@@ -5343,7 +6260,7 @@ const CAMPAIGN_ROADMAP = [
                     const available = playerTeam.filter(p => p && p.uid !== activePokemon.uid && !fainted.has(p.uid));
                     if (available.length === 0) { switchRow.innerHTML = ''; return; }
                     switchRow.innerHTML =
-                        '<div class="text-[9px] text-slate-500 uppercase tracking-widest font-bold w-full mt-1">Switch (costs 1 turn):</div>' +
+                        `<div class="text-[9px] text-slate-500 uppercase tracking-widest font-bold w-full mt-1">${t('battle.switchCost')}</div>` +
                         available.map(p =>
                             `<button onclick="window.switchBattlePokemon(${p.uid})" class="flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-900 border border-slate-700 hover:border-cyan-500 text-[10px] text-slate-300 rounded-lg transition">` +
                             `<img src="${p.sprite}" class="w-4 h-4 object-contain" style="image-rendering:pixelated">` +
@@ -5379,7 +6296,7 @@ const CAMPAIGN_ROADMAP = [
 
                     document.getElementById('playerFighterSprite').src = newFighter.sprite;
                     document.getElementById('playerFighterName').textContent = (newFighter.isShiny ? '✨ ' : '') + newFighter.name;
-                    document.getElementById('playerFighterLevelBadge').textContent = 'LVL ' + (newFighter.level || 1);
+                    document.getElementById('playerFighterLevelBadge').textContent = t('battle.lvl') + ' ' + (newFighter.level || 1);
                     document.getElementById('playerFighterHPText').textContent = newHP + '/' + newHP;
                     document.getElementById('playerFighterHPBar').style.width = '100%';
                     document.getElementById('playerFighterHPBar').className = 'bg-green-500 h-full transition-all duration-300';
@@ -5387,7 +6304,7 @@ const CAMPAIGN_ROADMAP = [
                         ? `<span class="bg-cyan-900/80 border border-cyan-700 text-cyan-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase"><i class="fas fa-briefcase"></i> ${HOLD_ITEMS_DB[newFighter.heldItem].name}</span>`
                         : '';
 
-                    logBox.innerHTML += `<div class="text-amber-400 font-bold mt-2">🔄 Switched to <span class="text-white">${newFighter.name}</span>! ${boss.name} attacks during the switch!</div>`;
+                    logBox.innerHTML += `<div class="text-amber-400 font-bold mt-2">🔄 ${t('battle.switchedTo')} <span class="text-white">${newFighter.name}</span>! ${boss.name} ${t('battle.attacksDuring')}</div>`;
                     logBox.scrollTop = logBox.scrollHeight;
 
                     // Enemy gets a free attack as the cost of switching
@@ -5969,7 +6886,7 @@ const CAMPAIGN_ROADMAP = [
                         gameState.battle.statusMeta.boss = {};
                         document.getElementById('bossSprite').src = nextEnemy.sprite;
                         document.getElementById('bossName').textContent = nextEnemy.name;
-                        document.getElementById('bossLevelBadge').textContent = `LVL ${nextEnemy.level}`;
+                        document.getElementById('bossLevelBadge').textContent = `${t('battle.lvl')} ${nextEnemy.level}`;
                         document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossHP}`;
                         document.getElementById('bossHPBar').style.width = "100%";
                         document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
@@ -5977,7 +6894,7 @@ const CAMPAIGN_ROADMAP = [
                         document.getElementById('playerFighterHPBar').style.width = `${_pHpPct2}%`;
                         document.getElementById('playerFighterHPBar').className = `${_pHpPct2 > 50 ? 'bg-green-500' : _pHpPct2 > 20 ? 'bg-yellow-400' : 'bg-red-500'} h-full transition-all duration-300`;
                         renderStatStagesUI();
-                        document.getElementById('battleLog').innerHTML += `<div class="text-amber-400 font-bold mt-2">🎯 ${stage ? stage.trainer : 'Trainer'} sent out ${nextEnemy.name}!</div>`;
+                        document.getElementById('battleLog').innerHTML += `<div class="text-amber-400 font-bold mt-2">🎯 ${stage ? stage.trainer : 'Trainer'} ${t('battle.sentOut')} ${nextEnemy.name}!</div>`;
                         document.getElementById('battleLog').scrollTop = document.getElementById('battleLog').scrollHeight;
                         renderBattleMoves(fighter);
                         return;
@@ -6232,7 +7149,7 @@ const CAMPAIGN_ROADMAP = [
                         const caughtShiny = gameState.pokedex.some(p => p.id === id && p.isShiny);
                         const registered = caughtNormal || caughtShiny;
 
-                        let nameStr = `No. ${id}`;
+                        let nameStr = `${t('dex.no')} ${id}`;
                         if (registered) { const dexP = gameState.pokedex.find(p => p.id === id); nameStr = getPokemonName(dexP).toLowerCase(); }
 
                         if (gameState.dexUI.search !== "" && !nameStr.includes(gameState.dexUI.search) && !id.toString().includes(gameState.dexUI.search)) continue;
@@ -6244,7 +7161,7 @@ const CAMPAIGN_ROADMAP = [
                     const maxPage = Math.max(1, Math.ceil(totalItems / gameState.dexUI.pageSize));
                     if (gameState.dexUI.page > maxPage) gameState.dexUI.page = maxPage;
 
-                    document.getElementById('pageInfoText').textContent = `Page ${gameState.dexUI.page} of ${maxPage}`;
+                    document.getElementById('pageInfoText').textContent = `${t('dex.page')} ${gameState.dexUI.page} ${t('dex.of')} ${maxPage}`;
                     document.getElementById('prevPageBtn').disabled = gameState.dexUI.page === 1;
                     document.getElementById('nextPageBtn').disabled = gameState.dexUI.page === maxPage;
 
@@ -6287,7 +7204,7 @@ const CAMPAIGN_ROADMAP = [
                                     <div class="text-[7px] text-slate-400 font-mono text-center mt-1">Battles: ${cached.battleCount || 0}</div>
                                     <div class="mt-1.5">
                                         <div class="flex justify-between text-[8px] font-mono text-slate-500 mb-0.5">
-                                            <span>XP PROGRESS</span><span>${xp}/${nextLevelReq}</span>
+                                            <span>${t('pc.xpProgress')}</span><span>${xp}/${nextLevelReq}</span>
                                         </div>
                                         <div class="w-full bg-slate-900 rounded-full h-1 overflow-hidden">
                                             <div class="bg-gradient-to-r from-pink-500 to-rose-400 h-full transition-all duration-300" style="width: ${xpPercent}%;"></div>
@@ -6312,7 +7229,7 @@ const CAMPAIGN_ROADMAP = [
                             `;
                         } else {
                             card.className = "p-4 rounded-2xl border border-slate-950 bg-slate-950/40 flex flex-col items-center justify-center min-h-[170px] opacity-30";
-                            card.innerHTML = `<div class="text-3xl text-slate-800 mb-2"><i class="fas fa-satellite"></i></div><h4 class="text-[10px] font-bold text-slate-500 font-mono">Signal Lost</h4><span class="text-[8px] text-slate-600 font-mono mt-0.5">No. ${item.id}</span>`;
+                            card.innerHTML = `<div class="text-3xl text-slate-800 mb-2"><i class="fas fa-satellite"></i></div><h4 class="text-[10px] font-bold text-slate-500 font-mono">${t('dex.signalLost')}</h4><span class="text-[8px] text-slate-600 font-mono mt-0.5">${t('dex.no')} ${item.id}</span>`;
                         }
                         grid.appendChild(card);
                     });
@@ -6362,8 +7279,8 @@ const CAMPAIGN_ROADMAP = [
                         const nameHtml = pk
                             ? `<div class="text-xs font-bold text-white truncate">${pk.isShiny?'✨ ':''}${getPokemonName(pk)}</div>
                                <div class="text-[9px] text-slate-400 capitalize">${pk.type1}${pk.type2?'/'+pk.type2:''} · Lv${pk.level||1}</div>`
-                            : `<div class="text-xs text-slate-500">Open slot</div>`;
-                        const slotLabel = i === 0 ? 'Lead' : `Slot ${i+1}`;
+                            : `<div class="text-xs text-slate-500">${t('team.openSlot')}</div>`;
+                        const slotLabel = i === 0 ? t('team.lead') : `${t('team.slot')} ${i+1}`;
 
                         card.innerHTML = `
                             ${spriteHtml}
@@ -6375,7 +7292,7 @@ const CAMPAIGN_ROADMAP = [
                                 ${pk ? `<button onclick="window.clearTeamSlot(${i})" class="text-[9px] text-slate-500 hover:text-rose-400 px-1.5 py-1 rounded border border-slate-800 hover:border-rose-800 transition" title="Clear slot">✕</button>` : ''}
                                 <button onclick="window.pickTeamSlot(${i})" title="${isActive ? 'Cancel picking' : 'Pick a Pokémon for this slot'}"
                                     class="text-[9px] font-bold px-2 py-1 rounded border transition ${isActive ? 'bg-cyan-600 border-cyan-500 text-white' : 'bg-slate-900 border-slate-700 text-cyan-400 hover:border-cyan-600 hover:bg-slate-800'}">
-                                    ${isActive ? '✓ Active' : 'Pick →'}
+                                    ${isActive ? t('team.active') : t('team.pick')}
                                 </button>
                             </div>
                         `;
@@ -6386,8 +7303,8 @@ const CAMPAIGN_ROADMAP = [
                     const banner = document.getElementById('teamActiveSlotBanner');
                     if (banner) {
                         if (activeSlot !== null) {
-                            const slotName = activeSlot === 0 ? 'Lead' : `Slot ${activeSlot + 1}`;
-                            banner.textContent = `Picking for ${slotName}`;
+                            const slotName = activeSlot === 0 ? t('team.lead') : `${t('team.slot')} ${activeSlot + 1}`;
+                            banner.textContent = `${t('team.pickingFor')} ${slotName}`;
                             banner.classList.remove('hidden');
                         } else {
                             banner.classList.add('hidden');
@@ -6396,7 +7313,7 @@ const CAMPAIGN_ROADMAP = [
 
                     if (summary) {
                         if (gameState.pcBox.length === 0) {
-                            summary.innerHTML = '<div class="text-[10px] text-slate-500 mb-2">Catch Pokémon in the scanner first.</div>';
+                            summary.innerHTML = `<div class="text-[10px] text-slate-500 mb-2">${t('team.catchFirst')}</div>`;
                         } else {
                             summary.innerHTML = `
                                 <div class="flex items-center gap-2 mb-2">
@@ -6405,7 +7322,7 @@ const CAMPAIGN_ROADMAP = [
                                         class="flex-1 bg-slate-900 border border-slate-800 px-2.5 py-1.5 rounded-xl text-[11px] text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500">
                                     <span class="text-[9px] text-slate-500 whitespace-nowrap">${filteredPc.length}/${gameState.pcBox.length}</span>
                                 </div>
-                                ${activeSlot === null ? '<div class="text-[9px] text-slate-600 mb-1">← Click <span class="text-cyan-500 font-bold">Pick →</span> on a slot, then tap a Pokémon below.</div>' : ''}
+                                ${activeSlot === null ? `<div class="text-[9px] text-slate-600 mb-1">${t('team.pickPrompt')}</div>` : ''}
                             `;
                         }
                     }
@@ -6438,7 +7355,7 @@ const CAMPAIGN_ROADMAP = [
                     }
 
                     const teamBadgeInline = document.getElementById('teamCountBadgeInline');
-                    if (teamBadgeInline) teamBadgeInline.textContent = `${teamSlots.filter(Boolean).length}/6 selected`;
+                    if (teamBadgeInline) teamBadgeInline.textContent = `${teamSlots.filter(Boolean).length}/6 ${t('team.selected')}`;
                     updateUI();
                 }
 
@@ -6514,7 +7431,7 @@ const CAMPAIGN_ROADMAP = [
                     const maxPage = Math.max(1, Math.ceil(totalItems / pcUI.pageSize));
                     if (pcUI.page > maxPage) pcUI.page = maxPage;
 
-                    document.getElementById('pcPageInfoText').textContent = `Page ${pcUI.page} of ${maxPage} (${totalItems} Pok\u00e9mon)`;
+                    document.getElementById('pcPageInfoText').textContent = `${t('dex.page')} ${pcUI.page} ${t('pc.of')} ${maxPage} (${totalItems} ${t('pc.pokemon')})`;
                     document.getElementById('pcPrevPageBtn').disabled = pcUI.page === 1;
                     document.getElementById('pcNextPageBtn').disabled = pcUI.page === maxPage;
                     document.getElementById('pcCountBadge').textContent = gameState.pcBox.length;
@@ -6523,7 +7440,7 @@ const CAMPAIGN_ROADMAP = [
                     const page = list.slice(startIdx, startIdx + pcUI.pageSize);
 
                     if (totalItems === 0) {
-                        grid.innerHTML = '<div class="col-span-3 text-center py-12 text-slate-500"><i class="fas fa-box-open text-4xl mb-3"></i><p class="text-sm font-bold">No Pok\u00e9mon in PC</p><p class="text-xs mt-1">Catch some Pok\u00e9mon using the Quantum Scanner!</p></div>';
+                        grid.innerHTML = `<div class="col-span-3 text-center py-12 text-slate-500"><i class="fas fa-box-open text-4xl mb-3"></i><p class="text-sm font-bold">${t('pc.noPokemon')}</p><p class="text-xs mt-1">${t('pc.noPokemonMsg')}</p></div>`;
                         return;
                     }
 
@@ -6566,7 +7483,7 @@ const CAMPAIGN_ROADMAP = [
                             const slotOptions = getLearnableMovesForPokemon(pk).map(move => `<option value="${move}" ${move === currentMove ? 'selected' : ''}>${move.replace(/-/g, ' ')}</option>`).join('');
                             return `
                                 <div class="flex items-center gap-2">
-                                    <span class="text-[8px] uppercase font-bold text-slate-500 w-8">Slot ${slotIndex + 1}</span>
+                                    <span class="text-[8px] uppercase font-bold text-slate-500 w-8">${t('pc.slot')} ${slotIndex + 1}</span>
                                     <select onchange="window.changePokemonMove(${pk.uid}, ${slotIndex}, this.value)" class="flex-1 bg-slate-900 border border-slate-800 text-[9px] rounded p-1 text-slate-300 focus:outline-none focus:border-cyan-500">
                                         ${slotOptions}
                                     </select>
@@ -6579,11 +7496,11 @@ const CAMPAIGN_ROADMAP = [
                         });
                         const consumableMarkup = consumableOptions.length ? `
                             <select id="pcConsumableSelect-${pk.uid}" class="flex-1 bg-slate-900 border border-slate-800 text-[9px] rounded p-1 text-slate-300 focus:outline-none focus:border-emerald-500">
-                                <option value="">Choose item</option>
+                                <option value="">${t('pc.chooseItem')}</option>
                                 ${consumableOptions.map(key => `<option value="${key}">${HOLD_ITEMS_DB[key].name} (${gameState.inventoryItems[key] || 0})</option>`).join('')}
                             </select>
-                            <button onclick="window.usePcConsumable(${pk.uid}, document.getElementById('pcConsumableSelect-${pk.uid}').value)" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-[9px] uppercase font-bold rounded">Use</button>
-                        ` : '<div class="text-[8px] text-slate-500">No one-time items owned.</div>';
+                            <button onclick="window.usePcConsumable(${pk.uid}, document.getElementById('pcConsumableSelect-${pk.uid}').value)" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-[9px] uppercase font-bold rounded">${t('pc.use')}</button>
+                        ` : `<div class="text-[8px] text-slate-500">${t('pc.noConsumables')}</div>`;
 
                         card.className = `p-4 rounded-2xl border flex flex-col justify-between relative overflow-hidden transition ${borderClass} ${glowClass}`;
                         card.innerHTML = `
@@ -6598,13 +7515,13 @@ const CAMPAIGN_ROADMAP = [
                                 <h4 class="font-extrabold text-white text-xs tracking-wide text-center truncate w-full">${pk.isShiny ? '✨ ' : ''}${getPokemonName(pk)}</h4>
                                 <div class="text-center mt-1 text-[9px] text-slate-400">${pk.type1.toUpperCase()}${pk.type2 ? ' / ' + pk.type2.toUpperCase() : ''}</div>
                                 <div class="mt-1.5">
-                                    <div class="flex justify-between text-[8px] font-mono text-slate-500 mb-0.5"><span>XP</span><span>${xp}/${nextLevelReq}</span></div>
+                                    <div class="flex justify-between text-[8px] font-mono text-slate-500 mb-0.5"><span>${t('common.exp')}</span><span>${xp}/${nextLevelReq}</span></div>
                                     <div class="w-full bg-slate-900 rounded-full h-1 overflow-hidden">
                                         <div class="bg-gradient-to-r from-emerald-500 to-cyan-400 h-full transition-all duration-300" style="width: ${xpPercent}%;"></div>
                                     </div>
                                 </div>
                                 <div class="mt-2 pt-2 border-t border-slate-900">
-                                    <div class="text-[7px] text-slate-500 uppercase font-bold mb-1">Moves</div>
+                                    <div class="text-[7px] text-slate-500 uppercase font-bold mb-1">${t('pc.moves')}</div>
                                     <div class="flex flex-wrap gap-1">${movesHtml}</div>
                                 </div>
                                 <div class="grid grid-cols-3 gap-1 w-full mt-2 pt-2 border-t border-slate-900 text-[8px] font-mono text-slate-500 text-center">
@@ -6617,36 +7534,36 @@ const CAMPAIGN_ROADMAP = [
                                 </div>
                             </div>
                             <div class="mt-3 pt-2 border-t border-slate-900">
-                                <label class="block text-[8px] uppercase tracking-wider text-slate-400 font-bold mb-1">Hold Item</label>
+                                <label class="block text-[8px] uppercase tracking-wider text-slate-400 font-bold mb-1">${t('pc.holdItem')}</label>
                                 <select onchange="window.equipItem(${pk.uid}, this.value)" class="w-full bg-slate-900 border border-slate-800 text-[10px] rounded p-1 text-slate-300 focus:outline-none focus:border-cyan-500">
                                     ${optionsMarkup}
                                 </select>
                             </div>
                             <div class="mt-2 pt-2 border-t border-slate-900">
-                                <div class="text-[7px] text-slate-500 uppercase font-bold mb-1">Move Relearn</div>
+                                <div class="text-[7px] text-slate-500 uppercase font-bold mb-1">${t('pc.moveRelearn')}</div>
                                 <div class="grid grid-cols-1 gap-1">${moveSlotsMarkup}</div>
                             </div>
                             <div class="mt-2 pt-2 border-t border-slate-900">
-                                <div class="text-[7px] text-slate-500 uppercase font-bold mb-1">Consumables</div>
+                                <div class="text-[7px] text-slate-500 uppercase font-bold mb-1">${t('pc.consumables')}</div>
                                 <div class="flex flex-col gap-2">${consumableMarkup}</div>
                             </div>
                             ${pk.isShiny ? '<span class="absolute top-2 right-2 text-[7px] bg-pink-500 text-white px-1 rounded uppercase font-black">Shiny</span>' : ''}
                             <div class="mt-2 pt-2 border-t border-slate-900">
-                                <div class="text-[7px] text-slate-500 uppercase font-bold mb-1">Teach TM</div>
+                                <div class="text-[7px] text-slate-500 uppercase font-bold mb-1">${t('pc.teachTm')}</div>
                                 ${(function() {
                                     const ownedTms = Object.keys(gameState.tmsOwned || {}).filter(k => gameState.tmsOwned[k] && canLearnTM(pk, k));
-                                    if (!ownedTms.length) return '<div class="text-[8px] text-slate-600 italic">No compatible TMs owned — buy TMs in the Shop.</div>';
+                                    if (!ownedTms.length) return `<div class="text-[8px] text-slate-600 italic">${t('pc.noTms')}</div>`;
                                     const opts = ownedTms.map(k => { const t = TM_DB[k]; return `<option value="${k}">TM${t.num} ${t.name} (${t.type}/${t.power||'—'})</option>`; }).join('');
                                     return `<div class="flex gap-1.5 flex-wrap">
-                                        <select id="pcTmSelect-${pk.uid}" class="flex-1 min-w-0 bg-slate-900 border border-slate-800 text-[9px] rounded p-1 text-slate-300 focus:outline-none focus:border-violet-500"><option value="">Choose TM</option>${opts}</select>
-                                        <select id="pcTmSlot-${pk.uid}" class="w-16 bg-slate-900 border border-slate-800 text-[9px] rounded p-1 text-slate-300 focus:outline-none focus:border-violet-500">${[0,1,2,3].map(i=>`<option value="${i}">Slot ${i+1}</option>`).join('')}</select>
-                                        <button onclick="window.teachTM(${pk.uid},document.getElementById('pcTmSelect-${pk.uid}').value,parseInt(document.getElementById('pcTmSlot-${pk.uid}').value))" class="px-2 py-1 bg-violet-700 hover:bg-violet-600 text-white text-[9px] uppercase font-bold rounded">Teach</button>
+                                        <select id="pcTmSelect-${pk.uid}" class="flex-1 min-w-0 bg-slate-900 border border-slate-800 text-[9px] rounded p-1 text-slate-300 focus:outline-none focus:border-violet-500"><option value="">${t('pc.chooseTm')}</option>${opts}</select>
+                                        <select id="pcTmSlot-${pk.uid}" class="w-16 bg-slate-900 border border-slate-800 text-[9px] rounded p-1 text-slate-300 focus:outline-none focus:border-violet-500">${[0,1,2,3].map(i=>`<option value="${i}">${t('pc.slot')} ${i+1}</option>`).join('')}</select>
+                                        <button onclick="window.teachTM(${pk.uid},document.getElementById('pcTmSelect-${pk.uid}').value,parseInt(document.getElementById('pcTmSlot-${pk.uid}').value))" class="px-2 py-1 bg-violet-700 hover:bg-violet-600 text-white text-[9px] uppercase font-bold rounded">${t('pc.teach')}</button>
                                     </div>`;
                                 })()}
                             </div>
                             <div class="mt-2 pt-2 border-t border-slate-900">
                                 <button onclick="window.releasePokemon(${pk.uid})" class="w-full py-1.5 text-[9px] uppercase font-bold tracking-widest rounded-lg border border-rose-900/50 text-rose-400 hover:bg-rose-950/60 hover:border-rose-700 transition duration-150">
-                                    🗑️ Release Pokémon
+                                    ${t('pc.release')}
                                 </button>
                             </div>
                         `;
@@ -6851,7 +7768,7 @@ const CAMPAIGN_ROADMAP = [
                             <div>
                                 <div class="flex justify-between items-start">
                                     <span class="p-2 ${item.type === 'held_item' ? 'bg-cyan-950/40 text-cyan-400' : 'bg-emerald-950/40 text-emerald-400'} rounded-lg text-xs"><i class="${item.type === 'held_item' ? 'fas fa-toolbox' : 'fas fa-pills'}"></i></span>
-                                    <span class="text-[9px] font-mono text-slate-400">Owned: <span class="font-bold">${count}</span></span>
+                                    <span class="text-[9px] font-mono text-slate-400">${t('shop.ownedLabel')} <span class="font-bold">${count}</span></span>
                                 </div>
                                 <h4 class="text-xs font-extrabold mt-3 text-white">${item.name}</h4>
                                 <p class="text-[10px] text-slate-400 mt-1 h-12 overflow-hidden">${item.desc}</p>
@@ -6908,18 +7825,18 @@ const CAMPAIGN_ROADMAP = [
                             <div>
                                 <div class="flex justify-between items-start mb-2">
                                     <span class="text-[8px] font-black font-mono px-1.5 py-0.5 rounded ${typeBg} ${typeColor} uppercase tracking-wider">TM${tm.num}</span>
-                                    <span class="text-[9px] font-mono ${owned ? 'text-violet-400 font-bold' : 'text-slate-500'}">${owned ? '📀 Owned' : 'Not Owned'}</span>
+                                    <span class="text-[9px] font-mono ${owned ? 'text-violet-400 font-bold' : 'text-slate-500'}">${owned ? t('shop.tmOwned') : t('shop.notOwned')}</span>
                                 </div>
                                 <span class="${typeBg} ${typeColor} text-[9px] font-bold uppercase tracking-wide px-2 py-0.5 rounded inline-block mb-1.5">${tm.type}</span>
                                 <h4 class="text-xs font-extrabold text-white">${tm.name}</h4>
                                 <p class="text-[9px] text-slate-400 mt-1 leading-relaxed line-clamp-2">${tm.desc}</p>
-                                <div class="text-[9px] font-mono text-slate-500 mt-1">PWR: <span class="text-slate-300">${tm.power > 0 ? tm.power : '—'}</span></div>
+                                <div class="text-[9px] font-mono text-slate-500 mt-1">${t('shop.pwr')} <span class="text-slate-300">${tm.power > 0 ? tm.power : '—'}</span></div>
                             </div>
                             <div class="mt-3 flex items-center justify-between">
                                 <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i>${formatNum(tm.cost)}</span>
                                 ${owned
-                                    ? '<span class="text-[9px] text-violet-400 font-bold">∞ Use</span>'
-                                    : `<button onclick="window.buyTM('${key}')" class="px-2 py-1 bg-violet-800 hover:bg-violet-700 text-white text-[9px] uppercase font-bold rounded-lg transition">Buy</button>`
+                                    ? `<span class="text-[9px] text-violet-400 font-bold">${t('shop.infiniteUse')}</span>`
+                                    : `<button onclick="window.buyTM('${key}')" class="px-2 py-1 bg-violet-800 hover:bg-violet-700 text-white text-[9px] uppercase font-bold rounded-lg transition">${t('shop.buy')}</button>`
                                 }
                             </div>`;
                         container.appendChild(card);
@@ -6989,7 +7906,7 @@ const CAMPAIGN_ROADMAP = [
                       if (owned) {
                           if (card) card.classList.add('border-amber-500/50');
                           if (ownedBadge) ownedBadge.textContent = '\u2705 Owned';
-                          if (buyBtn) { buyBtn.textContent = 'Owned'; buyBtn.disabled = true; buyBtn.className = 'px-2.5 py-1.5 bg-slate-700 text-slate-400 text-[10px] uppercase font-bold rounded-lg cursor-not-allowed'; }
+                          if (buyBtn) { buyBtn.textContent = t('common.owned'); buyBtn.disabled = true; buyBtn.className = 'px-2.5 py-1.5 bg-slate-700 text-slate-400 text-[10px] uppercase font-bold rounded-lg cursor-not-allowed'; }
                           if (panel) panel.classList.remove('hidden');
                       } else {
                           if (panel) panel.classList.add('hidden');
@@ -6997,7 +7914,7 @@ const CAMPAIGN_ROADMAP = [
                       var sel = document.getElementById('autoBattlerStageSelect');
                       if (sel && owned) {
                           var currentVal = gameState.autoBattlerStage;
-                          sel.innerHTML = '<option value="">-- Select a stage --</option>';
+                          sel.innerHTML = `<option value="">${t('autoBattler.selectStage')}</option>`;
                           var maxStage = gameState.unlockedStages || 1;
                           CAMPAIGN_ROADMAP.forEach(function(s) {
                               if (s.stageId <= maxStage) {
@@ -7011,13 +7928,13 @@ const CAMPAIGN_ROADMAP = [
                       }
                       var startBtn = document.getElementById('autoBattlerStartBtn');
                       if (startBtn) {
-                          if (autoBattlerRunning) { startBtn.textContent = 'Stop Auto Battle'; startBtn.className = 'px-4 py-2 bg-red-700 hover:bg-red-600 text-white text-xs font-bold uppercase rounded-xl transition shrink-0'; }
-                          else { startBtn.textContent = 'Start Auto Battle'; startBtn.className = 'px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold uppercase rounded-xl transition shrink-0'; }
+                          if (autoBattlerRunning) { startBtn.textContent = t('autoBattler.stop'); startBtn.className = 'px-4 py-2 bg-red-700 hover:bg-red-600 text-white text-xs font-bold uppercase rounded-xl transition shrink-0'; }
+                          else { startBtn.textContent = t('autoBattler.start'); startBtn.className = 'px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold uppercase rounded-xl transition shrink-0'; }
                       }
                       var badge = document.getElementById('autoBattlerStatusBadge');
                       if (badge) {
-                          if (autoBattlerRunning) { badge.textContent = 'RUNNING'; badge.className = 'text-[9px] font-bold px-2 py-1 rounded bg-amber-900/60 text-amber-400 animate-pulse'; }
-                          else { badge.textContent = 'IDLE'; badge.className = 'text-[9px] font-bold px-2 py-1 rounded bg-slate-800 text-slate-400'; }
+                          if (autoBattlerRunning) { badge.textContent = t('autoBattler.running'); badge.className = 'text-[9px] font-bold px-2 py-1 rounded bg-amber-900/60 text-amber-400 animate-pulse'; }
+                          else { badge.textContent = t('autoBattler.idle'); badge.className = 'text-[9px] font-bold px-2 py-1 rounded bg-slate-800 text-slate-400'; }
                       }
                   }
 
@@ -7145,11 +8062,11 @@ const CAMPAIGN_ROADMAP = [
                     if (card && owned) card.classList.add('border-pink-600/50');
                     if (buyBtn) {
                         if (owned) {
-                            buyBtn.textContent = 'Owned';
+                            buyBtn.textContent = t('common.owned');
                             buyBtn.disabled = true;
                             buyBtn.className = 'px-2.5 py-1.5 bg-slate-700 text-slate-400 text-[10px] uppercase font-bold rounded-lg cursor-not-allowed';
                         } else {
-                            buyBtn.textContent = 'Buy';
+                            buyBtn.textContent = t('shop.buy');
                             buyBtn.disabled = false;
                             buyBtn.className = 'px-2.5 py-1.5 bg-pink-700 hover:bg-pink-600 text-white text-[10px] uppercase font-bold rounded-lg transition';
                         }
@@ -7183,7 +8100,7 @@ const CAMPAIGN_ROADMAP = [
                     document.getElementById('gymPuzzleQuestion').textContent = stage.gymPuzzle.question;
                     document.getElementById('gymPuzzleResult').className = 'text-sm font-bold mt-4 text-center hidden';
                     document.getElementById('gymPuzzleHint').className = 'text-xs text-yellow-400/60 mt-4 italic hidden';
-                    document.getElementById('gymPuzzleHint').textContent = '💡 Hint: ' + (stage.gymPuzzle.hint || '');
+                    document.getElementById('gymPuzzleHint').textContent = t('battle.hint') + ': ' + (stage.gymPuzzle.hint || '');
                     const optionsEl = document.getElementById('gymPuzzleOptions');
                     optionsEl.innerHTML = stage.gymPuzzle.options.map((opt, i) => `
                         <button onclick="answerGymPuzzle(${i})" class="w-full text-left px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-yellow-500/50 text-sm text-slate-200 font-medium transition-all">
@@ -7204,7 +8121,7 @@ const CAMPAIGN_ROADMAP = [
                         else if (i === selectedIdx) btn.className = btn.className.replace('bg-slate-800 hover:bg-slate-700 border-slate-700 hover:border-yellow-500/50', 'bg-red-900/60 border-red-500');
                     });
                     if (selectedIdx === puzzle.answer) {
-                        resultEl.textContent = '✅ Correct! The gym is now open!';
+                        resultEl.textContent = t('gym.correct');
                         resultEl.className = 'text-sm font-bold mt-4 text-center text-green-400';
                         resultEl.classList.remove('hidden');
                         // Mark puzzle as solved and proceed to gym after delay
@@ -7218,7 +8135,7 @@ const CAMPAIGN_ROADMAP = [
                             launchStagePrep(_pendingGymStage);
                         }, 1200);
                     } else {
-                        resultEl.textContent = '❌ Wrong answer. Try again!';
+                        resultEl.textContent = t('gym.wrong');
                         resultEl.className = 'text-sm font-bold mt-4 text-center text-red-400';
                         resultEl.classList.remove('hidden');
                         setTimeout(() => {
@@ -7293,7 +8210,7 @@ const CAMPAIGN_ROADMAP = [
                     overlay.style.removeProperty('display');
                     overlay.classList.remove('hidden');
                     overlay.style.display = 'flex';
-                    grid.innerHTML = '<div class="col-span-3 text-center text-slate-400 py-8 animate-pulse">Loading starter data…</div>';
+                    grid.innerHTML = `<div class="col-span-3 text-center text-slate-400 py-8 animate-pulse">${t('starter.loading')}</div>`;
                     const starterData = await Promise.all(STARTER_POKEMON.map(async s => {
                         try {
                             const pdata = await fetchPokemonData(s.id);
@@ -7305,8 +8222,8 @@ const CAMPAIGN_ROADMAP = [
                             <img src="${s.sprite}" alt="${s.name}" class="w-16 h-16 object-contain drop-shadow-lg" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${s.id}.png'"/>
                             <span class="text-xs font-black text-white capitalize">${s.name}</span>
                             <span class="text-[9px] font-bold text-slate-400 uppercase">${s.type}</span>
-                            <span class="text-[9px] text-slate-500 uppercase tracking-wider">Gen ${s.gen}</span>
-                            <button onclick="selectStarter(${s.id})" style="background-color:${s.color}22; border-color:${s.color}55; color:${s.color}" class="mt-1 w-full py-1.5 rounded-xl border text-[10px] font-black uppercase tracking-wider transition-all duration-150 hover:opacity-80 active:scale-95 cursor-pointer">Select</button>
+                            <span class="text-[9px] text-slate-500 uppercase tracking-wider">${t('starter.gen')} ${s.gen}</span>
+                            <button onclick="selectStarter(${s.id})" style="background-color:${s.color}22; border-color:${s.color}55; color:${s.color}" class="mt-1 w-full py-1.5 rounded-xl border text-[10px] font-black uppercase tracking-wider transition-all duration-150 hover:opacity-80 active:scale-95 cursor-pointer">${t('starter.select')}</button>
                         </div>
                     `).join('');
                 }
