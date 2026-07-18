@@ -554,7 +554,7 @@
         </div>
 
         <!-- DATA TRANSFER MODAL -->
-        <div id="dataTransferModal" class="fixed inset-0 z-[70] bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+        <div id="dataTransferModal" class="fixed inset-0 z-[90] bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
             <div class="w-full max-w-2xl rounded-3xl border border-slate-800 bg-slate-950 p-5 shadow-2xl my-8">
                 <div class="flex items-start justify-between gap-4">
                     <div>
@@ -2596,32 +2596,20 @@ const CAMPAIGN_ROADMAP = [
 
                 function getDataExportPayload() {
                     try {
-                        // Check if CryptoJS is available
-                        if (typeof CryptoJS === 'undefined') {
-                            console.error('CryptoJS not loaded');
-                            throw new Error('CryptoJS library not loaded');
-                        }
-                        
                         const dataObject = {
-                            version: 1,
-                            exportedAt: new Date().toISOString(),
-                            data: gameState
+                            version: 2,
+                            exportedAt: Date.now(),
+                            data: normalizeSaveState(gameState)
                         };
                         const jsonStr = JSON.stringify(dataObject);
-                        console.log('Export JSON length:', jsonStr.length);
-                        
-                        // Use a more robust encryption method
-                        const encrypted = CryptoJS.AES.encrypt(jsonStr, 'pokemon-radar-secret-key-2024').toString();
-                        console.log('Export encrypted length:', encrypted.length);
-                        
-                        if (!encrypted || encrypted.length === 0) {
-                            throw new Error('Encryption returned empty result');
-                        }
-                        
-                        return 'PKMN_BACKUP:' + encrypted;
+                        // Primary: btoa — always available, no CDN dependency
+                        const encoded = btoa(unescape(encodeURIComponent(jsonStr)));
+                        if (!encoded || encoded.length === 0) throw new Error('btoa encoding returned empty result');
+                        console.log('[Export] Generated V2 btoa payload, length:', encoded.length);
+                        return 'PKMN_BACKUP_V2:' + encoded;
                     } catch (e) {
-                        console.error('Export encryption failed:', e);
-                        throw new Error('Encryption failed: ' + e.message);
+                        console.error('[Export] Failed:', e);
+                        throw new Error('Export failed: ' + e.message);
                     }
                 }
 
@@ -2683,61 +2671,48 @@ const CAMPAIGN_ROADMAP = [
                         showNotification('Import failed', 'Data transfer textarea not found.', 'error');
                         return;
                     }
-                    
                     const text = textarea.value.trim();
                     if (!text) {
-                        showNotification('Nothing to import', 'Paste a saved data string first.', 'error');
+                        showNotification('Nothing to import', 'Paste a saved backup code first.', 'error');
                         return;
                     }
-
                     try {
-                        // Check if CryptoJS is available
-                        if (typeof CryptoJS === 'undefined') {
-                            throw new Error('CryptoJS library not loaded');
-                        }
-                        
-                        console.log('Import text length:', text.length);
-                        console.log('Import text prefix:', text.substring(0, 50));
-                        
-                        if (!text.startsWith('PKMN_BACKUP:')) {
-                            throw new Error('Invalid backup format - must start with PKMN_BACKUP:');
+                        let parsed = null;
+
+                        if (text.startsWith('PKMN_BACKUP_V2:')) {
+                            // V2 format: btoa-encoded JSON (current)
+                            const encoded = text.slice('PKMN_BACKUP_V2:'.length);
+                            const jsonStr = decodeURIComponent(escape(atob(encoded)));
+                            parsed = JSON.parse(jsonStr);
+                        } else if (text.startsWith('PKMN_BACKUP:')) {
+                            // V1 format: CryptoJS AES (legacy)
+                            if (typeof CryptoJS === 'undefined') throw new Error('CryptoJS not available to decrypt legacy backup');
+                            const encryptedData = text.slice('PKMN_BACKUP:'.length);
+                            const decrypted = CryptoJS.AES.decrypt(encryptedData, 'pokemon-radar-secret-key-2024').toString(CryptoJS.enc.Utf8);
+                            if (!decrypted || decrypted.length === 0) throw new Error('Decryption failed — is the backup code complete?');
+                            parsed = JSON.parse(decrypted);
+                        } else {
+                            throw new Error('Not a valid backup code. It must start with PKMN_BACKUP_V2: or PKMN_BACKUP:');
                         }
 
-                        const encryptedData = text.replace('PKMN_BACKUP:', '');
-                        console.log('Encrypted data length:', encryptedData.length);
-                        
-                        const decrypted = CryptoJS.AES.decrypt(encryptedData, 'pokemon-radar-secret-key-2024').toString(CryptoJS.enc.Utf8);
-                        console.log('Decrypted length:', decrypted ? decrypted.length : 0);
-                        
-                        if (!decrypted || decrypted.length === 0) {
-                            throw new Error('Decryption failed - returned empty string. Check that the backup code is complete.');
-                        }
-                        
-                        const parsed = JSON.parse(decrypted);
-                        console.log('Parsed data keys:', Object.keys(parsed));
-                        
                         const importedData = parsed.data || parsed;
-                        console.log('Imported data has pokedex:', !!importedData.pokedex);
-                        console.log('Imported data has balls:', !!importedData.balls);
-                        
                         if (!importedData || !importedData.pokedex || !importedData.balls) {
-                            throw new Error('Invalid save data structure - missing required fields');
+                            throw new Error('Invalid save structure — missing required fields (pokedex / balls)');
                         }
 
                         const normalizedImport = normalizeSaveState(importedData);
                         Object.assign(gameState, normalizedImport);
                         assignPokemonUids();
-
                         saveProgress();
                         updateUI();
                         renderRoadmap();
                         renderPCBox();
                         renderPokedex();
                         renderHeldItemsShop();
-                        showNotification('Data imported', 'Progress restored from your pasted backup.', 'success');
+                        showNotification('Data imported', 'Progress restored from your backup code!', 'success');
                     } catch (e) {
-                        console.error('Import failed:', e);
-                        showNotification('Import failed', 'The pasted backup is corrupted or invalid: ' + e.message, 'error');
+                        console.error('[Import] failed:', e);
+                        showNotification('Import failed', 'Backup invalid or corrupted: ' + e.message, 'error');
                     }
                 }
 
@@ -3380,7 +3355,7 @@ const CAMPAIGN_ROADMAP = [
                     pokemon.rarity = rarity;
                     pokemon.isSpecialLegendary = isSpecialLegendary;
                     gameState.currentEncounter = pokemon;
-                    gameState.encounterShiny = (Math.random() < (0.05 + (gameState.shinyCharm ? 0.15 : 0)));
+                    gameState.encounterShiny = (Math.random() < (0.02 + (gameState.shinyCharm ? 0.15 : 0)));
 
                     const encounterTag = document.getElementById('encounterStatus');
                     encounterTag.className = `border text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block animate-bounce`;
@@ -3622,8 +3597,10 @@ const CAMPAIGN_ROADMAP = [
                     if (gameState.selectedBall === 'master') coreModifier = 12.0; 
 
                     const finalProbability = baseRate * coreModifier * accuracyModifier;
+                    // Shiny Pokémon have a guaranteed 90% catch rate floor
+                    const finalCatchProbability = gameState.encounterShiny ? Math.max(finalProbability, 0.9) : finalProbability;
                     const rollChance = Math.random();
-                    const isCaptured = (rollChance <= finalProbability);
+                    const isCaptured = (rollChance <= finalCatchProbability);
                     
                     const nameEl = document.getElementById('wildPokemonName');
                     const graphicEl = document.getElementById('wildPokemonGraphic');
@@ -4032,6 +4009,7 @@ const CAMPAIGN_ROADMAP = [
                     // Reset per-battle stat stages and status conditions
                     gameState.battle.statStages = { player:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} };
                     gameState.battle.statusConds = { player: null, boss: null };
+                    gameState.battle.statusMeta = { player: {}, boss: {} };
                     gameState.battle.choiceBandMove = null;
                     gameState.battle.faintedUids = new Set();
 
@@ -4172,6 +4150,11 @@ const CAMPAIGN_ROADMAP = [
                         return;
                     }
                     gameState.battle.statusConds[side] = cond;
+                    // Init sleep turn counter
+                    if (cond === 'sleep') {
+                        if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player: {}, boss: {} };
+                        gameState.battle.statusMeta[side] = { sleepTurns: -1 }; // -1 so first increment lands at 0
+                    }
                     const msgs = { sleep:`💤 fell asleep!`, para:`⚡ became paralysed!`, leech:`🌱 was seeded!` };
                     const cols = { sleep:'text-indigo-400', para:'text-yellow-400', leech:'text-emerald-400' };
                     logBox.innerHTML += `<div class="${cols[cond]||'text-slate-400'} mt-1 font-bold">${ownerName} ${msgs[cond]||cond}</div>`;
@@ -4193,18 +4176,31 @@ const CAMPAIGN_ROADMAP = [
                     // ── SLEEP check — blocks ALL move types ─────────────
                     const sc = gameState.battle.statusConds || {};
                     if (sc[attackerSide] === 'sleep') {
-                        if (Math.random() < 0.6) {
-                            logBox.innerHTML += `<div class="text-indigo-400 mt-1 italic">💤 ${attacker.name} is fast asleep!</div>`;
-                            if (Math.random() < 0.33) {
-                                gameState.battle.statusConds[attackerSide] = null;
-                                logBox.innerHTML += `<div class="text-indigo-300 mt-0.5">😲 ${attacker.name} woke up!</div>`;
-                                renderStatStagesUI();
-                            }
+                        if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player: {}, boss: {} };
+                        const sleepMeta = gameState.battle.statusMeta[attackerSide];
+                        if (typeof sleepMeta.sleepTurns !== 'number') sleepMeta.sleepTurns = 0;
+                        else sleepMeta.sleepTurns++;
+
+                        // Turn 3 (index 2) = guaranteed wake; turns 1-2 = 1/3 chance to wake
+                        const wakeUp = sleepMeta.sleepTurns >= 2 || Math.random() < (1/3);
+                        logBox.innerHTML += `<div class="text-indigo-400 mt-1 italic">💤 ${attacker.name} is fast asleep!</div>`;
+                        if (wakeUp) {
+                            gameState.battle.statusConds[attackerSide] = null;
+                            sleepMeta.sleepTurns = 0;
+                            logBox.innerHTML += `<div class="text-indigo-300 mt-0.5">😲 ${attacker.name} woke up!</div>`;
+                            renderStatStagesUI();
+                        }
+                        logBox.scrollTop = logBox.scrollHeight;
+                        return;
+                    }
+
+                    // ── PARALYSIS check — 1/3 chance to not be able to move ──
+                    if (sc[attackerSide] === 'para') {
+                        if (Math.random() < (1/3)) {
+                            logBox.innerHTML += `<div class="text-yellow-400 mt-1 italic">⚡ ${attacker.name} is paralyzed and can't move!</div>`;
                             logBox.scrollTop = logBox.scrollHeight;
                             return;
                         }
-                        // Small chance (40%) to act through sleep — considered "tossing and turning"
-                        logBox.innerHTML += `<div class="text-indigo-300 mt-0.5 text-[9px] italic">(${attacker.name} stirs in its sleep…)</div>`;
                     }
 
                     // ── STATUS (non-damaging) moves ─────────────────────
@@ -4398,6 +4394,8 @@ const CAMPAIGN_ROADMAP = [
                     // Incoming Pokémon has clean status & stat stages
                     gameState.battle.statusConds.player = null;
                     gameState.battle.statStages.player = { atk:0, def:0, spAtk:0, spDef:0, speed:0, accuracy:0 };
+                    if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player: {}, boss: {} };
+                    gameState.battle.statusMeta.player = {};
                     renderStatStagesUI();
 
                     document.getElementById('playerFighterSprite').src = newFighter.sprite;
@@ -4453,7 +4451,11 @@ const CAMPAIGN_ROADMAP = [
                         gameState.battle.enemyTeamIndex = 0;
                         gameState.battle.active        = true;
                         gameState.battle.statStages    = { player:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} };
+                        gameState.battle.statusConds.boss = null;
+                        if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player: {}, boss: {} };
+                        gameState.battle.statusMeta.boss = {};
                         gameState.battle.choiceBandMove = null;
+                        renderStatStagesUI();
 
                         document.getElementById('bossSprite').src     = newEnemy.sprite;
                         document.getElementById('bossName').textContent         = newEnemy.name;
@@ -4517,6 +4519,8 @@ const CAMPAIGN_ROADMAP = [
                         // New Pokémon sent out — clear boss status & stat stages, refresh display
                         gameState.battle.statusConds.boss = null;
                         gameState.battle.statStages.boss = { atk:0, def:0, spAtk:0, spDef:0, speed:0, accuracy:0 };
+                        if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player: {}, boss: {} };
+                        gameState.battle.statusMeta.boss = {};
                         document.getElementById('bossSprite').src = nextEnemy.sprite;
                         document.getElementById('bossName').textContent = nextEnemy.name;
                         document.getElementById('bossLevelBadge').textContent = `LVL ${nextEnemy.level}`;
@@ -4677,6 +4681,8 @@ const CAMPAIGN_ROADMAP = [
                         // Incoming Pokémon arrives with clean status & stat stages
                         gameState.battle.statusConds.player = null;
                         gameState.battle.statStages.player = { atk:0, def:0, spAtk:0, spDef:0, speed:0, accuracy:0 };
+                        if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player: {}, boss: {} };
+                        gameState.battle.statusMeta.player = {};
 
                         // Update player side UI
                         document.getElementById('playerFighterSprite').src = nextFighter.sprite;
@@ -4719,6 +4725,7 @@ const CAMPAIGN_ROADMAP = [
                     // Clear per-battle stat stages and status conditions
                     gameState.battle.statStages = { player:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} };
                     gameState.battle.statusConds = { player: null, boss: null };
+                    gameState.battle.statusMeta = { player: {}, boss: {} };
                     gameState.battle.choiceBandMove = null;
                     gameState.battle.faintedUids = new Set();
                     const panel = document.getElementById('statStagesPanel');
