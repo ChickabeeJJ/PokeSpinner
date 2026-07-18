@@ -7209,17 +7209,42 @@ const CAMPAIGN_ROADMAP = [
 
                 // ── Starter Pokémon selection ──────────────────────────────────────────
                 const STARTER_POKEMON = [
-                    { id: 1,   name: "Bulbasaur",  gen: 1, type: "Grass/Poison",  color: "#4ade80" },
-                    { id: 4,   name: "Charmander", gen: 1, type: "Fire",          color: "#fb923c" },
-                    { id: 7,   name: "Squirtle",   gen: 1, type: "Water",         color: "#60a5fa" },
-                    { id: 155, name: "Cyndaquil",  gen: 2, type: "Fire",          color: "#fb923c" },
-                    { id: 258, name: "Mudkip",     gen: 3, type: "Water",         color: "#60a5fa" },
-                    { id: 390, name: "Chimchar",   gen: 4, type: "Fire",          color: "#fb923c" },
-                    { id: 495, name: "Snivy",      gen: 5, type: "Grass",         color: "#4ade80" },
-                    { id: 656, name: "Froakie",    gen: 6, type: "Water",         color: "#60a5fa" },
-                    { id: 725, name: "Litten",     gen: 7, type: "Fire",          color: "#fb923c" },
-                    { id: 816, name: "Sobble",     gen: 8, type: "Water",         color: "#60a5fa" },
-                    { id: 906, name: "Sprigatito", gen: 9, type: "Grass",         color: "#4ade80" },
+                    // Gen 1
+                    { id: 1,   name: "Bulbasaur",   gen: 1, type: "Grass/Poison", color: "#4ade80" },
+                    { id: 4,   name: "Charmander",  gen: 1, type: "Fire",         color: "#fb923c" },
+                    { id: 7,   name: "Squirtle",    gen: 1, type: "Water",        color: "#60a5fa" },
+                    // Gen 2
+                    { id: 152, name: "Chikorita",   gen: 2, type: "Grass",        color: "#4ade80" },
+                    { id: 155, name: "Cyndaquil",   gen: 2, type: "Fire",         color: "#fb923c" },
+                    { id: 158, name: "Totodile",    gen: 2, type: "Water",        color: "#60a5fa" },
+                    // Gen 3
+                    { id: 252, name: "Treecko",     gen: 3, type: "Grass",        color: "#4ade80" },
+                    { id: 255, name: "Torchic",     gen: 3, type: "Fire",         color: "#fb923c" },
+                    { id: 258, name: "Mudkip",      gen: 3, type: "Water/Ground", color: "#60a5fa" },
+                    // Gen 4
+                    { id: 387, name: "Turtwig",     gen: 4, type: "Grass",        color: "#4ade80" },
+                    { id: 390, name: "Chimchar",    gen: 4, type: "Fire",         color: "#fb923c" },
+                    { id: 393, name: "Piplup",      gen: 4, type: "Water",        color: "#60a5fa" },
+                    // Gen 5
+                    { id: 495, name: "Snivy",       gen: 5, type: "Grass",        color: "#4ade80" },
+                    { id: 498, name: "Tepig",       gen: 5, type: "Fire",         color: "#fb923c" },
+                    { id: 501, name: "Oshawott",    gen: 5, type: "Water",        color: "#60a5fa" },
+                    // Gen 6
+                    { id: 650, name: "Chespin",     gen: 6, type: "Grass",        color: "#4ade80" },
+                    { id: 653, name: "Fennekin",    gen: 6, type: "Fire",         color: "#fb923c" },
+                    { id: 656, name: "Froakie",     gen: 6, type: "Water",        color: "#60a5fa" },
+                    // Gen 7
+                    { id: 722, name: "Rowlet",      gen: 7, type: "Grass/Flying", color: "#4ade80" },
+                    { id: 725, name: "Litten",      gen: 7, type: "Fire",         color: "#fb923c" },
+                    { id: 728, name: "Popplio",     gen: 7, type: "Water",        color: "#60a5fa" },
+                    // Gen 8
+                    { id: 810, name: "Grookey",     gen: 8, type: "Grass",        color: "#4ade80" },
+                    { id: 813, name: "Scorbunny",   gen: 8, type: "Fire",         color: "#fb923c" },
+                    { id: 816, name: "Sobble",      gen: 8, type: "Water",        color: "#60a5fa" },
+                    // Gen 9
+                    { id: 906, name: "Sprigatito",  gen: 9, type: "Grass",        color: "#4ade80" },
+                    { id: 909, name: "Fuecoco",     gen: 9, type: "Fire",         color: "#fb923c" },
+                    { id: 912, name: "Quaxly",      gen: 9, type: "Water",        color: "#60a5fa" },
                 ];
 
                 async function showStarterSelectionScreen() {
@@ -7237,12 +7262,13 @@ const CAMPAIGN_ROADMAP = [
                         } catch { return { ...s, sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${s.id}.png`, hp:45, atk:49, def:49, spAtk:65, spDef:65, speed:45 }; }
                     }));
                     grid.innerHTML = starterData.map(s => `
-                        <button onclick="selectStarter(${s.id})" style="border-color:${s.color}20" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-current rounded-2xl p-4 flex flex-col items-center gap-2 transition-all duration-200 hover:scale-105 group cursor-pointer">
+                        <div style="border-color:${s.color}33" class="bg-slate-800 border border-slate-700 rounded-2xl p-4 flex flex-col items-center gap-2 transition-all duration-200 hover:scale-105 hover:bg-slate-750 group">
                             <img src="${s.sprite}" alt="${s.name}" class="w-16 h-16 object-contain drop-shadow-lg" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${s.id}.png'"/>
                             <span class="text-xs font-black text-white capitalize">${s.name}</span>
                             <span class="text-[9px] font-bold text-slate-400 uppercase">${s.type}</span>
                             <span class="text-[9px] text-slate-500 uppercase tracking-wider">Gen ${s.gen}</span>
-                        </button>
+                            <button onclick="selectStarter(${s.id})" style="background-color:${s.color}22; border-color:${s.color}55; color:${s.color}" class="mt-1 w-full py-1.5 rounded-xl border text-[10px] font-black uppercase tracking-wider transition-all duration-150 hover:opacity-80 active:scale-95 cursor-pointer">Select</button>
+                        </div>
                     `).join('');
                 }
 
@@ -7328,8 +7354,16 @@ const CAMPAIGN_ROADMAP = [
                                 }
 
                                 loadSavedProgress();
-                                // Show starter selection if new game
-                                if (!gameState.starterSelected) {
+                                // Show starter selection only for a truly new game —
+                                // skip if starterSelected is already true OR if the
+                                // player already has any Pokémon in their PC/pokedex
+                                // (handles older saves where the flag wasn't set yet).
+                                const hasExistingData = gameState.starterSelected ||
+                                    (gameState.pc && gameState.pc.length > 0) ||
+                                    (gameState.pcBox && gameState.pcBox.length > 0) ||
+                                    (gameState.team && gameState.team.length > 0) ||
+                                    (gameState.pokedex && gameState.pokedex.length > 0);
+                                if (!hasExistingData) {
                                     setTimeout(() => showStarterSelectionScreen(), 900);
                                 }
                                 updateProfileBtn();
@@ -7396,13 +7430,13 @@ const CAMPAIGN_ROADMAP = [
               STARTER SELECTION MODAL
          ══════════════════════════════════════════════════════════════ -->
         <div id="starterSelectionOverlay" class="fixed inset-0 z-[999] flex items-center justify-center bg-black/90 backdrop-blur-md" style="display:none!important">
-            <div class="relative w-full max-w-2xl mx-4 bg-slate-900 rounded-3xl overflow-hidden border border-slate-700 shadow-2xl">
+            <div class="relative w-full max-w-3xl mx-4 bg-slate-900 rounded-3xl overflow-hidden border border-slate-700 shadow-2xl">
                 <div class="themed-gradient px-6 py-5">
                     <h2 class="text-xl font-black text-white tracking-tight">Choose Your Starter Pokémon!</h2>
-                    <p class="text-xs text-white/70 mt-1">Select your first partner — they'll join your team at Level 5.</p>
+                    <p class="text-xs text-white/70 mt-1">Select your first partner — they'll join your team at Level 5. All generations available!</p>
                 </div>
-                <div class="p-5 max-h-[70vh] overflow-y-auto">
-                    <div id="starterGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div class="p-5 max-h-[75vh] overflow-y-auto">
+                    <div id="starterGrid" class="grid grid-cols-3 sm:grid-cols-3 gap-3">
                         <!-- Filled by JS -->
                     </div>
                 </div>
