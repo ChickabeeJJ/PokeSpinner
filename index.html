@@ -3464,6 +3464,32 @@ const CAMPAIGN_ROADMAP = [
                         const backBtn = document.querySelector('#gymPuzzleOverlay button[onclick="closeGymPuzzle()"]');
                         if (backBtn) backBtn.textContent = t('battle.goBack');
                     }
+                    // Re-render ALL views so no Pokémon name or label is stale after language change
+                    renderRoadmap();
+                    updateUI();
+                    // Refresh current encounter display if one is active
+                    if (gameState.currentEncounter) {
+                        const _eN = getPokemonName(gameState.currentEncounter);
+                        const _eTxt = (gameState.currentEncounter.isShiny ? '✨ ' : '') + _eN;
+                        ['wildPokemonName','wildPokemonNameBig'].forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el) el.textContent = _eTxt;
+                        });
+                    }
+                    // Refresh battle fighter / boss names if a battle is active
+                    if (gameState.battle && gameState.battle.active) {
+                        const _bf = gameState.battle.fighterPokemon;
+                        const _bb = gameState.battle.bossPokemon;
+                        if (_bf) {
+                            const _pfnEl = document.getElementById('playerFighterName');
+                            if (_pfnEl) _pfnEl.textContent = (_bf.isShiny ? '✨ ' : '') + getPokemonName(_bf);
+                        }
+                        if (_bb) {
+                            const _bnEl = document.getElementById('bossName');
+                            if (_bnEl) _bnEl.textContent = getPokemonName(_bb);
+                        }
+                        if (_bf) renderBattleMoves(_bf);
+                    }
                     showNotification(
                         '🌐 Language Updated',
                         `Switched to ${document.querySelector('.lang-btn[data-lang="'+lang+'"]')?.textContent?.trim() || lang}`,
@@ -4974,6 +5000,8 @@ const CAMPAIGN_ROADMAP = [
                     logBox.innerHTML += `<div class="${cols[cond]||'text-slate-400'} mt-1 font-bold">${ownerName} ${msgs[cond]||cond}</div>`;
                     if (cond === 'para')  applyStatStage(side, 'speed', -2, logBox, myName, foeName);
                     if (cond === 'burn')  applyStatStage(side, 'atk',   -1, logBox, myName, foeName);
+                    // Always refresh the stat/status panel so Sleep, Freeze, Poison, Leech all appear
+                    renderStatStagesUI();
                 }
 
                 function resolveMoveAttack(attacker, defender, moveName, isPlayerAttacker) {
@@ -5933,7 +5961,7 @@ const CAMPAIGN_ROADMAP = [
                         gameState.battle.bossHP = nextMaxHP;
                         gameState.battle.bossMaxHP = nextMaxHP;
                         gameState.battle.bossOranUsed = false;
-                        gameState.battle.fighterHP = gameState.battle.fighterMaxHP;
+                        // Player's Pokémon HP is NOT restored when the trainer sends out the next Pokémon
                         // New Pokémon sent out — clear boss status & stat stages, refresh display
                         gameState.battle.statusConds.boss = null;
                         gameState.battle.statStages.boss = { atk:0, def:0, spAtk:0, spDef:0, speed:0, accuracy:0 };
@@ -5945,7 +5973,9 @@ const CAMPAIGN_ROADMAP = [
                         document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossHP}`;
                         document.getElementById('bossHPBar').style.width = "100%";
                         document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
-                        document.getElementById('playerFighterHPBar').style.width = "100%";
+                        const _pHpPct2 = gameState.battle.fighterMaxHP > 0 ? Math.round((gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100) : 0;
+                        document.getElementById('playerFighterHPBar').style.width = `${_pHpPct2}%`;
+                        document.getElementById('playerFighterHPBar').className = `${_pHpPct2 > 50 ? 'bg-green-500' : _pHpPct2 > 20 ? 'bg-yellow-400' : 'bg-red-500'} h-full transition-all duration-300`;
                         renderStatStagesUI();
                         document.getElementById('battleLog').innerHTML += `<div class="text-amber-400 font-bold mt-2">🎯 ${stage ? stage.trainer : 'Trainer'} sent out ${nextEnemy.name}!</div>`;
                         document.getElementById('battleLog').scrollTop = document.getElementById('battleLog').scrollHeight;
