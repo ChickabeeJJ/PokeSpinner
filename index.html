@@ -537,6 +537,8 @@
                 </div>
                 <!-- Loading text -->
                 <p id="loadingText" class="text-center text-xs font-bold tracking-widest uppercase" style="color:rgba(255,255,255,0.4);">Shuffling Pokémon data...</p>
+                <!-- Beta warning -->
+                <p class="text-center text-[10px] mt-3 font-bold tracking-wide uppercase" style="color:rgba(255,180,80,0.7);text-shadow:0 0 8px rgba(255,130,0,0.4);">⚠️ Game is in beta — bugs may occur.</p>
             </div>
         </div>
 
@@ -773,7 +775,8 @@
                     </div>
                 </div>
 
-                <div class="px-5 pb-5">
+                <div class="px-5 pb-5 space-y-3">
+                    <div class="text-center text-[9px] text-slate-600 uppercase tracking-widest font-bold">Version V1.0.0 — Beta</div>
                     <button onclick="closeSettingsModal()" class="w-full py-3 rounded-2xl text-sm font-black text-white tracking-wider transition themed-gradient">
                         Done
                     </button>
@@ -1344,6 +1347,19 @@
                         <div>
                             <h3 id="shop-anchor-items" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Scanning Devices (radar wedge & capture modifiers)</h3>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <!-- Poké Ball -->
+                                <div class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-red-500/50 transition">
+                                    <div class="flex justify-between items-start">
+                                        <svg width="32" height="32" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="2"/><path d="M1.5 20 A18.5 18.5 0 0 1 38.5 20Z" fill="#dc2626"/><rect x="1" y="18" width="38" height="4" fill="#1a1a2e"/><circle cx="20" cy="20" r="6.5" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="2"/><circle cx="20" cy="20" r="3.5" fill="#f9a8a8"/><circle cx="18" cy="18.5" r="1" fill="#fff" opacity="0.8"/></svg>
+                                        <span class="text-[9px] font-mono text-slate-400 uppercase">Qty Owned: <span id="shopCount-poke" class="font-bold">0</span></span>
+                                    </div>
+                                    <h4 class="text-sm font-extrabold mt-3 text-white">Poké Ball</h4>
+                                    <p class="text-[11px] text-slate-400 mt-1">Standard scanning device. Cannot lock onto legendary Pokémon signatures.</p>
+                                    <div class="mt-4 flex items-center justify-between">
+                                        <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> 10 Coins</span>
+                                        <button onclick="buyBall('poke')" class="px-3 py-1.5 bg-red-700 hover:bg-red-600 text-white text-[11px] uppercase font-bold rounded-lg transition">Buy 1</button>
+                                    </div>
+                                </div>
                                 <!-- Great Ball -->
                                 <div class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-blue-500/50 transition">
                                     <div class="flex justify-between items-start">
@@ -1666,6 +1682,68 @@
                     "energy-ball": { type: "grass", power: 90, category: "special" },
                     "sludge": { type: "poison", power: 65, category: "special" },
                     "mud-bomb":     { type: "ground",  power: 65, category: "special" },
+                    // ── Additional battle moves ──────────────────────────────────────────
+                    "confuse-ray":  { type: "ghost",   power: 0,  category: "status", effect: { target: "foe", status: "confuse" } },
+                    "sweet-kiss":   { type: "fairy",   power: 0,  category: "status", effect: { target: "foe", status: "confuse" } },
+                    "supersonic":   { type: "normal",  power: 0,  category: "status", effect: { target: "foe", status: "confuse" } },
+                    "flatter":      { type: "dark",    power: 0,  category: "status", effect: { target: "foe", status: "confuse" } },
+                    "swagger":      { type: "normal",  power: 0,  category: "status", effect: { target: "foe", status: "confuse" } },
+                    "hurricane":    { type: "flying",  power: 110, category: "special" },
+                    "air-slash":    { type: "flying",  power: 75,  category: "special" },
+                    "darkpulse":    { type: "dark",    power: 80,  category: "special" },
+                    "foul-play":    { type: "dark",    power: 95,  category: "physical" },
+                    "night-slash":  { type: "dark",    power: 70,  category: "physical" },
+                    "u-turn":       { type: "bug",     power: 70,  category: "physical" },
+                    "megahorn":     { type: "bug",     power: 120, category: "physical" },
+                    "leech-life":   { type: "bug",     power: 80,  category: "physical" },
+                    "scald":        { type: "water",   power: 80,  category: "special" },
+                    "waterfall":    { type: "water",   power: 80,  category: "physical" },
+                    "close-combat": { type: "fighting", power: 120, category: "physical" },
+                    "drain-punch":  { type: "fighting", power: 75,  category: "physical" },
+                    "aura-sphere":  { type: "fighting", power: 80,  category: "special" },
+                    "mach-punch":   { type: "fighting", power: 40,  category: "physical" },
+                    "superpower":   { type: "fighting", power: 120, category: "physical" },
+                    "shadow-claw":  { type: "ghost",   power: 70,  category: "physical" },
+                    "shadow-sneak": { type: "ghost",   power: 40,  category: "physical" },
+                    "poltergeist":  { type: "ghost",   power: 110, category: "physical" },
+                    "heat-wave":    { type: "fire",    power: 95,  category: "special" },
+                    "overheat":     { type: "fire",    power: 130, category: "special" },
+                    "dragon-pulse": { type: "dragon",  power: 85,  category: "special" },
+                    "draco-meteor": { type: "dragon",  power: 130, category: "special" },
+                    "flash":        { type: "normal",  power: 0,   category: "status", effect: { target: "foe", stat: "accuracy", stages: -1 } },
+                    "reflect":      { type: "psychic", power: 0,   category: "status", effect: { target: "self", stat: "def", stages: 1 } },
+                    "light-screen": { type: "psychic", power: 0,   category: "status", effect: { target: "self", stat: "spDef", stages: 1 } },
+                    "dragon-dance": { type: "dragon",  power: 0,   category: "status", effect: { target: "self", multiStat: [{stat:"atk",stages:1},{stat:"speed",stages:1}] } },
+                    "quiver-dance": { type: "bug",     power: 0,   category: "status", effect: { target: "self", multiStat: [{stat:"spAtk",stages:1},{stat:"spDef",stages:1},{stat:"speed",stages:1}] } },
+                    "shell-smash":  { type: "normal",  power: 0,   category: "status", effect: { target: "self", multiStat: [{stat:"atk",stages:2},{stat:"spAtk",stages:2},{stat:"speed",stages:2}] } },
+                    "work-up":      { type: "normal",  power: 0,   category: "status", effect: { target: "self", multiStat: [{stat:"atk",stages:1},{stat:"spAtk",stages:1}] } },
+                    "iron-defense": { type: "steel",   power: 0,   category: "status", effect: { target: "self", stat: "def", stages: 2 } },
+                    "acid-armor":   { type: "poison",  power: 0,   category: "status", effect: { target: "self", stat: "def", stages: 2 } },
+                    "roost":        { type: "flying",  power: 0,   category: "status", effect: { target: "self", heals: "half" } },
+                    "recover":      { type: "normal",  power: 0,   category: "status", effect: { target: "self", heals: "half" } },
+                    "synthesis":    { type: "grass",   power: 0,   category: "status", effect: { target: "self", heals: "half" } },
+                    "morning-sun":  { type: "normal",  power: 0,   category: "status", effect: { target: "self", heals: "half" } },
+                    "moonlight":    { type: "fairy",   power: 0,   category: "status", effect: { target: "self", heals: "half" } },
+                    "geomancy":     { type: "fairy",   power: 0,   category: "status", effect: { target: "self", multiStat: [{stat:"spAtk",stages:2},{stat:"spDef",stages:2},{stat:"speed",stages:2}] } },
+                    "metal-sound":  { type: "steel",   power: 0,   category: "status", effect: { target: "foe", stat: "spDef", stages: -2 } },
+                    "taunt":        { type: "dark",    power: 0,   category: "status", effect: { target: "foe", stat: "spAtk", stages: -1 } },
+                    "encore":       { type: "normal",  power: 0,   category: "status", effect: { target: "foe", stat: "speed", stages: -1 } },
+                    "throat-chop":  { type: "dark",    power: 80,  category: "physical" },
+                    "flip-turn":    { type: "water",   power: 60,  category: "physical" },
+                    "lunge":        { type: "bug",     power: 80,  category: "physical" },
+                    "headlong-rush":{ type: "ground",  power: 100, category: "physical" },
+                    "scale-shot":   { type: "dragon",  power: 60,  category: "physical" },
+                    "meteor-beam":  { type: "rock",    power: 120, category: "special" },
+                    "stone-edge":   { type: "rock",    power: 100, category: "physical" },
+                    "smart-strike": { type: "steel",   power: 70,  category: "physical" },
+                    "sunsteel-strike":{ type: "steel", power: 100, category: "physical" },
+                    "moongeist-beam":{ type: "ghost",  power: 100, category: "special" },
+                    "thunderous-kick":{ type: "fighting",power:90, category: "physical" },
+                    "surging-strikes":{ type: "water", power: 25,  category: "physical" },
+                    "glacial-lance":{ type: "ice",     power: 120, category: "physical" },
+                    "astral-barrage":{ type: "ghost",  power: 120, category: "special" },
+                    "wicked-blow":  { type: "dark",    power: 80,  category: "physical" },
+                    "spirit-break": { type: "fairy",   power: 75,  category: "physical" },
                     // ── Setup / Status TM moves ──────────────────────────────────────────
                     "calm-mind":    { type: "psychic",  power: 0,  category: "status", effect: { target: "self",  multiStat: [{stat:"spAtk",stages:1},{stat:"spDef",stages:1}] } },
                     "swords-dance": { type: "normal",   power: 0,  category: "status", effect: { target: "self",  stat: "atk",   stages: 2 } },
@@ -2217,15 +2295,20 @@
 
 const CAMPAIGN_ROADMAP = [
     { stageId:1, name:"Viridian Forest", trainer:"Bug Catcher Rick", pokemonId:10, bossName:"Caterpie", level:5, reward:60, icon:"🐛", teamSize:1, regionId:1 },
-    { stageId:2, name:"Pewter City Gym", trainer:"Gym Leader Brock", pokemonId:95, bossName:"Onix", level:12, reward:120, icon:"🪨", teamSize:2, regionId:1, isGym:true, badgeName:"Boulder Badge", badgeColor:"#9ca3af", badgeEmoji:"🪨" },
+    { stageId:2, name:"Pewter City Gym", trainer:"Gym Leader Brock", gymPuzzle: { question: "Which type is super effective against Rock?", options: ["Fire", "Water", "Grass", "Flying"], answer: 1, hint: "Think about eroding stone..." }, pokemonId:95, bossName:"Onix", level:12, reward:120, icon:"🪨", teamSize:2, regionId:1, isGym:true, badgeName:"Boulder Badge", badgeColor:"#9ca3af", badgeEmoji:"🪨" },
     { stageId:3, name:"Cerulean Route", trainer:"Lass Haley", pokemonId:39, bossName:"Jigglypuff", level:18, reward:150, icon:"🎈", teamSize:2, regionId:1 },
-    { stageId:4, name:"Cerulean City Gym", trainer:"Gym Leader Misty", pokemonId:121, bossName:"Starmie", level:24, reward:180, icon:"💧", teamSize:2, regionId:1, isGym:true, badgeName:"Cascade Badge", badgeColor:"#38bdf8", badgeEmoji:"💧" },
+    { stageId:4, name:"Cerulean City Gym", trainer:"Gym Leader Misty", gymPuzzle: { question: "What is Misty's signature Pokémon species?", options: ["Goldeen", "Psyduck", "Starmie", "Vaporeon"], answer: 2, hint: "It's a star-shaped Water/Psychic type." }, pokemonId:121, bossName:"Starmie", level:24, reward:180, icon:"💧", teamSize:2, regionId:1, isGym:true, badgeName:"Cascade Badge", badgeColor:"#38bdf8", badgeEmoji:"💧" },
+    { stageId:4.5, name:"Vermilion Route", trainer:"Sailor Huey", pokemonId:72, bossName:"Tentacool", level:29, reward:190, icon:"⛵", teamSize:2, regionId:1 },
     { stageId:5, name:"Vermilion City Gym", trainer:"Gym Leader Lt. Surge", pokemonId:26, bossName:"Raichu", level:32, reward:220, icon:"⚡", teamSize:3, regionId:1, isGym:true, badgeName:"Thunder Badge", badgeColor:"#facc15", badgeEmoji:"⚡" },
     { stageId:6, name:"Lavender Town", trainer:"Channeler Patricia", pokemonId:93, bossName:"Haunter", level:38, reward:250, icon:"👻", teamSize:3, regionId:1 },
-    { stageId:7, name:"Celadon City Gym", trainer:"Gym Leader Erika", pokemonId:45, bossName:"Vileplume", level:44, reward:290, icon:"🌸", teamSize:3, regionId:1, isGym:true, badgeName:"Rainbow Badge", badgeColor:"#34d399", badgeEmoji:"🌿" },
-    { stageId:8, name:"Fuchsia City Gym", trainer:"Gym Leader Koga", pokemonId:110, bossName:"Weezing", level:50, reward:340, icon:"☠️", teamSize:4, regionId:1, isGym:true, badgeName:"Soul Badge", badgeColor:"#a78bfa", badgeEmoji:"🔴" },
+    { stageId:7, name:"Celadon City Gym", trainer:"Gym Leader Erika", gymPuzzle: { question: "Which move does NOT have the Grass type?", options: ["Razor Leaf", "Solar Beam", "Petal Dance", "Body Slam"], answer: 3, hint: "Normal-type moves don't get STAB for Grass-types." }, pokemonId:45, bossName:"Vileplume", level:44, reward:290, icon:"🌸", teamSize:3, regionId:1, isGym:true, badgeName:"Rainbow Badge", badgeColor:"#34d399", badgeEmoji:"🌿" },
+    { stageId:7.5, name:"Safari Zone", trainer:"Poké Maniac Ethan", pokemonId:111, bossName:"Rhyhorn", level:46, reward:305, icon:"🦏", teamSize:3, regionId:1 },
+    { stageId:8, name:"Fuchsia City Gym", trainer:"Gym Leader Koga", gymPuzzle: { question: "Which of these is a Poison-type status move?", options: ["Toxic", "Acid", "Sludge Bomb", "Poison Gas"], answer: 0, hint: "It badly poisons the target." }, pokemonId:110, bossName:"Weezing", level:50, reward:340, icon:"☠️", teamSize:4, regionId:1, isGym:true, badgeName:"Soul Badge", badgeColor:"#a78bfa", badgeEmoji:"🔴" },
+    { stageId:8.5, name:"Silph Co.", trainer:"Rocket Executive Archer", pokemonId:89, bossName:"Muk", level:52, reward:360, icon:"☢️", teamSize:3, regionId:1 },
     { stageId:9, name:"Saffron City Gym", trainer:"Gym Leader Sabrina", pokemonId:65, bossName:"Alakazam", level:55, reward:390, icon:"🥄", teamSize:4, regionId:1, isGym:true, badgeName:"Marsh Badge", badgeColor:"#c084fc", badgeEmoji:"🔮" },
+    { stageId:9.5, name:"Seafoam Islands", trainer:"Lass Lola", pokemonId:91, bossName:"Cloyster", level:57, reward:410, icon:"🏝️", teamSize:3, regionId:1 },
     { stageId:10, name:"Cinnabar Island Gym", trainer:"Gym Leader Blaine", pokemonId:59, bossName:"Arcanine", level:60, reward:440, icon:"🔥", teamSize:4, regionId:1, isGym:true, badgeName:"Volcano Badge", badgeColor:"#f97316", badgeEmoji:"🌋" },
+    { stageId:10.5, name:"Route 22", trainer:"Rival Gary Oak", pokemonId:65, bossName:"Alakazam", level:62, reward:478, icon:"🏃", teamSize:4, regionId:1 },
     { stageId:11, name:"Viridian City Gym", trainer:"Gym Leader Giovanni", pokemonId:34, bossName:"Nidoking", level:65, reward:520, icon:"🌍", teamSize:4, regionId:1, isGym:true, badgeName:"Earth Badge", badgeColor:"#78716c", badgeEmoji:"🌍" },
     { stageId:12, name:"Victory Road", trainer:"Rival Gary Oak", pokemonId:65, bossName:"Alakazam", level:68, reward:620, icon:"🏔️", teamSize:4, regionId:1 },
     { stageId:13, name:"Indigo Plateau", trainer:"Elite Four Lorelei", pokemonId:131, bossName:"Lapras", level:72, reward:720, icon:"🧊", teamSize:4, regionId:1, isElite4:true },
@@ -2237,12 +2320,17 @@ const CAMPAIGN_ROADMAP = [
     { stageId:19, name:"Violet City Gym", trainer:"Gym Leader Falkner", pokemonId:164, bossName:"Noctowl", level:32, reward:1350, icon:"🪶", teamSize:2, regionId:2, isGym:true, badgeName:"Zephyr Badge", badgeColor:"#94a3b8", badgeEmoji:"🪶" },
     { stageId:20, name:"Azalea Route", trainer:"Bug Catcher Benny", pokemonId:167, bossName:"Spinarak", level:37, reward:1450, icon:"🕷️", teamSize:2, regionId:2 },
     { stageId:21, name:"Azalea Town Gym", trainer:"Gym Leader Bugsy", pokemonId:212, bossName:"Scizor", level:40, reward:1550, icon:"🐛", teamSize:2, regionId:2, isGym:true, badgeName:"Hive Badge", badgeColor:"#86efac", badgeEmoji:"🌿" },
+    { stageId:21.5, name:"Goldenrod Route", trainer:"Super Nerd Teru", pokemonId:100, bossName:"Voltorb", level:41, reward:1610, icon:"💫", teamSize:2, regionId:2 },
     { stageId:22, name:"Goldenrod City Gym", trainer:"Gym Leader Whitney", pokemonId:241, bossName:"Miltank", level:44, reward:1680, icon:"🐄", teamSize:3, regionId:2, isGym:true, badgeName:"Plain Badge", badgeColor:"#fde68a", badgeEmoji:"🌸" },
     { stageId:23, name:"Ecruteak City", trainer:"Kimono Girl Naoko", pokemonId:197, bossName:"Umbreon", level:48, reward:1780, icon:"🌑", teamSize:3, regionId:2 },
     { stageId:24, name:"Ecruteak City Gym", trainer:"Gym Leader Morty", pokemonId:200, bossName:"Misdreavus", level:52, reward:1900, icon:"👻", teamSize:3, regionId:2, isGym:true, badgeName:"Fog Badge", badgeColor:"#c4b5fd", badgeEmoji:"🌫️" },
+    { stageId:24.5, name:"Cianwood Route", trainer:"Fisher Rod", pokemonId:130, bossName:"Gyarados", level:54, reward:1970, icon:"🎣", teamSize:3, regionId:2 },
     { stageId:25, name:"Cianwood City Gym", trainer:"Gym Leader Chuck", pokemonId:214, bossName:"Heracross", level:57, reward:2050, icon:"🥊", teamSize:4, regionId:2, isGym:true, badgeName:"Storm Badge", badgeColor:"#93c5fd", badgeEmoji:"⚡" },
+    { stageId:25.5, name:"Lighthouse", trainer:"Ace Trainer Cyndy", pokemonId:202, bossName:"Wobbuffet", level:59, reward:2120, icon:"🔦", teamSize:3, regionId:2 },
     { stageId:26, name:"Olivine City Gym", trainer:"Gym Leader Jasmine", pokemonId:208, bossName:"Steelix", level:62, reward:2200, icon:"⚙️", teamSize:4, regionId:2, isGym:true, badgeName:"Mineral Badge", badgeColor:"#d1d5db", badgeEmoji:"🔩" },
+    { stageId:26.5, name:"Mt. Mortar", trainer:"Black Belt Kiyo", pokemonId:237, bossName:"Hitmontop", level:63, reward:2270, icon:"🏔️", teamSize:3, regionId:2 },
     { stageId:27, name:"Mahogany Town Gym", trainer:"Gym Leader Pryce", pokemonId:221, bossName:"Piloswine", level:66, reward:2350, icon:"❄️", teamSize:4, regionId:2, isGym:true, badgeName:"Glacier Badge", badgeColor:"#bae6fd", badgeEmoji:"❄️" },
+    { stageId:27.5, name:"Ice Path", trainer:"Boarder Hank", pokemonId:225, bossName:"Delibird", level:67, reward:2420, icon:"❄️", teamSize:3, regionId:2 },
     { stageId:28, name:"Blackthorn City Gym", trainer:"Gym Leader Clair", pokemonId:230, bossName:"Kingdra", level:70, reward:2500, icon:"🐲", teamSize:4, regionId:2, isGym:true, badgeName:"Rising Badge", badgeColor:"#c084fc", badgeEmoji:"🌊" },
     { stageId:29, name:"Mt. Silver", trainer:"Rival Silver", pokemonId:160, bossName:"Feraligatr", level:74, reward:2650, icon:"⚔️", teamSize:4, regionId:2 },
     { stageId:30, name:"Johto Elite Four", trainer:"Elite Four Will", pokemonId:178, bossName:"Xatu", level:77, reward:2800, icon:"🧠", teamSize:4, regionId:2, isElite4:true },
@@ -2254,12 +2342,17 @@ const CAMPAIGN_ROADMAP = [
     { stageId:36, name:"Rustboro City Gym", trainer:"Gym Leader Roxanne", pokemonId:299, bossName:"Nosepass", level:40, reward:4100, icon:"🪨", teamSize:2, regionId:3, isGym:true, badgeName:"Stone Badge", badgeColor:"#d1d5db", badgeEmoji:"🪨" },
     { stageId:37, name:"Dewford Town", trainer:"Fisherman Ivan", pokemonId:318, bossName:"Carvanha", level:44, reward:4250, icon:"🎣", teamSize:2, regionId:3 },
     { stageId:38, name:"Dewford Town Gym", trainer:"Gym Leader Brawly", pokemonId:297, bossName:"Hariyama", level:47, reward:4400, icon:"🥊", teamSize:3, regionId:3, isGym:true, badgeName:"Knuckle Badge", badgeColor:"#fb923c", badgeEmoji:"✊" },
+    { stageId:38.5, name:"Mauville Road", trainer:"Cyclist Lao", pokemonId:309, bossName:"Electrike", level:49, reward:4510, icon:"🚲", teamSize:2, regionId:3 },
     { stageId:39, name:"Mauville City Gym", trainer:"Gym Leader Wattson", pokemonId:310, bossName:"Manectric", level:52, reward:4600, icon:"⚡", teamSize:3, regionId:3, isGym:true, badgeName:"Dynamo Badge", badgeColor:"#fde047", badgeEmoji:"⚡" },
     { stageId:40, name:"Lavaridge Route", trainer:"Hiker Clarke", pokemonId:324, bossName:"Torkoal", level:56, reward:4750, icon:"🏔️", teamSize:3, regionId:3 },
     { stageId:41, name:"Lavaridge Town Gym", trainer:"Gym Leader Flannery", pokemonId:324, bossName:"Torkoal", level:58, reward:4900, icon:"🔥", teamSize:3, regionId:3, isGym:true, badgeName:"Heat Badge", badgeColor:"#f87171", badgeEmoji:"🌋" },
+    { stageId:41.5, name:"Route 111 Desert", trainer:"Camper Flint", pokemonId:328, bossName:"Trapinch", level:59, reward:5000, icon:"🏜️", teamSize:3, regionId:3 },
     { stageId:42, name:"Petalburg City Gym", trainer:"Gym Leader Norman", pokemonId:289, bossName:"Slaking", level:62, reward:5100, icon:"🐻", teamSize:4, regionId:3, isGym:true, badgeName:"Balance Badge", badgeColor:"#a3e635", badgeEmoji:"⚖️" },
+    { stageId:42.5, name:"Route 120", trainer:"Ace Trainer Brooke", pokemonId:335, bossName:"Zangoose", level:63, reward:5200, icon:"🌿", teamSize:3, regionId:3 },
     { stageId:43, name:"Fortree City Gym", trainer:"Gym Leader Winona", pokemonId:334, bossName:"Altaria", level:66, reward:5300, icon:"🦅", teamSize:4, regionId:3, isGym:true, badgeName:"Feather Badge", badgeColor:"#7dd3fc", badgeEmoji:"🪶" },
+    { stageId:43.5, name:"Route 124", trainer:"Swimmer Nikki", pokemonId:350, bossName:"Milotic", level:67, reward:5400, icon:"🌊", teamSize:3, regionId:3 },
     { stageId:44, name:"Mossdeep City Gym", trainer:"Gym Leader Tate&Liza", pokemonId:338, bossName:"Solrock", level:70, reward:5500, icon:"🌞", teamSize:4, regionId:3, isGym:true, badgeName:"Mind Badge", badgeColor:"#e9d5ff", badgeEmoji:"🧠" },
+    { stageId:44.5, name:"Cave of Origin", trainer:"Magma Leader Maxie", pokemonId:383, bossName:"Groudon", level:71, reward:5600, icon:"🌋", teamSize:3, regionId:3 },
     { stageId:45, name:"Sootopolis City Gym", trainer:"Gym Leader Wallace", pokemonId:350, bossName:"Milotic", level:74, reward:5700, icon:"💎", teamSize:4, regionId:3, isGym:true, badgeName:"Rain Badge", badgeColor:"#93c5fd", badgeEmoji:"💧" },
     { stageId:46, name:"Victory Road", trainer:"Wally", pokemonId:282, bossName:"Gardevoir", level:77, reward:5900, icon:"🌀", teamSize:4, regionId:3 },
     { stageId:47, name:"Ever Grande City", trainer:"Elite Four Sidney", pokemonId:359, bossName:"Absol", level:80, reward:6100, icon:"🌑", teamSize:4, regionId:3, isElite4:true },
@@ -2271,10 +2364,13 @@ const CAMPAIGN_ROADMAP = [
     { stageId:53, name:"Oreburgh City Gym", trainer:"Gym Leader Roark", pokemonId:409, bossName:"Rampardos", level:46, reward:7850, icon:"⛏️", teamSize:2, regionId:4, isGym:true, badgeName:"Coal Badge", badgeColor:"#78716c", badgeEmoji:"⛏️" },
     { stageId:54, name:"Eterna Forest", trainer:"Ace Trainer Molly", pokemonId:407, bossName:"Roserade", level:50, reward:8050, icon:"🌹", teamSize:2, regionId:4 },
     { stageId:55, name:"Eterna City Gym", trainer:"Gym Leader Gardenia", pokemonId:407, bossName:"Roserade", level:53, reward:8250, icon:"🌹", teamSize:3, regionId:4, isGym:true, badgeName:"Forest Badge", badgeColor:"#86efac", badgeEmoji:"🌿" },
+    { stageId:55.5, name:"Lost Tower", trainer:"Ace Trainer Molly", pokemonId:442, bossName:"Spiritomb", level:55, reward:8370, icon:"👻", teamSize:3, regionId:4 },
     { stageId:56, name:"Veilstone City Gym", trainer:"Gym Leader Maylene", pokemonId:448, bossName:"Lucario", level:58, reward:8500, icon:"🥋", teamSize:3, regionId:4, isGym:true, badgeName:"Cobble Badge", badgeColor:"#fca5a5", badgeEmoji:"🥊" },
     { stageId:57, name:"Route 214", trainer:"Cyclist Ariel", pokemonId:25, bossName:"Pikachu", level:61, reward:8700, icon:"🚲", teamSize:3, regionId:4 },
     { stageId:58, name:"Pastoria City Gym", trainer:"Gym Leader Crasher Wake", pokemonId:419, bossName:"Floatzel", level:65, reward:8950, icon:"🌊", teamSize:3, regionId:4, isGym:true, badgeName:"Fen Badge", badgeColor:"#7dd3fc", badgeEmoji:"💧" },
+    { stageId:58.5, name:"Amity Square", trainer:"Socialite Reina", pokemonId:440, bossName:"Happiny", level:66, reward:9060, icon:"🌸", teamSize:3, regionId:4 },
     { stageId:59, name:"Hearthome City Gym", trainer:"Gym Leader Fantina", pokemonId:429, bossName:"Mismagius", level:69, reward:9200, icon:"👻", teamSize:4, regionId:4, isGym:true, badgeName:"Relic Badge", badgeColor:"#d8b4fe", badgeEmoji:"👻" },
+    { stageId:59.5, name:"Iron Island", trainer:"Riley the Aura Guardian", pokemonId:445, bossName:"Garchomp", level:70, reward:9350, icon:"⚔️", teamSize:4, regionId:4 },
     { stageId:60, name:"Canalave City Gym", trainer:"Gym Leader Byron", pokemonId:411, bossName:"Bastiodon", level:73, reward:9500, icon:"🏰", teamSize:4, regionId:4, isGym:true, badgeName:"Mine Badge", badgeColor:"#94a3b8", badgeEmoji:"⛏️" },
     { stageId:61, name:"Snowpoint City Gym", trainer:"Gym Leader Candice", pokemonId:478, bossName:"Froslass", level:77, reward:9800, icon:"❄️", teamSize:4, regionId:4, isGym:true, badgeName:"Icicle Badge", badgeColor:"#bae6fd", badgeEmoji:"❄️" },
     { stageId:62, name:"Sunyshore City Gym", trainer:"Gym Leader Volkner", pokemonId:466, bossName:"Electivire", level:81, reward:10200, icon:"⚡", teamSize:4, regionId:4, isGym:true, badgeName:"Beacon Badge", badgeColor:"#fde047", badgeEmoji:"⚡" },
@@ -2288,12 +2384,16 @@ const CAMPAIGN_ROADMAP = [
     { stageId:70, name:"Striaton City Gym", trainer:"Gym Leader Cilan", pokemonId:512, bossName:"Simisage", level:52, reward:13400, icon:"🌿", teamSize:2, regionId:5, isGym:true, badgeName:"Trio Badge", badgeColor:"#86efac", badgeEmoji:"🌿" },
     { stageId:71, name:"Nacrene Route", trainer:"School Kid Marcy", pokemonId:522, bossName:"Blitzle", level:56, reward:13700, icon:"⚡", teamSize:2, regionId:5 },
     { stageId:72, name:"Nacrene City Gym", trainer:"Gym Leader Lenora", pokemonId:505, bossName:"Watchog", level:59, reward:14000, icon:"🔍", teamSize:3, regionId:5, isGym:true, badgeName:"Basic Badge", badgeColor:"#e2e8f0", badgeEmoji:"🔎" },
+    { stageId:72.5, name:"Pinwheel Forest", trainer:"Team Plasma Grunt", pokemonId:509, bossName:"Purrloin", level:60, reward:14100, icon:"🌲", teamSize:2, regionId:5 },
     { stageId:73, name:"Castelia City Gym", trainer:"Gym Leader Burgh", pokemonId:542, bossName:"Leavanny", level:63, reward:14300, icon:"🦋", teamSize:3, regionId:5, isGym:true, badgeName:"Insect Badge", badgeColor:"#86efac", badgeEmoji:"🐛" },
     { stageId:74, name:"Desert Resort", trainer:"Ace Trainer", pokemonId:554, bossName:"Darumaka", level:67, reward:14600, icon:"🔥", teamSize:3, regionId:5 },
     { stageId:75, name:"Nimbasa City Gym", trainer:"Gym Leader Elesa", pokemonId:523, bossName:"Zebstrika", level:70, reward:14900, icon:"⚡", teamSize:3, regionId:5, isGym:true, badgeName:"Bolt Badge", badgeColor:"#fde047", badgeEmoji:"⚡" },
     { stageId:76, name:"Driftveil City Gym", trainer:"Gym Leader Clay", pokemonId:530, bossName:"Excadrill", level:74, reward:15200, icon:"⛏️", teamSize:4, regionId:5, isGym:true, badgeName:"Quake Badge", badgeColor:"#d97706", badgeEmoji:"🏜️" },
+    { stageId:76.5, name:"Chargestone Cave", trainer:"Ace Trainer Shanta", pokemonId:596, bossName:"Galvantula", level:75, reward:15350, icon:"⚡", teamSize:3, regionId:5 },
     { stageId:77, name:"Mistralton City Gym", trainer:"Gym Leader Skyla", pokemonId:581, bossName:"Swanna", level:78, reward:15500, icon:"🦢", teamSize:4, regionId:5, isGym:true, badgeName:"Jet Badge", badgeColor:"#7dd3fc", badgeEmoji:"🪶" },
+    { stageId:77.5, name:"Twist Mountain", trainer:"Worker Cairn", pokemonId:625, bossName:"Bisharp", level:79, reward:15650, icon:"🏔️", teamSize:3, regionId:5 },
     { stageId:78, name:"Icirrus City Gym", trainer:"Gym Leader Brycen", pokemonId:614, bossName:"Beartic", level:82, reward:15800, icon:"🐻", teamSize:4, regionId:5, isGym:true, badgeName:"Freeze Badge", badgeColor:"#bae6fd", badgeEmoji:"❄️" },
+    { stageId:78.5, name:"Dragonspiral Tower", trainer:"N the Seeker of Truth", pokemonId:612, bossName:"Haxorus", level:82, reward:16000, icon:"🌀", teamSize:3, regionId:5 },
     { stageId:79, name:"Opelucid City Gym", trainer:"Gym Leader Drayden", pokemonId:612, bossName:"Haxorus", level:86, reward:16200, icon:"🐉", teamSize:4, regionId:5, isGym:true, badgeName:"Legend Badge", badgeColor:"#d8b4fe", badgeEmoji:"🐉" },
     { stageId:80, name:"Victory Road", trainer:"Cheren", pokemonId:497, bossName:"Serperior", level:88, reward:16500, icon:"🌀", teamSize:4, regionId:5 },
     { stageId:81, name:"Unova League", trainer:"Elite Four Shauntal", pokemonId:609, bossName:"Chandelure", level:90, reward:16800, icon:"👻", teamSize:4, regionId:5, isElite4:true },
@@ -2305,12 +2405,17 @@ const CAMPAIGN_ROADMAP = [
     { stageId:87, name:"Santalune City Gym", trainer:"Gym Leader Viola", pokemonId:666, bossName:"Vivillon", level:55, reward:20400, icon:"🦋", teamSize:2, regionId:6, isGym:true, badgeName:"Bug Badge", badgeColor:"#86efac", badgeEmoji:"🐛" },
     { stageId:88, name:"Route 7", trainer:"Hiker Lalo", pokemonId:679, bossName:"Honedge", level:59, reward:20700, icon:"⚔️", teamSize:2, regionId:6 },
     { stageId:89, name:"Cyllage City Gym", trainer:"Gym Leader Grant", pokemonId:698, bossName:"Amaura", level:62, reward:21000, icon:"🦕", teamSize:2, regionId:6, isGym:true, badgeName:"Cliff Badge", badgeColor:"#94a3b8", badgeEmoji:"🪨" },
+    { stageId:89.5, name:"Geosenge Town", trainer:"Team Flare Grunt", pokemonId:569, bossName:"Garbodor", level:63, reward:21150, icon:"🔴", teamSize:2, regionId:6 },
     { stageId:90, name:"Shalour City Gym", trainer:"Gym Leader Korrina", pokemonId:701, bossName:"Hawlucha", level:66, reward:21400, icon:"🦅", teamSize:3, regionId:6, isGym:true, badgeName:"Rumble Badge", badgeColor:"#fb923c", badgeEmoji:"🥊" },
     { stageId:91, name:"Route 12", trainer:"Roller Skater", pokemonId:702, bossName:"Dedenne", level:69, reward:21700, icon:"⚡", teamSize:3, regionId:6 },
     { stageId:92, name:"Coumarine City Gym", trainer:"Gym Leader Ramos", pokemonId:673, bossName:"Gogoat", level:72, reward:22000, icon:"🐐", teamSize:3, regionId:6, isGym:true, badgeName:"Plant Badge", badgeColor:"#86efac", badgeEmoji:"🌿" },
+    { stageId:92.5, name:"Route 13", trainer:"Ace Trainer Alanza", pokemonId:701, bossName:"Hawlucha", level:72, reward:22200, icon:"🌾", teamSize:3, regionId:6 },
     { stageId:93, name:"Lumiose City Gym", trainer:"Gym Leader Clemont", pokemonId:695, bossName:"Heliolisk", level:75, reward:22400, icon:"⚡", teamSize:4, regionId:6, isGym:true, badgeName:"Voltage Badge", badgeColor:"#fde047", badgeEmoji:"⚡" },
+    { stageId:93.5, name:"Connecting Cave", trainer:"Hiker Lalo", pokemonId:559, bossName:"Scraggy", level:75, reward:22600, icon:"🏔️", teamSize:2, regionId:6 },
     { stageId:94, name:"Laverre City Gym", trainer:"Gym Leader Valerie", pokemonId:700, bossName:"Sylveon", level:78, reward:22800, icon:"🎀", teamSize:4, regionId:6, isGym:true, badgeName:"Fairy Badge", badgeColor:"#f9a8d4", badgeEmoji:"🎀" },
+    { stageId:94.5, name:"Pokémon Village", trainer:"Ranger Petra", pokemonId:706, bossName:"Goodra", level:78, reward:23000, icon:"🌲", teamSize:3, regionId:6 },
     { stageId:95, name:"Anistar City Gym", trainer:"Gym Leader Olympia", pokemonId:678, bossName:"Meowstic", level:81, reward:23200, icon:"🔮", teamSize:4, regionId:6, isGym:true, badgeName:"Psychic Badge", badgeColor:"#c084fc", badgeEmoji:"🔮" },
+    { stageId:95.5, name:"Frost Cavern", trainer:"Team Flare Admin Mable", pokemonId:713, bossName:"Avalugg", level:81, reward:23400, icon:"❄️", teamSize:3, regionId:6 },
     { stageId:96, name:"Snowbelle City Gym", trainer:"Gym Leader Wulfric", pokemonId:713, bossName:"Avalugg", level:84, reward:23600, icon:"❄️", teamSize:4, regionId:6, isGym:true, badgeName:"Iceberg Badge", badgeColor:"#bae6fd", badgeEmoji:"❄️" },
     { stageId:97, name:"Victory Road", trainer:"Rival Calem", pokemonId:655, bossName:"Delphox", level:86, reward:24000, icon:"🔥", teamSize:4, regionId:6 },
     { stageId:98, name:"Kalos League", trainer:"Elite Four Malva", pokemonId:663, bossName:"Talonflame", level:88, reward:24400, icon:"🔥", teamSize:4, regionId:6, isElite4:true },
@@ -2322,10 +2427,13 @@ const CAMPAIGN_ROADMAP = [
     { stageId:104, name:"Verdant Cavern Trial", trainer:"Captain Ilima", pokemonId:735, bossName:"Gumshoos", level:59, reward:28500, icon:"🔍", teamSize:2, regionId:7, isGym:true, badgeName:"Normalium Z", badgeColor:"#e2e8f0", badgeEmoji:"⚪" },
     { stageId:105, name:"Brooklet Hill", trainer:"Fisherman Eugene", pokemonId:746, bossName:"Wishiwashi", level:63, reward:28900, icon:"🐟", teamSize:2, regionId:7 },
     { stageId:106, name:"Brooklet Hill Trial", trainer:"Captain Lana", pokemonId:752, bossName:"Araquanid", level:66, reward:29400, icon:"🕷️", teamSize:2, regionId:7, isGym:true, badgeName:"Waterium Z", badgeColor:"#7dd3fc", badgeEmoji:"💧" },
+    { stageId:106.5, name:"Diglett's Tunnel", trainer:"Worker Frank", pokemonId:50, bossName:"Diglett", level:67, reward:29650, icon:"🪨", teamSize:2, regionId:7 },
     { stageId:107, name:"Wela Volcano Trial", trainer:"Captain Kiawe", pokemonId:758, bossName:"Salazzle", level:70, reward:29900, icon:"🔥", teamSize:3, regionId:7, isGym:true, badgeName:"Firium Z", badgeColor:"#f87171", badgeEmoji:"🔥" },
     { stageId:108, name:"Lush Jungle Route", trainer:"Hiker Calhoun", pokemonId:744, bossName:"Rockruff", level:73, reward:30400, icon:"🐾", teamSize:3, regionId:7 },
     { stageId:109, name:"Lush Jungle Trial", trainer:"Captain Mallow", pokemonId:754, bossName:"Lurantis", level:75, reward:30900, icon:"🌺", teamSize:3, regionId:7, isGym:true, badgeName:"Grassium Z", badgeColor:"#86efac", badgeEmoji:"🌿" },
+    { stageId:109.5, name:"Route 10", trainer:"Punk Guy Goren", pokemonId:744, bossName:"Rockruff", level:75, reward:31250, icon:"🎸", teamSize:3, regionId:7 },
     { stageId:110, name:"Hokulani Observatory", trainer:"Captain Sophocles", pokemonId:777, bossName:"Togedemaru", level:78, reward:31500, icon:"⚡", teamSize:4, regionId:7, isGym:true, badgeName:"Electrium Z", badgeColor:"#fde047", badgeEmoji:"⚡" },
+    { stageId:110.5, name:"Ula'ula Meadow", trainer:"Dancer Travis", pokemonId:742, bossName:"Cutiefly", level:78, reward:31800, icon:"🌺", teamSize:3, regionId:7 },
     { stageId:111, name:"Thrifty Megamart", trainer:"Captain Acerola", pokemonId:778, bossName:"Mimikyu", level:81, reward:32100, icon:"👻", teamSize:4, regionId:7, isGym:true, badgeName:"Ghostium Z", badgeColor:"#d8b4fe", badgeEmoji:"👻" },
     { stageId:112, name:"Seafolk Village", trainer:"Captain Mina", pokemonId:742, bossName:"Ribombee", level:84, reward:32700, icon:"🎀", teamSize:4, regionId:7, isGym:true, badgeName:"Fairium Z", badgeColor:"#f9a8d4", badgeEmoji:"🎀" },
     { stageId:113, name:"Poni Island Kahuna", trainer:"Kahuna Hapu", pokemonId:749, bossName:"Mudsdale", level:87, reward:33300, icon:"🐎", teamSize:4, regionId:7, isGym:true, badgeName:"Groundium Z", badgeColor:"#d97706", badgeEmoji:"🏜️" },
@@ -2339,12 +2447,17 @@ const CAMPAIGN_ROADMAP = [
     { stageId:121, name:"Turffield Gym", trainer:"Gym Leader Milo", pokemonId:830, bossName:"Eldegoss", level:65, reward:40600, icon:"🌿", teamSize:2, regionId:8, isGym:true, badgeName:"Grass Badge", badgeColor:"#86efac", badgeEmoji:"🌿" },
     { stageId:122, name:"Route 2", trainer:"Camper Liam", pokemonId:833, bossName:"Chewtle", level:68, reward:41100, icon:"🐊", teamSize:2, regionId:8 },
     { stageId:123, name:"Hulbury Gym", trainer:"Gym Leader Nessa", pokemonId:834, bossName:"Drednaw", level:71, reward:41600, icon:"💧", teamSize:2, regionId:8, isGym:true, badgeName:"Water Badge", badgeColor:"#7dd3fc", badgeEmoji:"💧" },
+    { stageId:123.5, name:"Motostoke Outskirts", trainer:"Trainer Ball", pokemonId:850, bossName:"Sizzlipede", level:72, reward:41900, icon:"🌿", teamSize:2, regionId:8 },
     { stageId:124, name:"Motostoke Gym", trainer:"Gym Leader Kabu", pokemonId:851, bossName:"Centiskorch", level:75, reward:42200, icon:"🔥", teamSize:3, regionId:8, isGym:true, badgeName:"Fire Badge", badgeColor:"#f87171", badgeEmoji:"🔥" },
     { stageId:125, name:"Stow-on-Side Route", trainer:"Cyclist", pokemonId:848, bossName:"Toxel", level:78, reward:42800, icon:"⚡", teamSize:3, regionId:8 },
     { stageId:126, name:"Stow-on-Side Gym", trainer:"Gym Leader Bea", pokemonId:865, bossName:"Sirfetch'd", level:81, reward:43400, icon:"⚔️", teamSize:3, regionId:8, isGym:true, badgeName:"Fighting Badge", badgeColor:"#fb923c", badgeEmoji:"🥊" },
+    { stageId:126.5, name:"Glimwood Tangle", trainer:"Trainer Hop", pokemonId:862, bossName:"Obstagoon", level:81, reward:43850, icon:"🍄", teamSize:3, regionId:8 },
     { stageId:127, name:"Ballonlea Gym", trainer:"Gym Leader Opal", pokemonId:869, bossName:"Alcremie", level:84, reward:44100, icon:"🎂", teamSize:4, regionId:8, isGym:true, badgeName:"Fairy Badge", badgeColor:"#f9a8d4", badgeEmoji:"🎀" },
+    { stageId:127.5, name:"Route 9 Tunnel", trainer:"Worker Dunn", pokemonId:838, bossName:"Carkol", level:84, reward:44450, icon:"⛏️", teamSize:3, regionId:8 },
     { stageId:128, name:"Circhester Gym", trainer:"Gym Leader Gordie", pokemonId:839, bossName:"Coalossal", level:87, reward:44800, icon:"🏔️", teamSize:4, regionId:8, isGym:true, badgeName:"Rock Badge", badgeColor:"#d97706", badgeEmoji:"🪨" },
+    { stageId:128.5, name:"Spikemuth Route", trainer:"Marnie", pokemonId:860, bossName:"Morgrem", level:87, reward:45150, icon:"🎵", teamSize:3, regionId:8 },
     { stageId:129, name:"Spikemuth Gym", trainer:"Gym Leader Piers", pokemonId:862, bossName:"Obstagoon", level:90, reward:45500, icon:"🎸", teamSize:4, regionId:8, isGym:true, badgeName:"Dark Badge", badgeColor:"#334155", badgeEmoji:"🌑" },
+    { stageId:129.5, name:"Dusty Bowl", trainer:"Bede the Elegant", pokemonId:858, bossName:"Hatterene", level:90, reward:45900, icon:"🌪️", teamSize:4, regionId:8 },
     { stageId:130, name:"Hammerlocke Gym", trainer:"Gym Leader Raihan", pokemonId:884, bossName:"Duraludon", level:93, reward:46300, icon:"🐉", teamSize:4, regionId:8, isGym:true, badgeName:"Dragon Badge", badgeColor:"#c084fc", badgeEmoji:"🐉" },
     { stageId:131, name:"Route to League", trainer:"Rival Hop", pokemonId:832, bossName:"Dubwool", level:94, reward:47000, icon:"🐑", teamSize:4, regionId:8 },
     { stageId:132, name:"Galar League", trainer:"Semi-Final Bede", pokemonId:858, bossName:"Hatterene", level:95, reward:47700, icon:"🔮", teamSize:4, regionId:8, isElite4:true },
@@ -2356,12 +2469,17 @@ const CAMPAIGN_ROADMAP = [
     { stageId:138, name:"Cortondo Gym", trainer:"Gym Leader Katy", pokemonId:920, bossName:"Lokix", level:69, reward:55800, icon:"🐛", teamSize:2, regionId:9, isGym:true, badgeName:"Bug Badge", badgeColor:"#86efac", badgeEmoji:"🐛" },
     { stageId:139, name:"Artazon Route", trainer:"Student", pokemonId:921, bossName:"Pawmi", level:72, reward:56500, icon:"⚡", teamSize:2, regionId:9 },
     { stageId:140, name:"Artazon Gym", trainer:"Gym Leader Brassius", pokemonId:948, bossName:"Arboliva", level:74, reward:57200, icon:"🌿", teamSize:2, regionId:9, isGym:true, badgeName:"Grass Badge", badgeColor:"#86efac", badgeEmoji:"🌿" },
+    { stageId:140.5, name:"Zapapico", trainer:"Student Dario", pokemonId:940, bossName:"Wattrel", level:74, reward:57700, icon:"⚡", teamSize:2, regionId:9 },
     { stageId:141, name:"Levincia Gym", trainer:"Gym Leader Iono", pokemonId:939, bossName:"Bellibolt", level:77, reward:58000, icon:"⚡", teamSize:3, regionId:9, isGym:true, badgeName:"Electric Badge", badgeColor:"#fde047", badgeEmoji:"⚡" },
     { stageId:142, name:"Cascarrafa Route", trainer:"Fisherman", pokemonId:963, bossName:"Finizen", level:80, reward:58800, icon:"🐬", teamSize:3, regionId:9 },
     { stageId:143, name:"Cascarrafa Gym", trainer:"Gym Leader Kofu", pokemonId:977, bossName:"Dondozo", level:83, reward:59600, icon:"💧", teamSize:3, regionId:9, isGym:true, badgeName:"Water Badge", badgeColor:"#7dd3fc", badgeEmoji:"💧" },
+    { stageId:143.5, name:"East Province Route", trainer:"Giacomo", pokemonId:624, bossName:"Pawniard", level:83, reward:60100, icon:"🎵", teamSize:3, regionId:9 },
     { stageId:144, name:"Medali Gym", trainer:"Gym Leader Larry", pokemonId:930, bossName:"Flamigo", level:86, reward:60400, icon:"🦢", teamSize:4, regionId:9, isGym:true, badgeName:"Normal Badge", badgeColor:"#e2e8f0", badgeEmoji:"⚪" },
+    { stageId:144.5, name:"Glaseado Mountain", trainer:"Atticus", pokemonId:571, bossName:"Zoroark", level:86, reward:60850, icon:"🏔️", teamSize:3, regionId:9 },
     { stageId:145, name:"Montenevera Gym", trainer:"Gym Leader Ryme", pokemonId:975, bossName:"Houndstone", level:89, reward:61300, icon:"👻", teamSize:4, regionId:9, isGym:true, badgeName:"Ghost Badge", badgeColor:"#d8b4fe", badgeEmoji:"👻" },
+    { stageId:145.5, name:"Cascarrafa Outskirts", trainer:"Penny", pokemonId:855, bossName:"Polteageist", level:89, reward:61750, icon:"💻", teamSize:3, regionId:9 },
     { stageId:146, name:"Alfornada Gym", trainer:"Gym Leader Tulip", pokemonId:956, bossName:"Espathra", level:92, reward:62200, icon:"🔮", teamSize:4, regionId:9, isGym:true, badgeName:"Psychic Badge", badgeColor:"#c084fc", badgeEmoji:"🔮" },
+    { stageId:146.5, name:"North Province", trainer:"Star Boss Eri", pokemonId:237, bossName:"Hitmontop", level:92, reward:62600, icon:"🥊", teamSize:4, regionId:9 },
     { stageId:147, name:"Glaseado Gym", trainer:"Gym Leader Grusha", pokemonId:974, bossName:"Cetitan", level:95, reward:63200, icon:"❄️", teamSize:4, regionId:9, isGym:true, badgeName:"Ice Badge", badgeColor:"#bae6fd", badgeEmoji:"❄️" },
     { stageId:148, name:"Academy Ace", trainer:"Nemona", pokemonId:908, bossName:"Meowscarada", level:97, reward:64000, icon:"🎭", teamSize:4, regionId:9 },
     { stageId:149, name:"Pokémon League", trainer:"Elite Four Rika", pokemonId:980, bossName:"Clodsire", level:97, reward:64800, icon:"🌍", teamSize:4, regionId:9, isElite4:true },
@@ -2378,6 +2496,8 @@ const CAMPAIGN_ROADMAP = [
                     username: "",
                     gymBadges: [],
                     balls: { poke: 5, great: 0, ultra: 0, master: 0 },
+                    starterSelected: false,
+                    solvedGymPuzzles: [],
                     pokedex: [],
                     pcBox: [],
                     team: [],
@@ -2971,6 +3091,8 @@ const CAMPAIGN_ROADMAP = [
                             username: "",
                             gymBadges: [],
                             balls: { poke: 5, great: 0, ultra: 0, master: 0 },
+                            starterSelected: false,
+                            solvedGymPuzzles: [],
                             pokedex: [],
                             pcBox: [],
                             team: [],
@@ -3376,6 +3498,9 @@ const CAMPAIGN_ROADMAP = [
                     return (gameState.unlockedRegions || [1]).map(r => GEN_KEY[r]);
                 }
 
+                // Starter Pokémon appear 70% less frequently in the spinner pool
+                const STARTER_IDS_FREQ = new Set([1, 4, 7, 152, 155, 158, 252, 255, 258, 387, 390, 393, 495, 498, 501, 650, 653, 656, 722, 725, 728, 810, 813, 816, 906, 909, 912]);
+
                 function getWedgePokemonId(rarity) {
                     const genRange = getRadarGenRange();
                     const activeGens = getActiveGens();
@@ -3385,7 +3510,10 @@ const CAMPAIGN_ROADMAP = [
                     for (const gen of activeGens) if (rarityPool[gen]) pool = pool.concat(rarityPool[gen]);
                     pool = pool.filter(id => id <= genRange.max);
                     if (pool.length === 0) pool = BASIC_POKEMON_POOLS.Common.gen1;
-                    return pool[Math.floor(Math.random() * pool.length)];
+                    // Filter starters to 30% of their normal appearance rate
+                    const filtered = pool.filter(id => !STARTER_IDS_FREQ.has(id) || Math.random() < 0.30);
+                    const finalPool = filtered.length > 0 ? filtered : pool;
+                    return finalPool[Math.floor(Math.random() * finalPool.length)];
                 }
 
                 window.triggerSpin = function() {
@@ -3411,6 +3539,21 @@ const CAMPAIGN_ROADMAP = [
                     stopBtn.classList.add('lock-lit');
                     stopBtn.className = "lock-lit flex-1 py-4 px-6 text-white font-black uppercase rounded-2xl shadow-xl transition duration-150 tracking-wider cursor-pointer";
 
+                    // Poke Ball cannot catch legendaries
+                    if (selected === 'poke' && gameState.currentEncounter) {
+                        const encId = gameState.currentEncounter.id || 0;
+                        if (LEGENDARY_MYTHICAL_POKEMON.includes(encId)) {
+                            gameState.balls[selected] += 1; // refund
+                            updateUI();
+                            showNotification("Can't catch!", "Standard Poké Balls cannot capture legendary Pokémon! Use a Great Ball or higher.", 'error');
+                            // Re-enable spin
+                            document.getElementById('spinBtn').disabled = false;
+                            document.getElementById('spinBtn').className = "flex-1 py-4 px-6 themed-gradient text-white font-black uppercase rounded-2xl shadow-xl transition duration-150 tracking-wider cursor-pointer";
+                            document.getElementById('stopBtn').disabled = true;
+                            document.getElementById('encounterStatus').textContent = "Select a ball and scan!";
+                            return;
+                        }
+                    }
                     let baseSpeed = 0.15;
                     if (selected === 'great') baseSpeed = 0.12;
                     if (selected === 'ultra') baseSpeed = 0.09;
@@ -3987,6 +4130,14 @@ const CAMPAIGN_ROADMAP = [
                 }
 
                 function launchStagePrep(stage) {
+                    // Check for unsolved gym puzzle
+                    if (stage.gymPuzzle && stage.isGym) {
+                        const solved = gameState.solvedGymPuzzles || [];
+                        if (!solved.includes(stage.stageId)) {
+                            showGymPuzzle(stage);
+                            return;
+                        }
+                    }
                     initAudio();
                     playConfirmSound();
                     gameState.activeBattleStage = stage;
@@ -4235,14 +4386,15 @@ const CAMPAIGN_ROADMAP = [
                     const stages = gameState.battle.statStages;
                     const sc = gameState.battle.statusConds || {};
                     const labels = { atk:'ATK', def:'DEF', spAtk:'SpAtk', spDef:'SpDef', speed:'SPD', accuracy:'ACC' };
-                    const statusBadge = { sleep:'💤 Sleep', para:'⚡ Para', leech:'🌱 Leech', burn:'🔥 Burn', freeze:'🧊 Freeze', poison:'☠️ Poison' };
+                    const statusBadge = { sleep:'💤 Sleep', para:'⚡ Para', leech:'🌱 Leech', burn:'🔥 Burn', freeze:'🧊 Freeze', poison:'☠️ Poison', confuse:'😵 Confused' };
                     const statusCol   = {
                         sleep:  'text-indigo-400 border-indigo-800 bg-indigo-950/50',
                         para:   'text-yellow-400 border-yellow-800 bg-yellow-950/50',
                         leech:  'text-emerald-400 border-emerald-800 bg-emerald-950/50',
                         burn:   'text-red-400 border-red-800 bg-red-950/50',
                         freeze: 'text-blue-300 border-blue-800 bg-blue-950/50',
-                        poison: 'text-purple-400 border-purple-800 bg-purple-950/50'
+                        poison: 'text-purple-400 border-purple-800 bg-purple-950/50',
+                        confuse:'text-orange-300 border-orange-700 bg-orange-950/50'
                     };
                     const renderSide = (side, elId) => {
                         const el = document.getElementById(elId);
@@ -4256,6 +4408,12 @@ const CAMPAIGN_ROADMAP = [
                             const sCol = statusCol[cond] || 'text-slate-400 border-slate-700 bg-slate-900/50';
                             el.innerHTML += `<span class="text-[8px] font-black px-1.5 py-0.5 rounded border animate-pulse ${sCol}">${statusBadge[cond] || cond}</span>`;
                         }
+                        // Show confusion badge separately (can coexist with other statuses)
+                        const confMeta = (gameState.battle.statusMeta || {})[side] || {};
+                        if (confMeta.confused) {
+                            any = true;
+                            el.innerHTML += `<span class="text-[8px] font-black px-1.5 py-0.5 rounded border animate-pulse text-orange-300 border-orange-700 bg-orange-950/50">😵 Confused</span>`;
+                        }
                         // Stat stage chips
                         Object.entries(stages[side]).forEach(([stat, val]) => {
                             if (val === 0) return;
@@ -4268,7 +4426,9 @@ const CAMPAIGN_ROADMAP = [
                     };
                     renderSide('player', 'playerStatStages');
                     renderSide('boss',   'bossStatStages');
-                    const hasAny = sc.player || sc.boss ||
+                    const confuseP = (gameState.battle.statusMeta || {}).player || {};
+                    const confuseB = (gameState.battle.statusMeta || {}).boss || {};
+                    const hasAny = sc.player || sc.boss || confuseP.confused || confuseB.confused ||
                         Object.values(stages.player).some(v=>v!==0) ||
                         Object.values(stages.boss).some(v=>v!==0);
                     panel.classList.toggle('hidden', !hasAny);
@@ -4277,6 +4437,20 @@ const CAMPAIGN_ROADMAP = [
                 function applyStatusCond(side, cond, logBox, myName, foeName) {
                     if (!gameState.battle.statusConds) gameState.battle.statusConds = { player: null, boss: null };
                     const ownerName = side === 'player' ? myName : foeName;
+                    // Confusion is tracked separately and can stack with other status
+                    if (cond === 'confuse') {
+                        if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player: {}, boss: {} };
+                        if (!gameState.battle.statusMeta[side]) gameState.battle.statusMeta[side] = {};
+                        if (gameState.battle.statusMeta[side].confused) {
+                            logBox.innerHTML += `<div class="text-slate-500 mt-1 italic text-[10px]">${ownerName} is already confused!</div>`;
+                            return;
+                        }
+                        gameState.battle.statusMeta[side].confused = true;
+                        gameState.battle.statusMeta[side].confuseTurns = 2 + Math.floor(Math.random() * 3); // 2-4 turns
+                        logBox.innerHTML += `<div class="text-orange-300 mt-1 font-bold">😵 ${ownerName} became confused!</div>`;
+                        renderStatStagesUI();
+                        return;
+                    }
                     if (gameState.battle.statusConds[side]) {
                         logBox.innerHTML += `<div class="text-slate-500 mt-1 italic text-[10px]">${ownerName} already has a condition!</div>`;
                         return;
@@ -4336,6 +4510,42 @@ const CAMPAIGN_ROADMAP = [
                         }
                     }
 
+                    // ── CONFUSION check — 50% chance to hit self for 1/8 max HP ───────
+                    const meta = gameState.battle.statusMeta || {};
+                    const atkMeta = meta[attackerSide] || {};
+                    if (atkMeta.confused) {
+                        if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player:{}, boss:{} };
+                        if (!gameState.battle.statusMeta[attackerSide]) gameState.battle.statusMeta[attackerSide] = {};
+                        atkMeta.confuseTurns = (atkMeta.confuseTurns || 1) - 1;
+                        if (atkMeta.confuseTurns <= 0) {
+                            atkMeta.confused = false;
+                            logBox.innerHTML += `<div class="text-orange-300 mt-1">😊 ${attacker.name} snapped out of confusion!</div>`;
+                            renderStatStagesUI();
+                        } else if (Math.random() < 0.5) {
+                            // Hit self
+                            const selfDmg = Math.max(1, Math.round(
+                                isPlayerAttacker ? gameState.battle.fighterMaxHP / 8 : gameState.battle.bossMaxHP / 8
+                            ));
+                            logBox.innerHTML += `<div class="text-orange-400 mt-1 italic">😵 ${attacker.name} is confused and hurt itself! (−${selfDmg})</div>`;
+                            if (isPlayerAttacker) {
+                                gameState.battle.fighterHP = Math.max(0, gameState.battle.fighterHP - selfDmg);
+                                document.getElementById('playerFighterHPBar').style.width = `${(gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100}%`;
+                                document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
+                                if (gameState.battle.fighterHP <= 0) { handleBattleDefeat(); return; }
+                            } else {
+                                gameState.battle.bossHP = Math.max(0, gameState.battle.bossHP - selfDmg);
+                                document.getElementById('bossHPBar').style.width = `${(gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100}%`;
+                                document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossMaxHP}`;
+                                if (gameState.battle.bossHP <= 0) { handleBattleVictory(); return; }
+                            }
+                            logBox.scrollTop = logBox.scrollHeight;
+                            return;
+                        } else {
+                            logBox.innerHTML += `<div class="text-orange-300 mt-1 italic">😵 ${attacker.name} is confused but attacked anyway!</div>`;
+                        }
+                        renderStatStagesUI();
+                    }
+
                     // ── FREEZE check — 80% stay frozen, 20% thaw ────────────
                     if (sc[attackerSide] === 'freeze') {
                         if (Math.random() < 0.8) {
@@ -4355,11 +4565,19 @@ const CAMPAIGN_ROADMAP = [
                         const eff = moveSpec.effect;
                         playBeep();
                         logBox.innerHTML += `<div class="text-violet-400 mt-1">✨ ${attacker.name} used <span class="text-white capitalize font-bold">${moveName.replace(/-/g,' ')}</span>!</div>`;
-                        if (eff.heals === 'full' && isPlayerAttacker) {
-                            gameState.battle.fighterHP = gameState.battle.fighterMaxHP;
-                            document.getElementById('playerFighterHPBar').style.width = '100%';
-                            document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterMaxHP}/${gameState.battle.fighterMaxHP}`;
-                            logBox.innerHTML += `<div class="text-green-400 mt-1 font-bold">💚 ${attacker.name} restored all HP!</div>`;
+                        if ((eff.heals === 'full' || eff.heals === 'half') && isPlayerAttacker) {
+                            const healAmt = eff.heals === 'full' ? gameState.battle.fighterMaxHP : Math.round(gameState.battle.fighterMaxHP / 2);
+                            gameState.battle.fighterHP = Math.min(gameState.battle.fighterMaxHP, gameState.battle.fighterHP + healAmt);
+                            document.getElementById('playerFighterHPBar').style.width = `${(gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100}%`;
+                            document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
+                            logBox.innerHTML += `<div class="text-green-400 mt-1 font-bold">💚 ${attacker.name} restored ${healAmt} HP!</div>`;
+                        } else if (eff.heals === 'full' || eff.heals === 'half') {
+                            // Boss healed
+                            const healAmt = eff.heals === 'full' ? gameState.battle.bossMaxHP : Math.round(gameState.battle.bossMaxHP / 2);
+                            gameState.battle.bossHP = Math.min(gameState.battle.bossMaxHP, gameState.battle.bossHP + healAmt);
+                            document.getElementById('bossHPBar').style.width = `${(gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100}%`;
+                            document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossMaxHP}`;
+                            logBox.innerHTML += `<div class="text-emerald-400 mt-1 font-bold">💚 ${attacker.name} recovered ${healAmt} HP!</div>`;
                         } else if (eff.status) {
                             const tSide = eff.target === 'self' ? attackerSide : defenderSide;
                             applyStatusCond(tSide, eff.status, logBox, playerName, bossName);
@@ -4476,15 +4694,18 @@ const CAMPAIGN_ROADMAP = [
                     const bossSpeed    = (boss.speed    || 50) * stageMultiplier((_ss.boss  ||{}).speed || 0);
 
                     if (fighterSpeed >= bossSpeed) {
+                        disableMoveButtons(true);
                         resolveMoveAttack(fighter, boss, moveName, true);
                         if (gameState.battle.bossHP > 0) {
                             setTimeout(() => {
                                 const bossMove = boss.moves[Math.floor(Math.random() * boss.moves.length)];
                                 resolveMoveAttack(boss, fighter, bossMove, false);
+                                disableMoveButtons(false);
                                 // End-of-turn: burn/poison/leech after both moves
                                 if (gameState.battle.active) setTimeout(() => applyEndOfTurnEffects(), 400);
                             }, 800);
                         } else {
+                            disableMoveButtons(false);
                             // Boss fainted to player's first move — still run end-of-turn (poison ticks etc.)
                             // handleBattleVictory already called; skip to avoid double-trigger
                         }
@@ -4613,11 +4834,11 @@ const CAMPAIGN_ROADMAP = [
                     gameState.battle.fighterMaxHP = newHP;
                     gameState.battle.oranUsed = false;
                     gameState.battle.choiceBandMove = null;
-                    // Incoming Pokémon has clean status & stat stages
+                    // Incoming Pokémon has clean status & stat stages (including confusion)
                     gameState.battle.statusConds.player = null;
                     gameState.battle.statStages.player = { atk:0, def:0, spAtk:0, spDef:0, speed:0, accuracy:0 };
                     if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player: {}, boss: {} };
-                    gameState.battle.statusMeta.player = {};
+                    gameState.battle.statusMeta.player = { confused: false };
                     renderStatStagesUI();
 
                     document.getElementById('playerFighterSprite').src = newFighter.sprite;
@@ -4721,6 +4942,473 @@ const CAMPAIGN_ROADMAP = [
                     } catch(e) { /* silent — evolution is cosmetic if fetch fails */ }
                 }
 
+                // ── Level-up evolution table ──────────────────────────────────────────────
+                const LEVEL_EVO_TABLE = {
+                    // Gen 1
+                    1: { level: 16, evolvesTo: 2 },    // Bulbasaur → Ivysaur
+                    2: { level: 32, evolvesTo: 3 },    // Ivysaur → Venusaur
+                    4: { level: 16, evolvesTo: 5 },    // Charmander → Charmeleon
+                    5: { level: 36, evolvesTo: 6 },    // Charmeleon → Charizard
+                    7: { level: 16, evolvesTo: 8 },    // Squirtle → Wartortle
+                    8: { level: 36, evolvesTo: 9 },    // Wartortle → Blastoise
+                    10: { level: 7, evolvesTo: 11 },   // Caterpie → Metapod
+                    11: { level: 10, evolvesTo: 12 },  // Metapod → Butterfree
+                    13: { level: 7, evolvesTo: 14 },   // Weedle → Kakuna
+                    14: { level: 10, evolvesTo: 15 },  // Kakuna → Beedrill
+                    16: { level: 18, evolvesTo: 17 },  // Pidgey → Pidgeotto
+                    17: { level: 36, evolvesTo: 18 },  // Pidgeotto → Pidgeot
+                    19: { level: 20, evolvesTo: 20 },  // Rattata → Raticate
+                    21: { level: 20, evolvesTo: 22 },  // Spearow → Fearow
+                    23: { level: 22, evolvesTo: 24 },  // Ekans → Arbok
+                    27: { level: 22, evolvesTo: 28 },  // Sandshrew → Sandslash
+                    29: { level: 16, evolvesTo: 30 },  // Nidoran♀ → Nidorina
+                    32: { level: 16, evolvesTo: 33 },  // Nidoran♂ → Nidorino
+                    35: { level: 36, evolvesTo: 36 },  // Clefairy → Clefable (simplified)
+                    37: { level: 38, evolvesTo: 38 },  // Vulpix → Ninetales (simplified)
+                    39: { level: 36, evolvesTo: 40 },  // Jigglypuff → Wigglytuff (simplified)
+                    41: { level: 22, evolvesTo: 42 },  // Zubat → Golbat
+                    43: { level: 21, evolvesTo: 44 },  // Oddish → Gloom
+                    44: { level: 36, evolvesTo: 45 },  // Gloom → Vileplume (simplified)
+                    46: { level: 24, evolvesTo: 47 },  // Paras → Parasect
+                    48: { level: 31, evolvesTo: 49 },  // Venonat → Venomoth
+                    50: { level: 26, evolvesTo: 51 },  // Diglett → Dugtrio
+                    52: { level: 28, evolvesTo: 53 },  // Meowth → Persian
+                    54: { level: 33, evolvesTo: 55 },  // Psyduck → Golduck
+                    56: { level: 28, evolvesTo: 57 },  // Mankey → Primeape
+                    58: { level: 50, evolvesTo: 59 },  // Growlithe → Arcanine (simplified)
+                    60: { level: 25, evolvesTo: 61 },  // Poliwag → Poliwhirl
+                    61: { level: 36, evolvesTo: 62 },  // Poliwhirl → Poliwrath (simplified)
+                    63: { level: 16, evolvesTo: 64 },  // Abra → Kadabra
+                    64: { level: 36, evolvesTo: 65 },  // Kadabra → Alakazam (simplified)
+                    66: { level: 28, evolvesTo: 67 },  // Machop → Machoke
+                    67: { level: 36, evolvesTo: 68 },  // Machoke → Machamp (simplified)
+                    69: { level: 21, evolvesTo: 70 },  // Bellsprout → Weepinbell
+                    70: { level: 36, evolvesTo: 71 },  // Weepinbell → Victreebel (simplified)
+                    72: { level: 30, evolvesTo: 73 },  // Tentacool → Tentacruel
+                    74: { level: 25, evolvesTo: 75 },  // Geodude → Graveler
+                    75: { level: 36, evolvesTo: 76 },  // Graveler → Golem (simplified)
+                    77: { level: 40, evolvesTo: 78 },  // Ponyta → Rapidash
+                    79: { level: 37, evolvesTo: 80 },  // Slowpoke → Slowbro
+                    81: { level: 30, evolvesTo: 82 },  // Magnemite → Magneton
+                    84: { level: 31, evolvesTo: 85 },  // Doduo → Dodrio
+                    86: { level: 34, evolvesTo: 87 },  // Seel → Dewgong
+                    88: { level: 38, evolvesTo: 89 },  // Grimer → Muk
+                    90: { level: 36, evolvesTo: 91 },  // Shellder → Cloyster (simplified)
+                    92: { level: 25, evolvesTo: 93 },  // Gastly → Haunter
+                    93: { level: 36, evolvesTo: 94 },  // Haunter → Gengar (simplified)
+                    96: { level: 26, evolvesTo: 97 },  // Drowzee → Hypno
+                    98: { level: 28, evolvesTo: 99 },  // Krabby → Kingler
+                    100: { level: 30, evolvesTo: 101 }, // Voltorb → Electrode
+                    102: { level: 36, evolvesTo: 103 }, // Exeggcute → Exeggutor (simplified)
+                    104: { level: 28, evolvesTo: 105 }, // Cubone → Marowak
+                    109: { level: 35, evolvesTo: 110 }, // Koffing → Weezing
+                    111: { level: 42, evolvesTo: 112 }, // Rhyhorn → Rhydon
+                    116: { level: 32, evolvesTo: 117 }, // Horsea → Seadra
+                    118: { level: 33, evolvesTo: 119 }, // Goldeen → Seaking
+                    120: { level: 36, evolvesTo: 121 }, // Staryu → Starmie (simplified)
+                    129: { level: 20, evolvesTo: 130 }, // Magikarp → Gyarados
+                    147: { level: 30, evolvesTo: 148 }, // Dratini → Dragonair
+                    148: { level: 55, evolvesTo: 149 }, // Dragonair → Dragonite
+                    // Gen 2
+                    152: { level: 16, evolvesTo: 153 }, // Chikorita → Bayleef
+                    153: { level: 32, evolvesTo: 154 }, // Bayleef → Meganium
+                    155: { level: 14, evolvesTo: 156 }, // Cyndaquil → Quilava
+                    156: { level: 36, evolvesTo: 157 }, // Quilava → Typhlosion
+                    158: { level: 18, evolvesTo: 159 }, // Totodile → Croconaw
+                    159: { level: 30, evolvesTo: 160 }, // Croconaw → Feraligatr
+                    161: { level: 15, evolvesTo: 162 }, // Sentret → Furret
+                    163: { level: 20, evolvesTo: 164 }, // Hoothoot → Noctowl
+                    165: { level: 18, evolvesTo: 166 }, // Ledyba → Ledian
+                    167: { level: 22, evolvesTo: 168 }, // Spinarak → Ariados
+                    170: { level: 27, evolvesTo: 171 }, // Chinchou → Lanturn
+                    172: { level: 18, evolvesTo: 25 },  // Pichu → Pikachu (simplified)
+                    173: { level: 18, evolvesTo: 35 },  // Cleffa → Clefairy (simplified)
+                    174: { level: 18, evolvesTo: 39 },  // Igglybuff → Jigglypuff (simplified)
+                    175: { level: 18, evolvesTo: 176 }, // Togepi → Togetic (simplified)
+                    177: { level: 25, evolvesTo: 178 }, // Natu → Xatu
+                    179: { level: 15, evolvesTo: 180 }, // Mareep → Flaaffy
+                    180: { level: 30, evolvesTo: 181 }, // Flaaffy → Ampharos
+                    183: { level: 18, evolvesTo: 184 }, // Marill → Azumarill
+                    187: { level: 18, evolvesTo: 188 }, // Hoppip → Skiploom
+                    188: { level: 27, evolvesTo: 189 }, // Skiploom → Jumpluff
+                    191: { level: 18, evolvesTo: 192 }, // Sunkern → Sunflora (simplified)
+                    193: { level: 24, evolvesTo: 469 }, // Yanma → Yanmega (simplified)
+                    194: { level: 20, evolvesTo: 195 }, // Wooper → Quagsire
+                    198: { level: 30, evolvesTo: 430 }, // Murkrow → Honchkrow (simplified)
+                    200: { level: 25, evolvesTo: 429 }, // Misdreavus → Mismagius (simplified)
+                    204: { level: 31, evolvesTo: 205 }, // Pineco → Forretress
+                    209: { level: 23, evolvesTo: 210 }, // Snubbull → Granbull
+                    213: { level: 30, evolvesTo: 213 }, // Shuckle stays
+                    214: { level: 25, evolvesTo: 214 }, // Heracross stays
+                    215: { level: 40, evolvesTo: 461 }, // Sneasel → Weavile (simplified)
+                    216: { level: 30, evolvesTo: 217 }, // Teddiursa → Ursaring
+                    218: { level: 38, evolvesTo: 219 }, // Slugma → Magcargo
+                    220: { level: 33, evolvesTo: 221 }, // Swinub → Piloswine
+                    221: { level: 58, evolvesTo: 473 }, // Piloswine → Mamoswine (simplified)
+                    223: { level: 25, evolvesTo: 224 }, // Remoraid → Octillery
+                    228: { level: 24, evolvesTo: 229 }, // Houndour → Houndoom
+                    246: { level: 30, evolvesTo: 247 }, // Larvitar → Pupitar
+                    247: { level: 55, evolvesTo: 248 }, // Pupitar → Tyranitar
+                    // Gen 3
+                    252: { level: 16, evolvesTo: 253 }, // Treecko → Grovyle
+                    253: { level: 36, evolvesTo: 254 }, // Grovyle → Sceptile
+                    255: { level: 16, evolvesTo: 256 }, // Torchic → Combusken
+                    256: { level: 36, evolvesTo: 257 }, // Combusken → Blaziken
+                    258: { level: 16, evolvesTo: 259 }, // Mudkip → Marshtomp
+                    259: { level: 36, evolvesTo: 260 }, // Marshtomp → Swampert
+                    261: { level: 18, evolvesTo: 262 }, // Poochyena → Mightyena
+                    263: { level: 20, evolvesTo: 264 }, // Zigzagoon → Linoone
+                    265: { level: 7,  evolvesTo: 266 }, // Wurmple → Silcoon
+                    266: { level: 10, evolvesTo: 267 }, // Silcoon → Beautifly
+                    270: { level: 14, evolvesTo: 271 }, // Lotad → Lombre
+                    271: { level: 36, evolvesTo: 272 }, // Lombre → Ludicolo (simplified)
+                    273: { level: 14, evolvesTo: 274 }, // Seedot → Nuzleaf
+                    274: { level: 36, evolvesTo: 275 }, // Nuzleaf → Shiftry (simplified)
+                    276: { level: 22, evolvesTo: 277 }, // Taillow → Swellow
+                    278: { level: 25, evolvesTo: 279 }, // Wingull → Pelipper
+                    280: { level: 20, evolvesTo: 281 }, // Ralts → Kirlia
+                    281: { level: 30, evolvesTo: 282 }, // Kirlia → Gardevoir
+                    283: { level: 22, evolvesTo: 284 }, // Surskit → Masquerain
+                    285: { level: 23, evolvesTo: 286 }, // Shroomish → Breloom
+                    287: { level: 36, evolvesTo: 288 }, // Slakoth → Vigoroth
+                    288: { level: 36, evolvesTo: 289 }, // Vigoroth → Slaking
+                    290: { level: 20, evolvesTo: 291 }, // Nincada → Ninjask
+                    293: { level: 20, evolvesTo: 294 }, // Whismur → Loudred
+                    294: { level: 40, evolvesTo: 295 }, // Loudred → Exploud
+                    296: { level: 24, evolvesTo: 297 }, // Makuhita → Hariyama
+                    300: { level: 18, evolvesTo: 301 }, // Skitty → Delcatty (simplified)
+                    304: { level: 32, evolvesTo: 305 }, // Aron → Lairon
+                    305: { level: 42, evolvesTo: 306 }, // Lairon → Aggron
+                    307: { level: 32, evolvesTo: 308 }, // Meditite → Medicham
+                    309: { level: 26, evolvesTo: 310 }, // Electrike → Manectric
+                    315: { level: 25, evolvesTo: 407 }, // Roselia → Roserade (simplified)
+                    316: { level: 26, evolvesTo: 317 }, // Gulpin → Swalot
+                    318: { level: 30, evolvesTo: 319 }, // Carvanha → Sharpedo
+                    320: { level: 40, evolvesTo: 321 }, // Wailmer → Wailord
+                    322: { level: 33, evolvesTo: 323 }, // Numel → Camerupt
+                    325: { level: 32, evolvesTo: 326 }, // Spoink → Grumpig
+                    328: { level: 22, evolvesTo: 329 }, // Trapinch → Vibrava
+                    329: { level: 45, evolvesTo: 330 }, // Vibrava → Flygon
+                    331: { level: 32, evolvesTo: 332 }, // Cacnea → Cacturne
+                    333: { level: 35, evolvesTo: 334 }, // Swablu → Altaria
+                    339: { level: 30, evolvesTo: 340 }, // Barboach → Whiscash
+                    341: { level: 30, evolvesTo: 342 }, // Corphish → Crawdaunt
+                    343: { level: 36, evolvesTo: 344 }, // Baltoy → Claydol
+                    345: { level: 38, evolvesTo: 346 }, // Lileep → Cradily
+                    347: { level: 40, evolvesTo: 348 }, // Anorith → Armaldo
+                    349: { level: 20, evolvesTo: 350 }, // Feebas → Milotic (simplified)
+                    353: { level: 37, evolvesTo: 354 }, // Shuppet → Banette
+                    355: { level: 37, evolvesTo: 356 }, // Duskull → Dusclops
+                    360: { level: 40, evolvesTo: 202 }, // Wynaut → Wobbuffet
+                    361: { level: 42, evolvesTo: 362 }, // Snorunt → Glalie
+                    363: { level: 32, evolvesTo: 364 }, // Spheal → Sealeo
+                    364: { level: 44, evolvesTo: 365 }, // Sealeo → Walrein
+                    366: { level: 36, evolvesTo: 367 }, // Clamperl → Huntail (simplified)
+                    371: { level: 30, evolvesTo: 372 }, // Bagon → Shelgon
+                    372: { level: 50, evolvesTo: 373 }, // Shelgon → Salamence
+                    374: { level: 20, evolvesTo: 375 }, // Beldum → Metang
+                    375: { level: 45, evolvesTo: 376 }, // Metang → Metagross
+                    // Gen 4
+                    387: { level: 18, evolvesTo: 388 }, // Turtwig → Grotle
+                    388: { level: 32, evolvesTo: 389 }, // Grotle → Torterra
+                    390: { level: 14, evolvesTo: 391 }, // Chimchar → Monferno
+                    391: { level: 36, evolvesTo: 392 }, // Monferno → Infernape
+                    393: { level: 16, evolvesTo: 394 }, // Piplup → Prinplup
+                    394: { level: 36, evolvesTo: 395 }, // Prinplup → Empoleon
+                    396: { level: 14, evolvesTo: 397 }, // Starly → Staravia
+                    397: { level: 34, evolvesTo: 398 }, // Staravia → Staraptor
+                    403: { level: 15, evolvesTo: 404 }, // Shinx → Luxio
+                    404: { level: 30, evolvesTo: 405 }, // Luxio → Luxray
+                    406: { level: 18, evolvesTo: 315 }, // Budew → Roselia (simplified)
+                    408: { level: 30, evolvesTo: 409 }, // Cranidos → Rampardos
+                    410: { level: 30, evolvesTo: 411 }, // Shieldon → Bastiodon
+                    415: { level: 21, evolvesTo: 416 }, // Combee → Vespiquen (female)
+                    418: { level: 26, evolvesTo: 419 }, // Buizel → Floatzel
+                    420: { level: 25, evolvesTo: 421 }, // Cherubi → Cherrim
+                    422: { level: 30, evolvesTo: 423 }, // Shellos → Gastrodon
+                    425: { level: 28, evolvesTo: 426 }, // Drifloon → Drifblim
+                    427: { level: 18, evolvesTo: 428 }, // Buneary → Lopunny (simplified)
+                    431: { level: 28, evolvesTo: 432 }, // Glameow → Purugly
+                    434: { level: 34, evolvesTo: 435 }, // Stunky → Skuntank
+                    436: { level: 38, evolvesTo: 437 }, // Bronzor → Bronzong
+                    440: { level: 18, evolvesTo: 113 }, // Happiny → Chansey (simplified)
+                    442: { level: 30, evolvesTo: 442 }, // Spiritomb stays
+                    443: { level: 24, evolvesTo: 444 }, // Gible → Gabite
+                    444: { level: 48, evolvesTo: 445 }, // Gabite → Garchomp
+                    447: { level: 20, evolvesTo: 448 }, // Riolu → Lucario (simplified)
+                    449: { level: 34, evolvesTo: 450 }, // Hippopotas → Hippowdon
+                    451: { level: 40, evolvesTo: 452 }, // Skorupi → Drapion
+                    453: { level: 37, evolvesTo: 454 }, // Croagunk → Toxicroak
+                    456: { level: 30, evolvesTo: 457 }, // Finneon → Lumineon
+                    459: { level: 40, evolvesTo: 460 }, // Snover → Abomasnow
+                    // Gen 5
+                    495: { level: 17, evolvesTo: 496 }, // Snivy → Servine
+                    496: { level: 36, evolvesTo: 497 }, // Servine → Serperior
+                    498: { level: 17, evolvesTo: 499 }, // Tepig → Pignite
+                    499: { level: 36, evolvesTo: 500 }, // Pignite → Emboar
+                    501: { level: 17, evolvesTo: 502 }, // Oshawott → Dewott
+                    502: { level: 36, evolvesTo: 503 }, // Dewott → Samurott
+                    504: { level: 20, evolvesTo: 505 }, // Patrat → Watchog
+                    506: { level: 16, evolvesTo: 507 }, // Lillipup → Herdier
+                    507: { level: 32, evolvesTo: 508 }, // Herdier → Stoutland
+                    509: { level: 22, evolvesTo: 510 }, // Purrloin → Liepard
+                    511: { level: 28, evolvesTo: 512 }, // Pansage → Simisage (simplified)
+                    513: { level: 28, evolvesTo: 514 }, // Pansear → Simisear (simplified)
+                    515: { level: 28, evolvesTo: 516 }, // Panpour → Simipour (simplified)
+                    519: { level: 21, evolvesTo: 520 }, // Pidove → Tranquill
+                    520: { level: 32, evolvesTo: 521 }, // Tranquill → Unfezant
+                    524: { level: 25, evolvesTo: 525 }, // Roggenrola → Boldore
+                    525: { level: 36, evolvesTo: 526 }, // Boldore → Gigalith (simplified)
+                    527: { level: 32, evolvesTo: 528 }, // Woobat → Swoobat (simplified)
+                    529: { level: 31, evolvesTo: 530 }, // Drilbur → Excadrill
+                    532: { level: 25, evolvesTo: 533 }, // Timburr → Gurdurr
+                    533: { level: 36, evolvesTo: 534 }, // Gurdurr → Conkeldurr (simplified)
+                    535: { level: 25, evolvesTo: 536 }, // Tympole → Palpitoad
+                    536: { level: 36, evolvesTo: 537 }, // Palpitoad → Seismitoad
+                    538: { level: 30, evolvesTo: 538 }, // Throh stays
+                    539: { level: 30, evolvesTo: 539 }, // Sawk stays
+                    540: { level: 22, evolvesTo: 541 }, // Sewaddle → Swadloon
+                    541: { level: 30, evolvesTo: 542 }, // Swadloon → Leavanny (simplified)
+                    543: { level: 22, evolvesTo: 544 }, // Venipede → Whirlipede
+                    544: { level: 30, evolvesTo: 545 }, // Whirlipede → Scolipede
+                    546: { level: 28, evolvesTo: 547 }, // Cottonee → Whimsicott (simplified)
+                    548: { level: 28, evolvesTo: 549 }, // Petilil → Lilligant (simplified)
+                    551: { level: 29, evolvesTo: 552 }, // Sandile → Krokorok
+                    552: { level: 40, evolvesTo: 553 }, // Krokorok → Krookodile
+                    554: { level: 35, evolvesTo: 555 }, // Darumaka → Darmanitan
+                    557: { level: 34, evolvesTo: 558 }, // Dwebble → Crustle
+                    559: { level: 36, evolvesTo: 560 }, // Scraggy → Scrafty
+                    562: { level: 34, evolvesTo: 563 }, // Yamask → Cofagrigus
+                    564: { level: 37, evolvesTo: 565 }, // Tirtouga → Carracosta
+                    566: { level: 37, evolvesTo: 567 }, // Archen → Archeops
+                    568: { level: 36, evolvesTo: 569 }, // Trubbish → Garbodor
+                    570: { level: 30, evolvesTo: 571 }, // Zorua → Zoroark
+                    572: { level: 36, evolvesTo: 573 }, // Minccino → Cinccino (simplified)
+                    574: { level: 32, evolvesTo: 575 }, // Gothita → Gothorita
+                    575: { level: 41, evolvesTo: 576 }, // Gothorita → Gothitelle
+                    577: { level: 32, evolvesTo: 578 }, // Solosis → Duosion
+                    578: { level: 41, evolvesTo: 579 }, // Duosion → Reuniclus
+                    582: { level: 30, evolvesTo: 583 }, // Vanillite → Vanillish
+                    583: { level: 35, evolvesTo: 584 }, // Vanillish → Vanilluxe
+                    585: { level: 34, evolvesTo: 586 }, // Deerling → Sawsbuck
+                    592: { level: 38, evolvesTo: 593 }, // Frillish → Jellicent
+                    595: { level: 36, evolvesTo: 596 }, // Joltik → Galvantula
+                    599: { level: 38, evolvesTo: 600 }, // Klink → Klang
+                    600: { level: 49, evolvesTo: 601 }, // Klang → Klinklang
+                    602: { level: 39, evolvesTo: 603 }, // Tynamo → Eelektrik
+                    603: { level: 50, evolvesTo: 604 }, // Eelektrik → Eelektross (simplified)
+                    605: { level: 32, evolvesTo: 606 }, // Elgyem → Beheeyem
+                    607: { level: 41, evolvesTo: 608 }, // Litwick → Lampent
+                    608: { level: 52, evolvesTo: 609 }, // Lampent → Chandelure (simplified)
+                    610: { level: 38, evolvesTo: 611 }, // Axew → Fraxure
+                    611: { level: 48, evolvesTo: 612 }, // Fraxure → Haxorus
+                    613: { level: 37, evolvesTo: 614 }, // Cubchoo → Beartic
+                    616: { level: 36, evolvesTo: 617 }, // Shelmet → Accelgor (simplified)
+                    618: { level: 35, evolvesTo: 618 }, // Stunfisk stays
+                    619: { level: 50, evolvesTo: 620 }, // Mienfoo → Mienshao
+                    621: { level: 40, evolvesTo: 621 }, // Druddigon stays
+                    624: { level: 31, evolvesTo: 625 }, // Pawniard → Bisharp
+                    626: { level: 40, evolvesTo: 626 }, // Bouffalant stays
+                    627: { level: 27, evolvesTo: 628 }, // Rufflet → Braviary
+                    629: { level: 28, evolvesTo: 630 }, // Vullaby → Mandibuzz
+                    631: { level: 41, evolvesTo: 631 }, // Heatmor stays
+                    632: { level: 38, evolvesTo: 632 }, // Durant stays
+                    633: { level: 50, evolvesTo: 634 }, // Deino → Zweilous
+                    634: { level: 64, evolvesTo: 635 }, // Zweilous → Hydreigon
+                    // Gen 6
+                    650: { level: 16, evolvesTo: 651 }, // Chespin → Quilladin
+                    651: { level: 36, evolvesTo: 652 }, // Quilladin → Chesnaught
+                    653: { level: 16, evolvesTo: 654 }, // Fennekin → Braixen
+                    654: { level: 36, evolvesTo: 655 }, // Braixen → Delphox
+                    656: { level: 16, evolvesTo: 657 }, // Froakie → Frogadier
+                    657: { level: 36, evolvesTo: 658 }, // Frogadier → Greninja
+                    659: { level: 20, evolvesTo: 660 }, // Bunnelby → Diggersby
+                    661: { level: 17, evolvesTo: 662 }, // Fletchling → Fletchinder
+                    662: { level: 35, evolvesTo: 663 }, // Fletchinder → Talonflame
+                    664: { level: 9,  evolvesTo: 665 }, // Scatterbug → Spewpa
+                    665: { level: 12, evolvesTo: 666 }, // Spewpa → Vivillon
+                    667: { level: 35, evolvesTo: 668 }, // Litleo → Pyroar
+                    669: { level: 29, evolvesTo: 670 }, // Flabébé → Floette
+                    670: { level: 19, evolvesTo: 671 }, // Floette → Florges (simplified)
+                    672: { level: 32, evolvesTo: 673 }, // Skiddo → Gogoat
+                    674: { level: 32, evolvesTo: 675 }, // Pancham → Pangoro (simplified)
+                    677: { level: 25, evolvesTo: 678 }, // Espurr → Meowstic
+                    679: { level: 35, evolvesTo: 680 }, // Honedge → Doublade
+                    680: { level: 45, evolvesTo: 681 }, // Doublade → Aegislash (simplified)
+                    682: { level: 29, evolvesTo: 683 }, // Spritzee → Aromatisse (simplified)
+                    684: { level: 29, evolvesTo: 685 }, // Swirlix → Slurpuff (simplified)
+                    686: { level: 30, evolvesTo: 687 }, // Inkay → Malamar
+                    688: { level: 36, evolvesTo: 689 }, // Binacle → Barbaracle
+                    690: { level: 38, evolvesTo: 691 }, // Skrelp → Dragalge
+                    692: { level: 37, evolvesTo: 693 }, // Clauncher → Clawitzer
+                    694: { level: 30, evolvesTo: 695 }, // Helioptile → Heliolisk (simplified)
+                    696: { level: 39, evolvesTo: 697 }, // Tyrunt → Tyrantrum
+                    698: { level: 39, evolvesTo: 699 }, // Amaura → Aurorus
+                    701: { level: 32, evolvesTo: 701 }, // Hawlucha stays
+                    702: { level: 30, evolvesTo: 702 }, // Dedenne stays
+                    703: { level: 32, evolvesTo: 703 }, // Carbink stays
+                    704: { level: 40, evolvesTo: 705 }, // Goomy → Sliggoo
+                    705: { level: 50, evolvesTo: 706 }, // Sliggoo → Goodra
+                    708: { level: 32, evolvesTo: 709 }, // Phantump → Trevenant (simplified)
+                    710: { level: 32, evolvesTo: 711 }, // Pumpkaboo → Gourgeist (simplified)
+                    712: { level: 37, evolvesTo: 713 }, // Bergmite → Avalugg
+                    714: { level: 40, evolvesTo: 715 }, // Noibat → Noivern
+                    // Gen 7
+                    722: { level: 17, evolvesTo: 723 }, // Rowlet → Dartrix
+                    723: { level: 34, evolvesTo: 724 }, // Dartrix → Decidueye
+                    725: { level: 17, evolvesTo: 726 }, // Litten → Torracat
+                    726: { level: 34, evolvesTo: 727 }, // Torracat → Incineroar
+                    728: { level: 17, evolvesTo: 729 }, // Popplio → Brionne
+                    729: { level: 34, evolvesTo: 730 }, // Brionne → Primarina
+                    731: { level: 14, evolvesTo: 732 }, // Pikipek → Trumbeak
+                    732: { level: 28, evolvesTo: 733 }, // Trumbeak → Toucannon
+                    734: { level: 20, evolvesTo: 735 }, // Yungoos → Gumshoos
+                    736: { level: 20, evolvesTo: 737 }, // Grubbin → Charjabug
+                    737: { level: 30, evolvesTo: 738 }, // Charjabug → Vikavolt (simplified)
+                    739: { level: 28, evolvesTo: 740 }, // Crabrawler → Crabominable (simplified)
+                    742: { level: 25, evolvesTo: 743 }, // Cutiefly → Ribombee
+                    744: { level: 25, evolvesTo: 745 }, // Rockruff → Lycanroc (simplified)
+                    746: { level: 25, evolvesTo: 746 }, // Wishiwashi stays
+                    747: { level: 42, evolvesTo: 748 }, // Mareanie → Toxapex
+                    749: { level: 30, evolvesTo: 750 }, // Mudbray → Mudsdale
+                    751: { level: 22, evolvesTo: 752 }, // Dewpider → Araquanid
+                    753: { level: 34, evolvesTo: 754 }, // Fomantis → Lurantis
+                    755: { level: 24, evolvesTo: 756 }, // Morelull → Shiinotic
+                    757: { level: 33, evolvesTo: 758 }, // Salandit → Salazzle
+                    759: { level: 38, evolvesTo: 760 }, // Stufful → Bewear
+                    761: { level: 18, evolvesTo: 762 }, // Bounsweet → Steenee
+                    762: { level: 28, evolvesTo: 763 }, // Steenee → Tsareena (simplified)
+                    764: { level: 30, evolvesTo: 764 }, // Comfey stays
+                    765: { level: 30, evolvesTo: 765 }, // Oranguru stays
+                    766: { level: 30, evolvesTo: 766 }, // Passimian stays
+                    767: { level: 22, evolvesTo: 768 }, // Wimpod → Golisopod
+                    769: { level: 20, evolvesTo: 770 }, // Sandygast → Palossand
+                    774: { level: 30, evolvesTo: 774 }, // Minior stays
+                    775: { level: 30, evolvesTo: 775 }, // Komala stays
+                    776: { level: 30, evolvesTo: 776 }, // Turtonator stays
+                    778: { level: 30, evolvesTo: 778 }, // Mimikyu stays
+                    779: { level: 38, evolvesTo: 780 }, // Bruxish stays
+                    780: { level: 35, evolvesTo: 780 }, // Drampa stays
+                    781: { level: 40, evolvesTo: 781 }, // Dhelmise stays
+                    782: { level: 35, evolvesTo: 783 }, // Jangmo-o → Hakamo-o
+                    783: { level: 45, evolvesTo: 784 }, // Hakamo-o → Kommo-o
+                    // Gen 8
+                    810: { level: 16, evolvesTo: 811 }, // Grookey → Thwackey
+                    811: { level: 35, evolvesTo: 812 }, // Thwackey → Rillaboom
+                    813: { level: 16, evolvesTo: 814 }, // Scorbunny → Raboot
+                    814: { level: 35, evolvesTo: 815 }, // Raboot → Cinderace
+                    816: { level: 16, evolvesTo: 817 }, // Sobble → Drizzile
+                    817: { level: 35, evolvesTo: 818 }, // Drizzile → Inteleon
+                    819: { level: 16, evolvesTo: 820 }, // Skwovet → Greedent
+                    821: { level: 18, evolvesTo: 822 }, // Rookidee → Corvisquire
+                    822: { level: 38, evolvesTo: 823 }, // Corvisquire → Corviknight
+                    824: { level: 20, evolvesTo: 825 }, // Blipbug → Dottler
+                    825: { level: 30, evolvesTo: 826 }, // Dottler → Orbeetle
+                    827: { level: 22, evolvesTo: 828 }, // Nickit → Thievul
+                    829: { level: 20, evolvesTo: 830 }, // Gossifleur → Eldegoss
+                    831: { level: 24, evolvesTo: 832 }, // Wooloo → Dubwool
+                    833: { level: 22, evolvesTo: 834 }, // Chewtle → Drednaw
+                    835: { level: 30, evolvesTo: 836 }, // Yamper → Boltund
+                    837: { level: 18, evolvesTo: 838 }, // Rolycoly → Carkol
+                    838: { level: 34, evolvesTo: 839 }, // Carkol → Coalossal
+                    840: { level: 24, evolvesTo: 841 }, // Applin → Flapple (simplified)
+                    843: { level: 24, evolvesTo: 844 }, // Silicobra → Sandaconda
+                    845: { level: 50, evolvesTo: 845 }, // Cramorant stays
+                    846: { level: 30, evolvesTo: 847 }, // Arrokuda → Barraskewda
+                    848: { level: 30, evolvesTo: 849 }, // Toxel → Toxtricity (simplified)
+                    850: { level: 28, evolvesTo: 851 }, // Sizzlipede → Centiskorch
+                    852: { level: 28, evolvesTo: 853 }, // Clobbopus → Grapploct
+                    854: { level: 28, evolvesTo: 855 }, // Sinistea → Polteageist (simplified)
+                    856: { level: 20, evolvesTo: 857 }, // Hatenna → Hattrem
+                    857: { level: 34, evolvesTo: 858 }, // Hattrem → Hatterene
+                    859: { level: 18, evolvesTo: 860 }, // Impidimp → Morgrem
+                    860: { level: 32, evolvesTo: 861 }, // Morgrem → Grimmsnarl
+                    868: { level: 35, evolvesTo: 869 }, // Milcery → Alcremie (simplified)
+                    870: { level: 38, evolvesTo: 870 }, // Falinks stays
+                    871: { level: 30, evolvesTo: 871 }, // Pincurchin stays
+                    872: { level: 38, evolvesTo: 873 }, // Snom → Frosmoth (simplified)
+                    874: { level: 34, evolvesTo: 874 }, // Stonjourner stays
+                    875: { level: 38, evolvesTo: 875 }, // Eiscue stays
+                    876: { level: 30, evolvesTo: 876 }, // Indeedee stays
+                    877: { level: 30, evolvesTo: 877 }, // Morpeko stays
+                    878: { level: 30, evolvesTo: 879 }, // Cufant → Copperajah
+                    884: { level: 28, evolvesTo: 884 }, // Duraludon stays
+                    885: { level: 50, evolvesTo: 886 }, // Dreepy → Drakloak
+                    886: { level: 60, evolvesTo: 887 }, // Drakloak → Dragapult
+                    // Gen 9
+                    906: { level: 16, evolvesTo: 907 }, // Sprigatito → Floragato
+                    907: { level: 36, evolvesTo: 908 }, // Floragato → Meowscarada
+                    909: { level: 16, evolvesTo: 910 }, // Fuecoco → Crocalor
+                    910: { level: 36, evolvesTo: 911 }, // Crocalor → Skeledirge
+                    912: { level: 16, evolvesTo: 913 }, // Quaxly → Quaxwell
+                    913: { level: 36, evolvesTo: 914 }, // Quaxwell → Quaquaval
+                    915: { level: 18, evolvesTo: 916 }, // Lechonk → Oinkologne
+                    917: { level: 18, evolvesTo: 918 }, // Tarountula → Spidops
+                    919: { level: 14, evolvesTo: 920 }, // Nymble → Lokix
+                    921: { level: 18, evolvesTo: 922 }, // Pawmi → Pawmo
+                    922: { level: 32, evolvesTo: 923 }, // Pawmo → Pawmot (simplified)
+                    924: { level: 15, evolvesTo: 925 }, // Tandemaus → Maushold (simplified)
+                    926: { level: 25, evolvesTo: 927 }, // Fidough → Dachsbun
+                    928: { level: 28, evolvesTo: 929 }, // Squawkabilly stays (simplified)
+                    931: { level: 24, evolvesTo: 932 }, // Nacli → Naclstack
+                    932: { level: 38, evolvesTo: 933 }, // Naclstack → Garganacl
+                    934: { level: 25, evolvesTo: 935 }, // Charcadet → Armarouge (simplified)
+                    938: { level: 26, evolvesTo: 939 }, // Tadbulb → Bellibolt
+                    940: { level: 20, evolvesTo: 941 }, // Wattrel → Kilowattrel
+                    942: { level: 22, evolvesTo: 943 }, // Maschiff → Mabosstiff
+                    944: { level: 18, evolvesTo: 945 }, // Shroodle → Grafaiai
+                    946: { level: 22, evolvesTo: 947 }, // Bramblin → Brambleghast (simplified)
+                    948: { level: 25, evolvesTo: 949 }, // Toedscool → Toedscruel
+                    950: { level: 28, evolvesTo: 951 }, // Klawf stays (simplified)
+                    952: { level: 16, evolvesTo: 953 }, // Capsakid → Scovillain
+                    954: { level: 32, evolvesTo: 955 }, // Rellor → Rabsca (simplified)
+                    956: { level: 30, evolvesTo: 956 }, // Flittle stays
+                    957: { level: 35, evolvesTo: 957 }, // Tinkatink stays
+                    963: { level: 30, evolvesTo: 964 }, // Finizen → Palafin (simplified)
+                };
+
+                // IDs that evolve via stone only (skip automatic level-up evo check)
+                const STONE_EVO_ONLY = new Set([
+                    30,31,33,34,35,36,37,38,39,40,44,45,71,  // Nido/Clefairy/Vulpix/Jigglypuff/Vileplume lines
+                    58,59,80,90,91,102,103,120,121,  // Fire/Water stone evo targets
+                    133,134,135,136,196,197,700  // Eevee evolutions
+                ]);
+
+                async function checkLevelUpEvolution(pokemon, logBox) {
+                    if (STONE_EVO_ONLY.has(pokemon.id)) return;
+                    const evoEntry = LEVEL_EVO_TABLE[pokemon.id];
+                    if (!evoEntry) return;
+                    if ((pokemon.level || 1) < evoEntry.level) return;
+                    if (pokemon.evoStoneUsed) return; // already stone-evolved, skip
+
+                    // Check if already at final form
+                    const targetId = evoEntry.evolvesTo;
+                    if (targetId === pokemon.id) return; // No-op entries for Pokémon that stay
+
+                    try {
+                        const evolved = await fetchPokemonData(targetId);
+                        const oldName = pokemon.name;
+                        pokemon.id    = evolved.id;
+                        pokemon.name  = evolved.name;
+                        pokemon.type1 = evolved.type1;
+                        pokemon.type2 = evolved.type2;
+                        pokemon.sprite = evolved.sprite;
+                        pokemon.hp    = evolved.hp;
+                        pokemon.atk   = evolved.atk;
+                        pokemon.def   = evolved.def;
+                        pokemon.spAtk = evolved.spAtk || evolved.atk;
+                        pokemon.spDef = evolved.spDef || evolved.def;
+                        pokemon.speed = evolved.speed || 60;
+                        if (logBox) logBox.innerHTML += `<div class="text-pink-400 font-black animate-pulse mt-1">🌟 ${oldName} evolved into <span class="text-white">${evolved.name.toUpperCase()}</span>!</div>`;
+                        showNotification('✨ EVOLUTION!', `${oldName} evolved into ${evolved.name}!`, 'success');
+                        const evoMoves = applyLevelUpMoves(pokemon);
+                        if (evoMoves.length > 0 && logBox) {
+                            evoMoves.forEach(m => logBox.innerHTML += `<div class="text-cyan-400 font-bold mt-1">📖 ${pokemon.name} learned <span class="text-white capitalize">${m.replace(/-/g,' ')}</span>!</div>`);
+                        }
+                        saveProgress();
+                    } catch(e) { /* silent */ }
+                }
+
                 function handleBattleVictory() {
                     const stage = gameState.activeBattleStage;
                     const fighter = gameState.battle.fighterPokemon;
@@ -4765,7 +5453,12 @@ const CAMPAIGN_ROADMAP = [
 
                     if (stage) {
                         rewardCoins = stage.reward; enemyLvl = stage.level;
-                        if (gameState.unlockedStages === stage.stageId) gameState.unlockedStages += 1;
+                        if (gameState.unlockedStages === stage.stageId) {
+                            // Advance to the next stageId in sorted order (supports fractional IDs for inserted stages)
+                            const _allIds = CAMPAIGN_ROADMAP.map(s => s.stageId).sort((a, b) => a - b);
+                            const _idx = _allIds.indexOf(stage.stageId);
+                            gameState.unlockedStages = (_idx >= 0 && _idx + 1 < _allIds.length) ? _allIds[_idx + 1] : stage.stageId + 1;
+                        }
                         // Award gym badge if this was a gym battle and not already earned
                         if (stage.isGym && !gameState.gymBadges.includes(stage.stageId)) {
                             gameState.gymBadges.push(stage.stageId);
@@ -4792,19 +5485,21 @@ const CAMPAIGN_ROADMAP = [
                         nextLevelXp = fighter.level * 100;
                         didLevelUp = true;
                         const newMoves = applyLevelUpMoves(fighter);
-                        if (shouldExcludeFromLevelUp(fighter.id)) {
-                            const logBox2 = document.getElementById('battleLog');
-                            logBox2.innerHTML += `<div class="text-yellow-400 font-bold mt-1">⚠️ ${fighter.name} requires an evolution stone to evolve further!</div>`;
-                        }
+                        // Evolution stone check is handled by checkLevelUpEvolution / STONE_EVO_ONLY set
                         if (newMoves.length > 0) {
                             const logBox2 = document.getElementById('battleLog');
                             newMoves.forEach(m => logBox2.innerHTML += `<div class="text-cyan-400 font-bold mt-1">📖 ${fighter.name} learned <span class="text-white capitalize">${m.replace('-', ' ')}</span>!</div>`);
                         }
                     }
 
-                    // Eevee level-up evolution at level 20 (if not already stone-evolved)
-                    if (fighter.id === 133 && fighter.level >= 20 && !fighter.evoStoneUsed) {
-                        checkEeveeLevelUpEvolution(fighter, document.getElementById('battleLog'));
+                    // Check level-up evolution for all Pokémon (covers Eevee special case too)
+                    if (didLevelUp) {
+                        const logBoxEvo = document.getElementById('battleLog');
+                        if (fighter.id === 133 && fighter.level >= 20 && !fighter.evoStoneUsed) {
+                            checkEeveeLevelUpEvolution(fighter, logBoxEvo);
+                        } else {
+                            checkLevelUpEvolution(fighter, logBoxEvo);
+                        }
                     }
 
                     addCoins(rewardCoins);
@@ -4831,6 +5526,10 @@ const CAMPAIGN_ROADMAP = [
                                 tmLeveled = true;
                             }
                             if (logB) logB.innerHTML += `<div class="text-amber-300 mt-1 text-[10px]">📡 ${tm.name} +${expShareAmt} XP (Exp. Share)${tmLeveled?' → Lv'+tm.level:''}</div>`;
+                            if (tmLeveled) {
+                                if (tm.id === 133 && tm.level >= 20 && !tm.evoStoneUsed) checkEeveeLevelUpEvolution(tm, logB);
+                                else checkLevelUpEvolution(tm, logB);
+                            }
                         });
                     }
 
@@ -5544,6 +6243,26 @@ const CAMPAIGN_ROADMAP = [
                         applyLevelUpMoves(pokemon);
                         gameState.inventoryItems[itemKey] = owned - 1;
                         showNotification('Evolved', `${pokemon.name} evolved with ${item.name}.`, 'success');
+                    } else if (item.effect === 'teach_move' && item.move) {
+                        // TM teaching — check for duplicates
+                        const moveName = item.move;
+                        if (!MOVES_DB[moveName]) {
+                            showNotification('Cannot Teach', `Move data not found for ${moveName}.`, 'error');
+                            return;
+                        }
+                        if (pokemon.moves && pokemon.moves.includes(moveName)) {
+                            showNotification('Already Known', `${pokemon.name} already knows ${moveName.replace(/-/g,' ')}.`, 'info');
+                            return;
+                        }
+                        gameState.inventoryItems[itemKey] = owned - 1;
+                        if (!pokemon.moves) pokemon.moves = [];
+                        if (pokemon.moves.length >= 4) {
+                            pokemon.moves[3] = moveName; // Replace last move if full
+                            showNotification('Move Taught', `${pokemon.name} replaced its last move with ${moveName.replace(/-/g,' ')}.`, 'success');
+                        } else {
+                            pokemon.moves.push(moveName);
+                            showNotification('Move Taught', `${pokemon.name} learned ${moveName.replace(/-/g,' ')}!`, 'success');
+                        }
                     } else {
                         gameState.inventoryItems[itemKey] = owned - 1;
                         if (item.effect === 'heal_hp') {
@@ -5693,7 +6412,8 @@ const CAMPAIGN_ROADMAP = [
 
                 window.buyBall = function(ballType) {
                     initAudio();
-                    let cost = 50;
+                    let cost = 10;
+                    if (ballType === 'great') cost = 50;
                     if (ballType === 'ultra') cost = 150;
                     if (ballType === 'master') cost = 500;
 
@@ -5703,10 +6423,12 @@ const CAMPAIGN_ROADMAP = [
                     }
 
                     spendCoins(cost);
+                    if (!gameState.balls[ballType] && gameState.balls[ballType] !== 0) gameState.balls[ballType] = 0;
                     gameState.balls[ballType] += 1;
                     
                     playConfirmSound();
-                    showNotification("Cores Purchased", `Acquired 1x ${ballType.toUpperCase()} Core!`, 'success');
+                    const ballNames = { poke: 'Poké Ball', great: 'Great Lens', ultra: 'Ultra Core', master: 'Master Link' };
+                    showNotification("Purchased", `Acquired 1x ${ballNames[ballType] || ballType}!`, 'success');
                     
                     updateUI();
                     saveProgress();
@@ -5909,6 +6631,153 @@ const CAMPAIGN_ROADMAP = [
                     updateShinyCharmUI();
                 };
 
+
+
+                // ── Gym Puzzle system ──────────────────────────────────────────────────
+                let _pendingGymStage = null;
+                let _pendingGymPuzzle = null;
+
+                function showGymPuzzle(stage) {
+                    _pendingGymStage = stage;
+                    _pendingGymPuzzle = stage.gymPuzzle;
+                    const overlay = document.getElementById('gymPuzzleOverlay');
+                    document.getElementById('gymPuzzleIcon').textContent = stage.icon || '🏟️';
+                    document.getElementById('gymPuzzleQuestion').textContent = stage.gymPuzzle.question;
+                    document.getElementById('gymPuzzleResult').className = 'text-sm font-bold mt-4 text-center hidden';
+                    document.getElementById('gymPuzzleHint').className = 'text-xs text-yellow-400/60 mt-4 italic hidden';
+                    document.getElementById('gymPuzzleHint').textContent = '💡 Hint: ' + (stage.gymPuzzle.hint || '');
+                    const optionsEl = document.getElementById('gymPuzzleOptions');
+                    optionsEl.innerHTML = stage.gymPuzzle.options.map((opt, i) => `
+                        <button onclick="answerGymPuzzle(${i})" class="w-full text-left px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-yellow-500/50 text-sm text-slate-200 font-medium transition-all">
+                            <span class="text-yellow-400 font-black mr-2">${String.fromCharCode(65+i)}.</span> ${opt}
+                        </button>`).join('');
+                    overlay.style.display = 'flex';
+                }
+
+                function answerGymPuzzle(selectedIdx) {
+                    const puzzle = _pendingGymPuzzle;
+                    const resultEl = document.getElementById('gymPuzzleResult');
+                    const optionsEl = document.getElementById('gymPuzzleOptions');
+                    // Highlight correct/incorrect
+                    const btns = optionsEl.querySelectorAll('button');
+                    btns.forEach((btn, i) => {
+                        btn.disabled = true;
+                        if (i === puzzle.answer) btn.className = btn.className.replace('bg-slate-800 hover:bg-slate-700 border-slate-700 hover:border-yellow-500/50', 'bg-green-900/60 border-green-500');
+                        else if (i === selectedIdx) btn.className = btn.className.replace('bg-slate-800 hover:bg-slate-700 border-slate-700 hover:border-yellow-500/50', 'bg-red-900/60 border-red-500');
+                    });
+                    if (selectedIdx === puzzle.answer) {
+                        resultEl.textContent = '✅ Correct! The gym is now open!';
+                        resultEl.className = 'text-sm font-bold mt-4 text-center text-green-400';
+                        resultEl.classList.remove('hidden');
+                        // Mark puzzle as solved and proceed to gym after delay
+                        if (!gameState.solvedGymPuzzles) gameState.solvedGymPuzzles = [];
+                        if (!gameState.solvedGymPuzzles.includes(_pendingGymStage.stageId)) {
+                            gameState.solvedGymPuzzles.push(_pendingGymStage.stageId);
+                            saveProgress();
+                        }
+                        setTimeout(() => {
+                            document.getElementById('gymPuzzleOverlay').style.display = 'none';
+                            launchStagePrep(_pendingGymStage);
+                        }, 1200);
+                    } else {
+                        resultEl.textContent = '❌ Wrong answer. Try again!';
+                        resultEl.className = 'text-sm font-bold mt-4 text-center text-red-400';
+                        resultEl.classList.remove('hidden');
+                        setTimeout(() => {
+                            btns.forEach((btn, i) => {
+                                btn.disabled = false;
+                                btn.className = btn.className.replace(i === puzzle.answer ? 'bg-green-900/60 border-green-500' : 'bg-red-900/60 border-red-500', 'bg-slate-800 hover:bg-slate-700 border-slate-700 hover:border-yellow-500/50');
+                            });
+                            resultEl.classList.add('hidden');
+                        }, 1600);
+                    }
+                }
+
+                function showHint() {
+                    const hintEl = document.getElementById('gymPuzzleHint');
+                    hintEl.classList.remove('hidden');
+                }
+
+                function closeGymPuzzle() {
+                    document.getElementById('gymPuzzleOverlay').style.display = 'none';
+                    _pendingGymStage = null;
+                    _pendingGymPuzzle = null;
+                }
+
+                window.answerGymPuzzle = answerGymPuzzle;
+                window.showHint = showHint;
+                window.closeGymPuzzle = closeGymPuzzle;
+
+                // ── Starter Pokémon selection ──────────────────────────────────────────
+                const STARTER_POKEMON = [
+                    { id: 1,   name: "Bulbasaur",  gen: 1, type: "Grass/Poison",  color: "#4ade80" },
+                    { id: 4,   name: "Charmander", gen: 1, type: "Fire",          color: "#fb923c" },
+                    { id: 7,   name: "Squirtle",   gen: 1, type: "Water",         color: "#60a5fa" },
+                    { id: 155, name: "Cyndaquil",  gen: 2, type: "Fire",          color: "#fb923c" },
+                    { id: 258, name: "Mudkip",     gen: 3, type: "Water",         color: "#60a5fa" },
+                    { id: 390, name: "Chimchar",   gen: 4, type: "Fire",          color: "#fb923c" },
+                    { id: 495, name: "Snivy",      gen: 5, type: "Grass",         color: "#4ade80" },
+                    { id: 656, name: "Froakie",    gen: 6, type: "Water",         color: "#60a5fa" },
+                    { id: 725, name: "Litten",     gen: 7, type: "Fire",          color: "#fb923c" },
+                    { id: 816, name: "Sobble",     gen: 8, type: "Water",         color: "#60a5fa" },
+                    { id: 906, name: "Sprigatito", gen: 9, type: "Grass",         color: "#4ade80" },
+                ];
+
+                async function showStarterSelectionScreen() {
+                    const overlay = document.getElementById('starterSelectionOverlay');
+                    const grid = document.getElementById('starterGrid');
+                    if (!overlay || !grid) return;
+                    overlay.style.removeProperty('display');
+                    overlay.classList.remove('hidden');
+                    overlay.style.display = 'flex';
+                    grid.innerHTML = '<div class="col-span-3 text-center text-slate-400 py-8 animate-pulse">Loading starter data…</div>';
+                    const starterData = await Promise.all(STARTER_POKEMON.map(async s => {
+                        try {
+                            const pdata = await fetchPokemonData(s.id);
+                            return { ...s, sprite: pdata.sprite, hp: pdata.hp, atk: pdata.atk, def: pdata.def, spAtk: pdata.spAtk || pdata.atk, spDef: pdata.spDef || pdata.def, speed: pdata.speed || 60 };
+                        } catch { return { ...s, sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${s.id}.png`, hp:45, atk:49, def:49, spAtk:65, spDef:65, speed:45 }; }
+                    }));
+                    grid.innerHTML = starterData.map(s => `
+                        <button onclick="selectStarter(${s.id})" style="border-color:${s.color}20" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-current rounded-2xl p-4 flex flex-col items-center gap-2 transition-all duration-200 hover:scale-105 group cursor-pointer">
+                            <img src="${s.sprite}" alt="${s.name}" class="w-16 h-16 object-contain drop-shadow-lg" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${s.id}.png'"/>
+                            <span class="text-xs font-black text-white capitalize">${s.name}</span>
+                            <span class="text-[9px] font-bold text-slate-400 uppercase">${s.type}</span>
+                            <span class="text-[9px] text-slate-500 uppercase tracking-wider">Gen ${s.gen}</span>
+                        </button>
+                    `).join('');
+                }
+
+                async function selectStarter(pokemonId) {
+                    const overlay = document.getElementById('starterSelectionOverlay');
+                    try {
+                        const pdata = await fetchPokemonData(pokemonId);
+                        const starter = {
+                            id: pdata.id, name: pdata.name, type1: pdata.type1, type2: pdata.type2 || null,
+                            sprite: pdata.sprite, level: 5, xp: 0,
+                            hp: pdata.hp, atk: pdata.atk, def: pdata.def,
+                            spAtk: pdata.spAtk || pdata.atk, spDef: pdata.spDef || pdata.def, speed: pdata.speed || 45,
+                            moves: [], isShiny: false,
+                        };
+                        // Give starter its level-1 moves
+                        const lvlMoves = LEVELUP_MOVES[starter.id];
+                        if (lvlMoves) {
+                            const available = Object.entries(lvlMoves).filter(([lv]) => parseInt(lv) <= 5).flatMap(([, mvs]) => mvs);
+                            starter.moves = [...new Set(available)].slice(0, 4);
+                        }
+                        if (starter.moves.length === 0) starter.moves = ['tackle'];
+                        gameState.pc.push(starter);
+                        gameState.starterSelected = true;
+                        if (overlay) overlay.style.display = 'none';
+                        showNotification('✨ Partner Chosen!', `${starter.name} joined your team at Lv 5!`, 'success');
+                        saveProgress();
+                        updateUI();
+                    } catch(e) {
+                        showNotification('Error', 'Could not load starter data. Try again.', 'error');
+                        console.error(e);
+                    }
+                }
+                window.selectStarter = selectStarter;
+
                 // ==========================================
                 // BOOTSTRAP INIT
                 // ==========================================
@@ -5955,6 +6824,10 @@ const CAMPAIGN_ROADMAP = [
                                 }
 
                                 loadSavedProgress();
+                                // Show starter selection if new game
+                                if (!gameState.starterSelected) {
+                                    setTimeout(() => showStarterSelectionScreen(), 900);
+                                }
                                 updateProfileBtn();
                                 buildWheelSectors();
                                 drawWheel();
@@ -5987,5 +6860,49 @@ const CAMPAIGN_ROADMAP = [
 
             })();
         </script>
+    
+        <!-- ══════════════════════════════════════════════════════════════
+              GYM PUZZLE MODAL
+         ══════════════════════════════════════════════════════════════ -->
+        <div id="gymPuzzleOverlay" class="fixed inset-0 z-[998] flex items-center justify-center bg-black/90 backdrop-blur-md" style="display:none">
+            <div class="relative w-full max-w-md mx-4 bg-slate-900 rounded-3xl overflow-hidden border border-yellow-600/40 shadow-2xl">
+                <div class="bg-yellow-900/40 border-b border-yellow-700/30 px-6 py-4">
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl" id="gymPuzzleIcon">🧩</span>
+                        <div>
+                            <h2 class="text-lg font-black text-white">Gym Challenge</h2>
+                            <p class="text-xs text-yellow-300/70">Answer correctly to access the gym!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <p class="text-sm font-bold text-white mb-1">Question:</p>
+                    <p id="gymPuzzleQuestion" class="text-base text-slate-200 mb-5 leading-relaxed"></p>
+                    <div id="gymPuzzleOptions" class="space-y-3"></div>
+                    <p id="gymPuzzleHint" class="text-xs text-yellow-400/60 mt-4 italic hidden"></p>
+                    <p id="gymPuzzleResult" class="text-sm font-bold mt-4 text-center hidden"></p>
+                    <div class="flex gap-3 mt-5">
+                        <button onclick="showHint()" class="flex-1 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition">💡 Hint</button>
+                        <button onclick="closeGymPuzzle()" class="flex-1 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-400 transition">← Go Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ══════════════════════════════════════════════════════════════
+              STARTER SELECTION MODAL
+         ══════════════════════════════════════════════════════════════ -->
+        <div id="starterSelectionOverlay" class="fixed inset-0 z-[999] flex items-center justify-center bg-black/90 backdrop-blur-md" style="display:none!important">
+            <div class="relative w-full max-w-2xl mx-4 bg-slate-900 rounded-3xl overflow-hidden border border-slate-700 shadow-2xl">
+                <div class="themed-gradient px-6 py-5">
+                    <h2 class="text-xl font-black text-white tracking-tight">Choose Your Starter Pokémon!</h2>
+                    <p class="text-xs text-white/70 mt-1">Select your first partner — they'll join your team at Level 5.</p>
+                </div>
+                <div class="p-5 max-h-[70vh] overflow-y-auto">
+                    <div id="starterGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
     </html> 
