@@ -653,8 +653,8 @@
                             <i class="fas fa-cog text-white text-sm"></i>
                         </div>
                         <div>
-                            <p class="text-[9px] uppercase tracking-[0.3em] text-purple-400 font-bold">Configuration</p>
-                            <h3 class="text-base font-black text-white tracking-wide">Settings</h3>
+                            <p class="text-[9px] uppercase tracking-[0.3em] text-purple-400 font-bold" data-i18n="settings.subtitle">Configuration</p>
+                            <h3 class="text-base font-black text-white tracking-wide" data-i18n="settings.title">Settings</h3>
                         </div>
                     </div>
                     <button onclick="closeSettingsModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition">
@@ -669,22 +669,22 @@
                         <div class="p-4 rounded-2xl flex flex-col gap-3" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
                             <div class="flex items-center gap-2">
                                 <i class="fas fa-circle-half-stroke text-yellow-400 text-sm"></i>
-                                <span class="text-xs font-bold text-white">Display</span>
+                                <span class="text-xs font-bold text-white" data-i18n="settings.display">Display</span>
                             </div>
                             <button onclick="toggleDarkLight()" id="darkModeBtn" class="w-full py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);">
                                 <i id="darkModeIconSettings" class="fas fa-sun text-yellow-400"></i>
-                                <span id="darkModeSettingsText">Light Mode</span>
+                                <span id="darkModeSettingsText" data-i18n="settings.lightMode">Light Mode</span>
                             </button>
                         </div>
                         <!-- Sound -->
                         <div class="p-4 rounded-2xl flex flex-col gap-3" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
                             <div class="flex items-center gap-2">
                                 <i class="fas fa-volume-high text-cyan-400 text-sm"></i>
-                                <span class="text-xs font-bold text-white">Sound</span>
+                                <span class="text-xs font-bold text-white" data-i18n="settings.sound">Sound</span>
                             </div>
                             <button id="settingsSoundBtn" onclick="toggleMute()" class="w-full py-2 rounded-xl text-xs font-bold text-white transition flex items-center justify-center gap-2" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);">
                                 <i class="fas fa-music text-cyan-400"></i>
-                                <span id="settingsSoundText">Sound On</span>
+                                <span id="settingsSoundText" data-i18n="settings.soundOn">Sound On</span>
                             </button>
                         </div>
                     </div>
@@ -694,7 +694,7 @@
                         <div class="flex items-center justify-between mb-3">
                             <div class="flex items-center gap-2">
                                 <i class="fas fa-palette text-purple-400 text-sm"></i>
-                                <span class="text-xs font-bold text-white">Accent Theme</span>
+                                <span class="text-xs font-bold text-white" data-i18n="settings.theme">Accent Theme</span>
                             </div>
                             <span id="activeThemeLabel" class="themed-chip text-[9px] uppercase tracking-widest font-black px-2 py-0.5 rounded-full" style="border:1px solid var(--theme-chip-border);">Rose</span>
                         </div>
@@ -758,18 +758,37 @@
                         </div>
                     </div>
 
+
+                    <!-- Language Selector -->
+                    <div class="p-4 rounded-2xl" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                        <div class="flex items-center gap-2 mb-3">
+                            <i class="fas fa-language text-blue-400 text-sm"></i>
+                            <span class="text-xs font-bold text-white" data-i18n="settings.language">Language</span>
+                        </div>
+                        <div id="langPickerGrid" class="grid grid-cols-3 gap-2">
+                            <button onclick="setLanguage('en')"  data-lang="en"  class="lang-btn py-2 px-2 rounded-xl text-[11px] font-bold border transition text-white" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.12)">🇬🇧 English</button>
+                            <button onclick="setLanguage('ja')"  data-lang="ja"  class="lang-btn py-2 px-2 rounded-xl text-[11px] font-bold border transition text-white" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.12)">🇯🇵 日本語</button>
+                            <button onclick="setLanguage('ko')"  data-lang="ko"  class="lang-btn py-2 px-2 rounded-xl text-[11px] font-bold border transition text-white" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.12)">🇰🇷 한국어</button>
+                            <button onclick="setLanguage('fr')"  data-lang="fr"  class="lang-btn py-2 px-2 rounded-xl text-[11px] font-bold border transition text-white" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.12)">🇫🇷 Français</button>
+                            <button onclick="setLanguage('de')"  data-lang="de"  class="lang-btn py-2 px-2 rounded-xl text-[11px] font-bold border transition text-white" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.12)">🇩🇪 Deutsch</button>
+                            <button onclick="setLanguage('es')"  data-lang="es"  class="lang-btn py-2 px-2 rounded-xl text-[11px] font-bold border transition text-white" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.12)">🇪🇸 Español</button>
+                            <button onclick="setLanguage('it')"  data-lang="it"  class="lang-btn py-2 px-2 rounded-xl text-[11px] font-bold border transition text-white" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.12)">🇮🇹 Italiano</button>
+                            <button onclick="setLanguage('zh')"  data-lang="zh"  class="lang-btn py-2 px-2 rounded-xl text-[11px] font-bold border transition text-white" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.12)">🇨🇳 中文</button>
+                            <button onclick="setLanguage('pt')"  data-lang="pt"  class="lang-btn py-2 px-2 rounded-xl text-[11px] font-bold border transition text-white" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.12)">🇧🇷 Português</button>
+                        </div>
+                    </div>
                     <!-- Data Management -->
                     <div class="p-4 rounded-2xl" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
                         <div class="flex items-center gap-2 mb-3">
                             <i class="fas fa-database text-emerald-400 text-sm"></i>
-                            <span class="text-xs font-bold text-white">Save Data</span>
+                            <span class="text-xs font-bold text-white" data-i18n="settings.saveData">Save Data</span>
                         </div>
                         <div class="flex gap-2">
                             <button onclick="openDataTransferModal()" class="flex-1 py-2.5 rounded-xl text-xs font-bold text-white transition" style="background:linear-gradient(135deg,#059669,#10b981);">
-                                <i class="fas fa-download mr-1.5"></i>Backup / Restore
+                                <i class="fas fa-download mr-1.5"></i><span data-i18n="settings.backup">Backup / Restore</span>
                             </button>
                             <button onclick="clearAllData()" class="flex-1 py-2.5 rounded-xl text-xs font-bold text-white transition" style="background:linear-gradient(135deg,#dc2626,#f43f5e);">
-                                <i class="fas fa-trash mr-1.5"></i>Clear All
+                                <i class="fas fa-trash mr-1.5"></i><span data-i18n="settings.clearAll">Clear All</span>
                             </button>
                         </div>
                     </div>
@@ -777,9 +796,7 @@
 
                 <div class="px-5 pb-5 space-y-3">
                     <div class="text-center text-[9px] text-slate-600 uppercase tracking-widest font-bold">Version V1.0.0 — Beta</div>
-                    <button onclick="closeSettingsModal()" class="w-full py-3 rounded-2xl text-sm font-black text-white tracking-wider transition themed-gradient">
-                        Done
-                    </button>
+                    <button onclick="closeSettingsModal()" class="w-full py-3 rounded-2xl text-sm font-black text-white tracking-wider transition themed-gradient" data-i18n="settings.done">Done</button>
                 </div>
             </div>
         </div>
@@ -871,27 +888,27 @@
             <nav class="lg:col-span-3 flex lg:flex-col gap-2 w-full overflow-x-auto lg:overflow-visible py-1 sticky top-[72px] z-30 bg-[#05070f] lg:bg-transparent">
                 <button onclick="switchView('roulette')" id="nav-roulette" class="nav-btn active flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-gradient-to-r from-rose-600 to-pink-600 text-white border-transparent shadow-lg shadow-rose-600/10">
                     <i class="fas fa-radar animate-pulse"></i>
-                    <span>Quantum Scanner</span>
+                    <span data-i18n="nav.scanner">Quantum Scanner</span>
                 </button>
                 <button onclick="switchView('battle')" id="nav-battle" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
                     <i class="fas fa-compass text-rose-500 animate-spin-slow"></i>
-                    <span>Journey Arena</span>
+                    <span data-i18n="nav.journey">Journey Arena</span>
                 </button>
                 <button onclick="switchView('team')" id="nav-team" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
                     <i class="fas fa-users text-cyan-400"></i>
-                    <span>Team <span id="teamCountBadge" class="ml-auto text-[10px] bg-slate-900 px-2 py-0.5 rounded-full">0/6</span></span>
+                    <span data-i18n="nav.team">Team</span> <span id="teamCountBadge" class="ml-auto text-[10px] bg-slate-900 px-2 py-0.5 rounded-full">0/6</span>
                 </button>
                 <button onclick="switchView('pokedex')" id="nav-pokedex" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
                     <i class="fas fa-book text-blue-400"></i>
-                    <span>Registered Pokédex <span id="dexProgressBadge" class="ml-auto text-[10px] bg-slate-900 px-2 py-0.5 rounded-full">0/1025</span></span>
+                    <span data-i18n="nav.pokedex">Registered Pokédex</span> <span id="dexProgressBadge" class="ml-auto text-[10px] bg-slate-900 px-2 py-0.5 rounded-full">0/1025</span></span>
                 </button>
                 <button onclick="switchView('pc')" id="nav-pc" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
                     <i class="fas fa-box text-emerald-400"></i>
-                    <span>PC Box <span id="pcCountBadge" class="ml-auto text-[10px] bg-slate-900 px-2 py-0.5 rounded-full">0</span></span>
+                    <span data-i18n="nav.pc">PC Box</span> <span id="pcCountBadge" class="ml-auto text-[10px] bg-slate-900 px-2 py-0.5 rounded-full">0</span></span>
                 </button>
                 <button onclick="switchView('shop')" id="nav-shop" class="nav-btn flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-slate-955 border-slate-900 text-slate-400 hover:text-white hover:bg-slate-900">
                     <i class="fas fa-shopping-cart text-yellow-400"></i>
-                    <span>Gear & Item Mart</span>
+                    <span data-i18n="nav.shop">Gear &amp; Item Mart</span>
                 </button>
             </nav>
 
@@ -2496,6 +2513,7 @@ const CAMPAIGN_ROADMAP = [
                     username: "",
                     gymBadges: [],
                     balls: { poke: 5, great: 0, ultra: 0, master: 0 },
+                    language: 'en',
                     starterSelected: false,
                     solvedGymPuzzles: [],
                     pokedex: [],
@@ -2792,6 +2810,11 @@ const CAMPAIGN_ROADMAP = [
                         assignPokemonUids();
                         if (parsed._lightMode) { isLightMode = true; applyLightDarkMode(true); }
                         if (parsed._theme && THEMES[parsed._theme])   { currentTheme = parsed._theme; }
+                        // Restore language preference
+                        if (normalized.language && typeof _currentLang !== 'undefined') {
+                            _currentLang = normalized.language;
+                            localStorage.setItem('pokemon_radar_lang', normalized.language);
+                        }
                         updateProfileBtn();
                         console.log('[SAVE] Loaded ' + (normalized.pokedex ? normalized.pokedex.length : 0) + ' Pokémon, coins=' + normalized.coins);
                         return true;
@@ -2974,6 +2997,471 @@ const CAMPAIGN_ROADMAP = [
                 window.copyExportedData = copyExportedData;
                 window.importDataFromText = importDataFromText;
 
+
+                // ══════════════════════════════════════════════════════════════
+                // MODULE: INTERNATIONALISATION (i18n) + POKÉMON NAME TRANSLATION
+                // ══════════════════════════════════════════════════════════════
+
+                // ── Translation strings (9 languages) ──────────────────────
+                const TRANSLATIONS = {
+                  en: {
+                    'nav.scanner':  'Quantum Scanner',
+                    'nav.journey':  'Journey Arena',
+                    'nav.team':     'Team',
+                    'nav.pokedex':  'Registered Pokédex',
+                    'nav.pc':       'PC Box',
+                    'nav.shop':     'Gear & Item Mart',
+                    'settings.title':    'Settings',
+                    'settings.subtitle': 'Configuration',
+                    'settings.display':  'Display',
+                    'settings.sound':    'Sound',
+                    'settings.theme':    'Accent Theme',
+                    'settings.saveData': 'Save Data',
+                    'settings.backup':   'Backup / Restore',
+                    'settings.clearAll': 'Clear All',
+                    'settings.done':     'Done',
+                    'settings.language': 'Language',
+                    'settings.lightMode':'Light Mode',
+                    'settings.darkMode': 'Dark Mode',
+                    'settings.soundOn':  'Sound On',
+                    'settings.soundOff': 'Sound Off',
+                    'loading.text':  'Initialising Quantum Scanner…',
+                    'loading.beta':  'Game is in beta — features may change.',
+                    'battle.catch':  'Throw Ball',
+                    'battle.run':    'Run Away',
+                    'battle.arena':  'Journey Arena',
+                    'battle.gymChallenge': 'Gym Challenge',
+                    'battle.answer': 'Answer correctly to access the gym!',
+                    'battle.hint':   '💡 Hint',
+                    'battle.goBack': '← Go Back',
+                    'common.coins':  'Coins',
+                    'common.lv':     'Lv.',
+                    'common.hp':     'HP',
+                    'common.exp':    'EXP',
+                    'shop.title':    'Gear & Item Mart',
+                    'shop.buy':      'Buy 1',
+                  },
+                  ja: {
+                    'nav.scanner':  'クォンタムスキャナー',
+                    'nav.journey':  'バトルアリーナ',
+                    'nav.team':     'チーム',
+                    'nav.pokedex':  '図鑑',
+                    'nav.pc':       'PCボックス',
+                    'nav.shop':     'アイテムショップ',
+                    'settings.title':    '設定',
+                    'settings.subtitle': '構成',
+                    'settings.display':  '表示',
+                    'settings.sound':    'サウンド',
+                    'settings.theme':    'テーマ',
+                    'settings.saveData': 'セーブデータ',
+                    'settings.backup':   'バックアップ / 復元',
+                    'settings.clearAll': 'すべて削除',
+                    'settings.done':     '完了',
+                    'settings.language': '言語',
+                    'settings.lightMode':'ライトモード',
+                    'settings.darkMode': 'ダークモード',
+                    'settings.soundOn':  'サウンドオン',
+                    'settings.soundOff': 'サウンドオフ',
+                    'loading.text':  'クォンタムスキャナーを起動中…',
+                    'loading.beta':  'ベータ版 — 機能は変更される場合があります。',
+                    'battle.catch':  'ボールを投げる',
+                    'battle.run':    '逃げる',
+                    'battle.arena':  'バトルアリーナ',
+                    'battle.gymChallenge': 'ジムチャレンジ',
+                    'battle.answer': '正解するとジムに入れます！',
+                    'battle.hint':   '💡 ヒント',
+                    'battle.goBack': '← 戻る',
+                    'common.coins':  'コイン',
+                    'common.lv':     'Lv.',
+                    'common.hp':     'HP',
+                    'common.exp':    '経験値',
+                    'shop.title':    'アイテムショップ',
+                    'shop.buy':      '購入',
+                  },
+                  ko: {
+                    'nav.scanner':  '퀀텀 스캐너',
+                    'nav.journey':  '배틀 아레나',
+                    'nav.team':     '팀',
+                    'nav.pokedex':  '포케덱스',
+                    'nav.pc':       'PC 박스',
+                    'nav.shop':     '아이템 마트',
+                    'settings.title':    '설정',
+                    'settings.subtitle': '환경설정',
+                    'settings.display':  '화면',
+                    'settings.sound':    '사운드',
+                    'settings.theme':    '테마',
+                    'settings.saveData': '저장 데이터',
+                    'settings.backup':   '백업 / 복원',
+                    'settings.clearAll': '모두 삭제',
+                    'settings.done':     '완료',
+                    'settings.language': '언어',
+                    'settings.lightMode':'라이트 모드',
+                    'settings.darkMode': '다크 모드',
+                    'settings.soundOn':  '사운드 켜기',
+                    'settings.soundOff': '사운드 끄기',
+                    'loading.text':  '퀀텀 스캐너 초기화 중…',
+                    'loading.beta':  '베타 버전 — 기능은 변경될 수 있습니다.',
+                    'battle.catch':  '볼 던지기',
+                    'battle.run':    '도망가기',
+                    'battle.arena':  '배틀 아레나',
+                    'battle.gymChallenge': '체육관 도전',
+                    'battle.answer': '정답을 맞춰야 체육관에 들어갈 수 있습니다!',
+                    'battle.hint':   '💡 힌트',
+                    'battle.goBack': '← 돌아가기',
+                    'common.coins':  '코인',
+                    'common.lv':     'Lv.',
+                    'common.hp':     'HP',
+                    'common.exp':    '경험치',
+                    'shop.title':    '아이템 마트',
+                    'shop.buy':      '구매',
+                  },
+                  fr: {
+                    'nav.scanner':  'Scanner Quantique',
+                    'nav.journey':  'Arène du Voyage',
+                    'nav.team':     'Équipe',
+                    'nav.pokedex':  'Pokédex enregistré',
+                    'nav.pc':       'Boîte PC',
+                    'nav.shop':     'Boutique',
+                    'settings.title':    'Paramètres',
+                    'settings.subtitle': 'Configuration',
+                    'settings.display':  'Affichage',
+                    'settings.sound':    'Son',
+                    'settings.theme':    'Thème',
+                    'settings.saveData': 'Données sauvegardées',
+                    'settings.backup':   'Sauvegarde / Restaurer',
+                    'settings.clearAll': 'Tout effacer',
+                    'settings.done':     'Terminé',
+                    'settings.language': 'Langue',
+                    'settings.lightMode':'Mode clair',
+                    'settings.darkMode': 'Mode sombre',
+                    'settings.soundOn':  'Son activé',
+                    'settings.soundOff': 'Son désactivé',
+                    'loading.text':  'Initialisation du scanner quantique…',
+                    'loading.beta':  'Version bêta — les fonctionnalités peuvent changer.',
+                    'battle.catch':  'Lancer la Ball',
+                    'battle.run':    'Fuir',
+                    'battle.arena':  'Arène du Voyage',
+                    'battle.gymChallenge': 'Défi de l\'Arène',
+                    'battle.answer': 'Répondez correctement pour accéder à l\'arène !',
+                    'battle.hint':   '💡 Indice',
+                    'battle.goBack': '← Retour',
+                    'common.coins':  'Pièces',
+                    'common.lv':     'Nv.',
+                    'common.hp':     'PV',
+                    'common.exp':    'EXP',
+                    'shop.title':    'Boutique',
+                    'shop.buy':      'Acheter',
+                  },
+                  de: {
+                    'nav.scanner':  'Quanten-Scanner',
+                    'nav.journey':  'Kampfarena',
+                    'nav.team':     'Team',
+                    'nav.pokedex':  'Registrierter Pokédex',
+                    'nav.pc':       'PC-Box',
+                    'nav.shop':     'Artikel-Shop',
+                    'settings.title':    'Einstellungen',
+                    'settings.subtitle': 'Konfiguration',
+                    'settings.display':  'Anzeige',
+                    'settings.sound':    'Sound',
+                    'settings.theme':    'Farbthema',
+                    'settings.saveData': 'Speicherdaten',
+                    'settings.backup':   'Sichern / Wiederherstellen',
+                    'settings.clearAll': 'Alles löschen',
+                    'settings.done':     'Fertig',
+                    'settings.language': 'Sprache',
+                    'settings.lightMode':'Helles Design',
+                    'settings.darkMode': 'Dunkles Design',
+                    'settings.soundOn':  'Sound an',
+                    'settings.soundOff': 'Sound aus',
+                    'loading.text':  'Quanten-Scanner wird initialisiert…',
+                    'loading.beta':  'Beta-Version — Funktionen können sich ändern.',
+                    'battle.catch':  'Ball werfen',
+                    'battle.run':    'Fliehen',
+                    'battle.arena':  'Kampfarena',
+                    'battle.gymChallenge': 'Arena-Herausforderung',
+                    'battle.answer': 'Antworte richtig, um die Arena zu betreten!',
+                    'battle.hint':   '💡 Hinweis',
+                    'battle.goBack': '← Zurück',
+                    'common.coins':  'Münzen',
+                    'common.lv':     'Lv.',
+                    'common.hp':     'KP',
+                    'common.exp':    'EP',
+                    'shop.title':    'Artikel-Shop',
+                    'shop.buy':      'Kaufen',
+                  },
+                  es: {
+                    'nav.scanner':  'Escáner Cuántico',
+                    'nav.journey':  'Arena de Viaje',
+                    'nav.team':     'Equipo',
+                    'nav.pokedex':  'Pokédex Registrada',
+                    'nav.pc':       'PC Box',
+                    'nav.shop':     'Tienda',
+                    'settings.title':    'Ajustes',
+                    'settings.subtitle': 'Configuración',
+                    'settings.display':  'Pantalla',
+                    'settings.sound':    'Sonido',
+                    'settings.theme':    'Tema',
+                    'settings.saveData': 'Datos guardados',
+                    'settings.backup':   'Copia / Restaurar',
+                    'settings.clearAll': 'Borrar todo',
+                    'settings.done':     'Listo',
+                    'settings.language': 'Idioma',
+                    'settings.lightMode':'Modo claro',
+                    'settings.darkMode': 'Modo oscuro',
+                    'settings.soundOn':  'Sonido activado',
+                    'settings.soundOff': 'Sonido desactivado',
+                    'loading.text':  'Inicializando escáner cuántico…',
+                    'loading.beta':  'Versión beta — las funciones pueden cambiar.',
+                    'battle.catch':  'Lanzar Ball',
+                    'battle.run':    'Huir',
+                    'battle.arena':  'Arena de Viaje',
+                    'battle.gymChallenge': 'Desafío del Gimnasio',
+                    'battle.answer': '¡Responde correctamente para acceder al gimnasio!',
+                    'battle.hint':   '💡 Pista',
+                    'battle.goBack': '← Volver',
+                    'common.coins':  'Monedas',
+                    'common.lv':     'Nv.',
+                    'common.hp':     'PS',
+                    'common.exp':    'EXP',
+                    'shop.title':    'Tienda',
+                    'shop.buy':      'Comprar',
+                  },
+                  it: {
+                    'nav.scanner':  'Scanner Quantistico',
+                    'nav.journey':  'Arena di Viaggio',
+                    'nav.team':     'Squadra',
+                    'nav.pokedex':  'Pokédex Registrato',
+                    'nav.pc':       'PC Box',
+                    'nav.shop':     'Negozio',
+                    'settings.title':    'Impostazioni',
+                    'settings.subtitle': 'Configurazione',
+                    'settings.display':  'Schermo',
+                    'settings.sound':    'Suono',
+                    'settings.theme':    'Tema',
+                    'settings.saveData': 'Dati salvati',
+                    'settings.backup':   'Backup / Ripristino',
+                    'settings.clearAll': 'Cancella tutto',
+                    'settings.done':     'Fatto',
+                    'settings.language': 'Lingua',
+                    'settings.lightMode':'Modalità chiara',
+                    'settings.darkMode': 'Modalità scura',
+                    'settings.soundOn':  'Audio attivo',
+                    'settings.soundOff': 'Audio disattivo',
+                    'loading.text':  'Inizializzazione scanner quantistico…',
+                    'loading.beta':  'Versione beta — le funzionalità possono cambiare.',
+                    'battle.catch':  'Lancia Ball',
+                    'battle.run':    'Fuggi',
+                    'battle.arena':  'Arena di Viaggio',
+                    'battle.gymChallenge': 'Sfida della Palestra',
+                    'battle.answer': 'Rispondi correttamente per accedere alla palestra!',
+                    'battle.hint':   '💡 Suggerimento',
+                    'battle.goBack': '← Indietro',
+                    'common.coins':  'Monete',
+                    'common.lv':     'Lv.',
+                    'common.hp':     'PS',
+                    'common.exp':    'ESP',
+                    'shop.title':    'Negozio',
+                    'shop.buy':      'Acquista',
+                  },
+                  zh: {
+                    'nav.scanner':  '量子扫描仪',
+                    'nav.journey':  '战斗竞技场',
+                    'nav.team':     '队伍',
+                    'nav.pokedex':  '已注册图鉴',
+                    'nav.pc':       'PC 盒子',
+                    'nav.shop':     '道具商店',
+                    'settings.title':    '设置',
+                    'settings.subtitle': '配置',
+                    'settings.display':  '显示',
+                    'settings.sound':    '音效',
+                    'settings.theme':    '主题颜色',
+                    'settings.saveData': '存档数据',
+                    'settings.backup':   '备份 / 恢复',
+                    'settings.clearAll': '全部清除',
+                    'settings.done':     '完成',
+                    'settings.language': '语言',
+                    'settings.lightMode':'浅色模式',
+                    'settings.darkMode': '深色模式',
+                    'settings.soundOn':  '音效开启',
+                    'settings.soundOff': '音效关闭',
+                    'loading.text':  '量子扫描仪初始化中…',
+                    'loading.beta':  '测试版 — 功能可能会有所变更。',
+                    'battle.catch':  '投掷精灵球',
+                    'battle.run':    '逃跑',
+                    'battle.arena':  '战斗竞技场',
+                    'battle.gymChallenge': '道馆挑战',
+                    'battle.answer': '答对问题才能进入道馆！',
+                    'battle.hint':   '💡 提示',
+                    'battle.goBack': '← 返回',
+                    'common.coins':  '金币',
+                    'common.lv':     'Lv.',
+                    'common.hp':     'HP',
+                    'common.exp':    '经验值',
+                    'shop.title':    '道具商店',
+                    'shop.buy':      '购买',
+                  },
+                  pt: {
+                    'nav.scanner':  'Scanner Quântico',
+                    'nav.journey':  'Arena de Jornada',
+                    'nav.team':     'Equipe',
+                    'nav.pokedex':  'Pokédex Registrada',
+                    'nav.pc':       'Caixa PC',
+                    'nav.shop':     'Loja de Itens',
+                    'settings.title':    'Configurações',
+                    'settings.subtitle': 'Configuração',
+                    'settings.display':  'Exibição',
+                    'settings.sound':    'Som',
+                    'settings.theme':    'Tema',
+                    'settings.saveData': 'Dados salvos',
+                    'settings.backup':   'Backup / Restaurar',
+                    'settings.clearAll': 'Apagar tudo',
+                    'settings.done':     'Concluído',
+                    'settings.language': 'Idioma',
+                    'settings.lightMode':'Modo claro',
+                    'settings.darkMode': 'Modo escuro',
+                    'settings.soundOn':  'Som ligado',
+                    'settings.soundOff': 'Som desligado',
+                    'loading.text':  'Inicializando scanner quântico…',
+                    'loading.beta':  'Versão beta — recursos podem mudar.',
+                    'battle.catch':  'Lançar Ball',
+                    'battle.run':    'Fugir',
+                    'battle.arena':  'Arena de Jornada',
+                    'battle.gymChallenge': 'Desafio do Ginásio',
+                    'battle.answer': 'Responda corretamente para acessar o ginásio!',
+                    'battle.hint':   '💡 Dica',
+                    'battle.goBack': '← Voltar',
+                    'common.coins':  'Moedas',
+                    'common.lv':     'Nv.',
+                    'common.hp':     'HP',
+                    'common.exp':    'EXP',
+                    'shop.title':    'Loja de Itens',
+                    'shop.buy':      'Comprar',
+                  },
+                };
+
+                // PokéAPI language code mapping
+                const POKEAPI_LANG = {
+                  en:'en', ja:'ja', ko:'ko', fr:'fr', de:'de',
+                  es:'es', it:'it', zh:'zh-Hans', pt:'pt-BR'
+                };
+
+                // In-memory cache: { [pokemonId]: { en:'Bulbasaur', ja:'フシギダネ', ... } }
+                const _pkNames = {};
+
+                // Current language (driven by gameState.language after load)
+                let _currentLang = 'en';
+
+                function t(key) {
+                    const dict = TRANSLATIONS[_currentLang] || TRANSLATIONS.en;
+                    return dict[key] !== undefined ? dict[key] : (TRANSLATIONS.en[key] || key);
+                }
+
+                // Fetch & cache species names for all languages (called per-pokemon)
+                async function _ensurePokemonNames(id) {
+                    if (_pkNames[id]) return;
+                    try {
+                        const res = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
+                        if (!res.ok) return;
+                        const data = await res.json();
+                        const entry = {};
+                        const apiLangSet = new Set(Object.values(POKEAPI_LANG));
+                        data.names.forEach(n => {
+                            if (apiLangSet.has(n.language.name)) {
+                                // reverse-lookup our lang code from the api code
+                                const ourCode = Object.keys(POKEAPI_LANG).find(k => POKEAPI_LANG[k] === n.language.name);
+                                if (ourCode) entry[ourCode] = n.name;
+                            }
+                        });
+                        _pkNames[id] = entry;
+                    } catch(_) {}
+                }
+
+                // Synchronous display name (use cached value; falls back to pokemon.name / _enName)
+                function getPokemonName(pokemon) {
+                    if (!pokemon) return '';
+                    const lang = _currentLang;
+                    if (lang === 'en') return pokemon.name || pokemon._enName || '';
+                    const cached = _pkNames[pokemon.id];
+                    if (cached && cached[lang]) return cached[lang];
+                    return pokemon.name || pokemon._enName || '';
+                }
+
+                // Apply all data-i18n text nodes in the DOM
+                function applyTranslations() {
+                    document.querySelectorAll('[data-i18n]').forEach(el => {
+                        const key = el.getAttribute('data-i18n');
+                        const translated = t(key);
+                        // Only replace direct text; preserve child elements
+                        const childNodes = Array.from(el.childNodes).filter(n => n.nodeType === Node.ELEMENT_NODE);
+                        if (childNodes.length === 0) {
+                            el.textContent = translated;
+                        } else {
+                            // Has child elements (badges, icons): replace only text nodes
+                            el.childNodes.forEach(node => {
+                                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                                    node.textContent = translated + ' ';
+                                }
+                            });
+                        }
+                    });
+                    // Sync dynamic text that isn't always updated by updateUI
+                    _syncDynamicI18n();
+                    // Highlight active language button
+                    document.querySelectorAll('.lang-btn').forEach(btn => {
+                        const active = btn.getAttribute('data-lang') === _currentLang;
+                        btn.style.background = active ? 'var(--theme-grad-from, #f43f5e)' : 'rgba(255,255,255,0.07)';
+                        btn.style.borderColor = active ? 'transparent' : 'rgba(255,255,255,0.12)';
+                        btn.style.boxShadow = active ? '0 0 12px rgba(244,63,94,0.3)' : '';
+                    });
+                }
+
+                function _syncDynamicI18n() {
+                    const soundEl = document.getElementById('settingsSoundText');
+                    if (soundEl && soundEl.hasAttribute('data-i18n')) {
+                        soundEl.textContent = typeof audioMuted !== 'undefined' && audioMuted ? t('settings.soundOff') : t('settings.soundOn');
+                    }
+                    const darkEl = document.getElementById('darkModeSettingsText');
+                    if (darkEl && darkEl.hasAttribute('data-i18n')) {
+                        darkEl.textContent = (typeof isLightMode !== 'undefined' && isLightMode) ? t('settings.darkMode') : t('settings.lightMode');
+                    }
+                }
+
+                // Switch language: update state, cache name, re-render open views
+                window.setLanguage = async function(lang) {
+                    if (!TRANSLATIONS[lang]) return;
+                    _currentLang = lang;
+                    gameState.language = lang;
+                    localStorage.setItem('pokemon_radar_lang', lang);
+                    saveProgress();
+
+                    // Pre-fetch all known Pokémon names for the new language
+                    const allIds = new Set();
+                    [...(gameState.pcBox || []), ...(gameState.pokedex || [])].forEach(p => allIds.add(p.id));
+                    if (gameState.currentEncounter) allIds.add(gameState.currentEncounter.id);
+                    await Promise.all(Array.from(allIds).map(id => _ensurePokemonNames(id)));
+
+                    applyTranslations();
+
+                    // Re-render all live dynamic views so Pokémon names refresh
+                    const currentView = document.querySelector('.view-section.active')?.id || '';
+                    renderPCBox();
+                    renderTeamView();
+                    renderPokedex();
+                    // Force gym puzzle modal strings if open
+                    const puzzleOverlay = document.getElementById('gymPuzzleOverlay');
+                    if (puzzleOverlay && puzzleOverlay.style.display !== 'none') {
+                        const hintBtn = document.querySelector('#gymPuzzleOverlay button[onclick="showHint()"]');
+                        if (hintBtn) hintBtn.textContent = t('battle.hint');
+                        const backBtn = document.querySelector('#gymPuzzleOverlay button[onclick="closeGymPuzzle()"]');
+                        if (backBtn) backBtn.textContent = t('battle.goBack');
+                    }
+                    showNotification(
+                        '🌐 Language Updated',
+                        `Switched to ${document.querySelector('.lang-btn[data-lang="'+lang+'"]')?.textContent?.trim() || lang}`,
+                        'info'
+                    );
+                };
+
                 // ==========================================
                 // SETTINGS MODAL FUNCTIONS
                 // ==========================================
@@ -3021,6 +3509,8 @@ const CAMPAIGN_ROADMAP = [
 
                     // Sync profile button
                     updateProfileBtn();
+                    // Sync language buttons
+                    if (typeof applyTranslations === 'function') applyTranslations();
                 }
 
                 let currentTheme = 'default';
@@ -3091,6 +3581,7 @@ const CAMPAIGN_ROADMAP = [
                             username: "",
                             gymBadges: [],
                             balls: { poke: 5, great: 0, ultra: 0, master: 0 },
+                            language: 'en',
                             starterSelected: false,
                             solvedGymPuzzles: [],
                             pokedex: [],
@@ -3221,6 +3712,8 @@ const CAMPAIGN_ROADMAP = [
                   function updateUI() {
                     // Persist on every UI refresh (catches all state mutations)
                     saveProgress();
+                    // Apply i18n translations on every UI update
+                    if (typeof applyTranslations === 'function') applyTranslations();
                     document.getElementById('playerCoins').textContent = formatNum(gameState.coins);
                     document.getElementById('trainerLevelBadge').textContent = gameState.level;
                     document.getElementById('trainerLevelText').textContent = gameState.level;
@@ -3931,11 +4424,17 @@ const CAMPAIGN_ROADMAP = [
 
                 async function fetchPokemonData(id) {
                     try {
-                        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+                        // Fetch base data + species names in parallel
+                        const [response] = await Promise.all([
+                            fetch(`https://pokeapi.co/api/v2/pokemon/${id}`),
+                            _ensurePokemonNames(id),
+                        ]);
                         const data = await response.json();
                         const startMoves = getMovesForLevel(id, 1);
+                        const enName = data.name.charAt(0).toUpperCase() + data.name.slice(1);
+                        const displayName = getPokemonName({ id: data.id, name: enName });
                         return {
-                            id: data.id, name: data.name.charAt(0).toUpperCase() + data.name.slice(1),
+                            id: data.id, name: displayName, _enName: enName,
                             type1: data.types[0].type.name, type2: data.types[1]?.type.name || null,
                             sprite: data.sprites.other['official-artwork'].front_default || data.sprites.front_default,
                             hp: data.stats[0].base_stat, atk: data.stats[1].base_stat, def: data.stats[2].base_stat,
@@ -5695,7 +6194,7 @@ const CAMPAIGN_ROADMAP = [
                         const registered = caughtNormal || caughtShiny;
 
                         let nameStr = `No. ${id}`;
-                        if (registered) nameStr = gameState.pokedex.find(p => p.id === id).name.toLowerCase();
+                        if (registered) { const dexP = gameState.pokedex.find(p => p.id === id); nameStr = getPokemonName(dexP).toLowerCase(); }
 
                         if (gameState.dexUI.search !== "" && !nameStr.includes(gameState.dexUI.search) && !id.toString().includes(gameState.dexUI.search)) continue;
 
@@ -5745,7 +6244,7 @@ const CAMPAIGN_ROADMAP = [
                                     <div class="flex justify-center my-2">
                                         <img src="${cached.sprite}" alt="${cached.name}" class="h-16 w-16 object-contain" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
                                     </div>
-                                    <h4 class="font-extrabold text-white text-xs tracking-wide text-center truncate w-full">${cached.name}</h4>
+                                    <h4 class="font-extrabold text-white text-xs tracking-wide text-center truncate w-full">${getPokemonName(cached)}</h4>
                                     <div class="text-[7px] text-slate-400 font-mono text-center mt-1">Battles: ${cached.battleCount || 0}</div>
                                     <div class="mt-1.5">
                                         <div class="flex justify-between text-[8px] font-mono text-slate-500 mb-0.5">
@@ -5822,7 +6321,7 @@ const CAMPAIGN_ROADMAP = [
                             ? `<img src="${pk.sprite}" class="w-9 h-9 object-contain flex-shrink-0" style="image-rendering:pixelated" onerror="this.style.display='none'">`
                             : `<div class="w-9 h-9 rounded-lg border border-slate-800 bg-slate-900/60 flex items-center justify-center text-slate-600 font-bold text-xs flex-shrink-0">${i+1}</div>`;
                         const nameHtml = pk
-                            ? `<div class="text-xs font-bold text-white truncate">${pk.isShiny?'✨ ':''}${pk.name}</div>
+                            ? `<div class="text-xs font-bold text-white truncate">${pk.isShiny?'✨ ':''}${getPokemonName(pk)}</div>
                                <div class="text-[9px] text-slate-400 capitalize">${pk.type1}${pk.type2?'/'+pk.type2:''} · Lv${pk.level||1}</div>`
                             : `<div class="text-xs text-slate-500">Open slot</div>`;
                         const slotLabel = i === 0 ? 'Lead' : `Slot ${i+1}`;
@@ -5890,7 +6389,7 @@ const CAMPAIGN_ROADMAP = [
                             cell.innerHTML = `
                                 <img src="${pk.sprite}" class="w-8 h-8 object-contain flex-shrink-0" style="image-rendering:pixelated" onerror="this.style.display='none'">
                                 <div class="min-w-0 flex-1">
-                                    <div class="text-[10px] font-bold text-white truncate">${pk.isShiny?'✨ ':''}${pk.name}</div>
+                                    <div class="text-[10px] font-bold text-white truncate">${pk.isShiny?'✨ ':''}${getPokemonName(pk)}</div>
                                     <div class="text-[8px] text-slate-400 capitalize">${pk.type1} · Lv${pk.level||1}</div>
                                 </div>
                                 ${inSlot ? '<span class="text-[8px] text-cyan-400 flex-shrink-0">✓</span>' : ''}
@@ -6057,7 +6556,7 @@ const CAMPAIGN_ROADMAP = [
                                 <div class="flex justify-center my-2">
                                     <img src="${pk.sprite}" alt="${pk.name}" class="h-16 w-16 object-contain ${pk.isShiny ? 'drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]' : ''}" style="${pk.isShiny ? 'filter: hue-rotate(120deg) saturate(1.5)' : ''}" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
                                 </div>
-                                <h4 class="font-extrabold text-white text-xs tracking-wide text-center truncate w-full">${pk.isShiny ? '✨ ' : ''}${pk.name}</h4>
+                                <h4 class="font-extrabold text-white text-xs tracking-wide text-center truncate w-full">${pk.isShiny ? '✨ ' : ''}${getPokemonName(pk)}</h4>
                                 <div class="text-center mt-1 text-[9px] text-slate-400">${pk.type1.toUpperCase()}${pk.type2 ? ' / ' + pk.type2.toUpperCase() : ''}</div>
                                 <div class="mt-1.5">
                                     <div class="flex justify-between text-[8px] font-mono text-slate-500 mb-0.5"><span>XP</span><span>${xp}/${nextLevelReq}</span></div>
@@ -6782,6 +7281,11 @@ const CAMPAIGN_ROADMAP = [
                 // BOOTSTRAP INIT
                 // ==========================================
                 window.onload = function() {
+                    // Restore language from localStorage before anything renders
+                    const _savedLangOnLoad = localStorage.getItem('pokemon_radar_lang');
+                    if (_savedLangOnLoad && typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[_savedLangOnLoad]) {
+                        _currentLang = _savedLangOnLoad;
+                    }
                     const loadingScreen = document.getElementById('loadingScreen');
                     const loadingBar = document.getElementById('loadingBar');
                     const loadingText = document.getElementById('loadingText');
