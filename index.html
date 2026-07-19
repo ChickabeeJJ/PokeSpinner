@@ -851,7 +851,7 @@
                         </div>
                         <div>
                             <div class="flex justify-between items-baseline gap-2">
-                                <span class="text-[9px] text-slate-400 block uppercase font-bold">Trainer LVL <span id="trainerLevelText">1</span></span>
+                                <span class="text-[9px] text-slate-400 block uppercase font-bold" data-i18n="header.trainerLvl">Trainer LVL</span><span class="text-[9px] text-slate-400 block uppercase font-bold ml-0.5" id="trainerLevelText">1</span>
                             </div>
                             <div class="w-20 md:w-28 bg-slate-900 rounded-full h-1.5 overflow-hidden mt-0.5">
                                 <div id="xpBar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-full rounded-full transition-all duration-300" style="width: 10%;"></div>
@@ -972,7 +972,7 @@
 
                         <!-- BALL TIER SELECTION -->
                         <div class="mt-6 w-full z-10">
-                            <label class="text-[10px] font-black text-center block mb-2 uppercase tracking-widest" style="color:#a78bfa;letter-spacing:0.3em;">Choose Your Poké Ball</label>
+                            <label class="text-[10px] font-black text-center block mb-2 uppercase tracking-widest" style="color:#a78bfa;letter-spacing:0.3em;" data-i18n="scanner.chooseBall">Choose Your Poké Ball</label>
                             <div class="grid grid-cols-4 gap-2">
                                 <button id="ballBtn-poke" onclick="selectBall('poke')" class="ball-selector-btn bg-slate-950 border-2 border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
                                     <div class="pokeball-svg">
@@ -985,7 +985,7 @@
                                             <circle cx="18" cy="18.5" r="1" fill="#fff" opacity="0.8"/>
                                         </svg>
                                     </div>
-                                    <span class="text-xs font-bold mt-1.5">Standard</span>
+                                    <span class="text-xs font-bold mt-1.5" data-i18n="ball.standard">Standard</span>
                                     <span id="count-poke" class="text-[10px] text-slate-400">5</span>
                                 </button>
                                 <button id="ballBtn-great" onclick="selectBall('great')" class="ball-selector-btn bg-slate-950 border border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
@@ -1001,7 +1001,7 @@
                                             <circle cx="18" cy="18.5" r="1" fill="#fff" opacity="0.8"/>
                                         </svg>
                                     </div>
-                                    <span class="text-xs font-bold mt-1.5 text-blue-400">Great</span>
+                                    <span class="text-xs font-bold mt-1.5 text-blue-400" data-i18n="ball.great">Great</span>
                                     <span id="count-great" class="text-[10px] text-slate-400">0</span>
                                 </button>
                                 <button id="ballBtn-ultra" onclick="selectBall('ultra')" class="ball-selector-btn bg-slate-950 border border-slate-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
@@ -1016,7 +1016,7 @@
                                             <circle cx="18" cy="18.5" r="1" fill="#fff" opacity="0.8"/>
                                         </svg>
                                     </div>
-                                    <span class="text-xs font-bold mt-1.5 text-yellow-500">Ultra</span>
+                                    <span class="text-xs font-bold mt-1.5 text-yellow-500" data-i18n="ball.ultra">Ultra</span>
                                     <span id="count-ultra" class="text-[10px] text-slate-400">0</span>
                                 </button>
                                 <button id="ballBtn-master" onclick="selectBall('master')" class="ball-selector-btn bg-slate-950 border border-purple-900 p-2 rounded-2xl flex flex-col items-center justify-center hover:bg-slate-900 transition duration-150">
@@ -1032,7 +1032,7 @@
                                             <circle cx="18" cy="18.5" r="1" fill="#fff" opacity="0.8"/>
                                         </svg>
                                     </div>
-                                    <span class="text-xs font-bold mt-1.5 text-purple-400">Master</span>
+                                    <span class="text-xs font-bold mt-1.5 text-purple-400" data-i18n="ball.master">Master</span>
                                     <span id="count-master" class="text-[10px] text-slate-400">0</span>
                                 </button>
                             </div>
@@ -1052,7 +1052,7 @@
                     <!-- DYNAMIC CAPTURE ACTION SCREEN -->
                     <div class="md:col-span-5 bg-slate-955/40 border border-slate-900 p-6 rounded-3xl flex flex-col justify-between shadow-2xl min-h-[500px]">
                         <div class="text-center">
-                            <span id="encounterStatus" class="bg-slate-900 text-slate-400 border border-slate-800 text-[10px] px-3 py-1 rounded-full uppercase tracking-wider font-bold inline-block">Scanner Offline</span>
+                            <span id="encounterStatus" class="bg-slate-900 text-slate-400 border border-slate-800 text-[10px] px-3 py-1 rounded-full uppercase tracking-wider font-bold inline-block" data-i18n="scanner.offline">Scanner Offline</span>
                         </div>
 
                         <div class="my-6 flex flex-col items-center justify-center flex-grow">
@@ -1280,11 +1280,11 @@
                 <div id="view-pokedex" class="view-panel hidden bg-slate-955/40 border border-slate-900 p-6 rounded-3xl shadow-2xl min-h-[500px]">
                     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-6 border-b border-slate-900">
                         <div>
-                            <h2 class="heading-font text-2xl font-black text-white">REGISTERED PARTNERS</h2>
-                            <p class="text-xs text-slate-400 font-medium font-mono">View statistics, levels, XP metrics, and equip held items below!</p>
+                            <h2 class="heading-font text-2xl font-black text-white" data-i18n="dex.title">REGISTERED PARTNERS</h2>
+                            <p class="text-xs text-slate-400 font-medium font-mono" data-i18n="dex.subtitle">View statistics, levels, XP metrics, and equip held items below!</p>
                         </div>
                         <div class="flex gap-2 w-full md:w-auto">
-                            <input type="text" id="dexSearchInput" oninput="triggerDexSearch()" placeholder="Search Species..." class="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs text-white focus:outline-none focus:border-rose-500 flex-grow md:w-48">
+                            <input type="text" id="dexSearchInput" oninput="triggerDexSearch()" placeholder="Search Species..." data-i18n-placeholder="dex.searchPlaceholder" data-i18n-placeholder="dex.searchPlaceholder" class="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs text-white focus:outline-none focus:border-rose-500 flex-grow md:w-48">
                             <select id="rarityFilterSelect" onchange="triggerDexSearch()" class="bg-slate-900 border border-slate-800 px-3 py-2 rounded-xl text-xs text-white focus:outline-none">
                                 <option value="all">All Grades</option>
                                 <option value="Common">Standard</option>
@@ -1298,9 +1298,9 @@
                     <div id="pokedexGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
 
                     <div id="dexPagination" class="flex justify-between items-center mt-6 pt-4 border-t border-slate-900 text-xs">
-                        <button id="prevPageBtn" onclick="changeDexPage(-1)" class="px-4 py-2 bg-slate-900 hover:bg-slate-850 rounded-xl font-bold">Previous Page</button>
+                        <button id="prevPageBtn" onclick="changeDexPage(-1)" class="px-4 py-2 bg-slate-900 hover:bg-slate-850 rounded-xl font-bold" data-i18n="dex.prevPage">Previous Page</button>
                         <span id="pageInfoText" class="text-slate-400">Page 1 of 1</span>
-                        <button id="nextPageBtn" onclick="changeDexPage(1)" class="px-4 py-2 bg-slate-900 hover:bg-slate-850 rounded-xl font-bold">Next Page</button>
+                        <button id="nextPageBtn" onclick="changeDexPage(1)" class="px-4 py-2 bg-slate-900 hover:bg-slate-850 rounded-xl font-bold" data-i18n="dex.nextPage">Next Page</button>
                     </div>
                 </div>
 
@@ -1308,11 +1308,11 @@
                 <div id="view-pc" class="view-panel hidden bg-slate-955/40 border border-slate-900 p-6 rounded-3xl shadow-2xl min-h-[500px]">
                     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-6 border-b border-slate-900">
                         <div>
-                            <h2 class="heading-font text-2xl font-black text-white">PC STORAGE BOX</h2>
-                            <p class="text-xs text-slate-400 font-medium font-mono">All your caught Pok&eacute;mon are stored here. Each catch is unique!</p>
+                            <h2 class="heading-font text-2xl font-black text-white" data-i18n="pc.title">PC STORAGE BOX</h2>
+                            <p class="text-xs text-slate-400 font-medium font-mono" data-i18n="pc.subtitle">All your caught Pokémon are stored here. Each catch is unique!</p>
                         </div>
                         <div class="flex gap-2 w-full md:w-auto">
-                            <input type="text" id="pcSearchInput" oninput="triggerPCSearch()" placeholder="Search by name or #..." class="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500 flex-grow md:w-48">
+                            <input type="text" id="pcSearchInput" oninput="triggerPCSearch()" placeholder="Search by name or #..." data-i18n-placeholder="pc.searchPlaceholder" data-i18n-placeholder="pc.searchPlaceholder" class="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500 flex-grow md:w-48">
                             <select id="pcSortSelect" onchange="triggerPCSearch()" class="bg-slate-900 border border-slate-800 px-3 py-2 rounded-xl text-xs text-white focus:outline-none">
                                 <option value="newest">Newest First</option>
                                 <option value="oldest">Oldest First</option>
@@ -1324,35 +1324,35 @@
                     </div>
                     <div id="pcGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
                     <div id="pcPagination" class="flex justify-between items-center mt-6 pt-4 border-t border-slate-900 text-xs">
-                        <button id="pcPrevPageBtn" onclick="changePCPage(-1)" class="px-4 py-2 bg-slate-900 hover:bg-slate-850 rounded-xl font-bold">Previous</button>
+                        <button id="pcPrevPageBtn" onclick="changePCPage(-1)" class="px-4 py-2 bg-slate-900 hover:bg-slate-850 rounded-xl font-bold" data-i18n="pc.prev">Previous</button>
                         <span id="pcPageInfoText" class="text-slate-400">Page 1 of 1</span>
-                        <button id="pcNextPageBtn" onclick="changePCPage(1)" class="px-4 py-2 bg-slate-900 hover:bg-slate-850 rounded-xl font-bold">Next</button>
+                        <button id="pcNextPageBtn" onclick="changePCPage(1)" class="px-4 py-2 bg-slate-900 hover:bg-slate-850 rounded-xl font-bold" data-i18n="pc.next">Next</button>
                     </div>
                 </div>
 
                 <!-- MART SHOP VIEW -->
                 <div id="view-shop" class="view-panel hidden bg-slate-955/40 border border-slate-900 p-6 rounded-3xl shadow-2xl min-h-[500px]">
                     <div class="text-center mb-6">
-                        <span class="bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-bold">SILPH CO. STRATEGY MART</span>
-                        <h2 class="heading-font text-2xl font-black text-white mt-2">RADAR & STRATEGIC EQUIPMENT</h2>
-                        <p class="text-xs text-slate-400">Purchase scanner gear, balls, and equippable passive Hold Items to power up your roadmap campaign!</p>
+                        <span class="bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-bold" data-i18n="shop.strategyMart">SILPH CO. STRATEGY MART</span>
+                        <h2 class="heading-font text-2xl font-black text-white mt-2" data-i18n="shop.radarEquip">RADAR & STRATEGIC EQUIPMENT</h2>
+                        <p class="text-xs text-slate-400" data-i18n="shop.subtitle">Purchase scanner gear, balls, and equippable passive Hold Items to power up your roadmap campaign!</p>
                     </div>
 
                     <!-- Jump-to navigation -->
                     <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="text-[9px] uppercase tracking-widest font-bold text-slate-500 self-center mr-1">Jump to:</span>
-                        <button onclick="document.getElementById('shop-anchor-items').scrollIntoView({behavior:'smooth',block:'start'})" class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide bg-slate-900 border border-slate-800 text-slate-300 hover:border-cyan-500/50 hover:text-cyan-300 rounded-lg transition">🔵 Items</button>
-                        <button onclick="document.getElementById('shop-anchor-consumables').scrollIntoView({behavior:'smooth',block:'start'})" class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide bg-slate-900 border border-slate-800 text-slate-300 hover:border-emerald-500/50 hover:text-emerald-300 rounded-lg transition">💊 Consumables</button>
-                        <button onclick="document.getElementById('shop-anchor-tms').scrollIntoView({behavior:'smooth',block:'start'})" class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide bg-slate-900 border border-slate-800 text-slate-300 hover:border-violet-500/50 hover:text-violet-300 rounded-lg transition">📀 TMs</button>
-                        <button onclick="document.getElementById('shop-anchor-premium').scrollIntoView({behavior:'smooth',block:'start'})" class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide bg-slate-900 border border-slate-800 text-slate-300 hover:border-amber-500/50 hover:text-amber-300 rounded-lg transition">⭐ Premium</button>
+                        <span class="text-[9px] uppercase tracking-widest font-bold text-slate-500 self-center mr-1" data-i18n="shop.jumpTo">Jump to:</span>
+                        <button onclick="document.getElementById('shop-anchor-items').scrollIntoView({behavior:'smooth',block:'start'})" class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide bg-slate-900 border border-slate-800 text-slate-300 hover:border-cyan-500/50 hover:text-cyan-300 rounded-lg transition" data-i18n="shop.jumpItems" data-i18n="shop.jumpItems">🔵 Items</button>
+                        <button onclick="document.getElementById('shop-anchor-consumables').scrollIntoView({behavior:'smooth',block:'start'})" class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide bg-slate-900 border border-slate-800 text-slate-300 hover:border-emerald-500/50 hover:text-emerald-300 rounded-lg transition" data-i18n="shop.jumpConsumables" data-i18n="shop.jumpConsumables">💊 Consumables</button>
+                        <button onclick="document.getElementById('shop-anchor-tms').scrollIntoView({behavior:'smooth',block:'start'})" class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide bg-slate-900 border border-slate-800 text-slate-300 hover:border-violet-500/50 hover:text-violet-300 rounded-lg transition" data-i18n="shop.jumpTms" data-i18n="shop.jumpTms">📀 TMs</button>
+                        <button onclick="document.getElementById('shop-anchor-premium').scrollIntoView({behavior:'smooth',block:'start'})" class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide bg-slate-900 border border-slate-800 text-slate-300 hover:border-amber-500/50 hover:text-amber-300 rounded-lg transition" data-i18n="shop.jumpPremium" data-i18n="shop.jumpPremium">⭐ Premium</button>
                     </div>
 
                     <div class="space-y-6">
                         <div class="rounded-2xl border border-slate-900 bg-slate-950/70 p-4">
                             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
                                 <div>
-                                    <p class="text-[10px] uppercase tracking-[0.3em] text-slate-500">Sponsored</p>
-                                    <h3 class="text-sm font-bold text-white">Support the project</h3>
+                                    <p class="text-[10px] uppercase tracking-[0.3em] text-slate-500" data-i18n="shop.sponsored">Sponsored</p>
+                                    <h3 class="text-sm font-bold text-white" data-i18n="shop.supportProject">Support the project</h3>
                                 </div>
                                 <a href="https://buymeacoffee.com/luojj2019o" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs font-bold text-amber-300 hover:bg-amber-500/20 transition">
                                     <i class="fas fa-mug-hot"></i>
@@ -1371,13 +1371,13 @@
                         </div>
 
                         <div>
-                            <h3 id="shop-anchor-items" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Scanning Devices (radar wedge & capture modifiers)</h3>
+                            <h3 id="shop-anchor-items" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3" data-i18n="shop.scanDevices">Scanning Devices (radar wedge & capture modifiers)</h3>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <!-- Poké Ball -->
                                 <div class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-red-500/50 transition">
                                     <div class="flex justify-between items-start">
                                         <svg width="32" height="32" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="2"/><path d="M1.5 20 A18.5 18.5 0 0 1 38.5 20Z" fill="#dc2626"/><rect x="1" y="18" width="38" height="4" fill="#1a1a2e"/><circle cx="20" cy="20" r="6.5" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="2"/><circle cx="20" cy="20" r="3.5" fill="#f9a8a8"/><circle cx="18" cy="18.5" r="1" fill="#fff" opacity="0.8"/></svg>
-                                        <span class="text-[9px] font-mono text-slate-400 uppercase">Qty Owned: <span id="shopCount-poke" class="font-bold">0</span></span>
+                                        <span class="text-[9px] font-mono text-slate-400 uppercase"><span data-i18n="shop.qtyOwned">Qty Owned:</span> <span id="shopCount-poke" class="font-bold">0</span></span>
                                     </div>
                                     <h4 class="text-sm font-extrabold mt-3 text-white">Poké Ball</h4>
                                     <p class="text-[11px] text-slate-400 mt-1">Standard scanning device. Cannot lock onto legendary Pokémon signatures.</p>
@@ -1390,7 +1390,7 @@
                                 <div class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-blue-500/50 transition">
                                     <div class="flex justify-between items-start">
                                         <svg width="32" height="32" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="2"/><path d="M1.5 20 A18.5 18.5 0 0 1 38.5 20Z" fill="#1d4ed8"/><path d="M4 14 Q10 17.5 20 16 Q30 17.5 36 14 L38.5 20 L1.5 20Z" fill="#dc2626"/><rect x="1" y="18" width="38" height="4" fill="#1a1a2e"/><circle cx="20" cy="20" r="6.5" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="2"/><circle cx="20" cy="20" r="3.5" fill="#bfdbfe"/><circle cx="18" cy="18.5" r="1" fill="#fff" opacity="0.8"/></svg>
-                                        <span class="text-[9px] font-mono text-slate-400 uppercase">Qty Owned: <span id="shopCount-great" class="font-bold">0</span></span>
+                                        <span class="text-[9px] font-mono text-slate-400 uppercase"><span data-i18n="shop.qtyOwned">Qty Owned:</span> <span id="shopCount-great" class="font-bold">0</span></span>
                                     </div>
 
                                     <h4 class="text-sm font-extrabold mt-3 text-white">Great Scanning Lens</h4>
@@ -1404,20 +1404,20 @@
                                 <div class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-yellow-500/50 transition">
                                     <div class="flex justify-between items-start">
                                         <svg width="32" height="32" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#111827" stroke="#1a1a2e" stroke-width="2"/><path d="M1.5 20 A18.5 18.5 0 0 1 38.5 20Z" fill="#d97706"/><path d="M5 12 Q12 7.5 20 8 Q28 7.5 35 12 L38 18 L2 18Z" fill="#111827" opacity="0.6"/><rect x="1" y="18" width="38" height="4" fill="#1a1a2e"/><circle cx="20" cy="20" r="6.5" fill="#f5f5f5" stroke="#333" stroke-width="2"/><circle cx="20" cy="20" r="3.5" fill="#fef08a"/><circle cx="18" cy="18.5" r="1" fill="#fff" opacity="0.8"/></svg>
-                                        <span class="text-[9px] font-mono text-slate-400 uppercase">Qty Owned: <span id="shopCount-ultra" class="font-bold">0</span></span>
+                                        <span class="text-[9px] font-mono text-slate-400 uppercase"><span data-i18n="shop.qtyOwned">Qty Owned:</span> <span id="shopCount-ultra" class="font-bold">0</span></span>
                                     </div>
                                     <h4 class="text-sm font-extrabold mt-3 text-white">Ultra Tracking Core</h4>
                                     <p class="text-[11px] text-slate-400 mt-1">Slows scanning rate by 35% and increases probability of hitting targeted legendary scanning wedges.</p>
                                     <div class="mt-4 flex items-center justify-between">
                                         <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> 150 Coins</span>
-                                        <button onclick="buyBall('ultra')" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-[11px] uppercase font-black rounded-lg transition">Buy 1</button>
+                                        <button onclick="buyBall('ultra')" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-[11px] uppercase font-black rounded-lg transition" data-i18n="shop.buy1">Buy 1</button>
                                     </div>
                                 </div>
                                 <!-- Master Ball -->
                                 <div class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-purple-500/50 transition">
                                     <div class="flex justify-between items-start">
                                         <svg width="32" height="32" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="2"/><path d="M1.5 20 A18.5 18.5 0 0 1 38.5 20Z" fill="#7c3aed"/><circle cx="20" cy="10" r="5" fill="#ec4899"/><text x="20" y="13.5" text-anchor="middle" fill="#fff" font-size="7.5" font-weight="900" font-family="Arial,sans-serif">M</text><rect x="1" y="18" width="38" height="4" fill="#1a1a2e"/><circle cx="20" cy="20" r="6.5" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="2"/><circle cx="20" cy="20" r="3.5" fill="#e9d5ff"/><circle cx="18" cy="18.5" r="1" fill="#fff" opacity="0.8"/></svg>
-                                        <span class="text-[9px] font-mono text-slate-400 uppercase">Qty Owned: <span id="shopCount-master" class="font-bold">0</span></span>
+                                        <span class="text-[9px] font-mono text-slate-400 uppercase"><span data-i18n="shop.qtyOwned">Qty Owned:</span> <span id="shopCount-master" class="font-bold">0</span></span>
                                     </div>
                                     <h4 class="text-sm font-extrabold mt-3 text-white">Quantum Master Link</h4>
                                     <p class="text-[11px] text-slate-400 mt-1">Extremely easy slow spin. Captures targets instantly without needing the ring accuracy game.</p>
@@ -1430,26 +1430,26 @@
                         </div>
 
                         <div>
-                            <h3 id="shop-anchor-held" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Held Items (Equip to your partners for passive boosts)</h3>
+                            <h3 id="shop-anchor-held" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3" data-i18n="shop.heldItems">Held Items (Equip to your partners for passive boosts)</h3>
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="heldItemsShopList">
                             </div>
                         </div>
 
                         <div>
-                            <h3 id="shop-anchor-consumables" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Consumables & Evolution Stones (Use directly in your PC)</h3>
+                            <h3 id="shop-anchor-consumables" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3" data-i18n="shop.consumablesSection">Consumables & Evolution Stones (Use directly in your PC)</h3>
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="consumablesShopList">
                             </div>
                         </div>
 
                         <div id="shop-tms-section">
-                            <h3 id="shop-anchor-tms" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Technical Machines (TMs)</h3>
-                            <p class="text-[10px] text-slate-500 mb-3">One-time purchase — reuse the TM infinitely from your PC. Only compatible Pokémon can learn each TM.</p>
+                            <h3 id="shop-anchor-tms" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3" data-i18n="shop.tmsSection">Technical Machines (TMs)</h3>
+                            <p class="text-[10px] text-slate-500 mb-3" data-i18n="shop.tmsDesc">One-time purchase — reuse the TM infinitely from your PC. Only compatible Pokémon can learn each TM.</p>
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-3" id="tmShopList">
                             </div>
                         </div>
 
                         <div id="autoBattlerShopSection">
-                            <h3 id="shop-anchor-premium" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Premium Upgrades</h3>
+                            <h3 id="shop-anchor-premium" class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3" data-i18n="shop.premium">Premium Upgrades</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div id="autoBattlerShopCard" class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-amber-500/50 transition">
                                     <div>
@@ -1457,12 +1457,12 @@
                                             <span class="p-2 bg-amber-950/40 text-amber-400 rounded-lg text-xs"><i class="fas fa-robot"></i></span>
                                             <span id="autoBattlerOwned" class="text-[9px] font-mono text-slate-400">Not Owned</span>
                                         </div>
-                                        <h4 class="text-xs font-extrabold mt-3 text-white">Auto Battler</h4>
-                                        <p class="text-[10px] text-slate-400 mt-1">Automatically plays a selected campaign stage on repeat, collecting rewards hands-free. Stop anytime.</p>
+                                        <h4 class="text-xs font-extrabold mt-3 text-white" data-i18n="autoBattler.name">Auto Battler</h4>
+                                        <p class="text-[10px] text-slate-400 mt-1" data-i18n="autoBattler.desc">Automatically plays a selected campaign stage on repeat, collecting rewards hands-free. Stop anytime.</p>
                                     </div>
                                     <div class="mt-4 flex items-center justify-between">
                                         <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> 50.00k</span>
-                                        <button id="autoBattlerBuyBtn" onclick="buyAutoBattler()" class="px-2.5 py-1.5 bg-amber-700 hover:bg-amber-600 text-white text-[10px] uppercase font-bold rounded-lg transition">Buy</button>
+                                        <button id="autoBattlerBuyBtn" onclick="buyAutoBattler()" class="px-2.5 py-1.5 bg-amber-700 hover:bg-amber-600 text-white text-[10px] uppercase font-bold rounded-lg transition" data-i18n="autoBattler.buyBtn">Buy</button>
                                     </div>
                                 </div>
                                 <div id="shinyCharmShopCard" class="bg-slate-950 border border-slate-900 p-4 rounded-2xl flex flex-col justify-between hover:border-pink-500/50 transition">
@@ -1473,12 +1473,12 @@
                                             </span>
                                             <span id="shinyCharmOwned" class="text-[9px] font-mono text-slate-400">Not Owned</span>
                                         </div>
-                                        <h4 class="text-xs font-extrabold mt-3 text-white">Shiny Charm</h4>
-                                        <p class="text-[10px] text-slate-400 mt-1">A mysterious charm said to make it far easier to encounter Shiny Pokémon. Raises shiny odds by +15%.</p>
+                                        <h4 class="text-xs font-extrabold mt-3 text-white" data-i18n="shinyCharm.name">Shiny Charm</h4>
+                                        <p class="text-[10px] text-slate-400 mt-1" data-i18n="shinyCharm.desc">A mysterious charm said to make it far easier to encounter Shiny Pokémon. Raises shiny odds by +15%.</p>
                                     </div>
                                     <div class="mt-4 flex items-center justify-between">
                                         <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> 35.00k</span>
-                                        <button id="shinyCharmBuyBtn" onclick="buyShinyCharm()" class="px-2.5 py-1.5 bg-pink-700 hover:bg-pink-600 text-white text-[10px] uppercase font-bold rounded-lg transition">Buy</button>
+                                        <button id="shinyCharmBuyBtn" onclick="buyShinyCharm()" class="px-2.5 py-1.5 bg-pink-700 hover:bg-pink-600 text-white text-[10px] uppercase font-bold rounded-lg transition" data-i18n="shop.buy">Buy</button>
                                     </div>
                                 </div>
                             </div>
@@ -1488,14 +1488,14 @@
                         <div id="autoBattlerPanel" class="hidden bg-gradient-to-r from-amber-950/30 to-slate-950/30 border border-amber-900/50 p-5 rounded-2xl space-y-4">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <h3 class="text-sm font-bold text-amber-400 uppercase tracking-widest flex items-center gap-2"><i class="fas fa-robot"></i> Auto Battler</h3>
-                                    <p class="text-[10px] text-slate-400 mt-0.5">Select a stage and let your team fight automatically.</p>
+                                    <h3 class="text-sm font-bold text-amber-400 uppercase tracking-widest flex items-center gap-2"><i class="fas fa-robot"></i> <span data-i18n="autoBattler.name">Auto Battler</span></h3>
+                                    <p class="text-[10px] text-slate-400 mt-0.5" data-i18n="autoBattler.panelDesc">Select a stage and let your team fight automatically.</p>
                                 </div>
                                 <div id="autoBattlerStatusBadge" class="text-[9px] font-bold px-2 py-1 rounded bg-slate-800 text-slate-400">IDLE</div>
                             </div>
                             <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-end">
                                 <div class="flex-1">
-                                    <label class="text-[10px] text-slate-400 uppercase font-bold block mb-1">Stage to Farm</label>
+                                    <label class="text-[10px] text-slate-400 uppercase font-bold block mb-1" data-i18n="autoBattler.stageFarm">Stage to Farm</label>
                                     <select id="autoBattlerStageSelect" class="w-full bg-slate-900 border border-slate-700 text-white text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
                                         <option value="">-- Select a stage --</option>
                                     </select>
@@ -2321,7 +2321,7 @@
 
 const CAMPAIGN_ROADMAP = [
     { stageId:1, name:"Viridian Forest", trainer:"Bug Catcher Rick", pokemonId:10, bossName:"Caterpie", level:5, reward:60, icon:"🐛", teamSize:1, regionId:1 },
-    { stageId:2, name:"Pewter City Gym", trainer:"Gym Leader Brock", gymPuzzle: { question: "Which type is super effective against Rock?", options: ["Fire", "Water", "Psychic", "Flying"], answer: 1, hint: "Think about eroding stone..." }, pokemonId:95, bossName:"Onix", level:12, reward:120, icon:"🪨", teamSize:2, regionId:1, isGym:true, badgeName:"Boulder Badge", badgeColor:"#9ca3af", badgeEmoji:"🪨" },
+    { stageId:2, name:"Pewter City Gym", trainer:"Gym Leader Brock", gymPuzzle: { question: "Which type is super effective against Rock?", options: ["Fire", "Water", "Grass", "Flying"], answer: 1, hint: "Think about eroding stone..." }, pokemonId:95, bossName:"Onix", level:12, reward:120, icon:"🪨", teamSize:2, regionId:1, isGym:true, badgeName:"Boulder Badge", badgeColor:"#9ca3af", badgeEmoji:"🪨" },
     { stageId:3, name:"Cerulean Route", trainer:"Lass Haley", pokemonId:39, bossName:"Jigglypuff", level:18, reward:150, icon:"🎈", teamSize:2, regionId:1 },
     { stageId:4, name:"Cerulean City Gym", trainer:"Gym Leader Misty", gymPuzzle: { question: "What is Misty's signature Pokémon species?", options: ["Goldeen", "Psyduck", "Starmie", "Vaporeon"], answer: 2, hint: "It's a star-shaped Water/Psychic type." }, pokemonId:121, bossName:"Starmie", level:24, reward:180, icon:"💧", teamSize:2, regionId:1, isGym:true, badgeName:"Cascade Badge", badgeColor:"#38bdf8", badgeEmoji:"💧" },
     { stageId:4.5, name:"Vermilion Route", trainer:"Sailor Huey", pokemonId:72, bossName:"Tentacool", level:29, reward:190, icon:"⛵", teamSize:2, regionId:1 },
@@ -2329,7 +2329,7 @@ const CAMPAIGN_ROADMAP = [
     { stageId:6, name:"Lavender Town", trainer:"Channeler Patricia", pokemonId:93, bossName:"Haunter", level:38, reward:250, icon:"👻", teamSize:3, regionId:1 },
     { stageId:7, name:"Celadon City Gym", trainer:"Gym Leader Erika", gymPuzzle: { question: "Which move does NOT have the Grass type?", options: ["Razor Leaf", "Solar Beam", "Petal Dance", "Body Slam"], answer: 3, hint: "Normal-type moves don't get STAB for Grass-types." }, pokemonId:45, bossName:"Vileplume", level:44, reward:290, icon:"🌸", teamSize:3, regionId:1, isGym:true, badgeName:"Rainbow Badge", badgeColor:"#34d399", badgeEmoji:"🌿" },
     { stageId:7.5, name:"Safari Zone", trainer:"Poké Maniac Ethan", pokemonId:111, bossName:"Rhyhorn", level:46, reward:305, icon:"🦏", teamSize:3, regionId:1 },
-    { stageId:8, name:"Fuchsia City Gym", trainer:"Gym Leader Koga", gymPuzzle: { question: "Which of these is a Poison-type status move?", options: ["Toxic", "Acid Armor", "Sludge Bomb", "Poison Gas"], answer: 0, hint: "It badly poisons the target." }, pokemonId:110, bossName:"Weezing", level:50, reward:340, icon:"☠️", teamSize:4, regionId:1, isGym:true, badgeName:"Soul Badge", badgeColor:"#a78bfa", badgeEmoji:"🔴" },
+    { stageId:8, name:"Fuchsia City Gym", trainer:"Gym Leader Koga", gymPuzzle: { question: "Which of these is a Poison-type status move?", options: ["Toxic", "Acid", "Sludge Bomb", "Poison Gas"], answer: 0, hint: "It badly poisons the target." }, pokemonId:110, bossName:"Weezing", level:50, reward:340, icon:"☠️", teamSize:4, regionId:1, isGym:true, badgeName:"Soul Badge", badgeColor:"#a78bfa", badgeEmoji:"🔴" },
     { stageId:8.5, name:"Silph Co.", trainer:"Rocket Executive Archer", pokemonId:89, bossName:"Muk", level:52, reward:360, icon:"☢️", teamSize:3, regionId:1 },
     { stageId:9, name:"Saffron City Gym", trainer:"Gym Leader Sabrina", pokemonId:65, bossName:"Alakazam", level:55, reward:390, icon:"🥄", teamSize:4, regionId:1, isGym:true, badgeName:"Marsh Badge", badgeColor:"#c084fc", badgeEmoji:"🔮" },
     { stageId:9.5, name:"Seafoam Islands", trainer:"Lass Lola", pokemonId:91, bossName:"Cloyster", level:57, reward:410, icon:"🏝️", teamSize:3, regionId:1 },
@@ -2634,7 +2634,7 @@ const CAMPAIGN_ROADMAP = [
                                 <button onclick="window.profileRegionNav(-1)" class="text-slate-400 hover:text-white px-3 py-1 rounded-lg border border-slate-800 text-[11px] disabled:opacity-30 transition" ${prevOk?'':'disabled'}>◀ Prev</button>
                                 <div class="text-center">
                                     <div class="text-xs font-black text-white uppercase tracking-widest">${REGION_NAMES_P[currentRegionId]}</div>
-                                    <div class="text-[9px] text-slate-500">Gen ${currentRegionId} · ${earnedInRegion}/${regionGyms.length} badges</div>
+                                    <div class="text-[9px] text-slate-500">${t('profile.gen')} ${currentRegionId} · ${earnedInRegion}/${regionGyms.length} ${t('profile.badges')}</div>
                                 </div>
                                 <button onclick="window.profileRegionNav(1)" class="text-slate-400 hover:text-white px-3 py-1 rounded-lg border border-slate-800 text-[11px] disabled:opacity-30 transition" ${nextOk?'':'disabled'}>Next ▶</button>
                             </div>
@@ -2654,7 +2654,7 @@ const CAMPAIGN_ROADMAP = [
                             if (grid) grid.appendChild(div);
                         });
                         if (regionGyms.length === 0) {
-                            if (grid) grid.innerHTML = '<div class="col-span-4 text-[10px] text-slate-500 text-center py-4">No gym badges in this region yet.</div>';
+                            if (grid) grid.innerHTML = `<div class="col-span-4 text-[10px] text-slate-500 text-center py-4">${t('profile.noBadges')}</div>`;
                         }
                     }
 
@@ -4331,6 +4331,16 @@ const CAMPAIGN_ROADMAP = [
                             });
                         }
                     });
+                    // data-i18n-placeholder: translate placeholder attributes
+                    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                        el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+                    });
+                    // data-i18n-title: translate title attributes
+                    document.querySelectorAll('[data-i18n-title]').forEach(el => {
+                        el.title = t(el.getAttribute('data-i18n-title'));
+                    });
+                    // Update dynamic select options and other elements
+                    _updateDynamicElements();
                     // Sync dynamic text that isn't always updated by updateUI
                     _syncDynamicI18n();
                     // Highlight active language button
@@ -4340,6 +4350,110 @@ const CAMPAIGN_ROADMAP = [
                         btn.style.borderColor = active ? 'transparent' : 'rgba(255,255,255,0.12)';
                         btn.style.boxShadow = active ? '0 0 12px rgba(244,63,94,0.3)' : '';
                     });
+                }
+
+                function _updateDynamicElements() {
+                    // Pokedex rarity filter select
+                    const raritySelect = document.getElementById('rarityFilterSelect');
+                    if (raritySelect) {
+                        const rarityMap = [
+                            ['all', 'dex.allGrades'],
+                            ['Common', 'dex.filterCommon'],
+                            ['Rare', 'dex.filterRare'],
+                            ['Epic', 'dex.filterEpic'],
+                            ['Legendary', 'dex.filterLegendary']
+                        ];
+                        const cur = raritySelect.value;
+                        raritySelect.innerHTML = rarityMap.map(([val, key]) =>
+                            `<option value="${val}"${cur === val ? ' selected' : ''}>${t(key)}</option>`
+                        ).join('');
+                    }
+                    // PC sort select
+                    const pcSort = document.getElementById('pcSortSelect');
+                    if (pcSort) {
+                        const sortMap = [
+                            ['newest', 'pc.sortNewest'],
+                            ['oldest', 'pc.sortOldest'],
+                            ['level-desc', 'pc.sortLevelDesc'],
+                            ['level-asc', 'pc.sortLevelAsc'],
+                            ['name', 'pc.sortName']
+                        ];
+                        const cur2 = pcSort.value;
+                        pcSort.innerHTML = sortMap.map(([val, key]) =>
+                            `<option value="${val}"${cur2 === val ? ' selected' : ''}>${t(key)}</option>`
+                        ).join('');
+                    }
+                    // Dex search placeholder
+                    const dexSearch = document.getElementById('dexSearchInput');
+                    if (dexSearch) dexSearch.placeholder = t('dex.searchPlaceholder');
+                    // PC search placeholder
+                    const pcSearch = document.getElementById('pcSearchInput');
+                    if (pcSearch) pcSearch.placeholder = t('pc.searchPlaceholder');
+                    // Ball selector tooltip titles
+                    const ballMiniTitles = {poke: 'ball.pokeName', great: 'ball.greatName', ultra: 'ball.ultraName', master: 'ball.masterName'};
+                    Object.entries(ballMiniTitles).forEach(([type, key]) => {
+                        const wrap = document.querySelector(`#miniCount-${type}`)?.closest('[title]');
+                        if (wrap) wrap.title = t(key);
+                    });
+                    // Update autobattler owned badge
+                    const abOwned = document.getElementById('autoBattlerOwned');
+                    if (abOwned && (gameState.autoBattler)) abOwned.textContent = t('autoBattler.owned');
+                    else if (abOwned && !gameState.autoBattler) abOwned.textContent = t('shop.notOwned');
+                    // Update shiny charm owned badge
+                    const scOwned = document.getElementById('shinyCharmOwned');
+                    if (scOwned) scOwned.textContent = gameState.shinyCharm ? ('✨ ' + t('common.owned')) : t('shop.notOwned');
+                }
+
+                function _updateDynamicElements() {
+                    // Pokedex rarity filter select
+                    const raritySelect = document.getElementById('rarityFilterSelect');
+                    if (raritySelect) {
+                        const rarityMap = [
+                            ['all', 'dex.allGrades'],
+                            ['Common', 'dex.filterCommon'],
+                            ['Rare', 'dex.filterRare'],
+                            ['Epic', 'dex.filterEpic'],
+                            ['Legendary', 'dex.filterLegendary']
+                        ];
+                        const cur = raritySelect.value;
+                        raritySelect.innerHTML = rarityMap.map(([val, key]) =>
+                            `<option value="${val}"${cur === val ? ' selected' : ''}>${t(key)}</option>`
+                        ).join('');
+                    }
+                    // PC sort select
+                    const pcSort = document.getElementById('pcSortSelect');
+                    if (pcSort) {
+                        const sortMap = [
+                            ['newest', 'pc.sortNewest'],
+                            ['oldest', 'pc.sortOldest'],
+                            ['level-desc', 'pc.sortLevelDesc'],
+                            ['level-asc', 'pc.sortLevelAsc'],
+                            ['name', 'pc.sortName']
+                        ];
+                        const cur2 = pcSort.value;
+                        pcSort.innerHTML = sortMap.map(([val, key]) =>
+                            `<option value="${val}"${cur2 === val ? ' selected' : ''}>${t(key)}</option>`
+                        ).join('');
+                    }
+                    // Dex search placeholder
+                    const dexSearch = document.getElementById('dexSearchInput');
+                    if (dexSearch) dexSearch.placeholder = t('dex.searchPlaceholder');
+                    // PC search placeholder
+                    const pcSearch = document.getElementById('pcSearchInput');
+                    if (pcSearch) pcSearch.placeholder = t('pc.searchPlaceholder');
+                    // Ball selector tooltip titles
+                    const ballMiniTitles = {poke: 'ball.pokeName', great: 'ball.greatName', ultra: 'ball.ultraName', master: 'ball.masterName'};
+                    Object.entries(ballMiniTitles).forEach(([type, key]) => {
+                        const wrap = document.querySelector(`#miniCount-${type}`)?.closest('[title]');
+                        if (wrap) wrap.title = t(key);
+                    });
+                    // Update autobattler owned badge
+                    const abOwned = document.getElementById('autoBattlerOwned');
+                    if (abOwned && (gameState.autoBattler)) abOwned.textContent = t('autoBattler.owned');
+                    else if (abOwned && !gameState.autoBattler) abOwned.textContent = t('shop.notOwned');
+                    // Update shiny charm owned badge
+                    const scOwned = document.getElementById('shinyCharmOwned');
+                    if (scOwned) scOwned.textContent = gameState.shinyCharm ? ('✨ ' + t('common.owned')) : t('shop.notOwned');
                 }
 
                 function _syncDynamicI18n() {
@@ -4456,7 +4570,7 @@ const CAMPAIGN_ROADMAP = [
                     });
 
                     // Active theme label chip — text only; colours come from CSS variables
-                    const labels = { default:'Rose', ocean:'Ocean', forest:'Forest', sunset:'Sunset', electric:'Electric', midnight:'Midnight', dragon:'Dragon', steel:'Steel' };
+                    const labels = { default:t('theme.rose')||'Rose', ocean:t('theme.ocean')||'Ocean', forest:t('theme.forest')||'Forest', sunset:t('theme.sunset')||'Sunset', electric:t('theme.electric')||'Electric', midnight:t('theme.midnight')||'Midnight', dragon:t('theme.dragon')||'Dragon', steel:t('theme.steel')||'Steel' };
                     const labelEl = document.getElementById('activeThemeLabel');
                     if (labelEl) labelEl.textContent = labels[currentTheme] || 'Rose';
 
@@ -4512,7 +4626,7 @@ const CAMPAIGN_ROADMAP = [
                     localStorage.setItem('pokemon_radar_theme', themeName);
 
                     if (!silent) {
-                        const labels = { default:'Rose', ocean:'Ocean', forest:'Forest', sunset:'Sunset', electric:'Electric', midnight:'Midnight', dragon:'Dragon', steel:'Steel' };
+                        const labels = { default:t('theme.rose')||'Rose', ocean:t('theme.ocean')||'Ocean', forest:t('theme.forest')||'Forest', sunset:t('theme.sunset')||'Sunset', electric:t('theme.electric')||'Electric', midnight:t('theme.midnight')||'Midnight', dragon:t('theme.dragon')||'Dragon', steel:t('theme.steel')||'Steel' };
                         showNotification('Theme Changed', `Applied ${labels[themeName] || themeName} theme`, 'success');
                     }
                 }
@@ -5594,7 +5708,7 @@ const CAMPAIGN_ROADMAP = [
                     gameState.activeBattleStage = stage;
                     // Check PC box first — need at least one Pokémon
                     if (!gameState.pcBox || gameState.pcBox.length === 0) {
-                        showNotification("No Pokémon!", "Spin the wheel to catch Pokémon before battling.", "error");
+                        showNotification(t('notify.noPokemon'), t('notify.spinFirst'), 'error');
                         return;
                     }
                     const teamFighters = getBattleFighterPool(true);
@@ -5673,7 +5787,7 @@ const CAMPAIGN_ROADMAP = [
                     if (!stage) {
                         const BATTLE_ENTRY_COST = 50;
                         if (gameState.coins < BATTLE_ENTRY_COST) {
-                            showNotification('Not Enough Coins', `Endless simulation entry requires ${BATTLE_ENTRY_COST} Coins.`, 'error');
+                            showNotification(t('notify.notEnoughCoins'), `Endless simulation entry requires ${BATTLE_ENTRY_COST} ${t('common.coins')}.`, 'error');
                             return;
                         }
                         spendCoins(BATTLE_ENTRY_COST);
@@ -5752,7 +5866,7 @@ const CAMPAIGN_ROADMAP = [
 
                     document.getElementById('bossSprite').src = enemyProfile.sprite;
                     document.getElementById('bossName').textContent = enemyProfile.name;
-                    document.getElementById('bossLevelBadge').textContent = `${t('battle.lvl')} ${enemyProfile.level}`;
+                    document.getElementById('bossLevelBadge').textContent = t('battle.lvl') + ' ' + enemyProfile.level;
                     document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossHP}`;
                     document.getElementById('bossHPBar').style.width = "100%";
 
@@ -6355,10 +6469,10 @@ const CAMPAIGN_ROADMAP = [
 
                         document.getElementById('bossSprite').src     = newEnemy.sprite;
                         document.getElementById('bossName').textContent         = newEnemy.name;
-                        document.getElementById('bossLevelBadge').textContent   = `LVL ${newEnemy.level}`;
+                        document.getElementById('bossLevelBadge').textContent   = t('battle.lvl') + ' ' + newEnemy.level;
                         document.getElementById('bossHPText').textContent       = `${newEnemy.hp}/${newEnemy.hp}`;
                         document.getElementById('bossHPBar').style.width        = '100%';
-                        if (logBox) { logBox.innerHTML += `<div class="text-amber-400 font-bold mt-2">⚔️ ${newEnemy.name} appeared! Defeat it to keep going!</div>`; logBox.scrollTop = logBox.scrollHeight; }
+                        if (logBox) { logBox.innerHTML += `<div class="text-amber-400 font-bold mt-2">⚔️ ${newEnemy.name} ${t('battle.appeared')}</div>`; logBox.scrollTop = logBox.scrollHeight; }
                         disableMoveButtons(false);
                         renderBattleMoves(fighter);
                     } catch(e) {
@@ -7064,7 +7178,7 @@ const CAMPAIGN_ROADMAP = [
                         // Update player side UI
                         document.getElementById('playerFighterSprite').src = nextFighter.sprite;
                         document.getElementById('playerFighterName').textContent = (nextFighter.isShiny ? '✨ ' : '') + nextFighter.name;
-                        document.getElementById('playerFighterLevelBadge').textContent = 'LVL ' + (nextFighter.level || 1);
+                        document.getElementById('playerFighterLevelBadge').textContent = t('battle.lvl') + ' ' + (nextFighter.level || 1);
                         document.getElementById('playerFighterHPText').textContent = nextHP + '/' + nextHP;
                         document.getElementById('playerFighterHPBar').style.width = '100%';
                         document.getElementById('playerFighterHPBar').className = 'bg-green-500 h-full transition-all duration-300';
@@ -7072,7 +7186,7 @@ const CAMPAIGN_ROADMAP = [
                             ? `<span class="bg-cyan-900/80 border border-cyan-700 text-cyan-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase"><i class="fas fa-briefcase"></i> ${HOLD_ITEMS_DB[nextFighter.heldItem].name}</span>`
                             : '';
 
-                        logBox.innerHTML += `<div class="text-cyan-400 font-bold mt-1 animate-pulse">⚡ Go, <span class="text-white font-black">${nextFighter.name}</span>! (${nextIndex + 1}/${playerTeam.length})</div>`;
+                        logBox.innerHTML += `<div class="text-cyan-400 font-bold mt-1 animate-pulse">${t('battle.goNext')} <span class="text-white font-black">${nextFighter.name}</span>! (${nextIndex + 1}/${playerTeam.length})</div>`;
                         logBox.scrollTop = logBox.scrollHeight;
 
                         renderStatStagesUI();
@@ -7194,14 +7308,14 @@ const CAMPAIGN_ROADMAP = [
                                 <div>
                                     <div class="flex justify-between items-center mb-1 gap-1">
                                         <span class="text-[8px] uppercase tracking-wider px-1.5 py-0.5 rounded font-extrabold bg-slate-900 text-slate-400">${item.rarity}</span>
-                                        <span class="text-[10px] font-bold text-pink-400 font-mono">LVL ${level}</span>
+                                        <span class="text-[10px] font-bold text-pink-400 font-mono">${t('dex.lvl')} ${level}</span>
                                         <span class="text-[8px] font-bold text-red-400 font-mono" title="Friendship">💕 ${Math.round((cached.friendship || 50) * 100 / 255)}%</span>
                                     </div>
                                     <div class="flex justify-center my-2">
                                         <img src="${cached.sprite}" alt="${cached.name}" class="h-16 w-16 object-contain" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
                                     </div>
                                     <h4 class="font-extrabold text-white text-xs tracking-wide text-center truncate w-full">${getPokemonName(cached)}</h4>
-                                    <div class="text-[7px] text-slate-400 font-mono text-center mt-1">Battles: ${cached.battleCount || 0}</div>
+                                    <div class="text-[7px] text-slate-400 font-mono text-center mt-1">${t('dex.battles')}: ${cached.battleCount || 0}</div>
                                     <div class="mt-1.5">
                                         <div class="flex justify-between text-[8px] font-mono text-slate-500 mb-0.5">
                                             <span>${t('pc.xpProgress')}</span><span>${xp}/${nextLevelReq}</span>
@@ -7220,7 +7334,7 @@ const CAMPAIGN_ROADMAP = [
                                     </div>
                                 </div>
                                 <div class="mt-3 pt-2 border-t border-slate-900 text-center">
-                                    <span class="text-[8px] font-mono text-slate-500">Owned: <span class="font-bold text-emerald-400">${gameState.pcBox.filter(p => p.id === item.id).length}x</span></span>
+                                    <span class="text-[8px] font-mono text-slate-500">${t('dex.owned')}: <span class="font-bold text-emerald-400">${gameState.pcBox.filter(p => p.id === item.id).length}x</span></span>
                                 </div>
                                 <div class="absolute bottom-2 right-2 flex gap-1">
                                     ${item.caughtNormal ? '<span class="text-[7px] font-bold bg-slate-800 text-slate-300 px-1 rounded">N</span>' : ''}
@@ -7507,7 +7621,7 @@ const CAMPAIGN_ROADMAP = [
                             <div>
                                 <div class="flex justify-between items-center mb-1">
                                     <span class="text-[8px] uppercase tracking-wider px-1.5 py-0.5 rounded font-extrabold bg-slate-900 text-slate-400">#${pk.id} ${rarity}</span>
-                                    <span class="text-[10px] font-bold text-pink-400 font-mono">LVL ${level}</span>
+                                    <span class="text-[10px] font-bold text-pink-400 font-mono">${t('dex.lvl')} ${level}</span>
                                 </div>
                                 <div class="flex justify-center my-2">
                                     <img src="${pk.sprite}" alt="${pk.name}" class="h-16 w-16 object-contain ${pk.isShiny ? 'drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]' : ''}" style="${pk.isShiny ? 'filter: hue-rotate(120deg) saturate(1.5)' : ''}" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
@@ -7775,7 +7889,7 @@ const CAMPAIGN_ROADMAP = [
                             </div>
                             <div class="mt-4 flex items-center justify-between">
                                 <span class="text-xs font-bold text-yellow-400"><i class="fas fa-coins mr-1"></i> ${formatNum(item.cost)}</span>
-                                <button onclick="window.buyShopItem('${key}')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white text-[10px] uppercase font-bold rounded-lg transition">Buy</button>
+                                <button onclick="window.buyShopItem('${key}')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white text-[10px] uppercase font-bold rounded-lg transition">${t('shop.buy')}</button>
                             </div>
                         `;
                         targetContainer.appendChild(card);
@@ -7788,7 +7902,7 @@ const CAMPAIGN_ROADMAP = [
                     if (!item) return;
 
                     if (gameState.coins < item.cost) {
-                        showNotification('No Funds Available', `Requires ${formatNum(item.cost)} Coins. Beat roadmap chapters to earn payouts!`, 'error');
+                        showNotification(t('notify.noFunds'), t('notify.noFundsRoadmap').replace('{0}', formatNum(item.cost)), 'error');
                         return;
                     }
 
@@ -7796,8 +7910,8 @@ const CAMPAIGN_ROADMAP = [
                     gameState.inventoryItems[itemKey] = (gameState.inventoryItems[itemKey] || 0) + 1;
                     
                     playConfirmSound();
-                    const actionLabel = item.type === 'held_item' ? 'Hold Item Purchased' : 'Consumable Purchased';
-                    showNotification(actionLabel, `Added ${item.name} to inventory.`, 'success');
+                    const actionLabel = item.type === 'held_item' ? t('notify.holdItemBought') : t('notify.consumableBought');
+                    showNotification(actionLabel, item.name + ' — ' + t('notify.addedInventory'), 'success');
                     
                     updateUI();
                     renderHeldItemsShop();
@@ -7848,11 +7962,11 @@ const CAMPAIGN_ROADMAP = [
                     const tm = TM_DB[tmKey];
                     if (!tm) return;
                     if (gameState.tmsOwned && gameState.tmsOwned[tmKey]) {
-                        showNotification('Already Owned', `TM${tm.num} ${tm.name} is already in your collection.`, 'info');
+                        showNotification(t('notify.alreadyOwned'), `TM${tm.num} ${tm.name} — ` + t('notify.tmAlreadyInCollection'), 'info');
                         return;
                     }
                     if (gameState.coins < tm.cost) {
-                        showNotification('No Funds Available', `Requires ${formatNum(tm.cost)} Coins.`, 'error');
+                        showNotification(t('notify.noFunds'), t('notify.noFundsSimple').replace('{0}', formatNum(tm.cost)), 'error');
                         return;
                     }
                     spendCoins(tm.cost);
@@ -7860,7 +7974,7 @@ const CAMPAIGN_ROADMAP = [
                     gameState.tmsOwned[tmKey] = true;
                     saveProgress();
                     playConfirmSound();
-                    showNotification(`TM${tm.num} Acquired!`, `${tm.name} can now be taught in your PC — unlimited uses!`, 'success');
+                    showNotification(`TM${tm.num} ` + t('notify.tmAcquired'), `${tm.name} ` + t('notify.tmUnlimitedUse'), 'success');
                     updateUI();
                     renderTMShop();
                 };
@@ -7873,7 +7987,7 @@ const CAMPAIGN_ROADMAP = [
                     if (ballType === 'master') cost = 500;
 
                     if (gameState.coins < cost) {
-                        showNotification("No Funds Available", `Requires ${formatNum(cost)} Coins.`, 'error');
+                        showNotification(t('notify.noFunds'), t('notify.noFundsSimple').replace('{0}', formatNum(cost)), 'error');
                         return;
                     }
 
@@ -7882,8 +7996,8 @@ const CAMPAIGN_ROADMAP = [
                     gameState.balls[ballType] += 1;
                     
                     playConfirmSound();
-                    const ballNames = { poke: 'Poké Ball', great: 'Great Lens', ultra: 'Ultra Core', master: 'Master Link' };
-                    showNotification("Purchased", `Acquired 1x ${ballNames[ballType] || ballType}!`, 'success');
+                    const ballNames = { poke: t('ball.pokeName'), great: t('ball.greatName'), ultra: t('ball.ultraName'), master: t('ball.masterName') };
+                    showNotification(t('notify.purchased'), t('notify.acquired') + ' ' + (ballNames[ballType] || ballType) + '!', 'success');
                     
                     updateUI();
                     saveProgress();
@@ -7905,7 +8019,7 @@ const CAMPAIGN_ROADMAP = [
                       var buyBtn = document.getElementById('autoBattlerBuyBtn');
                       if (owned) {
                           if (card) card.classList.add('border-amber-500/50');
-                          if (ownedBadge) ownedBadge.textContent = '\u2705 Owned';
+                          if (ownedBadge) ownedBadge.textContent = t('autoBattler.owned');
                           if (buyBtn) { buyBtn.textContent = t('common.owned'); buyBtn.disabled = true; buyBtn.className = 'px-2.5 py-1.5 bg-slate-700 text-slate-400 text-[10px] uppercase font-bold rounded-lg cursor-not-allowed'; }
                           if (panel) panel.classList.remove('hidden');
                       } else {
@@ -7940,14 +8054,14 @@ const CAMPAIGN_ROADMAP = [
 
                   window.buyAutoBattler = function() {
                       initAudio();
-                      if (gameState.autoBattler) { showNotification('Already Owned', 'Auto Battler is already active.', 'info'); return; }
+                      if (gameState.autoBattler) { showNotification(t('notify.alreadyOwned'), t('notify.autoBattlerActive'), 'info'); return; }
                       var cost = 50000;
                       if (gameState.coins < cost) { showNotification('No Funds Available', 'Requires ' + formatNum(cost) + ' Coins.', 'error'); return; }
                       spendCoins(cost);
                       gameState.autoBattler = true;
                       saveProgress();
                       playConfirmSound();
-                      showNotification('Auto Battler Unlocked!', 'Select a stage below and start farming!', 'success');
+                      showNotification(t('notify.autoBattlerUnlocked'), t('notify.autoBattlerMsg'), 'success');
                       updateAutoBattlerUI();
                   };
 
@@ -7973,17 +8087,17 @@ const CAMPAIGN_ROADMAP = [
                       if (!gameState.autoBattler) return;
                       var sel = document.getElementById('autoBattlerStageSelect');
                       var stageId = sel ? parseInt(sel.value) : null;
-                      if (!stageId || isNaN(stageId)) { showNotification('No Stage Selected', 'Pick a campaign stage to farm first.', 'error'); return; }
+                      if (!stageId || isNaN(stageId)) { showNotification(t('notify.noStageSelected'), t('notify.pickStageFirst'), 'error'); return; }
                       var stage = CAMPAIGN_ROADMAP.find(function(s) { return s.stageId === stageId; });
-                      if (!stage) { showNotification('Stage Not Found', 'Invalid stage.', 'error'); return; }
+                      if (!stage) { showNotification(t('notify.stageNotFound'), t('notify.invalidStage'), 'error'); return; }
                       var fighters = typeof getBattleFighterPool === 'function' ? getBattleFighterPool() : [];
-                      if (!fighters || fighters.length === 0) { showNotification('No Team', 'Assign at least one Pokemon to your team first.', 'error'); return; }
+                      if (!fighters || fighters.length === 0) { showNotification(t('notify.noTeam'), t('notify.assignTeam'), 'error'); return; }
                       gameState.autoBattlerStage = stageId;
                       autoBattlerRunning = true;
                       autoBattlerBusy = false;
                       saveProgress();
                       updateAutoBattlerUI();
-                      autoBattlerLog('\u25b6 Started \u2014 Stage ' + stageId + ': ' + stage.name);
+                      autoBattlerLog(t('autoBattler.logStarted') + ' Stage ' + stageId + ': ' + stage.name);
                       runAutoBattleRound();
                       autoBattlerIntervalId = setInterval(function() {
                           if (!autoBattlerRunning) { clearInterval(autoBattlerIntervalId); return; }
@@ -7996,7 +8110,7 @@ const CAMPAIGN_ROADMAP = [
                       autoBattlerBusy = false;
                       if (autoBattlerIntervalId) { clearInterval(autoBattlerIntervalId); autoBattlerIntervalId = null; }
                       updateAutoBattlerUI();
-                      autoBattlerLog('\u23f9 Stopped.');
+                      autoBattlerLog(t('autoBattler.logStopped'));
                   }
 
                   function runAutoBattleRound() {
@@ -8006,7 +8120,7 @@ const CAMPAIGN_ROADMAP = [
                       var stage = CAMPAIGN_ROADMAP.find(function(s) { return s.stageId === stageId; });
                       if (!stage) { stopAutoBattler(); autoBattlerBusy = false; return; }
                       var fighters = typeof getBattleFighterPool === 'function' ? getBattleFighterPool() : [];
-                      if (!fighters || fighters.length === 0) { autoBattlerLog('\u26a0 No team. Stopping.'); stopAutoBattler(); autoBattlerBusy = false; return; }
+                      if (!fighters || fighters.length === 0) { autoBattlerLog(t('autoBattler.logNoTeam')); stopAutoBattler(); autoBattlerBusy = false; return; }
                       var fighter = fighters[0];
                       var fighterLevel = fighter.level || 1;
                       var levelMul = 1 + ((fighterLevel - 1) * 0.05);
@@ -8042,10 +8156,10 @@ const CAMPAIGN_ROADMAP = [
                               if (typeof applyLevelUpMoves === 'function') applyLevelUpMoves(fighter);
                               leveled = true;
                           }
-                          autoBattlerLog('\u2705 Stage ' + stageId + ' won! +' + formatNum(reward) + ' coins' + (leveled ? ' | ' + fighter.name + ' \u2192 Lv' + fighter.level : ''));
+                          autoBattlerLog('\u2705 Stage ' + stageId + ' ' + t('autoBattler.logWon') + formatNum(reward) + ' ' + t('common.coins') + (leveled ? ' | ' + fighter.name + ' \u2192 Lv' + fighter.level : ''));
                           saveProgress();
                       } else {
-                          autoBattlerLog('\u274c Stage ' + stageId + ': defeat \u2014 your team may be too weak.');
+                          autoBattlerLog('\u274c Stage ' + stageId + ': ' + t('autoBattler.logDefeat'));
                       }
                       autoBattlerBusy = false;
                   }
@@ -8058,7 +8172,7 @@ const CAMPAIGN_ROADMAP = [
                     const ownedEl = document.getElementById('shinyCharmOwned');
                     const buyBtn  = document.getElementById('shinyCharmBuyBtn');
                     const card    = document.getElementById('shinyCharmShopCard');
-                    if (ownedEl) ownedEl.textContent = owned ? '\u2728 Owned' : 'Not Owned';
+                    if (ownedEl) ownedEl.textContent = owned ? '\u2728 ' + t('common.owned') : t('shop.notOwned');
                     if (card && owned) card.classList.add('border-pink-600/50');
                     if (buyBtn) {
                         if (owned) {
@@ -8075,14 +8189,14 @@ const CAMPAIGN_ROADMAP = [
 
                 window.buyShinyCharm = function() {
                     initAudio();
-                    if (gameState.shinyCharm) { showNotification('Already Owned', 'Shiny Charm is already active!', 'info'); return; }
+                    if (gameState.shinyCharm) { showNotification(t('notify.alreadyOwned'), t('notify.shinyCharmActive'), 'info'); return; }
                     const cost = 35000;
-                    if (gameState.coins < cost) { showNotification('No Funds Available', 'Requires ' + formatNum(cost) + ' Coins.', 'error'); return; }
+                    if (gameState.coins < cost) { showNotification(t('notify.noFunds'), t('notify.noFundsSimple').replace('{0}', formatNum(cost)), 'error'); return; }
                     spendCoins(cost);
                     gameState.shinyCharm = true;
                     saveProgress();
                     playConfirmSound();
-                    showNotification('\u2728 Shiny Charm!', 'Shiny encounter rate raised to 20%! Good luck, trainer!', 'shiny');
+                    showNotification(t('notify.shinyCharm'), t('notify.shinyCharmMsg'), 'shiny');
                     updateShinyCharmUI();
                 };
 
