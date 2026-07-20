@@ -398,6 +398,38 @@
                 --theme-chip-color: #cbd5e1;
                 --theme-chip-border: rgba(100,116,139,0.4);
             }
+            /* ── Grey Scale display mode ── */
+            body.grey-mode {
+                --theme-c1: #6b7280;
+                --theme-c2: #9ca3af;
+                --theme-c3: #4b5563;
+                --theme-chip-bg: rgba(107,114,128,0.18);
+                --theme-chip-color: #e2e8f0;
+                --theme-chip-border: rgba(148,163,184,0.4);
+                background-color: #0a0a0a !important;
+                color: #d1d5db !important;
+            }
+            body.grey-mode header { background-color:rgba(14,14,14,0.98)!important; border-color:rgba(255,255,255,0.06)!important; }
+            body.grey-mode footer { background-color:#0a0a0a!important; border-color:rgba(255,255,255,0.05)!important; }
+            body.grey-mode main  { background-color:#0a0a0a!important; }
+            body.grey-mode nav.sticky { background-color:#0a0a0a!important; border-color:rgba(255,255,255,0.05)!important; }
+            body.grey-mode .bg-slate-950, body.grey-mode [class="bg-slate-950"] { background-color:#111111!important; }
+            body.grey-mode .bg-slate-900 { background-color:#1a1a1a!important; }
+            body.grey-mode .bg-slate-800 { background-color:#242424!important; }
+            body.grey-mode [class*="text-rose-"],  body.grey-mode [class*="text-pink-"]   { color:#9ca3af!important; }
+            body.grey-mode [class*="text-amber-"], body.grey-mode [class*="text-yellow-"],
+            body.grey-mode [class*="text-orange-"]                                         { color:#9ca3af!important; }
+            body.grey-mode [class*="text-cyan-"],  body.grey-mode [class*="text-blue-"],
+            body.grey-mode [class*="text-sky-"]                                            { color:#a1a1aa!important; }
+            body.grey-mode [class*="text-emerald-"],body.grey-mode [class*="text-green-"],
+            body.grey-mode [class*="text-teal-"]                                           { color:#9ca3af!important; }
+            body.grey-mode [class*="text-violet-"],body.grey-mode [class*="text-purple-"],
+            body.grey-mode [class*="text-indigo-"]                                         { color:#a1a1aa!important; }
+            body.grey-mode img { filter:grayscale(0.8) brightness(0.85)!important; }
+            body.grey-mode #darkModeIconSettings  { color:#9ca3af!important; }
+            body.grey-mode #customToast { background-color:rgba(20,20,20,0.98)!important; }
+            body.grey-mode [id$="Modal"] > div > div { background-color:#1a1a1a!important; }
+            body.grey-mode #battleMovesGrid button { background-color:#1e1e1e!important; }
             /* Utility classes that use theme variables */
             .themed-gradient {
                 background: linear-gradient(135deg, var(--theme-c1), var(--theme-c2)) !important;
@@ -675,6 +707,10 @@
                                 <i id="darkModeIconSettings" class="fas fa-sun text-yellow-400"></i>
                                 <span id="darkModeSettingsText" data-i18n="settings.lightMode">Light Mode</span>
                             </button>
+                            <button onclick="toggleGreyMode()" id="greyModeBtn" class="w-full py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 mt-2" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);">
+                                <i id="greyModeIconSettings" class="fas fa-circle-half-stroke text-slate-400"></i>
+                                <span id="greyModeSettingsText">Grey Scale</span>
+                            </button>
                         </div>
                         <!-- Sound -->
                         <div class="p-4 rounded-2xl flex flex-col gap-3" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
@@ -890,6 +926,37 @@
             </div>
         </div>
 
+        <!-- MOVE LEARN MODAL -->
+        <div id="learnMoveModal" class="hidden fixed inset-0 z-[90] bg-black/80 backdrop-blur-md items-center justify-center p-4">
+            <div class="w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl" style="border:3px solid rgba(255,255,255,0.12);background:linear-gradient(160deg,#0d1220 0%,#0a0f1e 100%);">
+                <div class="px-6 py-4 text-center" style="background:linear-gradient(90deg,#0f2040,#0f172a,#051030);border-bottom:1px solid rgba(255,255,255,0.08);">
+                    <div class="text-2xl mb-1">📖</div>
+                    <h3 class="text-base font-black text-white">New Move Available!</h3>
+                    <p class="text-slate-400 text-[11px] mt-0.5" id="learnMoveModalPokemon"></p>
+                </div>
+                <div class="p-5">
+                    <div class="rounded-2xl p-3 mb-4 text-center" style="background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2);">
+                        <div class="text-cyan-300 font-black text-sm capitalize mb-1" id="learnMoveModalMoveName"></div>
+                        <div class="text-slate-400 text-[10px]" id="learnMoveModalMoveDesc"></div>
+                    </div>
+                    <!-- Slot picker (shown after clicking Replace a Move) -->
+                    <div id="learnMoveSlotPicker" class="hidden mb-4">
+                        <p class="text-slate-300 text-xs text-center mb-2 font-bold">Choose a move to replace:</p>
+                        <div id="learnMoveSlotBtns" class="grid grid-cols-2 gap-2"></div>
+                    </div>
+                    <!-- Yes / No buttons -->
+                    <div id="learnMoveYesNo" class="flex gap-3">
+                        <button onclick="learnMoveDecline()" class="flex-1 py-2.5 rounded-xl text-xs font-bold text-slate-400 transition" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">
+                            ✗ Skip (Add to Bank)
+                        </button>
+                        <button onclick="learnMoveAccept()" class="flex-1 py-2.5 rounded-xl text-xs font-bold text-white themed-gradient transition">
+                            ✓ Replace a Move
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- HEADER / DASHBOARD STATUS -->
         <header class="bg-slate-950/85 backdrop-blur-md border-b border-slate-900 sticky top-0 z-40 py-3 px-4 md:px-8">
             <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
@@ -1046,7 +1113,7 @@
                         <!-- RADAR SCANNER WHEEL CANVAS -->
                         <div class="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center z-10">
                             <div class="absolute inset-0 rounded-full border-4 border-slate-900 shadow-[0_0_20px_rgba(244,63,94,0.05)] pointer-events-none"></div>
-                            <canvas id="wheelCanvas" width="320" height="320" class="w-full h-full transition-transform duration-75"></canvas>
+                            <canvas id="wheelCanvas" width="320" height="320" class="w-full h-full transition-transform duration-75 cursor-pointer" onclick="triggerSpin()" title="Click to spin!"></canvas>
                             
                             <!-- Central Pointer / Hub -->
                             <div class="absolute z-20 w-12 h-12 bg-slate-950 rounded-full border-4 border-slate-800 flex items-center justify-center shadow-2xl">
@@ -4446,7 +4513,7 @@ const CAMPAIGN_ROADMAP = [
                 window.setLanguage = async function(lang) {
                     if (!TRANSLATIONS[lang]) return;
                     if (lang !== 'en') {
-                        showNotification('🌐 Feature Coming Soon', 'Language translation will be available in a future update!', 'info');
+                        showNotification('🌐 Language', 'Feature temporarily disabled', 'info');
                         return;
                     }
                     _currentLang = lang;
@@ -4542,6 +4609,17 @@ const CAMPAIGN_ROADMAP = [
                         if (darkIcon) darkIcon.className = 'fas fa-sun text-yellow-400';
                     }
 
+                    // Grey Scale mode label
+                    const greyText = document.getElementById('greyModeSettingsText');
+                    const greyIcon = document.getElementById('greyModeIconSettings');
+                    if (isGreyMode) {
+                        if (greyText) greyText.textContent = 'Grey Scale: ON';
+                        if (greyIcon) greyIcon.className = 'fas fa-circle-half-stroke text-white';
+                    } else {
+                        if (greyText) greyText.textContent = 'Grey Scale';
+                        if (greyIcon) greyIcon.className = 'fas fa-circle-half-stroke text-slate-400';
+                    }
+
                     // Theme cards — toggle CSS class (is-active) which drives ring + checkmark via CSS
                     document.querySelectorAll('.theme-btn').forEach(btn => {
                         const isActive = btn.getAttribute('data-theme') === currentTheme;
@@ -4561,11 +4639,14 @@ const CAMPAIGN_ROADMAP = [
 
                 let currentTheme = 'default';
                 let isLightMode = false;
+                let isGreyMode = false;
 
                 function applyLightDarkMode(light) {
                     const body = document.body;
                     if (light) {
                         body.classList.add('light-mode');
+                        body.classList.remove('grey-mode');
+                        isGreyMode = false;
                     } else {
                         body.classList.remove('light-mode');
                     }
@@ -4573,10 +4654,29 @@ const CAMPAIGN_ROADMAP = [
                     updateSettingsUI();
                 }
 
+                function applyGreyMode(grey) {
+                    const body = document.body;
+                    if (grey) {
+                        body.classList.add('grey-mode');
+                        body.classList.remove('light-mode');
+                        isLightMode = false;
+                    } else {
+                        body.classList.remove('grey-mode');
+                    }
+                    updateSettingsUI();
+                }
+
                 window.toggleDarkLight = function() {
                     isLightMode = !isLightMode;
+                    if (isLightMode) { isGreyMode = false; }
                     applyLightDarkMode(isLightMode);
                     localStorage.setItem('pokemon_radar_lightmode', isLightMode ? '1' : '0');
+                };
+
+                window.toggleGreyMode = function() {
+                    isGreyMode = !isGreyMode;
+                    applyGreyMode(isGreyMode);
+                    localStorage.setItem('pokemon_radar_greymode', isGreyMode ? '1' : '0');
                 };
 
                 const THEMES = {
@@ -5568,12 +5668,95 @@ const CAMPAIGN_ROADMAP = [
                             }
                         }
                     }
+                    const actuallyLearned = [];
                     for (const move of newMoves) {
-                        if (pokemon.moves.length < 4) pokemon.moves.push(move);
-                        else { pokemon.moves.shift(); pokemon.moves.push(move); }
+                        if (pokemon.moves.length < 4) {
+                            pokemon.moves.push(move);
+                            actuallyLearned.push(move);
+                        } else if (typeof window.queueLearnMove === 'function') {
+                            // Full moveset — queue a pop-up so the player chooses which slot to replace
+                            window.queueLearnMove(pokemon, move);
+                            // move is not yet in the active moveset; don't log as "learned"
+                        } else {
+                            pokemon.moveBank = pokemon.moveBank || [];
+                            if (!pokemon.moveBank.includes(move)) pokemon.moveBank.push(move);
+                        }
                     }
-                    return newMoves;
+                    return actuallyLearned;
                 }
+
+                // ── Move-Learn queue: shows pop-up when a Pokémon's moveset is full ──
+                window._learnMoveQueue = [];
+                window._learnMoveCurrent = null;
+
+                window.queueLearnMove = function(pokemon, moveName) {
+                    window._learnMoveQueue.push({ pokemon, moveName });
+                    setTimeout(() => window.processLearnMoveQueue(), 600);
+                };
+
+                window.processLearnMoveQueue = function() {
+                    if (window._learnMoveCurrent) return;
+                    if (!window._learnMoveQueue.length) return;
+                    window._learnMoveCurrent = window._learnMoveQueue.shift();
+                    const { pokemon, moveName } = window._learnMoveCurrent;
+                    const moveData = (typeof MOVES_DB !== 'undefined') ? MOVES_DB[moveName] : null;
+                    document.getElementById('learnMoveModalPokemon').textContent =
+                        pokemon.name + ' wants to learn ' + moveName.replace(/-/g,' ');
+                    document.getElementById('learnMoveModalMoveName').textContent = moveName.replace(/-/g,' ');
+                    document.getElementById('learnMoveModalMoveDesc').textContent = moveData
+                        ? (moveData.type||'').toUpperCase() + '  ·  Power: ' + (moveData.power||'—') + '  ·  PP: ' + (moveData.pp||'—')
+                        : '';
+                    document.getElementById('learnMoveSlotPicker').classList.add('hidden');
+                    document.getElementById('learnMoveYesNo').classList.remove('hidden');
+                    const modal = document.getElementById('learnMoveModal');
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                };
+
+                window.learnMoveDecline = function() {
+                    const { pokemon, moveName } = window._learnMoveCurrent;
+                    pokemon.moveBank = pokemon.moveBank || [];
+                    if (!pokemon.moveBank.includes(moveName)) pokemon.moveBank.push(moveName);
+                    document.getElementById('learnMoveModal').classList.add('hidden');
+                    document.getElementById('learnMoveModal').classList.remove('flex');
+                    window._learnMoveCurrent = null;
+                    if (typeof saveProgress === 'function') saveProgress();
+                    window.processLearnMoveQueue();
+                };
+
+                window.learnMoveAccept = function() {
+                    const { pokemon } = window._learnMoveCurrent;
+                    document.getElementById('learnMoveYesNo').classList.add('hidden');
+                    document.getElementById('learnMoveSlotPicker').classList.remove('hidden');
+                    const grid = document.getElementById('learnMoveSlotBtns');
+                    grid.innerHTML = '';
+                    pokemon.moves.forEach((m, i) => {
+                        const md = (typeof MOVES_DB !== 'undefined') ? MOVES_DB[m] : null;
+                        const btn = document.createElement('button');
+                        btn.className = 'py-2 px-3 rounded-xl text-left transition hover:opacity-80';
+                        btn.style.cssText = 'background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);';
+                        btn.innerHTML = '<div class="text-[10px] font-black text-white capitalize">' + m.replace(/-/g,' ') + '</div>'
+                            + '<div class="text-slate-500 text-[8px] uppercase mt-0.5">'
+                            + (md ? (md.type||'') + ' · Pwr ' + (md.power||'—') : '') + '</div>';
+                        btn.onclick = () => window.learnMoveChooseSlot(i);
+                        grid.appendChild(btn);
+                    });
+                };
+
+                window.learnMoveChooseSlot = function(slotIndex) {
+                    const { pokemon, moveName } = window._learnMoveCurrent;
+                    const replaced = pokemon.moves[slotIndex];
+                    pokemon.moveBank = pokemon.moveBank || [];
+                    if (!pokemon.moveBank.includes(replaced)) pokemon.moveBank.push(replaced);
+                    pokemon.moves[slotIndex] = moveName;
+                    document.getElementById('learnMoveModal').classList.add('hidden');
+                    document.getElementById('learnMoveModal').classList.remove('flex');
+                    window._learnMoveCurrent = null;
+                    if (typeof showNotification === 'function')
+                        showNotification('Move Learned!', pokemon.name + ' replaced ' + replaced.replace(/-/g,' ') + ' with ' + moveName.replace(/-/g,' ') + '!', 'success');
+                    if (typeof saveProgress === 'function') saveProgress();
+                    window.processLearnMoveQueue();
+                };
 
                 // ==========================================
                 // MODULE 6: BATTLE ENGINE & CAMPAIGN
@@ -7047,6 +7230,9 @@ const CAMPAIGN_ROADMAP = [
                         fighter.level = (fighter.level || 1) + 1;
                         nextLevelXp = fighter.level * 100;
                         didLevelUp = true;
+                        // Live level badge update
+                        const _lvlBadge = document.getElementById('playerFighterLevelBadge');
+                        if (_lvlBadge) _lvlBadge.textContent = (typeof t==='function'?t('battle.lvl'):'LVL') + ' ' + fighter.level;
                         const newMoves = applyLevelUpMoves(fighter);
                         // Evolution stone check is handled by checkLevelUpEvolution / STONE_EVO_ONLY set
                         if (newMoves.length > 0) {
@@ -8410,6 +8596,8 @@ const CAMPAIGN_ROADMAP = [
                                 // Load saved light/dark mode preference
                                 const savedLightMode = localStorage.getItem('pokemon_radar_lightmode');
                                 if (savedLightMode === '1') { isLightMode = true; applyLightDarkMode(true); }
+                                const savedGreyMode = localStorage.getItem('pokemon_radar_greymode');
+                                if (savedGreyMode === '1') { isGreyMode = true; applyGreyMode(true); }
 
                                 // Load saved theme (silent — no toast on page load)
                                 const savedTheme = localStorage.getItem('pokemon_radar_theme');
