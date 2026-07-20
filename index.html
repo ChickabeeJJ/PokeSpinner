@@ -676,7 +676,7 @@
         </div>
 
         <!-- SETTINGS MODAL -->
-        <div id="settingsModal" class="fixed inset-0 z-[70] bg-black/70 backdrop-blur-md hidden items-center justify-center p-4 overflow-y-auto">
+        <div id="settingsModal" class="fixed inset-0 z-[70] bg-black/70 backdrop-blur-md hidden items-start justify-center p-4 overflow-y-auto">
             <div class="w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl my-8" style="border:3px solid rgba(255,255,255,0.12); background:linear-gradient(160deg,#0d1220 0%,#0a0f1e 100%);">
                 <!-- Modal Header Bar -->
                 <div class="px-6 py-4 flex items-center justify-between" style="background:linear-gradient(90deg,#1e1040,#0f172a,#1a0530);border-bottom:1px solid rgba(255,255,255,0.08);">
@@ -697,20 +697,17 @@
                 <div class="p-5 space-y-3">
                     <!-- Appearance row: Light/Dark + Sound side by side -->
                     <div class="grid grid-cols-2 gap-3">
-                        <!-- Light / Dark Mode -->
+                        <!-- Display Mode (3-way: Dark / Light / Grey) -->
                         <div class="p-4 rounded-2xl flex flex-col gap-3" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
                             <div class="flex items-center gap-2">
                                 <i class="fas fa-circle-half-stroke text-yellow-400 text-sm"></i>
                                 <span class="text-xs font-bold text-white" data-i18n="settings.display">Display</span>
                             </div>
-                            <button onclick="toggleDarkLight()" id="darkModeBtn" class="w-full py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);">
-                                <i id="darkModeIconSettings" class="fas fa-sun text-yellow-400"></i>
-                                <span id="darkModeSettingsText" data-i18n="settings.lightMode">Light Mode</span>
+                            <button onclick="toggleDisplayMode()" id="darkModeBtn" class="w-full py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);">
+                                <i id="darkModeIconSettings" class="fas fa-moon text-purple-400"></i>
+                                <span id="darkModeSettingsText">Dark Mode</span>
                             </button>
-                            <button onclick="toggleGreyMode()" id="greyModeBtn" class="w-full py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 mt-2" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);">
-                                <i id="greyModeIconSettings" class="fas fa-circle-half-stroke text-slate-400"></i>
-                                <span id="greyModeSettingsText">Grey Scale</span>
-                            </button>
+                            <p class="text-[10px] text-slate-500 text-center -mt-1">Tap to cycle: Dark → Light → Grey</p>
                         </div>
                         <!-- Sound -->
                         <div class="p-4 rounded-2xl flex flex-col gap-3" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
@@ -4511,11 +4508,11 @@ const CAMPAIGN_ROADMAP = [
 
                 // Switch language: update state, cache name, re-render open views
                 window.setLanguage = async function(lang) {
-                    if (!TRANSLATIONS[lang]) return;
                     if (lang !== 'en') {
                         showNotification('🌐 Language', 'Feature temporarily disabled', 'info');
                         return;
                     }
+                    if (!TRANSLATIONS[lang]) return;
                     _currentLang = lang;
                     gameState.language = lang;
                     localStorage.setItem('pokemon_radar_lang', lang);
@@ -4598,26 +4595,18 @@ const CAMPAIGN_ROADMAP = [
                     const settingsSoundText = document.getElementById('settingsSoundText');
                     if (settingsSoundText) settingsSoundText.textContent = audioMuted ? t('settings.soundOff') : t('settings.soundOn');
 
-                    // Light/dark label
+                    // Display mode label (3-way: Dark / Light / Grey)
                     const darkText = document.getElementById('darkModeSettingsText');
                     const darkIcon = document.getElementById('darkModeIconSettings');
-                    if (isLightMode) {
-                        if (darkText) darkText.textContent = t('settings.darkMode');
-                        if (darkIcon) darkIcon.className = 'fas fa-moon text-purple-400';
-                    } else {
+                    if (isGreyMode) {
+                        if (darkText) darkText.textContent = 'Grey Scale';
+                        if (darkIcon) darkIcon.className = 'fas fa-circle-half-stroke text-slate-400';
+                    } else if (isLightMode) {
                         if (darkText) darkText.textContent = t('settings.lightMode');
                         if (darkIcon) darkIcon.className = 'fas fa-sun text-yellow-400';
-                    }
-
-                    // Grey Scale mode label
-                    const greyText = document.getElementById('greyModeSettingsText');
-                    const greyIcon = document.getElementById('greyModeIconSettings');
-                    if (isGreyMode) {
-                        if (greyText) greyText.textContent = 'Grey Scale: ON';
-                        if (greyIcon) greyIcon.className = 'fas fa-circle-half-stroke text-white';
                     } else {
-                        if (greyText) greyText.textContent = 'Grey Scale';
-                        if (greyIcon) greyIcon.className = 'fas fa-circle-half-stroke text-slate-400';
+                        if (darkText) darkText.textContent = t('settings.darkMode') || 'Dark Mode';
+                        if (darkIcon) darkIcon.className = 'fas fa-moon text-purple-400';
                     }
 
                     // Theme cards — toggle CSS class (is-active) which drives ring + checkmark via CSS
@@ -4666,18 +4655,31 @@ const CAMPAIGN_ROADMAP = [
                     updateSettingsUI();
                 }
 
-                window.toggleDarkLight = function() {
-                    isLightMode = !isLightMode;
-                    if (isLightMode) { isGreyMode = false; }
-                    applyLightDarkMode(isLightMode);
+                // 3-way display cycle: Dark → Light → Grey → Dark
+                window.toggleDisplayMode = function() {
+                    if (!isLightMode && !isGreyMode) {
+                        // Dark → Light
+                        isLightMode = true; isGreyMode = false;
+                        document.body.classList.add('light-mode');
+                        document.body.classList.remove('grey-mode');
+                    } else if (isLightMode) {
+                        // Light → Grey
+                        isLightMode = false; isGreyMode = true;
+                        document.body.classList.add('grey-mode');
+                        document.body.classList.remove('light-mode');
+                    } else {
+                        // Grey → Dark
+                        isLightMode = false; isGreyMode = false;
+                        document.body.classList.remove('light-mode', 'grey-mode');
+                    }
                     localStorage.setItem('pokemon_radar_lightmode', isLightMode ? '1' : '0');
+                    localStorage.setItem('pokemon_radar_greymode', isGreyMode ? '1' : '0');
+                    updateSettingsUI();
                 };
 
-                window.toggleGreyMode = function() {
-                    isGreyMode = !isGreyMode;
-                    applyGreyMode(isGreyMode);
-                    localStorage.setItem('pokemon_radar_greymode', isGreyMode ? '1' : '0');
-                };
+                // Keep legacy aliases in case any other code calls them
+                window.toggleDarkLight = window.toggleDisplayMode;
+                window.toggleGreyMode = window.toggleDisplayMode;
 
                 const THEMES = {
                     default:  { primary:'from-rose-500 via-pink-500 to-amber-400',    accent:'rose',    glow:'rgba(244,63,94,0.65)'   },
