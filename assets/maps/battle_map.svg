@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- battle_map.svg - lightweight placeholder map approximating uploaded image -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#6bde6b"/>
+      <stop offset="100%" stop-color="#2f8f3f"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="#7cc86a"/>
+  <rect y="360" width="100%" height="360" fill="url(#g1)" opacity="0.9"/>
+  <!-- treeline --><!-- simple stylized trees -->
+  <g id="trees" transform="translate(60,40)">
+    <g transform="translate(0,120)">
+      <ellipse cx="120" cy="60" rx="120" ry="36" fill="#1f6a3a" opacity="0.95" />
+      <ellipse cx="220" cy="40" rx="90" ry="30" fill="#1e7a3f" opacity="0.95" />
+      <ellipse cx="340" cy="60" rx="110" ry="36" fill="#1f6a3a" opacity="0.95" />
+    </g>
+    <g transform="translate(600,60)">
+      <ellipse cx="120" cy="60" rx="140" ry="44" fill="#2a7a3f" opacity="0.95" />
+      <ellipse cx="260" cy="50" rx="120" ry="40" fill="#1f6a3a" opacity="0.95" />
+    </g>
+  </g>
+  <!-- subtle ground stripes -->
+  <g opacity="0.06" fill="#ffffff">
+    <rect x="0" y="440" width="1280" height="6"/>
+    <rect x="0" y="520" width="1280" height="6"/>
+    <rect x="0" y="600" width="1280" height="6"/>
+  </g>
+</svg>

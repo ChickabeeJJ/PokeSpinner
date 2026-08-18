@@ -1,13 +1,13 @@
-/* battle.css - Phase 1 battle layout styles */
+/* battle.css - Phase 1 battle layout styles (no destructive change) */
 #battleScreen { position: fixed; inset: 0; z-index: 2000; display: none; align-items: center; justify-content: center; }
 #battleScreen.active { display: flex; }
-#battleMap { width: 100%; max-width: 1100px; height: 60vh; border-radius: 1rem; overflow: hidden; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+#battleMap { width: 100%; max-width: 1100px; height: 60vh; border-radius: 1rem; overflow: hidden; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.6); background-color: #134; }
 #battleMap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-#opponentWrap { position: absolute; right: 6%; top: 22%; width: 28%; max-width: 320px; height: auto; pointer-events: none; display:flex; align-items:flex-end; justify-content:center; }
-#opponentWrap img { width: 100%; max-width: 320px; transform-origin: center bottom; transition: transform 220ms ease; }
-#playerBackWrap { position: absolute; left: 4%; bottom: 4%; width: 18%; max-width: 220px; height: auto; pointer-events: none; display:flex; align-items:flex-end; justify-content:center; }
-#playerBackWrap img { width: 100%; max-width: 220px; transform-origin: center bottom; transition: transform 220ms ease; }
-#battleMovesPanel { position: absolute; right: 2.5%; bottom: 2.5%; width: 340px; max-width: 38%; padding: 14px; background: rgba(2,6,23,0.6); border-radius: 14px; border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(6px); }
+#opponentWrap { position: absolute; right: 6%; top: 18%; width: 30%; max-width: 360px; height: auto; pointer-events: none; display:flex; align-items:flex-end; justify-content:center; }
+#opponentWrap img { width: 100%; max-width: 360px; transform-origin: center bottom; transition: transform 220ms ease; filter: drop-shadow(0 12px 18px rgba(0,0,0,0.6)); }
+#playerBackWrap { position: absolute; left: 4%; bottom: 6%; width: 20%; max-width: 240px; height: auto; pointer-events: none; display:flex; align-items:flex-end; justify-content:center; }
+#playerBackWrap img { width: 100%; max-width: 220px; transform-origin: center bottom; transition: transform 220ms ease; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.5)); }
+#battleMovesPanel { position: absolute; right: 2.5%; bottom: 2.5%; width: 360px; max-width: 38%; padding: 14px; background: rgba(2,6,23,0.65); border-radius: 14px; border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(6px); }
 #battleMovesPanel .move-btn { display:block; width:100%; padding:10px 12px; border-radius:10px; background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); color: #fff; text-align:left; font-weight:700; margin-bottom:8px; }
 #opponentHUD { position: absolute; top: 2.5%; right: 5%; width: 220px; padding:10px; border-radius:10px; background: rgba(0,0,0,0.45); border:1px solid rgba(255,255,255,0.05); }
 #opponentHUD .hp-wrap { width:100%; height:10px; background: rgba(0,0,0,0.25); border-radius:6px; overflow:hidden; margin-top:6px; }
@@ -18,3 +18,10 @@
 /* Small shake effect for opponent */
 .shake { animation: shakeAnim 500ms ease-in-out; }
 @keyframes shakeAnim { 0% { transform: translateX(0); } 25% { transform: translateX(-8px) rotate(-2deg); } 50% { transform: translateX(8px) rotate(2deg); } 75% { transform: translateX(-4px); } 100% { transform: translateX(0); } }
+
+/* Damage number */
+.damage-number { position:absolute; pointer-events:none; font-weight:900; color:#fff; text-shadow:0 6px 18px rgba(0,0,0,0.6); transform:translateY(0); opacity:1; transition: transform 900ms ease, opacity 900ms ease; }
+
+/* particle */
+.particle-spark { position:absolute; width:8px; height:8px; border-radius:50%; background: radial-gradient(circle at 30% 30%, #fff, #fff8, #f59e0b); box-shadow:0 0 8px rgba(245,158,11,0.9); pointer-events:none; animation: particleRise 700ms ease-out forwards; }
+@keyframes particleRise { 0% { transform:translateY(0) scale(1); opacity:1; } 100% { transform:translateY(-40px) scale(0.6); opacity:0; } }
