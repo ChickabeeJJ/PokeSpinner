@@ -125,6 +125,34 @@
             .pokeball-svg svg { filter:drop-shadow(0 2px 6px rgba(0,0,0,0.5)); transition:transform 0.15s ease; }
             .ball-selector-btn:hover .pokeball-svg svg, .ball-selector-btn.active .pokeball-svg svg { transform:scale(1.12) rotate(-12deg); }
 
+            /* ===== CLASSIC BATTLE UI ===== */
+            #battleArenaActive {
+                position: relative;
+                isolation: isolate;
+                gap: 0.9rem;
+                padding: clamp(0.35rem, 1.5vw, 1rem);
+                border: 1px solid rgba(15, 96, 70, .45);
+                border-radius: 1.15rem;
+                background-color: #39c978;
+                background-image: linear-gradient(180deg, rgba(20, 115, 104, .08), rgba(24, 166, 94, .1)), url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-gXKOtYm9fd1KU0uVA5Bonl9qIpE74o.png');
+                background-size: cover;
+                background-position: center;
+                box-shadow: inset 0 0 0 999px rgba(33, 178, 106, .08), 0 20px 50px rgba(0,0,0,.25);
+                image-rendering: pixelated;
+            }
+            #battleArenaActive::before { content:''; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(4,80,48,.12)); pointer-events:none; }
+            #battleArenaActive > div:not(:last-child) { background:rgba(246, 255, 236, .92)!important; border:2px solid #173d2c!important; border-radius:12px!important; box-shadow:4px 5px 0 rgba(8,55,39,.32); color:#173d2c; }
+            #battleArenaActive > div:not(:last-child) .text-white, #battleArenaActive > div:not(:last-child) h4 { color:#173d2c!important; }
+            #battleArenaActive > div:not(:last-child) .text-slate-400, #battleArenaActive > div:not(:last-child) .text-slate-500 { color:#47715a!important; }
+            #battleArenaActive > div:last-child { background:#f7f2d7!important; border:2px solid #173d2c!important; border-radius:12px!important; box-shadow:4px 5px 0 rgba(8,55,39,.32); }
+            #battleArenaActive #battleLog { background:#172b25!important; border:2px solid #173d2c!important; color:#dff8df!important; font-family:'Space Grotesk',sans-serif; }
+            #battleArenaActive #battleMovesGrid button { background:#fffdf0!important; border:2px solid #173d2c!important; color:#173d2c!important; min-height:4.4rem; box-shadow:2px 3px 0 rgba(8,55,39,.18); }
+            #battleArenaActive #battleMovesGrid button:hover:not(:disabled) { transform:translateY(-2px); background:#e7f7c8!important; }
+            #battleArenaActive #battleMovesGrid button:active:not(:disabled) { transform:translateY(1px); box-shadow:none; }
+            #battleArenaActive #bossSprite { filter:drop-shadow(0 8px 0 rgba(18,92,52,.2)); }
+            #battleArenaActive #playerFighterSprite { filter:drop-shadow(0 8px 0 rgba(18,92,52,.2)); }
+            @media (min-width:768px) { #battleArenaActive { grid-template-columns:repeat(12,minmax(0,1fr)); } #battleArenaActive > div:nth-child(1), #battleArenaActive > div:nth-child(3) { min-height:19rem; } }
+
             /* ===== LIGHT MODE ===== */
             /* ═══ COMPREHENSIVE LIGHT MODE ═══════════════════════════════════════════ */
             body.light-mode { background-color:#f0f4f8!important; color:#0f172a!important; }
@@ -3380,7 +3408,7 @@ const CAMPAIGN_ROADMAP = [
                     'battle.leadBadge':    'リード',
                     'battle.item':         'アイテム',
                     'battle.shinyBadge':   'ひかる',
-                    'battle.noItem':       'アイテムなし',
+                    'battle.noItem':       'ア���テムなし',
                     'battle.noTeamMsg':    'チームメンバーが選ばれていません。チーム画面で少なくとも1匹を選んでください。',
                     'battle.hint':         '💡 ヒント',
                     'stage.cleared':       'クリア済み ✓',
@@ -6333,6 +6361,18 @@ const CAMPAIGN_ROADMAP = [
                         return;
                     }
 
+                    // Classic Pokémon battle order: priority first, then Speed; this
+                    // keeps quick attacks and similar moves faithful to the originals.
+                    const movePriority = Number(moveSpec.priority || 0);
+                    const accuracy = Number(moveSpec.accuracy ?? 100);
+                    const accuracyStage = stageMultiplier((gameState.battle.statStages?.[attackerSide] || {}).accuracy || 0);
+                    if (accuracy < 100 && Math.random() * 100 > Math.min(100, accuracy * accuracyStage)) {
+                        playBeep();
+                        logBox.innerHTML += `<div class="text-slate-500 mt-1 italic">${attacker.name}'s <span class="text-white capitalize">${moveName.replace(/-/g,' ')}</span> missed!</div>`;
+                        logBox.scrollTop = logBox.scrollHeight;
+                        return;
+                    }
+
                     let typeMod = 1.0;
                     if (TYPE_MATCHUPS[moveSpec.type]) {
                         if (TYPE_MATCHUPS[moveSpec.type][defender.type1] !== undefined) typeMod *= TYPE_MATCHUPS[moveSpec.type][defender.type1];
@@ -6359,8 +6399,15 @@ const CAMPAIGN_ROADMAP = [
                         defenseStat = (defender.def || 50)            * stageMultiplier(ss[defenderSide].def);
                     }
 
-                    let calculatedDamage = Math.round((((2 * attackerLvl / 5 + 2) * moveSpec.power * (attackStat / defenseStat)) / 50 + 2) * stabMod * typeMod * itemMod * (0.85 + Math.random() * 0.15));
-                    if (calculatedDamage < 3) calculatedDamage = 3;
+                    // Gen III-style damage: random 85–100%, STAB, type chart,
+                    // and a 1/16 critical-hit roll (critical hits ignore attack drops).
+                    const isCritical = Math.random() < (1 / 16);
+                    if (isCritical && (ss[attackerSide][moveSpec.category === 'special' ? 'spAtk' : 'atk'] || 0) < 0) {
+                        attackStat = (moveSpec.category === 'special' ? (attacker.spAtk || attacker.atk || 50) : (attacker.atk || 50)) * lvlMul;
+                    }
+                    const criticalMod = isCritical ? 2 : 1;
+                    let calculatedDamage = Math.round((((2 * attackerLvl / 5 + 2) * moveSpec.power * (attackStat / defenseStat)) / 50 + 2) * stabMod * typeMod * itemMod * criticalMod * (0.85 + Math.random() * 0.15));
+                    if (calculatedDamage < 1 || typeMod === 0) calculatedDamage = typeMod === 0 ? 0 : 1;
 
                     if (isPlayerAttacker) {
                         gameState.battle.bossHP -= calculatedDamage;
@@ -6421,17 +6468,21 @@ const CAMPAIGN_ROADMAP = [
                         }
                     }
 
-                    // Speed comparison uses current stat stages
-                    const _ss = gameState.battle.statStages || { player:{speed:0}, boss:{speed:0} };
-                    const fighterSpeed = (fighter.speed || 50) * stageMultiplier((_ss.player||{}).speed || 0);
-                    const bossSpeed    = (boss.speed    || 50) * stageMultiplier((_ss.boss  ||{}).speed || 0);
+  // Priority is checked before Speed, matching the original turn order.
+  const _ss = gameState.battle.statStages || { player:{speed:0}, boss:{speed:0} };
+  const bossMoveForTurn = boss.moves[Math.floor(Math.random() * boss.moves.length)];
+  const playerPriority = Number((MOVES_DB[moveName] || {}).priority || 0);
+  const bossPriority = Number((MOVES_DB[bossMoveForTurn] || {}).priority || 0);
+  const fighterSpeed = (fighter.speed || 50) * stageMultiplier((_ss.player||{}).speed || 0);
+  const bossSpeed    = (boss.speed    || 50) * stageMultiplier((_ss.boss  ||{}).speed || 0);
+  const playerMovesFirst = playerPriority !== bossPriority ? playerPriority > bossPriority : fighterSpeed >= bossSpeed;
 
-                    if (fighterSpeed >= bossSpeed) {
+  if (playerMovesFirst) {
                         disableMoveButtons(true);
                         resolveMoveAttack(fighter, boss, moveName, true);
                         if (gameState.battle.bossHP > 0) {
                             setTimeout(() => {
-                                const bossMove = boss.moves[Math.floor(Math.random() * boss.moves.length)];
+                                const bossMove = bossMoveForTurn;
                                 resolveMoveAttack(boss, fighter, bossMove, false);
                                 disableMoveButtons(false);
                                 // End-of-turn: burn/poison/leech after both moves
@@ -6444,7 +6495,7 @@ const CAMPAIGN_ROADMAP = [
                         }
                     } else {
                         disableMoveButtons(true);
-                        const bossMove = boss.moves[Math.floor(Math.random() * boss.moves.length)];
+                        const bossMove = bossMoveForTurn;
                         resolveMoveAttack(boss, fighter, bossMove, false);
                         
                         if (gameState.battle.fighterHP > 0) {
@@ -6605,7 +6656,7 @@ const CAMPAIGN_ROADMAP = [
                     const switchRow = document.getElementById('battleSwitchRow');
                     if (switchRow) switchRow.innerHTML = '';
                     setTimeout(() => {
-                        const bossMove = boss.moves[Math.floor(Math.random() * boss.moves.length)];
+                        const bossMove = bossMoveForTurn;
                         resolveMoveAttack(boss, newFighter, bossMove, false);
                         disableMoveButtons(false);
                         renderBattleMoves(newFighter);
