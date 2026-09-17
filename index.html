@@ -218,6 +218,36 @@
             #battleArenaActive #bossHPBar, #battleArenaActive #playerFighterHPBar { box-shadow:inset 0 1px 0 rgba(255,255,255,.48), 0 0 10px rgba(74,222,128,.22); }
             #battleArenaActive #bossHPBar[style*="width: 0"], #battleArenaActive #playerFighterHPBar[style*="width: 0"] { background:#ef4444!important; box-shadow:none; }
 
+            /* ===== BATTLE POLISH OVERRIDES ===== */
+            #battleArenaActive.hidden { display:none !important; }
+            #battleArenaActive:not(.hidden) { display:grid !important; }
+            #battleArenaActive > div:nth-child(1), #battleArenaActive > div:nth-child(3) { position:relative; }
+            #battleArenaActive > div:nth-child(1) > .flex.flex-col, #battleArenaActive > div:nth-child(3) > .flex.flex-col { position:static; display:block; padding:0!important; }
+            #battleArenaActive #bossSprite, #battleArenaActive #playerFighterSprite { position:absolute; z-index:2; object-fit:contain; margin:0; }
+            #battleArenaActive #bossSprite { width:clamp(130px, 22vw, 205px); height:clamp(130px, 22vw, 205px); right:12%; top:104px; }
+            #battleArenaActive #playerFighterSprite { width:clamp(115px, 19vw, 175px); height:clamp(115px, 19vw, 175px); left:12%; bottom:18px; transform:scaleX(-1); }
+            #battleArenaActive #bossName, #battleArenaActive #playerFighterName { position:absolute; z-index:5; display:flex; align-items:center; min-width:150px; max-width:230px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding:7px 12px!important; }
+            #battleArenaActive #bossName { top:30px; left:7%; }
+            #battleArenaActive #playerFighterName { right:7%; bottom:62px; }
+            #battleArenaActive #bossLevelBadge, #battleArenaActive #playerFighterLevelBadge { position:absolute; z-index:6; margin:0!important; padding:4px 8px!important; font-size:11px; }
+            #battleArenaActive #bossLevelBadge { top:37px; left:calc(7% + 158px); }
+            #battleArenaActive #playerFighterLevelBadge { right:calc(7% + 158px); bottom:68px; }
+            #battleArenaActive #bossHPBar, #battleArenaActive #playerFighterHPBar { position:absolute; z-index:5; width:170px!important; height:8px!important; margin:0!important; }
+            #battleArenaActive #bossHPBar { top:75px; left:7%; }
+            #battleArenaActive #playerFighterHPBar { right:7%; bottom:48px; }
+            #battleArenaActive #bossHPBar + *, #battleArenaActive #playerFighterHPBar + * { display:none; }
+            #battleArenaActive #bossHPText, #battleArenaActive #playerFighterHPText { position:absolute; z-index:6; font-size:10px; }
+            #battleArenaActive #bossHPText { top:57px; left:calc(7% + 176px); }
+            #battleArenaActive #playerFighterHPText { right:7%; bottom:27px; }
+            #battleArenaActive #battleMovesGrid { gap:8px!important; padding:8px!important; border:3px solid #4b4969!important; }
+            #battleArenaActive #battleMovesGrid button { border:2px solid #74718e!important; border-radius:8px!important; box-shadow:inset 0 1px 0 rgba(255,255,255,.8), 0 2px 0 rgba(52,49,79,.18)!important; }
+            #battleArenaActive #battleMovesGrid button:hover:not(:disabled) { border-color:#2e9e8f!important; box-shadow:0 0 0 2px rgba(46,158,143,.2), inset 0 1px 0 rgba(255,255,255,.8)!important; }
+            @media (max-width:700px) {
+                #battleArenaActive #bossHPBar, #battleArenaActive #playerFighterHPBar { width:125px!important; }
+                #battleArenaActive #bossLevelBadge { left:calc(7% + 130px); }
+                #battleArenaActive #playerFighterLevelBadge { right:calc(7% + 130px); }
+            }
+
             /* ===== LIGHT MODE ===== */
             /* ═══ COMPREHENSIVE LIGHT MODE ════════���══════════════════════════════════ */
             body.light-mode { background-color:#f0f4f8!important; color:#0f172a!important; }
