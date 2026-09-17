@@ -153,8 +153,58 @@
             #battleArenaActive #playerFighterSprite { filter:drop-shadow(0 8px 0 rgba(18,92,52,.2)); }
             @media (min-width:768px) { #battleArenaActive { grid-template-columns:repeat(12,minmax(0,1fr)); } #battleArenaActive > div:nth-child(1), #battleArenaActive > div:nth-child(3) { min-height:19rem; } }
 
+            /* ===== GBA-STYLE BATTLE LAYOUT ===== */
+            #battleArenaActive {
+                display: grid !important;
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+                grid-template-areas:
+                    "enemy enemy"
+                    "field field"
+                    "player player"
+                    "commands commands";
+                gap: 0 !important;
+                min-height: 720px;
+                padding: 0 !important;
+                overflow: hidden;
+                border: 4px solid #2f4b45 !important;
+                border-radius: 8px !important;
+                background:
+                    repeating-linear-gradient(0deg, rgba(255,255,255,.36) 0 4px, transparent 4px 12px),
+                    linear-gradient(180deg, #a9e9f3 0%, #d9f5ee 47%, #73d6bd 48%, #4fc0a7 100%) !important;
+                box-shadow: 0 12px 0 rgba(22, 43, 47, .32), 0 22px 36px rgba(0,0,0,.25) !important;
+                image-rendering: pixelated;
+                font-family: "Courier New", monospace;
+            }
+            #battleArenaActive::before { display:none; }
+            #battleArenaActive > div:nth-child(1) { grid-area: enemy; min-height: 330px; background:transparent!important; border:0!important; box-shadow:none!important; border-radius:0!important; overflow:visible; }
+            #battleArenaActive > div:nth-child(2) { display:none; }
+            #battleArenaActive > div:nth-child(3) { grid-area: player; min-height: 150px; background:transparent!important; border:0!important; box-shadow:none!important; border-radius:0!important; overflow:visible; }
+            #battleArenaActive > div:last-child { grid-area: commands; background:#6fa9a7!important; border:4px solid #343d62!important; border-radius:0!important; box-shadow:none!important; padding:14px!important; display:grid; grid-template-columns: 1fr 1.25fr; gap:14px; align-items:stretch; }
+            #battleArenaActive > div:nth-child(1)::after, #battleArenaActive > div:nth-child(3)::after { content:""; position:absolute; z-index:0; border-radius:50%; background:rgba(37,169,164,.62); box-shadow:inset 0 0 0 5px rgba(43,190,174,.5); }
+            #battleArenaActive > div:nth-child(1)::after { top:160px; right:7%; width:42%; height:100px; }
+            #battleArenaActive > div:nth-child(3)::after { bottom:145px; left:5%; width:48%; height:54px; }
+            #battleArenaActive > div:nth-child(1) > div:not(.absolute), #battleArenaActive > div:nth-child(3) > div:not(.absolute) { position:relative; z-index:1; }
+            #battleArenaActive .absolute { z-index:3; }
+            #battleArenaActive #bossSprite { position:relative; z-index:2; height:210px; width:210px; margin:30px 8% 0 auto; filter:drop-shadow(5px 8px 0 rgba(37,73,73,.35)); }
+            #battleArenaActive #playerFighterSprite { position:relative; z-index:2; height:155px; width:155px; margin:0 auto 0 10%; filter:drop-shadow(5px 8px 0 rgba(37,73,73,.35)); }
+            #battleArenaActive #bossName, #battleArenaActive #bossLevelBadge, #battleArenaActive #playerFighterName, #battleArenaActive #playerFighterLevelBadge { position:absolute; z-index:4; background:#fffbd9!important; color:#273a2f!important; border:4px solid #41583e!important; border-radius:14px 5px 14px 5px!important; box-shadow:5px 6px 0 rgba(52,83,57,.35); font-weight:900; }
+            #battleArenaActive #bossName { top:34px; left:6%; padding:9px 14px; font-size:18px; }
+            #battleArenaActive #bossLevelBadge { top:39px; left:24%; padding:8px 12px; font-size:14px; }
+            #battleArenaActive #playerFighterName { bottom:58px; right:6%; padding:9px 14px; font-size:18px; }
+            #battleArenaActive #playerFighterLevel { bottom:62px; right:23%; padding:8px 12px; font-size:14px; }
+            #battleArenaActive #bossHPBar, #battleArenaActive #playerFighterHPBar { height:9px!important; background:#41d77c!important; border:2px solid #41643b; }
+            #battleArenaActive #bossHPText, #battleArenaActive #playerFighterHPText { color:#273a2f!important; font-weight:900; }
+            #battleArenaActive #battleLog { grid-column:1; grid-row:1; align-self:stretch; height:auto!important; min-height:120px; background:#6fa9a7!important; border:0!important; color:#f8fff0!important; font-family:"Courier New",monospace!important; font-size:14px; padding:14px!important; }
+            #battleArenaActive > div:last-child > div:first-child { display:none; }
+            #battleArenaActive #battleMovesGrid { grid-column:2; grid-row:1; display:grid; grid-template-columns:1fr 1fr; gap:0; background:#f8f7f2; border:5px solid #4b4969; border-radius:10px; padding:6px; }
+            #battleArenaActive #battleMovesGrid button { min-height:58px; background:#f8f7f2!important; border:0!important; border-bottom:2px solid #c8c5cc!important; border-radius:0!important; color:#343343!important; box-shadow:none!important; font-family:"Courier New",monospace; font-size:15px; font-weight:900; text-align:left; padding:8px 12px; }
+            #battleArenaActive #battleMovesGrid button::before { content:"▶"; opacity:0; margin-right:6px; }
+            #battleArenaActive #battleMovesGrid button:hover:not(:disabled) { transform:none; background:#e8f1e9!important; }
+            #battleArenaActive #battleSwitchRow, #battleArenaActive #statStagesPanel, #battleArenaActive #effectivenessIndicator { grid-column:1 / -1; }
+            @media (max-width: 700px) { #battleArenaActive { min-height:620px; } #battleArenaActive > div:last-child { grid-template-columns:1fr; } #battleArenaActive #battleLog, #battleArenaActive #battleMovesGrid { grid-column:1; } #battleArenaActive #battleMovesGrid { grid-row:2; } #battleArenaActive #bossSprite { width:150px;height:150px; } }
+
             /* ===== LIGHT MODE ===== */
-            /* ═══ COMPREHENSIVE LIGHT MODE ═══════════════════════════════════════════ */
+            /* ═══ COMPREHENSIVE LIGHT MODE ════════���══════════════════════════════════ */
             body.light-mode { background-color:#f0f4f8!important; color:#0f172a!important; }
             body.light-mode .scanlines { opacity:0.02!important; }
 
@@ -2961,7 +3011,7 @@ const CAMPAIGN_ROADMAP = [
                     }
                 }
 
-                // ── SAVE SYSTEM ────────────────────────────────────────────
+                // ── SAVE SYSTEM ───────────────────────────���────────────────
                 // Plain JSON save — no CryptoJS dependency for primary slot.
                 // CryptoJS is still used for the manual Export/Import feature.
                 // ────────────────────────────────────────────────────────────
