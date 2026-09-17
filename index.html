@@ -134,7 +134,7 @@
                 border: 1px solid rgba(15, 96, 70, .45);
                 border-radius: 1.15rem;
                 background-color: #39c978;
-                background-image: linear-gradient(180deg, rgba(20, 115, 104, .08), rgba(24, 166, 94, .1)), url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-gXKOtYm9fd1KU0uVA5Bonl9qIpE74o.png');
+                background-image: linear-gradient(180deg, rgba(20, 115, 104, .08), rgba(24, 166, 94, .1)), url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-AQ1Qxv6GT2e08UaMiqlLp9zqaMVCgG.png');
                 background-size: cover;
                 background-position: center;
                 box-shadow: inset 0 0 0 999px rgba(33, 178, 106, .08), 0 20px 50px rgba(0,0,0,.25);
@@ -202,6 +202,21 @@
             #battleArenaActive #battleMovesGrid button:hover:not(:disabled) { transform:none; background:#e8f1e9!important; }
             #battleArenaActive #battleSwitchRow, #battleArenaActive #statStagesPanel, #battleArenaActive #effectivenessIndicator { grid-column:1 / -1; }
             @media (max-width: 700px) { #battleArenaActive { min-height:620px; } #battleArenaActive > div:last-child { grid-template-columns:1fr; } #battleArenaActive #battleLog, #battleArenaActive #battleMovesGrid { grid-column:1; } #battleArenaActive #battleMovesGrid { grid-row:2; } #battleArenaActive #bossSprite { width:150px;height:150px; } }
+
+            /* ===== PROFESSIONAL GAME SURFACES ===== */
+            :root { --game-radius: 16px; --game-panel: rgba(15,23,42,.88); --game-border: rgba(148,163,184,.18); --game-shadow: 0 18px 45px rgba(2,6,23,.28); }
+            body { background-image: radial-gradient(circle at 15% 0%, color-mix(in srgb, var(--theme-c1) 10%, transparent), transparent 32rem), radial-gradient(circle at 85% 10%, color-mix(in srgb, var(--theme-c2) 8%, transparent), transparent 28rem); }
+            #settingsModal > div { border-radius:24px!important; box-shadow:var(--game-shadow)!important; backdrop-filter:blur(22px); }
+            #settingsModal .theme-btn { min-height:78px; border:1px solid var(--game-border); background:rgba(15,23,42,.78); box-shadow:0 8px 18px rgba(2,6,23,.18); }
+            #settingsModal .theme-btn:hover { transform:translateY(-3px) scale(1.02)!important; opacity:1!important; border-color:color-mix(in srgb, var(--theme-c1) 65%, white 10%); box-shadow:0 12px 24px rgba(2,6,23,.28); }
+            #settingsModal .theme-btn > div:first-child { height:42px; filter:saturate(1.1); }
+            #settingsModal .theme-btn > div:nth-child(2) { background:rgba(2,6,23,.72)!important; }
+            #settingsModal .theme-btn span { letter-spacing:.04em; }
+            #settingsModal .theme-btn.is-active { outline:2px solid var(--theme-c1); outline-offset:2px; }
+            #battleArenaActive { background-image:linear-gradient(180deg, rgba(8,20,35,.05), rgba(8,20,35,.24)), url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-AQ1Qxv6GT2e08UaMiqlLp9zqaMVCgG.png') !important; background-size:cover!important; background-position:center!important; }
+            #battleArenaActive.hidden { background-image:none!important; }
+            #battleArenaActive #bossHPBar, #battleArenaActive #playerFighterHPBar { box-shadow:inset 0 1px 0 rgba(255,255,255,.48), 0 0 10px rgba(74,222,128,.22); }
+            #battleArenaActive #bossHPBar[style*="width: 0"], #battleArenaActive #playerFighterHPBar[style*="width: 0"] { background:#ef4444!important; box-shadow:none; }
 
             /* ===== LIGHT MODE ===== */
             /* ═══ COMPREHENSIVE LIGHT MODE ════════���══════════════════════════════════ */
@@ -3506,7 +3521,7 @@ const CAMPAIGN_ROADMAP = [
                     'shop.pwr':            '威力:',
                     'shop.infiniteUse':    '∞ 使用可能',
                     'autoBattler.stop':    'オートバトル停止',
-                    'autoBattler.start':   'オートバトル開始',
+                    'autoBattler.start':   'オートバト���開始',
                     'autoBattler.running': '実行中',
                     'autoBattler.idle':    'アイドル',
                     'autoBattler.owned':   '✅ 所持済み',
@@ -6920,7 +6935,7 @@ const CAMPAIGN_ROADMAP = [
                     287: { level: 36, evolvesTo: 288 }, // Slakoth → Vigoroth
                     288: { level: 36, evolvesTo: 289 }, // Vigoroth → Slaking
                     290: { level: 20, evolvesTo: 291 }, // Nincada → Ninjask
-                    293: { level: 20, evolvesTo: 294 }, // Whismur → Loudred
+                    293: { level: 20, evolvesTo: 294 }, // Whismur ��� Loudred
                     294: { level: 40, evolvesTo: 295 }, // Loudred → Exploud
                     296: { level: 24, evolvesTo: 297 }, // Makuhita → Hariyama
                     300: { level: 18, evolvesTo: 301 }, // Skitty → Delcatty (simplified)
