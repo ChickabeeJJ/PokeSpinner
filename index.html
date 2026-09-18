@@ -805,6 +805,22 @@
               #battleArenaActive #bossSprite, #battleArenaActive #playerFighterSprite { width:92px!important; height:92px!important; }
             }
 
+            /* ===== MATCHED BATTLE SPRITES ===== */
+            #battleArenaActive #bossSprite,
+            #battleArenaActive #playerFighterSprite {
+                width:104px!important;
+                height:104px!important;
+                object-fit:contain!important;
+                margin:0!important;
+                filter:drop-shadow(0 5px 0 rgba(22,55,58,.3));
+            }
+            #battleArenaActive #bossSprite { right:18%!important; top:84px!important; }
+            #battleArenaActive #playerFighterSprite { left:18%!important; bottom:27px!important; transform:scaleX(-1); }
+            @media (max-width:700px) {
+                #battleArenaActive #bossSprite,
+                #battleArenaActive #playerFighterSprite { width:88px!important; height:88px!important; }
+            }
+
   </style>
     </head>
     <body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white pb-16 md:pb-0">
