@@ -248,6 +248,52 @@
                 #battleArenaActive #playerFighterLevelBadge { right:calc(7% + 130px); }
             }
 
+            /* ===== FIXED BATTLE COMPOSITION ===== */
+            #battleArenaActive:not(.hidden) {
+                display:grid!important;
+                grid-template-columns:1fr!important;
+                grid-template-rows:270px 0 220px 230px!important;
+                grid-template-areas:"enemy" "." "player" "commands"!important;
+                height:720px!important;
+                min-height:720px!important;
+                max-height:720px!important;
+                overflow:hidden!important;
+            }
+            #battleArenaActive > div:nth-child(1), #battleArenaActive > div:nth-child(3) {
+                min-height:0!important; height:auto!important; width:100%; overflow:visible!important; padding:0!important;
+            }
+            #battleArenaActive > div:nth-child(1) > .flex.flex-col, #battleArenaActive > div:nth-child(3) > .flex.flex-col {
+                position:absolute; inset:0; display:block; padding:0!important;
+            }
+            #battleArenaActive > div:nth-child(1)::after { top:154px!important; right:8%!important; width:40%!important; height:78px!important; }
+            #battleArenaActive > div:nth-child(3)::after { bottom:48px!important; left:7%!important; width:42%!important; height:54px!important; }
+            #battleArenaActive #bossSprite { width:170px!important; height:170px!important; right:12%!important; top:72px!important; }
+            #battleArenaActive #playerFighterSprite { width:145px!important; height:145px!important; left:12%!important; bottom:18px!important; }
+            #battleArenaActive #bossName, #battleArenaActive #playerFighterName { max-width:180px!important; min-width:120px!important; height:36px!important; padding:5px 10px!important; font-size:14px!important; }
+            #battleArenaActive #bossName { top:22px!important; left:7%!important; }
+            #battleArenaActive #playerFighterName { right:7%!important; bottom:53px!important; }
+            #battleArenaActive #bossLevelBadge, #battleArenaActive #playerFighterLevelBadge { top:27px!important; bottom:auto!important; font-size:10px!important; }
+            #battleArenaActive #bossLevelBadge { left:calc(7% + 188px)!important; }
+            #battleArenaActive #playerFighterLevelBadge { right:calc(7% + 188px)!important; }
+            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child, #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child {
+                position:absolute; display:block; width:180px!important; margin:0!important; padding:0!important; top:67px!important;
+            }
+            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child { left:7%!important; }
+            #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child { right:7%!important; top:auto!important; bottom:20px!important; }
+            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child > div:first-child, #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child > div:first-child { display:flex!important; justify-content:space-between; font-size:9px!important; line-height:12px; margin:0 0 2px!important; }
+            #battleArenaActive #bossHPBar, #battleArenaActive #playerFighterHPBar { position:static!important; display:block!important; width:100%!important; height:8px!important; }
+            #battleArenaActive #bossHPText, #battleArenaActive #playerFighterHPText { position:static!important; font-size:9px!important; }
+            #battleArenaActive > div:last-child { height:230px!important; min-height:230px!important; max-height:230px!important; padding:12px!important; display:grid!important; grid-template-columns:minmax(0, .85fr) minmax(0, 1.15fr)!important; grid-template-rows:1fr!important; gap:12px!important; overflow:hidden!important; }
+            #battleArenaActive #battleLog { grid-column:1!important; grid-row:1!important; min-height:0!important; height:100%!important; max-height:100%!important; overflow-y:auto!important; overscroll-behavior:contain; word-break:break-word; }
+            #battleArenaActive #battleMovesGrid { grid-column:2!important; grid-row:1!important; align-self:stretch; min-height:0!important; height:100%!important; overflow:auto; }
+            #battleArenaActive > div:last-child > div:first-child { display:none!important; }
+            @media (max-width:700px) {
+                #battleArenaActive:not(.hidden) { grid-template-rows:230px 0 180px 360px!important; height:770px!important; max-height:770px!important; }
+                #battleArenaActive > div:last-child { height:360px!important; max-height:360px!important; grid-template-columns:1fr!important; grid-template-rows:120px 1fr!important; }
+                #battleArenaActive #battleLog { grid-column:1!important; grid-row:1!important; }
+                #battleArenaActive #battleMovesGrid { grid-column:1!important; grid-row:2!important; }
+            }
+
             /* ===== LIGHT MODE ===== */
             /* ═══ COMPREHENSIVE LIGHT MODE ════════���══════════════════════════════════ */
             body.light-mode { background-color:#f0f4f8!important; color:#0f172a!important; }
@@ -2046,7 +2092,7 @@
                     "astral-barrage":{ type: "ghost",  power: 120, category: "special" },
                     "wicked-blow":  { type: "dark",    power: 80,  category: "physical" },
                     "spirit-break": { type: "fairy",   power: 75,  category: "physical" },
-                    // ── Setup / Status TM moves ──────────────────────────────────────────
+                    // ── Setup / Status TM moves ──────��───────────────────────────────────
                     "calm-mind":    { type: "psychic",  power: 0,  category: "status", effect: { target: "self",  multiStat: [{stat:"spAtk",stages:1},{stat:"spDef",stages:1}] } },
                     "swords-dance": { type: "normal",   power: 0,  category: "status", effect: { target: "self",  stat: "atk",   stages: 2 } },
                     "nasty-plot":   { type: "dark",     power: 0,  category: "status", effect: { target: "self",  stat: "spAtk", stages: 2 } },
