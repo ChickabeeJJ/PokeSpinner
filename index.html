@@ -798,6 +798,13 @@
                 #battleArenaActive #bossName, #battleArenaActive #playerFighterName, #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child, #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child { width:164px!important; min-width:164px!important; }
             }
 
+            /* Match the opponent's visible footprint to the player's sprite. */
+            #battleArenaActive #bossSprite { width:104px!important; height:104px!important; right:18%!important; top:82px!important; }
+            #battleArenaActive #playerFighterSprite { width:104px!important; height:104px!important; left:18%!important; bottom:26px!important; }
+            @media (max-width:700px) {
+              #battleArenaActive #bossSprite, #battleArenaActive #playerFighterSprite { width:92px!important; height:92px!important; }
+            }
+
   </style>
     </head>
     <body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white pb-16 md:pb-0">
@@ -2205,7 +2212,7 @@
                     "astral-barrage":{ type: "ghost",  power: 120, category: "special" },
                     "wicked-blow":  { type: "dark",    power: 80,  category: "physical" },
                     "spirit-break": { type: "fairy",   power: 75,  category: "physical" },
-                    // ── Setup / Status TM moves ──────��───────────────────────────────────
+                    // ── Setup / Status TM moves ──────��─��─────────────────────────────────
                     "calm-mind":    { type: "psychic",  power: 0,  category: "status", effect: { target: "self",  multiStat: [{stat:"spAtk",stages:1},{stat:"spDef",stages:1}] } },
                     "swords-dance": { type: "normal",   power: 0,  category: "status", effect: { target: "self",  stat: "atk",   stages: 2 } },
                     "nasty-plot":   { type: "dark",     power: 0,  category: "status", effect: { target: "self",  stat: "spAtk", stages: 2 } },
@@ -3592,7 +3599,7 @@ const CAMPAIGN_ROADMAP = [
                     'nav.journey':  'バトルアリーナ',
                     'nav.team':     'チーム',
                     'nav.pokedex':  '図鑑',
-                    'nav.pc':       'PCボックス',
+                    'nav.pc':       'PCボ��クス',
                     'nav.shop':     'アイテムショップ',
                     'settings.title':    '設定',
                     'settings.subtitle': '構成',
@@ -6964,7 +6971,7 @@ const CAMPAIGN_ROADMAP = [
                     }
                 }
 
-                // ── Eevee level-up evolution at level 20 ──────────────────────────────
+                // ── Eevee level-up evolution at level 20 ──────────────────────────��───
                 async function checkEeveeLevelUpEvolution(pokemon, logBox) {
                     const eeveeLvlUpEvos = [700, 196, 197]; // Sylveon, Espeon, Umbreon
                     const targetId = eeveeLvlUpEvos[Math.floor(Math.random() * eeveeLvlUpEvos.length)];
@@ -7057,7 +7064,7 @@ const CAMPAIGN_ROADMAP = [
                     116: { level: 32, evolvesTo: 117 }, // Horsea → Seadra
                     118: { level: 33, evolvesTo: 119 }, // Goldeen → Seaking
                     120: { level: 36, evolvesTo: 121 }, // Staryu → Starmie (simplified)
-                    129: { level: 20, evolvesTo: 130 }, // Magikarp → Gyarados
+                    129: { level: 20, evolvesTo: 130 }, // Magikarp �� Gyarados
                     147: { level: 30, evolvesTo: 148 }, // Dratini → Dragonair
                     148: { level: 55, evolvesTo: 149 }, // Dragonair → Dragonite
                     // Gen 2
