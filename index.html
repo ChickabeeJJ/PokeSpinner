@@ -2,7 +2,8 @@
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <meta name="theme-color" content="#05070f">
         <meta name="google-adsense-account" content="ca-pub-4850555217888083">
         <title>Pokémon Spinner: Elite Edition</title>
         <!-- Tailwind CSS -->
@@ -125,84 +126,6 @@
             .pokeball-svg svg { filter:drop-shadow(0 2px 6px rgba(0,0,0,0.5)); transition:transform 0.15s ease; }
             .ball-selector-btn:hover .pokeball-svg svg, .ball-selector-btn.active .pokeball-svg svg { transform:scale(1.12) rotate(-12deg); }
 
-            /* ===== CLASSIC BATTLE UI ===== */
-            #battleArenaActive {
-                position: relative;
-                isolation: isolate;
-                gap: 0.9rem;
-                padding: clamp(0.35rem, 1.5vw, 1rem);
-                border: 1px solid rgba(15, 96, 70, .45);
-                border-radius: 1.15rem;
-                background-color: #39c978;
-                background-image: linear-gradient(180deg, rgba(20, 115, 104, .08), rgba(24, 166, 94, .1)), url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-AQ1Qxv6GT2e08UaMiqlLp9zqaMVCgG.png');
-                background-size: cover;
-                background-position: center;
-                box-shadow: inset 0 0 0 999px rgba(33, 178, 106, .08), 0 20px 50px rgba(0,0,0,.25);
-                image-rendering: pixelated;
-            }
-            #battleArenaActive::before { content:''; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(4,80,48,.12)); pointer-events:none; }
-            #battleArenaActive > div:not(:last-child) { background:rgba(246, 255, 236, .92)!important; border:2px solid #173d2c!important; border-radius:12px!important; box-shadow:4px 5px 0 rgba(8,55,39,.32); color:#173d2c; }
-            #battleArenaActive > div:not(:last-child) .text-white, #battleArenaActive > div:not(:last-child) h4 { color:#173d2c!important; }
-            #battleArenaActive > div:not(:last-child) .text-slate-400, #battleArenaActive > div:not(:last-child) .text-slate-500 { color:#47715a!important; }
-            #battleArenaActive > div:last-child { background:#f7f2d7!important; border:2px solid #173d2c!important; border-radius:12px!important; box-shadow:4px 5px 0 rgba(8,55,39,.32); }
-            #battleArenaActive #battleLog { background:#172b25!important; border:2px solid #173d2c!important; color:#dff8df!important; font-family:'Space Grotesk',sans-serif; }
-            #battleArenaActive #battleMovesGrid button { background:#fffdf0!important; border:2px solid #173d2c!important; color:#173d2c!important; min-height:4.4rem; box-shadow:2px 3px 0 rgba(8,55,39,.18); }
-            #battleArenaActive #battleMovesGrid button:hover:not(:disabled) { transform:translateY(-2px); background:#e7f7c8!important; }
-            #battleArenaActive #battleMovesGrid button:active:not(:disabled) { transform:translateY(1px); box-shadow:none; }
-            #battleArenaActive #bossSprite { filter:drop-shadow(0 8px 0 rgba(18,92,52,.2)); }
-            #battleArenaActive #playerFighterSprite { filter:drop-shadow(0 8px 0 rgba(18,92,52,.2)); }
-            @media (min-width:768px) { #battleArenaActive { grid-template-columns:repeat(12,minmax(0,1fr)); } #battleArenaActive > div:nth-child(1), #battleArenaActive > div:nth-child(3) { min-height:19rem; } }
-
-            /* ===== GBA-STYLE BATTLE LAYOUT ===== */
-            #battleArenaActive {
-                display: grid !important;
-                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-                grid-template-areas:
-                    "enemy enemy"
-                    "field field"
-                    "player player"
-                    "commands commands";
-                gap: 0 !important;
-                min-height: 720px;
-                padding: 0 !important;
-                overflow: hidden;
-                border: 4px solid #2f4b45 !important;
-                border-radius: 8px !important;
-                background:
-                    repeating-linear-gradient(0deg, rgba(255,255,255,.36) 0 4px, transparent 4px 12px),
-                    linear-gradient(180deg, #a9e9f3 0%, #d9f5ee 47%, #73d6bd 48%, #4fc0a7 100%) !important;
-                box-shadow: 0 12px 0 rgba(22, 43, 47, .32), 0 22px 36px rgba(0,0,0,.25) !important;
-                image-rendering: pixelated;
-                font-family: "Courier New", monospace;
-            }
-            #battleArenaActive::before { display:none; }
-            #battleArenaActive > div:nth-child(1) { grid-area: enemy; min-height: 330px; background:transparent!important; border:0!important; box-shadow:none!important; border-radius:0!important; overflow:visible; }
-            #battleArenaActive > div:nth-child(2) { display:none; }
-            #battleArenaActive > div:nth-child(3) { grid-area: player; min-height: 150px; background:transparent!important; border:0!important; box-shadow:none!important; border-radius:0!important; overflow:visible; }
-            #battleArenaActive > div:last-child { grid-area: commands; background:#6fa9a7!important; border:4px solid #343d62!important; border-radius:0!important; box-shadow:none!important; padding:14px!important; display:grid; grid-template-columns: 1fr 1.25fr; gap:14px; align-items:stretch; }
-            #battleArenaActive > div:nth-child(1)::after, #battleArenaActive > div:nth-child(3)::after { content:""; position:absolute; z-index:0; border-radius:50%; background:rgba(37,169,164,.62); box-shadow:inset 0 0 0 5px rgba(43,190,174,.5); }
-            #battleArenaActive > div:nth-child(1)::after { top:160px; right:7%; width:42%; height:100px; }
-            #battleArenaActive > div:nth-child(3)::after { bottom:145px; left:5%; width:48%; height:54px; }
-            #battleArenaActive > div:nth-child(1) > div:not(.absolute), #battleArenaActive > div:nth-child(3) > div:not(.absolute) { position:relative; z-index:1; }
-            #battleArenaActive .absolute { z-index:3; }
-            #battleArenaActive #bossSprite { position:relative; z-index:2; height:210px; width:210px; margin:30px 8% 0 auto; filter:drop-shadow(5px 8px 0 rgba(37,73,73,.35)); }
-            #battleArenaActive #playerFighterSprite { position:relative; z-index:2; height:155px; width:155px; margin:0 auto 0 10%; filter:drop-shadow(5px 8px 0 rgba(37,73,73,.35)); }
-            #battleArenaActive #bossName, #battleArenaActive #bossLevelBadge, #battleArenaActive #playerFighterName, #battleArenaActive #playerFighterLevelBadge { position:absolute; z-index:4; background:#fffbd9!important; color:#273a2f!important; border:4px solid #41583e!important; border-radius:14px 5px 14px 5px!important; box-shadow:5px 6px 0 rgba(52,83,57,.35); font-weight:900; }
-            #battleArenaActive #bossName { top:34px; left:6%; padding:9px 14px; font-size:18px; }
-            #battleArenaActive #bossLevelBadge { top:39px; left:24%; padding:8px 12px; font-size:14px; }
-            #battleArenaActive #playerFighterName { bottom:58px; right:6%; padding:9px 14px; font-size:18px; }
-            #battleArenaActive #playerFighterLevel { bottom:62px; right:23%; padding:8px 12px; font-size:14px; }
-            #battleArenaActive #bossHPBar, #battleArenaActive #playerFighterHPBar { height:9px!important; background:#41d77c!important; border:2px solid #41643b; }
-            #battleArenaActive #bossHPText, #battleArenaActive #playerFighterHPText { color:#273a2f!important; font-weight:900; }
-            #battleArenaActive #battleLog { grid-column:1; grid-row:1; align-self:stretch; height:auto!important; min-height:120px; background:#6fa9a7!important; border:0!important; color:#f8fff0!important; font-family:"Courier New",monospace!important; font-size:14px; padding:14px!important; }
-            #battleArenaActive > div:last-child > div:first-child { display:none; }
-            #battleArenaActive #battleMovesGrid { grid-column:2; grid-row:1; display:grid; grid-template-columns:1fr 1fr; gap:0; background:#f8f7f2; border:5px solid #4b4969; border-radius:10px; padding:6px; }
-            #battleArenaActive #battleMovesGrid button { min-height:58px; background:#f8f7f2!important; border:0!important; border-bottom:2px solid #c8c5cc!important; border-radius:0!important; color:#343343!important; box-shadow:none!important; font-family:"Courier New",monospace; font-size:15px; font-weight:900; text-align:left; padding:8px 12px; }
-            #battleArenaActive #battleMovesGrid button::before { content:"▶"; opacity:0; margin-right:6px; }
-            #battleArenaActive #battleMovesGrid button:hover:not(:disabled) { transform:none; background:#e8f1e9!important; }
-            #battleArenaActive #battleSwitchRow, #battleArenaActive #statStagesPanel, #battleArenaActive #effectivenessIndicator { grid-column:1 / -1; }
-            @media (max-width: 700px) { #battleArenaActive { min-height:620px; } #battleArenaActive > div:last-child { grid-template-columns:1fr; } #battleArenaActive #battleLog, #battleArenaActive #battleMovesGrid { grid-column:1; } #battleArenaActive #battleMovesGrid { grid-row:2; } #battleArenaActive #bossSprite { width:150px;height:150px; } }
-
             /* ===== PROFESSIONAL GAME SURFACES ===== */
             :root { --game-radius: 16px; --game-panel: rgba(15,23,42,.88); --game-border: rgba(148,163,184,.18); --game-shadow: 0 18px 45px rgba(2,6,23,.28); }
             body { background-image: radial-gradient(circle at 15% 0%, color-mix(in srgb, var(--theme-c1) 10%, transparent), transparent 32rem), radial-gradient(circle at 85% 10%, color-mix(in srgb, var(--theme-c2) 8%, transparent), transparent 28rem); }
@@ -213,87 +136,6 @@
             #settingsModal .theme-btn > div:nth-child(2) { background:rgba(2,6,23,.72)!important; }
             #settingsModal .theme-btn span { letter-spacing:.04em; }
             #settingsModal .theme-btn.is-active { outline:2px solid var(--theme-c1); outline-offset:2px; }
-            #battleArenaActive { background-image:linear-gradient(180deg, rgba(8,20,35,.05), rgba(8,20,35,.24)), url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-AQ1Qxv6GT2e08UaMiqlLp9zqaMVCgG.png') !important; background-size:cover!important; background-position:center!important; }
-            #battleArenaActive.hidden { background-image:none!important; }
-            #battleArenaActive #bossHPBar, #battleArenaActive #playerFighterHPBar { box-shadow:inset 0 1px 0 rgba(255,255,255,.48), 0 0 10px rgba(74,222,128,.22); }
-            #battleArenaActive #bossHPBar[style*="width: 0"], #battleArenaActive #playerFighterHPBar[style*="width: 0"] { background:#ef4444!important; box-shadow:none; }
-
-            /* ===== BATTLE POLISH OVERRIDES ===== */
-            #battleArenaActive.hidden { display:none !important; }
-            #battleArenaActive:not(.hidden) { display:grid !important; }
-            #battleArenaActive > div:nth-child(1), #battleArenaActive > div:nth-child(3) { position:relative; }
-            #battleArenaActive > div:nth-child(1) > .flex.flex-col, #battleArenaActive > div:nth-child(3) > .flex.flex-col { position:static; display:block; padding:0!important; }
-            #battleArenaActive #bossSprite, #battleArenaActive #playerFighterSprite { position:absolute; z-index:2; object-fit:contain; margin:0; }
-            #battleArenaActive #bossSprite { width:clamp(130px, 22vw, 205px); height:clamp(130px, 22vw, 205px); right:12%; top:104px; }
-            #battleArenaActive #playerFighterSprite { width:clamp(115px, 19vw, 175px); height:clamp(115px, 19vw, 175px); left:12%; bottom:18px; transform:scaleX(-1); }
-            #battleArenaActive #bossName, #battleArenaActive #playerFighterName { position:absolute; z-index:5; display:flex; align-items:center; min-width:150px; max-width:230px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding:7px 12px!important; }
-            #battleArenaActive #bossName { top:30px; left:7%; }
-            #battleArenaActive #playerFighterName { right:7%; bottom:62px; }
-            #battleArenaActive #bossLevelBadge, #battleArenaActive #playerFighterLevelBadge { position:absolute; z-index:6; margin:0!important; padding:4px 8px!important; font-size:11px; }
-            #battleArenaActive #bossLevelBadge { top:37px; left:calc(7% + 158px); }
-            #battleArenaActive #playerFighterLevelBadge { right:calc(7% + 158px); bottom:68px; }
-            #battleArenaActive #bossHPBar, #battleArenaActive #playerFighterHPBar { position:absolute; z-index:5; width:170px!important; height:8px!important; margin:0!important; }
-            #battleArenaActive #bossHPBar { top:75px; left:7%; }
-            #battleArenaActive #playerFighterHPBar { right:7%; bottom:48px; }
-            #battleArenaActive #bossHPBar + *, #battleArenaActive #playerFighterHPBar + * { display:none; }
-            #battleArenaActive #bossHPText, #battleArenaActive #playerFighterHPText { position:absolute; z-index:6; font-size:10px; }
-            #battleArenaActive #bossHPText { top:57px; left:calc(7% + 176px); }
-            #battleArenaActive #playerFighterHPText { right:7%; bottom:27px; }
-            #battleArenaActive #battleMovesGrid { gap:8px!important; padding:8px!important; border:3px solid #4b4969!important; }
-            #battleArenaActive #battleMovesGrid button { border:2px solid #74718e!important; border-radius:8px!important; box-shadow:inset 0 1px 0 rgba(255,255,255,.8), 0 2px 0 rgba(52,49,79,.18)!important; }
-            #battleArenaActive #battleMovesGrid button:hover:not(:disabled) { border-color:#2e9e8f!important; box-shadow:0 0 0 2px rgba(46,158,143,.2), inset 0 1px 0 rgba(255,255,255,.8)!important; }
-            @media (max-width:700px) {
-                #battleArenaActive #bossHPBar, #battleArenaActive #playerFighterHPBar { width:125px!important; }
-                #battleArenaActive #bossLevelBadge { left:calc(7% + 130px); }
-                #battleArenaActive #playerFighterLevelBadge { right:calc(7% + 130px); }
-            }
-
-            /* ===== FIXED BATTLE COMPOSITION ===== */
-            #battleArenaActive:not(.hidden) {
-                display:grid!important;
-                grid-template-columns:1fr!important;
-                grid-template-rows:270px 0 220px 230px!important;
-                grid-template-areas:"enemy" "." "player" "commands"!important;
-                height:720px!important;
-                min-height:720px!important;
-                max-height:720px!important;
-                overflow:hidden!important;
-            }
-            #battleArenaActive > div:nth-child(1), #battleArenaActive > div:nth-child(3) {
-                min-height:0!important; height:auto!important; width:100%; overflow:visible!important; padding:0!important;
-            }
-            #battleArenaActive > div:nth-child(1) > .flex.flex-col, #battleArenaActive > div:nth-child(3) > .flex.flex-col {
-                position:absolute; inset:0; display:block; padding:0!important;
-            }
-            #battleArenaActive > div:nth-child(1)::after { top:154px!important; right:8%!important; width:40%!important; height:78px!important; }
-            #battleArenaActive > div:nth-child(3)::after { bottom:48px!important; left:7%!important; width:42%!important; height:54px!important; }
-            #battleArenaActive #bossSprite { width:170px!important; height:170px!important; right:12%!important; top:72px!important; }
-            #battleArenaActive #playerFighterSprite { width:145px!important; height:145px!important; left:12%!important; bottom:18px!important; }
-            #battleArenaActive #bossName, #battleArenaActive #playerFighterName { max-width:180px!important; min-width:120px!important; height:36px!important; padding:5px 10px!important; font-size:14px!important; }
-            #battleArenaActive #bossName { top:22px!important; left:7%!important; }
-            #battleArenaActive #playerFighterName { right:7%!important; bottom:53px!important; }
-            #battleArenaActive #bossLevelBadge, #battleArenaActive #playerFighterLevelBadge { top:27px!important; bottom:auto!important; font-size:10px!important; }
-            #battleArenaActive #bossLevelBadge { left:calc(7% + 188px)!important; }
-            #battleArenaActive #playerFighterLevelBadge { right:calc(7% + 188px)!important; }
-            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child, #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child {
-                position:absolute; display:block; width:180px!important; margin:0!important; padding:0!important; top:67px!important;
-            }
-            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child { left:7%!important; }
-            #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child { right:7%!important; top:auto!important; bottom:20px!important; }
-            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child > div:first-child, #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child > div:first-child { display:flex!important; justify-content:space-between; font-size:9px!important; line-height:12px; margin:0 0 2px!important; }
-            #battleArenaActive #bossHPBar, #battleArenaActive #playerFighterHPBar { position:static!important; display:block!important; width:100%!important; height:8px!important; }
-            #battleArenaActive #bossHPText, #battleArenaActive #playerFighterHPText { position:static!important; font-size:9px!important; }
-            #battleArenaActive > div:last-child { height:230px!important; min-height:230px!important; max-height:230px!important; padding:12px!important; display:grid!important; grid-template-columns:minmax(0, .85fr) minmax(0, 1.15fr)!important; grid-template-rows:1fr!important; gap:12px!important; overflow:hidden!important; }
-            #battleArenaActive #battleLog { grid-column:1!important; grid-row:1!important; min-height:0!important; height:100%!important; max-height:100%!important; overflow-y:auto!important; overscroll-behavior:contain; word-break:break-word; }
-            #battleArenaActive #battleMovesGrid { grid-column:2!important; grid-row:1!important; align-self:stretch; min-height:0!important; height:100%!important; overflow:auto; }
-            #battleArenaActive > div:last-child > div:first-child { display:none!important; }
-            @media (max-width:700px) {
-                #battleArenaActive:not(.hidden) { grid-template-rows:230px 0 180px 360px!important; height:770px!important; max-height:770px!important; }
-                #battleArenaActive > div:last-child { height:360px!important; max-height:360px!important; grid-template-columns:1fr!important; grid-template-rows:120px 1fr!important; }
-                #battleArenaActive #battleLog { grid-column:1!important; grid-row:1!important; }
-                #battleArenaActive #battleMovesGrid { grid-column:1!important; grid-row:2!important; }
-            }
-
             /* ===== LIGHT MODE ===== */
             /* ═══ COMPREHENSIVE LIGHT MODE ════════���══════════════════════════════════ */
             body.light-mode { background-color:#f0f4f8!important; color:#0f172a!important; }
@@ -343,7 +185,6 @@
             body.light-mode option { background-color:#ffffff!important; color:#0f172a!important; }
 
             /* Specific panels */
-            body.light-mode #battleLog { background-color:#f8fafc!important; border-color:#e2e8f0!important; color:#334155!important; }
             body.light-mode #wildDisplayBox { background-color:#f1f5f9!important; border-color:#e2e8f0!important; }
             body.light-mode #pokemonPlatform { background-color:#e2e8f0!important; }
 
@@ -376,9 +217,6 @@
             body.light-mode [style*="border:1px solid rgba(255,255,255,0.08)"] { border-color:rgba(148,163,184,0.3)!important; }
             body.light-mode [style*="border:3px solid rgba(255,255,255,0.12)"] { border-color:rgba(148,163,184,0.5)!important; }
 
-            /* Stat stages panel */
-            body.light-mode #statStagesPanel { background:rgba(241,245,249,0.9)!important; border-color:#e2e8f0!important; }
-
             /* Buttons - ensure text visible */
             body.light-mode button:not([class*="themed"]):not([class*="bg-rose"]):not([class*="bg-emerald"]):not([class*="bg-blue"]):not([class*="bg-purple"]):not([class*="bg-green"]):not([class*="bg-cyan"]):not([class*="bg-amber"]):not([class*="bg-yellow"]):not([class*="bg-red"]):not([class*="bg-pink"]):not([class*="bg-indigo"]):not([class*="bg-violet"]):not([class*="bg-teal"]):not([class*="bg-orange"]) {
                 color:#0f172a!important; }
@@ -387,12 +225,6 @@
             body.light-mode #settingsToggleBtn, body.light-mode #profileToggleBtn { background-color:rgba(241,245,249,0.98)!important; border-color:#e2e8f0!important; }
               #settingsToggleBtn { box-shadow: 0 0 10px rgba(34,211,238,0.18), 0 0 20px rgba(34,211,238,0.07); }
               #profileToggleBtn  { box-shadow: 0 0 10px rgba(168,85,247,0.18), 0 0 20px rgba(168,85,247,0.07); }
-
-            /* Move buttons in battle */
-            body.light-mode #battleMovesGrid button { background-color:#f1f5f9!important; color:#0f172a!important; }
-
-            /* Battle arena background */
-            body.light-mode #battleArenaActive .bg-slate-950 { background-color:#ffffff!important; }
 
             /* Scrollbar */
             body.light-mode ::-webkit-scrollbar-track { background:#e2e8f0; }
@@ -411,9 +243,6 @@
 
             /* Journey / roadmap cards */
             body.light-mode #roadmapTrainerGrid > div, body.light-mode #roadmapGymGrid > div { background-color:#ffffff!important; }
-
-            /* HP bars - keep colored */
-            body.light-mode #bossHPBar, body.light-mode #playerFighterHPBar { filter:saturate(1.2); }
 
             /* Cutscene overlay stays dark */
             body.light-mode #rareCutscene { background:rgba(0,0,0,0.92)!important; }
@@ -598,7 +427,6 @@
             body.grey-mode #darkModeIconSettings  { color:#9ca3af!important; }
             body.grey-mode #customToast { background-color:rgba(20,20,20,0.98)!important; }
             body.grey-mode [id$="Modal"] > div > div { background-color:#1a1a1a!important; }
-            body.grey-mode #battleMovesGrid button { background-color:#1e1e1e!important; }
             /* Utility classes that use theme variables */
             .themed-gradient {
                 background: linear-gradient(135deg, var(--theme-c1), var(--theme-c2)) !important;
@@ -685,185 +513,339 @@
                 0%,100% { opacity:0.15; transform:scale(0.8); }
                 50% { opacity:1; transform:scale(1.4); }
             }
-                  /* ===== FINAL BATTLE ALIGNMENT ===== */
-            #battleArenaActive:not(.hidden) { grid-template-rows:280px 0 210px 230px!important; }
-            #battleArenaActive > div:nth-child(1), #battleArenaActive > div:nth-child(3) { position:relative!important; }
-            #battleArenaActive #bossSprite, #battleArenaActive #playerFighterSprite {
-                width:156px!important; height:156px!important; object-fit:contain!important; margin:0!important;
-                transform-origin:center center; z-index:3!important;
-                filter:drop-shadow(0 7px 0 rgba(22,55,58,.32));
+
+            /* ===================================================================
+               BATTLE SCENE — single source of truth for the battle screen.
+               Self-contained dark "game screen" palette so it stays legible in
+               dark, light and grey display modes, and fluid from 320px phones
+               up to wide desktops (no fixed pixel positions).
+               =================================================================== */
+            .battle-arena {
+                --b-bg: #0b1222;
+                --b-panel: rgba(15, 23, 42, .9);
+                --b-panel-solid: #111a2e;
+                --b-line: rgba(148, 163, 184, .2);
+                --b-text: #e2e8f0;
+                --b-muted: #94a3b8;
+                --b-accent: var(--theme-c1, #f43f5e);
+                --hp-high: #22c55e;
+                --hp-mid: #eab308;
+                --hp-low: #ef4444;
+                width: 100%;
+                max-width: 960px;
+                margin: 0 auto;
+                border-radius: 20px;
+                overflow: hidden;
+                border: 1px solid var(--b-line);
+                background: var(--b-bg);
+                color: var(--b-text);
+                box-shadow: 0 24px 60px rgba(2, 6, 23, .45);
+                font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif;
             }
-            #battleArenaActive #bossSprite { right:15%!important; top:70px!important; }
-            #battleArenaActive #playerFighterSprite { left:15%!important; bottom:17px!important; transform:scaleX(-1); }
-            #battleArenaActive #bossName, #battleArenaActive #playerFighterName {
-                width:218px!important; min-width:218px!important; max-width:218px!important; height:56px!important;
-                display:grid!important; grid-template-columns:1fr auto; grid-template-rows:22px 13px 9px;
-                align-items:center; gap:1px 8px; padding:6px 10px!important;
-                background:#fffbdc!important; color:#27342d!important; border:3px solid #455942!important;
-                border-radius:12px 4px 12px 4px!important; box-shadow:4px 5px 0 rgba(37,62,48,.35)!important;
-                font-family:"Courier New",monospace!important; font-size:14px!important; font-weight:900!important;
+            .battle-arena:not(.hidden) { display: flex; flex-direction: column; }
+
+            /* ── Top bar: stage info, enemy party, run ── */
+            .battle-topbar {
+                display: flex; align-items: center; gap: .75rem;
+                padding: .6rem .85rem;
+                background: rgba(2, 6, 23, .92);
+                border-bottom: 1px solid var(--b-line);
             }
-            #battleArenaActive #bossName { top:18px!important; left:6%!important; }
-            #battleArenaActive #playerFighterName { right:6%!important; bottom:39px!important; }
-            #battleArenaActive #bossLevelBadge, #battleArenaActive #playerFighterLevelBadge {
-                position:absolute!important; z-index:7!important; top:auto!important; bottom:auto!important;
-                height:22px!important; padding:3px 7px!important; background:#fffbdc!important; color:#27342d!important;
-                border:3px solid #455942!important; border-radius:5px!important; box-shadow:3px 3px 0 rgba(37,62,48,.3)!important;
-                font:900 10px/12px "Courier New",monospace!important;
+            .battle-stage { min-width: 0; flex: 1 1 auto; display: flex; align-items: center; gap: .6rem; }
+            .battle-stage-icon {
+                flex: none; width: 2rem; height: 2rem; border-radius: 10px;
+                display: grid; place-items: center; font-size: 1rem;
+                background: color-mix(in srgb, var(--b-accent) 18%, transparent);
+                border: 1px solid color-mix(in srgb, var(--b-accent) 40%, transparent);
             }
-            #battleArenaActive #bossLevelBadge { left:calc(6% + 184px)!important; top:24px!important; }
-            #battleArenaActive #playerFighterLevelBadge { right:calc(6% + 184px)!important; bottom:57px!important; }
-            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child, #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child {
-                width:182px!important; height:27px!important; padding:4px 6px!important; background:#fffbdc!important;
-                border:3px solid #455942!important; border-radius:6px!important; box-shadow:3px 3px 0 rgba(37,62,48,.28)!important;
+            .battle-stage-text { min-width: 0; }
+            .battle-stage-title { font-weight: 800; font-size: .85rem; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #f8fafc; }
+            .battle-stage-sub { font-size: .68rem; color: var(--b-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .battle-run-btn {
+                flex: none; display: inline-flex; align-items: center; gap: .35rem;
+                padding: .4rem .7rem; border-radius: 10px;
+                font-size: .72rem; font-weight: 700; letter-spacing: .02em;
+                color: #fecaca; background: rgba(127, 29, 29, .35); border: 1px solid rgba(248, 113, 113, .35);
+                transition: background .15s, border-color .15s, opacity .15s;
             }
-            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child { left:6%!important; top:79px!important; }
-            #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child { right:6%!important; bottom:7px!important; }
-            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child > div:first-child, #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child > div:first-child { display:none!important; }
-            #battleArenaActive #bossHPBar, #battleArenaActive #playerFighterHPBar {
-                width:100%!important; height:12px!important; border:2px solid #536a45!important; border-radius:999px!important;
-                background:#d7dec4!important; overflow:hidden; box-shadow:inset 0 1px 2px rgba(29,48,31,.35)!important;
+            .battle-run-btn:hover:not(:disabled) { background: rgba(153, 27, 27, .55); border-color: rgba(248, 113, 113, .6); }
+            .battle-run-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+            /* Party pips (●●○) */
+            .battle-pips { display: flex; gap: 4px; align-items: center; flex: none; }
+            .battle-pips:empty { display: none; }
+            .battle-pip {
+                width: 10px; height: 10px; border-radius: 50%;
+                background: radial-gradient(circle at 50% 35%, #fff 0 22%, #ef4444 23% 48%, #1f2937 49% 55%, #f1f5f9 56%);
+                box-shadow: 0 0 0 1px rgba(15, 23, 42, .8);
             }
-            #battleArenaActive #bossHPBar > *, #battleArenaActive #playerFighterHPBar > * { height:100%!important; border-radius:999px!important; background:linear-gradient(180deg,#72eb98,#24b968)!important; }
-            #battleArenaActive #bossHPText, #battleArenaActive #playerFighterHPText { display:none!important; }
-            @media (max-width:700px) {
-                #battleArenaActive:not(.hidden) { grid-template-rows:230px 0 180px 360px!important; }
-                #battleArenaActive #bossSprite, #battleArenaActive #playerFighterSprite { width:124px!important; height:124px!important; }
-                #battleArenaActive #bossName, #battleArenaActive #playerFighterName { width:164px!important; min-width:164px!important; max-width:164px!important; }
-                #battleArenaActive #bossLevelBadge { left:calc(6% + 136px)!important; }
-                #battleArenaActive #playerFighterLevelBadge { right:calc(6% + 136px)!important; }
+            .battle-pip.is-fainted { filter: grayscale(1) brightness(.55); opacity: .7; }
+            .battle-pip.is-active { box-shadow: 0 0 0 2px var(--b-accent); }
+
+            /* ── Field ── */
+            .battle-field {
+                position: relative;
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                grid-template-rows: auto auto;
+                gap: .25rem clamp(.5rem, 2vw, 1.5rem);
+                padding: clamp(.6rem, 2.4vw, 1.25rem);
+                min-height: clamp(250px, 62vw, 400px);
+                background:
+                    radial-gradient(120% 60% at 75% 38%, rgba(56, 189, 248, .16), transparent 60%),
+                    radial-gradient(120% 70% at 25% 95%, rgba(34, 197, 94, .18), transparent 60%),
+                    linear-gradient(180deg, #13244a 0%, #1b3560 42%, #1e4d4a 58%, #173d33 100%);
+                isolation: isolate;
+                overflow: hidden;
+            }
+            .battle-field::before { /* horizon line */
+                content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; z-index: -1;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .18), transparent);
+            }
+            .battle-hud--foe    { grid-column: 1; grid-row: 1; align-self: start;  justify-self: start; }
+            .battle-mon--foe    { grid-column: 2; grid-row: 1; }
+            .battle-mon--player { grid-column: 1; grid-row: 2; }
+            .battle-hud--player { grid-column: 2; grid-row: 2; align-self: end;    justify-self: end; }
+
+            .battle-mon { position: relative; display: flex; align-items: flex-end; justify-content: center; min-height: 0; padding-bottom: .5rem; }
+            .battle-platform {
+                position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+                width: 88%; max-width: 260px; aspect-ratio: 4 / 1; border-radius: 50%; z-index: 0;
+                background: radial-gradient(closest-side, rgba(134, 239, 172, .38), rgba(22, 101, 52, .35) 70%, transparent);
+                box-shadow: inset 0 -4px 10px rgba(0, 0, 0, .25);
+            }
+            .battle-mon--foe .battle-platform { background: radial-gradient(closest-side, rgba(147, 197, 253, .32), rgba(30, 64, 175, .3) 70%, transparent); }
+            .battle-sprite {
+                --flip: 1;
+                position: relative; z-index: 1;
+                width: clamp(84px, 22vw, 150px); height: auto; aspect-ratio: 1; object-fit: contain;
+                filter: drop-shadow(0 10px 8px rgba(2, 6, 23, .5));
+                transform: scaleX(var(--flip));
+                animation: battleIdle 3.2s ease-in-out infinite;
+                user-select: none; -webkit-user-drag: none;
+            }
+            .battle-mon--player .battle-sprite { --flip: -1; width: clamp(96px, 27vw, 176px); animation-delay: -1.6s; }
+            .battle-sprite.is-hit { animation: battleHit .5s ease both; }
+            .battle-sprite.is-fainted { animation: battleFaint .6s ease-in forwards; }
+            .battle-sprite.is-entering { animation: battleEnter .45s cubic-bezier(.2, .9, .3, 1.2) both; }
+            @keyframes battleIdle { 0%, 100% { transform: translateY(0) scaleX(var(--flip)); } 50% { transform: translateY(-4px) scaleX(var(--flip)); } }
+            @keyframes battleHit {
+                0%, 100% { transform: translateX(0) scaleX(var(--flip)); filter: drop-shadow(0 10px 8px rgba(2, 6, 23, .5)); }
+                15% { transform: translateX(-7px) scaleX(var(--flip)); filter: brightness(2.2) drop-shadow(0 0 10px rgba(255, 255, 255, .7)); }
+                35% { transform: translateX(6px) scaleX(var(--flip)); filter: brightness(1); }
+                55% { transform: translateX(-4px) scaleX(var(--flip)); opacity: .55; }
+                75% { transform: translateX(2px) scaleX(var(--flip)); opacity: 1; }
+            }
+            @keyframes battleFaint { to { transform: translateY(40%) scaleX(var(--flip)); opacity: 0; } }
+            @keyframes battleEnter { from { transform: scale(.35) scaleX(var(--flip)); opacity: 0; } to { transform: scale(1) scaleX(var(--flip)); opacity: 1; } }
+
+            /* ── Status HUDs ── */
+            .battle-hud {
+                position: relative; z-index: 2;
+                width: 100%; max-width: 270px;
+                padding: .55rem .7rem .6rem;
+                border-radius: 14px;
+                background: var(--b-panel);
+                border: 1px solid var(--b-line);
+                box-shadow: 0 10px 24px rgba(2, 6, 23, .35);
+                -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+            }
+            .battle-hud--player { border-color: color-mix(in srgb, var(--b-accent) 45%, var(--b-line)); }
+            .hud-row { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; }
+            .hud-name { min-width: 0; font-weight: 800; font-size: clamp(.78rem, 2.6vw, .95rem); line-height: 1.2; color: #f8fafc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .hud-level { flex: none; font-weight: 700; font-size: .7rem; color: var(--b-muted); font-variant-numeric: tabular-nums; }
+            .hud-tags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: .3rem; }
+            .hud-tags:empty { display: none; }
+            .hud-chip {
+                display: inline-flex; align-items: center; gap: 3px;
+                padding: 1px 6px; border-radius: 999px;
+                font-size: .6rem; font-weight: 800; line-height: 1.5; letter-spacing: .03em; text-transform: uppercase;
+                color: #f8fafc; background: rgba(148, 163, 184, .2); border: 1px solid rgba(148, 163, 184, .25);
+                white-space: nowrap;
+            }
+            .hud-chip--type { background: color-mix(in srgb, var(--type-color, #94a3b8) 30%, transparent); border-color: color-mix(in srgb, var(--type-color, #94a3b8) 60%, transparent); }
+            .hud-chip--item { color: #a5f3fc; background: rgba(8, 145, 178, .2); border-color: rgba(34, 211, 238, .35); }
+            .hud-chip--status { color: #0f172a; border: 0; }
+            .hud-chip--up { color: #bbf7d0; background: rgba(22, 163, 74, .25); border-color: rgba(74, 222, 128, .4); }
+            .hud-chip--down { color: #fecaca; background: rgba(220, 38, 38, .25); border-color: rgba(248, 113, 113, .4); }
+            .hud-stats { display: flex; flex-wrap: wrap; gap: 3px; margin-top: .3rem; }
+            .hud-stats:empty { display: none; }
+            .hud-hp { display: flex; align-items: center; gap: .4rem; margin-top: .4rem; }
+            .hud-hp-label { flex: none; font-size: .6rem; font-weight: 900; letter-spacing: .06em; color: #fbbf24; }
+            .hud-hp-track { position: relative; flex: 1 1 auto; height: 8px; border-radius: 999px; background: #020617; box-shadow: inset 0 1px 2px rgba(0, 0, 0, .6); overflow: hidden; }
+            .hud-hp-fill { height: 100%; width: 100%; border-radius: inherit; background: var(--hp-high); transition: width .5s ease, background-color .3s; }
+            .hud-hp-fill[data-hp="mid"] { background: var(--hp-mid); }
+            .hud-hp-fill[data-hp="low"] { background: var(--hp-low); animation: hpLowPulse 1s ease-in-out infinite; }
+            @keyframes hpLowPulse { 50% { opacity: .6; } }
+            .hud-foot { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-top: .3rem; }
+            .hud-hp-text { font-size: .7rem; font-weight: 700; color: var(--b-text); font-variant-numeric: tabular-nums; margin-left: auto; }
+
+            /* Floating "It's super effective!" callout */
+            .battle-callout {
+                position: absolute; left: 50%; top: 50%; z-index: 5;
+                transform: translate(-50%, -50%);
+                max-width: calc(100% - 2rem);
+                padding: .35rem .8rem; border-radius: 999px;
+                font-size: clamp(.72rem, 2.4vw, .85rem); font-weight: 800; text-align: center; white-space: nowrap;
+                color: #fff; background: rgba(2, 6, 23, .82); border: 1px solid rgba(255, 255, 255, .18);
+                box-shadow: 0 8px 20px rgba(2, 6, 23, .45);
+                pointer-events: none;
+            }
+            .battle-callout:empty { display: none; }
+            .battle-callout[data-kind="super"] { color: #fde68a; border-color: rgba(250, 204, 21, .55); }
+            .battle-callout[data-kind="weak"]  { color: #cbd5e1; }
+            .battle-callout[data-kind="immune"]{ color: #fca5a5; border-color: rgba(248, 113, 113, .5); }
+            .battle-callout[data-kind="crit"]  { color: #fdba74; border-color: rgba(251, 146, 60, .55); }
+            .battle-callout.is-pop { animation: calloutPop 1.6s ease forwards; }
+            @keyframes calloutPop {
+                0% { opacity: 0; transform: translate(-50%, -30%) scale(.8); }
+                12%, 75% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                100% { opacity: 0; transform: translate(-50%, -70%) scale(.98); }
             }
 
-            /* ===== STATUS CARD REFINEMENT ===== */
-            #battleArenaActive #bossName, #battleArenaActive #playerFighterName { height:72px!important; grid-template-rows:22px 13px 12px!important; }
-            #battleArenaActive #bossName { top:18px!important; }
-            #battleArenaActive #playerFighterName { bottom:31px!important; }
-            #battleArenaActive #bossLevelBadge, #battleArenaActive #playerFighterLevelBadge { z-index:8!important; }
-            #battleArenaActive #bossLevelBadge { left:calc(6% + 164px)!important; top:25px!important; }
-            #battleArenaActive #playerFighterLevelBadge { right:calc(6% + 10px)!important; bottom:60px!important; }
-            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child { left:6%!important; top:69px!important; width:218px!important; height:13px!important; padding:0!important; border:0!important; background:transparent!important; box-shadow:none!important; }
-            #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child { right:6%!important; bottom:25px!important; width:218px!important; height:13px!important; padding:0!important; border:0!important; background:transparent!important; box-shadow:none!important; }
-            #battleArenaActive #bossHPBar, #battleArenaActive #playerFighterHPBar { height:11px!important; border:2px solid #43583d!important; background:#dce5cb!important; }
-            #battleArenaActive #bossHPBar::before, #battleArenaActive #playerFighterHPBar::before { content:"HP"; position:absolute; transform:translate(-20px,-1px); color:#d95a52; font:900 10px/11px "Courier New",monospace; }
-            #battleArenaActive #bossHPText, #battleArenaActive #playerFighterHPText { display:none!important; }
-            @media (max-width:700px) {
-                #battleArenaActive #bossName, #battleArenaActive #playerFighterName { width:164px!important; min-width:164px!important; max-width:164px!important; }
-                #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child, #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child { width:164px!important; }
-                #battleArenaActive #bossLevelBadge { left:calc(6% + 118px)!important; }
-                #battleArenaActive #playerFighterLevelBadge { right:calc(6% + 118px)!important; }
+            /* ── Console: log + commands ── */
+            .battle-console {
+                display: grid; grid-template-columns: minmax(0, 1fr); gap: .75rem;
+                padding: .75rem;
+                background: #0f172a;
+                border-top: 1px solid var(--b-line);
+            }
+            .battle-log {
+                order: 1;
+                height: 5.75rem; overflow-y: auto; overscroll-behavior: contain;
+                padding: .55rem .7rem; border-radius: 12px;
+                background: #020617; border: 1px solid var(--b-line);
+                box-shadow: inset 0 2px 8px rgba(0, 0, 0, .35);
+                font-size: .75rem; line-height: 1.5; color: #cbd5e1;
+                overflow-wrap: anywhere;
+            }
+            .battle-log > div { margin-top: .15rem !important; }
+            .battle-log > div:first-child { margin-top: 0 !important; }
+            .battle-log > div:last-child { color: inherit; }
+            .battle-commands { order: 2; display: flex; flex-direction: column; gap: .55rem; min-width: 0; }
+            .battle-commands-head { display: flex; align-items: center; justify-content: space-between; gap: .5rem; min-height: 1.25rem; }
+            .battle-prompt { font-size: .78rem; font-weight: 700; color: var(--b-text); min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .battle-turn-state { flex: none; font-size: .65rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #4ade80; }
+            .battle-arena[data-busy="1"] .battle-turn-state { color: #fbbf24; }
+            .battle-moves { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+            .move-btn {
+                --type-color: #94a3b8;
+                position: relative; display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: .3rem;
+                min-height: 3.6rem; min-width: 0;
+                padding: .5rem .65rem .5rem .85rem;
+                border-radius: 12px; overflow: hidden; text-align: left;
+                color: #f1f5f9;
+                background: linear-gradient(135deg, color-mix(in srgb, var(--type-color) 16%, #1e293b), #172033);
+                border: 1px solid color-mix(in srgb, var(--type-color) 35%, rgba(148, 163, 184, .2));
+                box-shadow: 0 6px 14px rgba(2, 6, 23, .25);
+                transition: transform .15s, border-color .15s, box-shadow .15s, opacity .15s;
+                touch-action: manipulation;
+            }
+            .move-btn::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--type-color); }
+            .move-btn:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--type-color); box-shadow: 0 10px 20px rgba(2, 6, 23, .35), 0 0 0 1px color-mix(in srgb, var(--type-color) 40%, transparent); }
+            .move-btn:active:not(:disabled) { transform: translateY(0) scale(.98); }
+            .move-btn:focus-visible { outline: 2px solid var(--type-color); outline-offset: 2px; }
+            .move-btn:disabled { opacity: .45; cursor: not-allowed; }
+            .move-btn.is-choice-locked { box-shadow: 0 0 0 2px #f59e0b; }
+            .move-btn.is-choice-blocked { opacity: .3; }
+            .move-name { font-weight: 700; font-size: .82rem; line-height: 1.15; text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .move-meta { display: flex; align-items: center; gap: .3rem; flex-wrap: wrap; font-size: .6rem; font-weight: 700; color: var(--b-muted); }
+            .move-type { padding: 0 5px; border-radius: 4px; color: #fff; background: color-mix(in srgb, var(--type-color) 70%, #0f172a); text-transform: uppercase; letter-spacing: .04em; }
+            .move-eff { margin-left: auto; padding: 0 5px; border-radius: 4px; font-weight: 900; }
+            .move-eff[data-eff="super"]  { color: #052e16; background: #4ade80; }
+            .move-eff[data-eff="weak"]   { color: #f1f5f9; background: #475569; }
+            .move-eff[data-eff="immune"] { color: #fff; background: #b91c1c; }
+
+            .battle-switch { display: flex; flex-direction: column; gap: .4rem; }
+            .battle-switch:empty { display: none; }
+            .battle-switch-label { font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--b-muted); }
+            .battle-switch-list { display: flex; gap: .4rem; overflow-x: auto; padding-bottom: 2px; scrollbar-width: thin; }
+            .switch-btn {
+                flex: 0 0 auto; display: flex; align-items: center; gap: .4rem;
+                max-width: 11rem; padding: .3rem .55rem .3rem .3rem; border-radius: 10px;
+                background: #1e293b; border: 1px solid var(--b-line); color: #e2e8f0; text-align: left;
+                transition: border-color .15s, background .15s, opacity .15s;
+                touch-action: manipulation;
+            }
+            .switch-btn:hover:not(:disabled) { border-color: #22d3ee; background: #233047; }
+            .switch-btn:disabled { opacity: .45; cursor: not-allowed; }
+            .switch-btn img { width: 28px; height: 28px; object-fit: contain; flex: none; }
+            .switch-info { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+            .switch-name { font-size: .7rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .switch-hp { display: block; width: 4.5rem; height: 4px; border-radius: 999px; background: #020617; overflow: hidden; }
+            .switch-hp > span { display: block; height: 100%; background: var(--hp-high); }
+            .switch-hp > span[data-hp="mid"] { background: var(--hp-mid); }
+            .switch-hp > span[data-hp="low"] { background: var(--hp-low); }
+
+            /* Loading state while opponents are fetched */
+            .battle-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .9rem; min-height: 320px; text-align: center; color: #94a3b8; font-size: .85rem; font-weight: 600; }
+            .battle-loading.hidden { display: none; }
+
+            @media (min-width: 768px) {
+                .battle-console { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); padding: 1rem; gap: 1rem; }
+                .battle-log { order: 0; height: auto; min-height: 11rem; max-height: 15rem; }
+                .battle-commands { order: 0; }
+                .move-btn { min-height: 4rem; }
+                .move-name { font-size: .9rem; }
+            }
+            @media (max-width: 380px) {
+                .battle-field { gap: .15rem .4rem; }
+                .battle-hud { padding: .45rem .55rem .5rem; }
+                .hud-chip { font-size: .55rem; padding: 0 5px; }
+                .battle-run-btn .battle-run-text { display: none; }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .battle-sprite, .battle-sprite.is-hit, .battle-sprite.is-entering { animation: none; }
+                .hud-hp-fill { transition: none; }
             }
 
-            /* ===== CLEAN BATTLE COMPOSITION ===== */
-            #battleArenaActive:not(.hidden) { grid-template-rows:265px 0 205px 230px!important; }
-            #battleArenaActive #bossSprite, #battleArenaActive #playerFighterSprite {
-                width:122px!important; height:122px!important; object-fit:contain!important;
-                filter:drop-shadow(0 5px 0 rgba(22,55,58,.3));
-            }
-            #battleArenaActive #bossSprite { right:17%!important; top:72px!important; }
-            #battleArenaActive #playerFighterSprite { left:17%!important; bottom:20px!important; transform:scaleX(-1); }
-            #battleArenaActive #bossName, #battleArenaActive #playerFighterName {
-                width:204px!important; min-width:204px!important; max-width:204px!important; height:64px!important;
-                display:block!important; padding:8px 10px 7px!important; overflow:hidden!important;
-                background:#fffbdc!important; color:#27342d!important; border:3px solid #455942!important;
-                border-radius:11px 4px 11px 4px!important; box-shadow:4px 5px 0 rgba(37,62,48,.3)!important;
-                font:900 14px/19px "Courier New",monospace!important;
-            }
-            #battleArenaActive #bossName { top:17px!important; left:6%!important; }
-            #battleArenaActive #playerFighterName { right:6%!important; bottom:25px!important; }
-            #battleArenaActive #bossLevelBadge, #battleArenaActive #playerFighterLevelBadge {
-                position:absolute!important; display:block!important; z-index:9!important;
-                background:transparent!important; border:0!important; box-shadow:none!important;
-                color:#536647!important; padding:0!important; margin:0!important;
-                font:900 10px/13px "Courier New",monospace!important;
-                width:auto!important; height:auto!important;
-            }
-            #battleArenaActive #bossLevelBadge { left:calc(6% + 10px)!important; top:43px!important; }
-            #battleArenaActive #playerFighterLevelBadge { right:calc(6% + 10px)!important; bottom:39px!important; }
-            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child, #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child {
-                position:absolute!important; width:204px!important; height:13px!important; padding:0!important;
-                background:transparent!important; border:0!important; box-shadow:none!important;
-            }
-            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child { left:6%!important; top:68px!important; }
-            #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child { right:6%!important; bottom:19px!important; }
-            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child > div:first-child, #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child > div:first-child { display:none!important; }
-            #battleArenaActive #bossHPBar, #battleArenaActive #playerFighterHPBar {
-                position:static!important; display:block!important; width:100%!important; height:10px!important;
-                border:2px solid #536a45!important; border-radius:999px!important; background:#d8dfc9!important;
-                box-shadow:inset 0 1px 2px rgba(29,48,31,.35)!important; overflow:hidden!important;
-            }
-            #battleArenaActive #bossHPBar > *, #battleArenaActive #playerFighterHPBar > * { height:100%!important; border-radius:999px!important; background:linear-gradient(#72eb98,#24b968)!important; }
-            #battleArenaActive #bossHPText, #battleArenaActive #playerFighterHPText { display:none!important; }
-            @media (max-width:700px) {
-                #battleArenaActive #bossSprite, #battleArenaActive #playerFighterSprite { width:104px!important; height:104px!important; }
-                #battleArenaActive #bossName, #battleArenaActive #playerFighterName, #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child, #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child { width:164px!important; min-width:164px!important; }
-            }
+            /* Light / grey modes: the arena is a self-contained screen, so undo
+               the global colour remaps that are meant for page surfaces. */
+            body.light-mode #battleArenaActive .text-white { color: #fff !important; }
+            body.light-mode #battleArenaActive .text-slate-300 { color: #cbd5e1 !important; }
+            body.light-mode #battleArenaActive .text-slate-400 { color: #94a3b8 !important; }
+            body.light-mode #battleArenaActive .text-slate-500 { color: #64748b !important; }
+            body.light-mode #battleArenaActive .move-btn,
+            body.light-mode #battleArenaActive .switch-btn { color: #f1f5f9 !important; }
+            body.light-mode #battleArenaActive .battle-run-btn { color: #fecaca !important; }
+            body.light-mode #battleArenaActive .battle-log { color: #cbd5e1 !important; background: #020617 !important; }
 
-            /* Match the opponent's visible footprint to the player's sprite. */
-            #battleArenaActive #bossSprite { width:104px!important; height:104px!important; right:18%!important; top:82px!important; }
-            #battleArenaActive #playerFighterSprite { width:104px!important; height:104px!important; left:18%!important; bottom:26px!important; }
-            @media (max-width:700px) {
-              #battleArenaActive #bossSprite, #battleArenaActive #playerFighterSprite { width:92px!important; height:92px!important; }
+            /* ===================================================================
+               GLOBAL RESPONSIVE POLISH — phones, tablets, notches.
+               =================================================================== */
+            html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+            img { max-width: 100%; }
+            input, select, textarea { min-width: 0; }
+            button { touch-action: manipulation; }
+            :focus-visible { outline: 2px solid var(--theme-c1); outline-offset: 2px; }
+            /* Bottom tab bar (phones & tablets) */
+            .mobile-tabbar { padding-bottom: calc(.35rem + env(safe-area-inset-bottom)); }
+            .mobile-nav-btn {
+                flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px;
+                padding: .4rem .15rem; border-radius: 12px; color: #94a3b8;
+                transition: color .15s, background .15s;
             }
-
-            /* ===== MATCHED BATTLE SPRITES ===== */
-            #battleArenaActive #bossSprite,
-            #battleArenaActive #playerFighterSprite {
-                width:104px!important;
-                height:104px!important;
-                object-fit:contain!important;
-                margin:0!important;
-                filter:drop-shadow(0 5px 0 rgba(22,55,58,.3));
+            .mobile-nav-btn span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+            .mobile-nav-btn.is-active { color: var(--theme-chip-color); background: var(--theme-chip-bg); }
+            body.light-mode .mobile-nav-btn { color: #64748b !important; }
+            body.light-mode .mobile-nav-btn.is-active { color: var(--theme-c1) !important; }
+            @media (max-width: 1023px) {
+                body { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)) !important; }
             }
-            #battleArenaActive #bossSprite { right:18%!important; top:84px!important; }
-            #battleArenaActive #playerFighterSprite { left:18%!important; bottom:27px!important; transform:scaleX(-1); }
-            @media (max-width:700px) {
-                #battleArenaActive #bossSprite,
-                #battleArenaActive #playerFighterSprite { width:88px!important; height:88px!important; }
+            @media (max-width: 639px) {
+                /* Roomier content on small screens */
+                .view-panel:not(#view-roulette) { padding: 1rem !important; border-radius: 1.25rem !important; }
+                #view-roulette > div { padding: 1rem !important; border-radius: 1.25rem !important; min-height: 0 !important; }
+                .heading-font.text-2xl { font-size: 1.3rem; line-height: 1.75rem; }
+                /* Prevent iOS zoom-on-focus */
+                input, select, textarea { font-size: 16px !important; }
+                #customToast { top: calc(.75rem + env(safe-area-inset-top)); padding: .75rem 1rem; }
+                /* Give the battle screen the full width while fighting */
+                #view-battle:has(> #battleArenaActive:not(.hidden)) { padding: .5rem !important; }
             }
-
-            /* ===== DARK ARCADE BATTLE OVERHAUL ===== */
-            #battleArenaActive:not(.hidden) {
-                display:grid!important;
-                grid-template-rows:280px 0 205px 230px!important;
-                width:100%; max-width:920px; height:715px!important; min-height:715px!important; max-height:715px!important;
-                padding:0!important; overflow:hidden!important;
-                border:1px solid rgba(71,85,105,.7)!important; border-radius:18px!important;
-                background:linear-gradient(180deg,rgba(15,23,42,.16),rgba(2,6,23,.32)),url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-AQ1Qxv6GT2e08UaMiqlLp9zqaMVCgG.png') center/cover!important;
-                box-shadow:0 24px 70px rgba(2,6,23,.48), inset 0 0 0 1px rgba(148,163,184,.08)!important;
-                font-family:ui-sans-serif,system-ui,sans-serif!important;
-            }
-            #battleArenaActive > div:nth-child(1), #battleArenaActive > div:nth-child(3) { background:transparent!important; }
-            #battleArenaActive #bossSprite, #battleArenaActive #playerFighterSprite { width:104px!important; height:104px!important; filter:drop-shadow(0 8px 8px rgba(2,6,23,.55)); }
-            #battleArenaActive #bossSprite { right:18%!important; top:90px!important; }
-            #battleArenaActive #playerFighterSprite { left:18%!important; bottom:28px!important; transform:scaleX(-1); }
-            #battleArenaActive #bossName, #battleArenaActive #playerFighterName {
-                width:224px!important; min-width:224px!important; max-width:224px!important; height:72px!important;
-                display:flex!important; flex-direction:column!important; align-items:stretch!important; justify-content:center!important; gap:5px!important;
-                padding:10px 12px!important; background:rgba(15,23,42,.88)!important; color:#f1f5f9!important;
-                border:1px solid rgba(148,163,184,.26)!important; border-radius:12px!important; box-shadow:0 12px 26px rgba(2,6,23,.32)!important;
-                font:700 13px/16px ui-sans-serif,system-ui,sans-serif!important;
-            }
-            #battleArenaActive #bossName { left:6%!important; top:22px!important; }
-            #battleArenaActive #playerFighterName { right:6%!important; bottom:22px!important; }
-            #battleArenaActive #bossLevelBadge, #battleArenaActive #playerFighterLevelBadge { position:static!important; display:block!important; width:auto!important; height:auto!important; margin:0!important; padding:0!important; background:transparent!important; border:0!important; box-shadow:none!important; color:#94a3b8!important; font:600 10px/12px ui-sans-serif,system-ui,sans-serif!important; }
-            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child, #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child { position:absolute!important; width:224px!important; height:auto!important; padding:0!important; background:transparent!important; border:0!important; box-shadow:none!important; }
-            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child { left:6%!important; top:98px!important; }
-            #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child { right:6%!important; bottom:13px!important; }
-            #battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child > div:first-child, #battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child > div:first-child { display:none!important; }
-            #battleArenaActive #bossHPBar, #battleArenaActive #playerFighterHPBar { width:100%!important; height:10px!important; border:1px solid rgba(30,41,59,.95)!important; border-radius:999px!important; background:#020617!important; overflow:hidden!important; box-shadow:inset 0 1px 3px rgba(0,0,0,.55)!important; }
-            #battleArenaActive #bossHPBar > *, #battleArenaActive #playerFighterHPBar > * { height:100%!important; border-radius:999px!important; background:linear-gradient(90deg,#10b981,#4ade80)!important; box-shadow:0 0 8px rgba(52,211,153,.3); }
-            #battleArenaActive #bossHPText, #battleArenaActive #playerFighterHPText { display:none!important; }
-            #battleArenaActive > div:last-child { height:230px!important; min-height:230px!important; max-height:230px!important; display:grid!important; grid-template-columns:minmax(0,1fr) minmax(0,2fr)!important; gap:14px!important; padding:16px!important; background:rgba(15,23,42,.95)!important; border:0!important; border-top:1px solid rgba(148,163,184,.16)!important; border-radius:0!important; box-shadow:none!important; }
-            #battleArenaActive #battleLog { grid-column:1!important; height:100%!important; min-height:0!important; max-height:100%!important; overflow-y:auto!important; padding:12px!important; background:#020617!important; border:1px solid rgba(71,85,105,.7)!important; border-radius:12px!important; color:#34d399!important; font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace!important; box-shadow:inset 0 2px 8px rgba(0,0,0,.3)!important; }
-            #battleArenaActive #battleMovesGrid { grid-column:2!important; display:grid!important; grid-template-columns:1fr 1fr!important; gap:10px!important; height:100%!important; min-height:0!important; padding:0!important; background:transparent!important; border:0!important; border-radius:0!important; }
-            #battleArenaActive #battleMovesGrid button { min-height:0!important; background:rgba(30,41,59,.9)!important; border:1px solid rgba(100,116,139,.55)!important; border-radius:12px!important; color:#f1f5f9!important; box-shadow:0 8px 18px rgba(2,6,23,.28)!important; font:600 13px/17px ui-sans-serif,system-ui,sans-serif!important; transition:background .18s,border-color .18s,transform .18s!important; }
-            #battleArenaActive #battleMovesGrid button:hover:not(:disabled) { background:rgba(51,65,85,.95)!important; border-color:#22d3ee!important; transform:translateY(-2px)!important; }
-            #battleArenaActive #battleMovesGrid button:active:not(:disabled) { transform:scale(.98)!important; }
-            @media(max-width:700px){ #battleArenaActive:not(.hidden){grid-template-rows:230px 0 180px 360px!important;height:770px!important;max-height:770px!important;} #battleArenaActive #bossName,#battleArenaActive #playerFighterName,#battleArenaActive > div:nth-child(1) > .flex.flex-col > div:last-child,#battleArenaActive > div:nth-child(3) > .flex.flex-col > div:last-child{width:164px!important;min-width:164px!important;} #battleArenaActive > div:last-child{height:360px!important;max-height:360px!important;grid-template-columns:1fr!important;grid-template-rows:110px 1fr!important;} #battleArenaActive #battleLog{grid-column:1!important;grid-row:1!important;} #battleArenaActive #battleMovesGrid{grid-column:1!important;grid-row:2!important;} }
-
   </style>
     </head>
-    <body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white pb-16 md:pb-0">
+    <body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white">
         <div class="scanlines"></div>
 
         <!-- EPIC LOADING SCREEN -->
@@ -1300,12 +1282,13 @@
         </div>
 
         <!-- HEADER / DASHBOARD STATUS -->
-        <header class="bg-slate-950/85 backdrop-blur-md border-b border-slate-900 sticky top-0 z-40 py-3 px-4 md:px-8">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+        <header class="bg-slate-950/85 backdrop-blur-md border-b border-slate-900 sticky top-0 z-40 py-2 lg:py-3 px-3 sm:px-4 lg:px-8" style="padding-top:max(.5rem, env(safe-area-inset-top));">
+            <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-2 lg:gap-4">
                 <!-- Brand -->
-                <div class="relative flex items-center justify-center md:justify-start gap-3 w-full md:w-auto">
-                    <div class="relative">
-                        <svg width="44" height="44" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 8px rgba(220,38,38,0.5))">
+                <div class="flex items-center justify-between lg:justify-start gap-3 w-full lg:w-auto">
+                  <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                    <div class="relative shrink-0">
+                        <svg class="w-9 h-9 sm:w-11 sm:h-11" width="44" height="44" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 8px rgba(220,38,38,0.5))">
                             <circle cx="20" cy="20" r="19" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="2"/>
                             <path d="M1.5 20 A18.5 18.5 0 0 1 38.5 20Z" fill="#dc2626"/>
                             <path d="M5 20 A15 15 0 0 1 35 20Z" fill="#b91c1c" opacity="0.5"/>
@@ -1315,24 +1298,25 @@
                             <circle cx="18.5" cy="18.5" r="1.2" fill="#fff" opacity="0.9"/>
                         </svg>
                     </div>
-                    <div>
-                        <h1 class="heading-font text-xl md:text-2xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 vibe-title">
+                    <div class="min-w-0">
+                        <h1 class="heading-font text-lg sm:text-xl lg:text-2xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 vibe-title whitespace-nowrap">
                             POKÉMON SPINNER
                         </h1>
                     </div>
-                    <!-- Mobile-only: profile & settings pinned to the right so the title stays centred -->
-                    <div class="md:hidden absolute right-0 flex gap-1.5 items-center">
-                        <button onclick="openSettingsModal()" class="bg-slate-900/80 border border-slate-800 p-2 rounded-full hover:bg-slate-800 transition duration-200 text-cyan-400 focus:outline-none" style="box-shadow:0 0 10px rgba(34,211,238,0.18)">
+                  </div>
+                    <!-- Mobile-only: profile & settings on the right of the brand row -->
+                    <div class="lg:hidden flex gap-1.5 items-center shrink-0">
+                        <button onclick="openSettingsModal()" title="Settings" aria-label="Settings" class="w-9 h-9 bg-slate-900/80 border border-slate-800 rounded-full hover:bg-slate-800 transition duration-200 text-cyan-400 flex items-center justify-center" style="box-shadow:0 0 10px rgba(34,211,238,0.18)">
                             <i class="fas fa-cog text-sm"></i>
                         </button>
-                        <button onclick="openProfileModal()" title="Trainer Profile" class="bg-slate-900/80 border border-slate-800 p-2 rounded-full hover:bg-slate-800 transition duration-200 focus:outline-none flex items-center justify-center">
+                        <button onclick="openProfileModal()" title="Trainer Profile" aria-label="Trainer Profile" class="w-9 h-9 bg-slate-900/80 border border-slate-800 rounded-full hover:bg-slate-800 transition duration-200 flex items-center justify-center">
                             <i class="fas fa-user text-sm text-purple-400"></i>
                         </button>
                     </div>
                 </div>
 
                 <!-- Stats Bar -->
-                <div class="flex items-center gap-3 md:gap-6 bg-slate-950/85 px-4 py-2 rounded-2xl border border-slate-900 w-full md:w-auto justify-around md:justify-end">
+                <div class="flex items-center gap-2 sm:gap-3 md:gap-6 bg-slate-950/85 px-3 sm:px-4 py-1.5 sm:py-2 rounded-2xl border border-slate-900 w-full lg:w-auto justify-between sm:justify-around lg:justify-end">
                     <div class="flex items-center gap-2">
                         <div class="w-8 h-8 rounded-full bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center text-yellow-400">
                             <i class="fas fa-coins text-xs"></i>
@@ -1351,13 +1335,13 @@
                             <div class="flex justify-between items-baseline gap-2">
                                 <span class="text-[9px] text-slate-400 block uppercase font-bold">Trainer LVL <span id="trainerLevelText">1</span></span>
                             </div>
-                            <div class="w-20 md:w-28 bg-slate-900 rounded-full h-1.5 overflow-hidden mt-0.5">
+                            <div class="w-14 sm:w-20 md:w-28 bg-slate-900 rounded-full h-1.5 overflow-hidden mt-0.5">
                                 <div id="xpBar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-full rounded-full transition-all duration-300" style="width: 10%;"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div id="ballSelectorMini" class="flex gap-2 border-l border-slate-850 pl-4">
+                    <div id="ballSelectorMini" class="flex gap-1.5 sm:gap-2 border-l border-slate-850 pl-2 sm:pl-4">
                         <div class="flex flex-col items-center" title="Poké Balls">
                             <svg width="16" height="16" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="3"/><path d="M1.5 20 A18.5 18.5 0 0 1 38.5 20Z" fill="#dc2626"/><rect x="0" y="17.5" width="40" height="5" fill="#1a1a2e"/><circle cx="20" cy="20" r="6" fill="#f5f5f5" stroke="#1a1a2e" stroke-width="2.5"/><circle cx="20" cy="20" r="3" fill="#e5e7eb"/></svg>
                             <span id="miniCount-poke" class="text-[9px] font-bold mt-0.5">5</span>
@@ -1377,8 +1361,8 @@
                     </div>
 
                     <!-- Profile & Settings — after ball display (desktop only; mobile version is in the brand row above) -->
-                    <div class="hidden md:flex gap-1.5 border-l border-slate-850 pl-4 items-center">
-                        <button id="settingsToggleBtn" onclick="openSettingsModal()" class="bg-slate-900/80 border border-slate-800 p-2 rounded-full hover:bg-slate-800 transition duration-200 text-cyan-400 focus:outline-none">
+                    <div class="hidden lg:flex gap-1.5 border-l border-slate-850 pl-4 items-center">
+                        <button id="settingsToggleBtn" onclick="openSettingsModal()" title="Settings" aria-label="Settings" class="bg-slate-900/80 border border-slate-800 p-2 rounded-full hover:bg-slate-800 transition duration-200 text-cyan-400 focus:outline-none">
                             <i class="fas fa-cog text-sm"></i>
                         </button>
                         <button id="profileToggleBtn" onclick="openProfileModal()" title="Trainer Profile" class="bg-slate-900/80 border border-slate-800 p-2 rounded-full hover:bg-slate-800 transition duration-200 focus:outline-none flex items-center justify-center">
@@ -1392,7 +1376,7 @@
         <!-- MAIN INTERACTIVE LAYOUT -->
         <main class="max-w-7xl mx-auto px-4 py-6 w-full flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             <!-- NAVIGATION PANEL -->
-            <nav class="lg:col-span-3 flex lg:flex-col gap-2 w-full overflow-x-auto lg:overflow-visible py-1 sticky top-[72px] z-30 bg-[#05070f] lg:bg-transparent">
+            <nav class="hidden lg:col-span-3 lg:flex lg:flex-col gap-2 w-full py-1 lg:sticky lg:top-[88px] z-30" aria-label="Game sections">
                 <button onclick="switchView('roulette')" id="nav-roulette" class="nav-btn active flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl font-semibold transition duration-200 border w-full shrink-0 lg:shrink text-sm bg-gradient-to-r from-rose-600 to-pink-600 text-white border-transparent shadow-lg shadow-rose-600/10">
                     <i class="fas fa-radar animate-pulse"></i>
                     <span data-i18n="nav.scanner">Quantum Scanner</span>
@@ -1594,13 +1578,13 @@
 
                         <div class="flex justify-center border-b border-slate-900 pb-4">
                             <div class="inline-flex bg-slate-950 p-1.5 rounded-xl border border-slate-900 gap-0.5">
-                                <button onclick="toggleJourneySubMode('trainers')" id="btn-journey-trainers" class="px-4 py-2 rounded-lg text-xs font-bold transition duration-150 themed-gradient text-white">
+                                <button onclick="toggleJourneySubMode('trainers')" id="btn-journey-trainers" class="px-3 sm:px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition duration-150 themed-gradient text-white">
                                     <i class="fas fa-user mr-1.5"></i>Trainers
                                 </button>
-                                <button onclick="toggleJourneySubMode('gym')" id="btn-journey-gym" class="px-4 py-2 rounded-lg text-xs font-bold transition duration-150 text-slate-400 hover:text-white">
+                                <button onclick="toggleJourneySubMode('gym')" id="btn-journey-gym" class="px-3 sm:px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition duration-150 text-slate-400 hover:text-white">
                                     <i class="fas fa-medal mr-1.5"></i>Gym Leaders
                                 </button>
-                                <button onclick="toggleJourneySubMode('unlimited')" id="btn-journey-unlimited" class="px-4 py-2 rounded-lg text-xs font-bold transition duration-150 text-slate-400 hover:text-white">
+                                <button onclick="toggleJourneySubMode('unlimited')" id="btn-journey-unlimited" class="px-3 sm:px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition duration-150 text-slate-400 hover:text-white">
                                     <i class="fas fa-infinity mr-1.5"></i>Endless
                                 </button>
                             </div>
@@ -1611,7 +1595,7 @@
                             <div class="flex items-center gap-2 mb-1">
                                 <span class="text-[9px] text-slate-500">Beat trainers to unlock gym challenges</span>
                             </div>
-                            <div id="roadmapTrainerGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3"></div>
+                            <div id="roadmapTrainerGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3"></div>
                         </div>
 
                         <!-- Gym panel (hidden by default) -->
@@ -1619,7 +1603,7 @@
                             <div class="flex items-center gap-2 mb-1">
                                 <span class="text-[9px] text-slate-500">Gym leaders unlock as you clear prerequisite trainers</span>
                             </div>
-                            <div id="roadmapGymGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3"></div>
+                            <div id="roadmapGymGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3"></div>
                         </div>
 
                         <div id="journey-unlimited-panel" class="hidden space-y-6">
@@ -1663,81 +1647,85 @@
                         </div>
                     </div>
 
-                    <div id="battleArenaActive" class="hidden grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
-                        <div class="md:col-span-5 bg-slate-950 border border-slate-900 rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden">
-                            <div class="absolute top-2 left-2 text-[9px] font-bold text-slate-500 uppercase tracking-widest">Enemy Combatant</div>
-                            <div class="absolute top-2 right-2 flex gap-1 text-[10px]" id="bossHeldItemBadge"></div>
-                            
-                            <div class="flex flex-col items-center justify-center flex-grow py-6">
-                                <img id="bossSprite" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Enemy" class="h-32 w-32 object-contain mb-4 transform scale-110">
-                                <h4 id="bossName" class="text-md font-extrabold text-white">Opponent</h4>
-                                <span id="bossLevelBadge" class="text-[10px] bg-slate-900 text-slate-400 px-2 py-0.5 rounded font-bold mt-1">LVL 5</span>
-                                <div class="w-full mt-4">
-                                    <div class="flex justify-between text-[11px] font-mono mb-1 text-slate-400">
-                                        <span>HP Status</span>
-                                        <span id="bossHPText">300/300</span>
-                                    </div>
-                                    <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
-                                        <div id="bossHPBar" class="bg-red-500 h-full transition-all duration-300" style="width: 100%;"></div>
-                                    </div>
+                    <!-- Shown while opponents are being prepared -->
+                    <div id="battleLoading" class="battle-loading hidden" role="status" aria-live="polite">
+                        <div class="spinner"></div>
+                        <span id="battleLoadingText">Preparing battle…</span>
+                    </div>
+
+                    <!-- BATTLE SCREEN (layout & styling: .battle-* rules in <style>) -->
+                    <div id="battleArenaActive" class="battle-arena hidden" data-busy="0">
+                        <div class="battle-topbar">
+                            <div class="battle-stage">
+                                <span id="battleStageIcon" class="battle-stage-icon" aria-hidden="true">⚔️</span>
+                                <div class="battle-stage-text">
+                                    <div id="battleStageTitle" class="battle-stage-title">Battle</div>
+                                    <div id="battleStageSub" class="battle-stage-sub"></div>
                                 </div>
                             </div>
+                            <div id="bossTeamPips" class="battle-pips" title="Opponent's party"></div>
+                            <button id="battleRunBtn" type="button" onclick="fleeBattle()" class="battle-run-btn" title="Leave this battle">
+                                <i class="fas fa-person-running"></i><span class="battle-run-text">Run</span>
+                            </button>
                         </div>
 
-                        <div class="md:col-span-2 flex flex-col justify-center items-center gap-4 py-4 min-h-[140px]">
-                            <div class="text-center font-bold text-slate-500 text-xs uppercase tracking-wider">VS</div>
-                            <div class="w-12 h-12 rounded-full border border-slate-800 bg-slate-950 flex items-center justify-center shadow-lg">
-                                <i class="fas fa-bolt text-red-500 animate-pulse text-lg"></i>
-                            </div>
-                        </div>
-
-                        <div class="md:col-span-5 bg-slate-950 border border-slate-900 rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden">
-                            <div class="absolute top-2 right-2 text-[9px] font-bold text-slate-500 uppercase tracking-widest">Deployed Partner</div>
-                            <div class="absolute top-2 left-2 flex gap-1 text-[10px]" id="playerHeldItemBadge"></div>
-                            
-                            <div class="flex flex-col items-center justify-center flex-grow py-6">
-                                <img id="playerFighterSprite" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Player Partner" class="h-32 w-32 object-contain mb-4 transform scale-110">
-                                <h4 id="playerFighterName" class="text-md font-extrabold text-white">Partner</h4>
-                                <span id="playerFighterLevelBadge" class="text-[10px] bg-slate-900 text-slate-400 px-2 py-0.5 rounded font-bold mt-1">LVL 1</span>
-                                <div class="w-full mt-4">
-                                    <div class="flex justify-between text-[11px] font-mono mb-1 text-slate-400">
-                                        <span>HP Status</span>
-                                        <span id="playerFighterHPText">200/200</span>
-                                    </div>
-                                    <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
-                                        <div id="playerFighterHPBar" class="bg-green-500 h-full transition-all duration-300" style="width: 10%;"></div>
-                                    </div>
+                        <div class="battle-field">
+                            <!-- Opponent status -->
+                            <div class="battle-hud battle-hud--foe">
+                                <div class="hud-row">
+                                    <span id="bossName" class="hud-name">Opponent</span>
+                                    <span id="bossLevelBadge" class="hud-level">Lv. 5</span>
                                 </div>
+                                <div class="hud-tags"><span id="bossTypeTags" class="contents"></span><span id="bossStatusTag" class="contents"></span><span id="bossHeldItemBadge" class="contents"></span></div>
+                                <div class="hud-hp">
+                                    <span class="hud-hp-label">HP</span>
+                                    <div class="hud-hp-track"><div id="bossHPBar" class="hud-hp-fill" style="width: 100%;"></div></div>
+                                </div>
+                                <div class="hud-foot"><span id="bossHPText" class="hud-hp-text">300/300</span></div>
+                                <div id="bossStatStages" class="hud-stats"></div>
                             </div>
+                            <div class="battle-mon battle-mon--foe">
+                                <div class="battle-platform"></div>
+                                <img id="bossSprite" class="battle-sprite" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Opponent Pokémon" draggable="false" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
+                            </div>
+
+                            <!-- Player side -->
+                            <div class="battle-mon battle-mon--player">
+                                <div class="battle-platform"></div>
+                                <img id="playerFighterSprite" class="battle-sprite" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Your Pokémon" draggable="false" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
+                            </div>
+                            <div class="battle-hud battle-hud--player">
+                                <div class="hud-row">
+                                    <span id="playerFighterName" class="hud-name">Partner</span>
+                                    <span id="playerFighterLevelBadge" class="hud-level">Lv. 1</span>
+                                </div>
+                                <div class="hud-tags"><span id="playerTypeTags" class="contents"></span><span id="playerStatusTag" class="contents"></span><span id="playerHeldItemBadge" class="contents"></span></div>
+                                <div class="hud-hp">
+                                    <span class="hud-hp-label">HP</span>
+                                    <div class="hud-hp-track"><div id="playerFighterHPBar" class="hud-hp-fill" style="width: 100%;"></div></div>
+                                </div>
+                                <div class="hud-foot">
+                                    <div id="playerTeamPips" class="battle-pips" title="Your party"></div>
+                                    <span id="playerFighterHPText" class="hud-hp-text">200/200</span>
+                                </div>
+                                <div id="playerStatStages" class="hud-stats"></div>
+                            </div>
+
+                            <div id="effectivenessIndicator" class="battle-callout" aria-live="polite"></div>
                         </div>
 
-                        <div class="md:col-span-12 bg-slate-950 border border-slate-900 p-6 rounded-2xl flex flex-col gap-4">
-                            <div class="flex items-center justify-between">
-                                <div class="text-xs text-slate-400 uppercase tracking-widest font-bold">Select Move</div>
-                                <div id="effectivenessIndicator" class="text-[10px] font-bold text-slate-500 italic"></div>
-                            </div>
-                            <div id="battleMovesGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
-
-                            <!-- Switch Pokémon row (populated by JS) -->
-                            <div id="battleSwitchRow" class="flex items-center gap-2 flex-wrap"></div>
-
-                            <!-- STAT STAGES PANEL -->
-                            <div id="statStagesPanel" class="hidden rounded-xl border border-slate-800 p-3" style="background:rgba(255,255,255,0.03);">
-                                <div class="text-[9px] uppercase tracking-widest font-bold text-slate-500 mb-2">Active Stat Changes</div>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <div>
-                                        <div class="text-[8px] text-slate-500 uppercase font-bold mb-1.5">Your Pokémon</div>
-                                        <div id="playerStatStages" class="flex flex-wrap gap-1"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-[8px] text-slate-500 uppercase font-bold mb-1.5">Opponent</div>
-                                        <div id="bossStatStages" class="flex flex-wrap gap-1"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="battleLog" class="w-full bg-slate-955 border border-slate-900 rounded-xl p-3 text-xs font-mono h-28 overflow-y-auto text-slate-400">
+                        <div class="battle-console">
+                            <div id="battleLog" class="battle-log" aria-live="polite">
                                 <div>Battle stage configured. Ready to strike first based on speed.</div>
+                            </div>
+                            <div class="battle-commands">
+                                <div class="battle-commands-head">
+                                    <span id="battlePrompt" class="battle-prompt">What will your Pokémon do?</span>
+                                    <span id="battleTurnState" class="battle-turn-state">Your turn</span>
+                                </div>
+                                <div id="battleMovesGrid" class="battle-moves"></div>
+                                <!-- Switch Pokémon row (populated by JS) -->
+                                <div id="battleSwitchRow" class="battle-switch"></div>
                             </div>
                         </div>
                     </div>
@@ -2013,33 +2001,33 @@
         </main>
 
         <!-- FOOTER MOBILE NAV -->
-        <footer class="bg-slate-950 border-t border-slate-900 py-2 fixed bottom-0 left-0 right-0 z-40 block lg:hidden">
-            <div class="flex justify-around items-center">
-                <button onclick="switchView('roulette')" class="mobile-nav-btn text-center text-rose-500">
+        <footer class="mobile-tabbar bg-slate-950/95 backdrop-blur-md border-t border-slate-900 pt-1.5 px-1 fixed bottom-0 left-0 right-0 z-40 block lg:hidden">
+            <nav class="flex justify-around items-stretch gap-0.5 max-w-xl mx-auto" aria-label="Game sections">
+                <button type="button" onclick="switchView('roulette')" data-view="roulette" class="mobile-nav-btn is-active" aria-current="page">
                     <i class="fas fa-crosshairs text-lg"></i>
                     <span class="block text-[10px] font-bold">Radar</span>
                 </button>
-                <button onclick="switchView('battle')" class="mobile-nav-btn text-center text-slate-400">
+                <button type="button" onclick="switchView('battle')" data-view="battle" class="mobile-nav-btn">
                     <i class="fas fa-route text-lg"></i>
                     <span class="block text-[10px] font-bold">Journey</span>
                 </button>
-                <button onclick="switchView('team')" class="mobile-nav-btn text-center text-slate-400">
+                <button type="button" onclick="switchView('team')" data-view="team" class="mobile-nav-btn">
                     <i class="fas fa-users text-lg"></i>
                     <span class="block text-[10px] font-bold">Team</span>
                 </button>
-                <button onclick="switchView('pokedex')" class="mobile-nav-btn text-center text-slate-400">
+                <button type="button" onclick="switchView('pokedex')" data-view="pokedex" class="mobile-nav-btn">
                     <i class="fas fa-book text-lg"></i>
                     <span class="block text-[10px] font-bold">Dex</span>
                 </button>
-                <button onclick="switchView('pc')" class="mobile-nav-btn text-center text-slate-400">
+                <button type="button" onclick="switchView('pc')" data-view="pc" class="mobile-nav-btn">
                     <i class="fas fa-box text-lg"></i>
                     <span class="block text-[10px] font-bold">PC</span>
                 </button>
-                <button onclick="switchView('shop')" class="mobile-nav-btn text-center text-slate-400">
+                <button type="button" onclick="switchView('shop')" data-view="shop" class="mobile-nav-btn">
                     <i class="fas fa-shopping-cart text-lg"></i>
                     <span class="block text-[10px] font-bold">Mart</span>
                 </button>
-            </div>
+            </nav>
         </footer>
 
         <!-- SECURED LOGIC SYSTEM -->
@@ -3589,6 +3577,21 @@ const CAMPAIGN_ROADMAP = [
                     'battle.noItem':       'No Item',
                     'battle.noTeamMsg':    'No team members selected. Open Team screen and assign at least one Pokémon.',
                     'battle.hint':         '💡 Hint',
+                    'battle.wantsToBattle':'wants to battle!',
+                    'battle.preparing':    'Preparing battle…',
+                    'battle.endlessTitle': 'Endless Simulation',
+                    'battle.round':        'Round',
+                    'battle.waiting':      'Waiting…',
+                    'battle.yourTurn':     'Your turn',
+                    'battle.statusMove':   'Status',
+                    'battle.pwr':          'PWR',
+                    'battle.whatWill':     'What will {name} do?',
+                    'battle.critHit':      'A critical hit!',
+                    'battle.victory':      'Victory! 🏆',
+                    'battle.runConfirmStage':   'Leave this battle? You can challenge this trainer again any time.',
+                    'battle.runConfirmEndless': 'End this Endless run? Your streak will reset.',
+                    'battle.fledTitle':    'Got away safely!',
+                    'battle.fledMsg':      'You left the battle.',
                     'stage.cleared':       'Cleared ✓',
                     'stage.fight':         'FIGHT ⚔️',
                     'stage.badgeLocked':   '🔒 Badge Locked',
@@ -4909,6 +4912,7 @@ const CAMPAIGN_ROADMAP = [
                             if (_bnEl) _bnEl.textContent = getPokemonName(_bb);
                         }
                         if (_bf) renderBattleMoves(_bf);
+                        renderBattleHeader();
                     }
                     showNotification(
                         '🌐 Language Updated',
@@ -5171,11 +5175,15 @@ const CAMPAIGN_ROADMAP = [
                     });
                     
                     document.querySelectorAll('.mobile-nav-btn').forEach(mBtn => {
-                        mBtn.className = "mobile-nav-btn text-center text-slate-400";
+                        const isActive = mBtn.dataset.view === viewName;
+                        mBtn.classList.toggle('is-active', isActive);
+                        if (isActive) mBtn.setAttribute('aria-current', 'page'); else mBtn.removeAttribute('aria-current');
                     });
 
                     const activePanel = document.getElementById(`view-${viewName}`);
                     if (activePanel) activePanel.classList.remove('hidden');
+                    // Start each tab at the top on small screens
+                    if (window.innerWidth < 1024 && activePanel && activePanel.getBoundingClientRect().top < 0) window.scrollTo({ top: 0 });
                     
                     const targetNav = document.getElementById(`nav-${viewName}`);
                     if (targetNav) {
@@ -5183,7 +5191,11 @@ const CAMPAIGN_ROADMAP = [
                     }
 
                     if (viewName === 'pokedex') renderPokedex();
-                    else if (viewName === 'battle') { resetBattleScreen(); renderRoadmap(); }
+                    else if (viewName === 'battle') {
+                        // Returning to the Journey tab mid-battle resumes the fight instead of abandoning it
+                        if (!gameState.battle.active && !gameState.battle.starting) resetBattleScreen();
+                        renderRoadmap();
+                    }
                     else if (viewName === 'shop') { renderHeldItemsShop(); renderTMShop(); updateAutoBattlerUI(); updateShinyCharmUI(); }
                     else if (viewName === 'pc') renderPCBox();
                     else if (viewName === 'team') renderTeamView();
@@ -6113,8 +6125,8 @@ const CAMPAIGN_ROADMAP = [
                     playConfirmSound();
                     gameState.battleType = mode;
                     const TABS = ['trainers', 'gym', 'unlimited'];
-                    const inactiveCls = 'px-4 py-2 rounded-lg text-xs font-bold transition duration-150 text-slate-400 hover:text-white';
-                    const activeCls   = 'px-4 py-2 rounded-lg text-xs font-bold transition duration-150 themed-gradient text-white';
+                    const inactiveCls = 'px-3 sm:px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition duration-150 text-slate-400 hover:text-white';
+                    const activeCls   = 'px-3 sm:px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition duration-150 themed-gradient text-white';
                     TABS.forEach(t => {
                         const btn   = document.getElementById('btn-journey-' + t);
                         const panel = document.getElementById('journey-' + t + '-panel');
@@ -6147,7 +6159,7 @@ const CAMPAIGN_ROADMAP = [
                         if (stage.isGym && !isCleared) borderColor = 'border-yellow-500/60';
                         if (stage.isGym && isCleared)  borderColor = 'border-yellow-600/40';
 
-                        card.className = `p-4 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between h-44 bg-slate-900 hover:bg-slate-800 text-white ${borderColor}`;
+                        card.className = `p-3 sm:p-4 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between h-40 sm:h-44 min-w-0 bg-slate-900 hover:bg-slate-800 text-white ${borderColor}`;
                         if (stage.isGym && !isCleared) card.style.boxShadow = 'inset 0 0 0 1px rgba(234,179,8,0.2), 0 0 18px rgba(234,179,8,0.12)';
                         card.onclick = () => launchStagePrep(stage);
 
@@ -6178,7 +6190,7 @@ const CAMPAIGN_ROADMAP = [
                             </div>
                         `;
                     } else {
-                        card.className = "p-4 rounded-2xl border border-slate-900 bg-slate-950/20 text-slate-600 flex flex-col justify-center items-center h-44 opacity-30 select-none";
+                        card.className = "p-3 sm:p-4 rounded-2xl border border-slate-900 bg-slate-950/20 text-slate-600 flex flex-col justify-center items-center h-40 sm:h-44 opacity-30 select-none";
                         card.innerHTML = `<i class="fas fa-lock text-xl mb-2"></i>`;
                     }
                     return card;
@@ -6290,6 +6302,8 @@ const CAMPAIGN_ROADMAP = [
                 }
 
                 async function selectFighterAndBegin(pokemon) {
+                    // Ignore double taps while opponents are still being fetched
+                    if (gameState.battle.starting) return;
                     playConfirmSound();
                     const stage = gameState.activeBattleStage;
                     // 50-coin fee only for endless simulation (no active stage)
@@ -6297,6 +6311,7 @@ const CAMPAIGN_ROADMAP = [
                         const BATTLE_ENTRY_COST = 50;
                         if (gameState.coins < BATTLE_ENTRY_COST) {
                             showNotification('Not Enough Coins', `Endless simulation entry requires ${BATTLE_ENTRY_COST} Coins.`, 'error');
+                            resetBattleScreen();
                             return;
                         }
                         spendCoins(BATTLE_ENTRY_COST);
@@ -6304,45 +6319,60 @@ const CAMPAIGN_ROADMAP = [
                     }
                     let enemyProfile = null;
                     let enemyTeam = [];
-                    document.getElementById('wildPokemonLoading').classList.remove('hidden');
+                    gameState.battle.starting = true;
+                    const session = (gameState.battle.session || 0) + 1;
+                    gameState.battle.session = session;
+                    document.getElementById('battleSelector').classList.add('hidden');
+                    document.getElementById('fighterSelector').classList.add('hidden');
+                    document.getElementById('battleArenaActive').classList.add('hidden');
+                    document.getElementById('battleLoading').classList.remove('hidden');
+                    document.getElementById('battleLoadingText').textContent = stage
+                        ? `${stage.trainer} ${t('battle.wantsToBattle')}`
+                        : t('battle.preparing');
 
-                    if (stage) {
-                        const teamSize = Math.max(1, Math.min(4, stage.teamSize || 1));
-                        for (let index = 0; index < teamSize; index += 1) {
-                            const teamMemberId = Math.min(1025, stage.pokemonId + (index * 5));
-                            const member = await fetchPokemonData(teamMemberId);
-                            const memberLevel = stage.level + (index * 4);
-                            member.hp = member.hp + (memberLevel * 3);
-                            member.atk = member.atk + (memberLevel * 1.2);
-                            member.def = member.def + (memberLevel * 1);
-                            member.spAtk = member.spAtk + (memberLevel * 1.2);
-                            member.spDef = member.spDef + (memberLevel * 1);
-                            member.name = index === 0 ? `${stage.trainer}'s ${stage.bossName}` : `${stage.trainer}'s ${member.name}`;
-                            member.level = memberLevel;
-                            if (memberLevel >= 20) member.heldItem = "oran_berry";
-                            enemyTeam.push(member);
+                    try {
+                        if (stage) {
+                            const teamSize = Math.max(1, Math.min(4, stage.teamSize || 1));
+                            for (let index = 0; index < teamSize; index += 1) {
+                                const teamMemberId = Math.min(1025, stage.pokemonId + (index * 5));
+                                const member = await fetchPokemonData(teamMemberId);
+                                const memberLevel = stage.level + (index * 4);
+                                member.hp = member.hp + (memberLevel * 3);
+                                member.atk = member.atk + (memberLevel * 1.2);
+                                member.def = member.def + (memberLevel * 1);
+                                member.spAtk = member.spAtk + (memberLevel * 1.2);
+                                member.spDef = member.spDef + (memberLevel * 1);
+                                member.name = index === 0 ? `${stage.trainer}'s ${stage.bossName}` : `${stage.trainer}'s ${member.name}`;
+                                member.level = memberLevel;
+                                if (memberLevel >= 20) member.heldItem = "oran_berry";
+                                enemyTeam.push(member);
+                            }
+                            enemyProfile = enemyTeam[0];
+                        } else {
+                            const fighterLevel = pokemon.level || 1;
+                            const endlessEnemyLevel = Math.max(1, Math.ceil((fighterLevel - 0.7) + ((gameState.endlessRunDefeats || 0) * 0.1)));
+                            const genRange = getRadarGenRange();
+                            const idDiff = genRange.max - genRange.min;
+                            const randomEnemyId = Math.floor(Math.random() * (idDiff + 1)) + genRange.min;
+
+                            enemyProfile = await fetchPokemonData(randomEnemyId);
+                            enemyProfile.hp = enemyProfile.hp + (endlessEnemyLevel * 3);
+                            enemyProfile.atk = enemyProfile.atk + (endlessEnemyLevel * 1.2);
+                            enemyProfile.def = enemyProfile.def + (endlessEnemyLevel * 1);
+                            enemyProfile.spAtk = enemyProfile.spAtk + (endlessEnemyLevel * 1.2);
+                            enemyProfile.spDef = enemyProfile.spDef + (endlessEnemyLevel * 1);
+                            enemyProfile.name = "Simulated " + enemyProfile.name;
+                            enemyProfile.level = endlessEnemyLevel;
+                            if (endlessEnemyLevel >= 20) enemyProfile.heldItem = "oran_berry";
+                            enemyTeam = [enemyProfile];
                         }
-                        enemyProfile = enemyTeam[0];
-                    } else {
-                        const fighterLevel = pokemon.level || 1;
-                        const endlessEnemyLevel = Math.max(1, Math.ceil((fighterLevel - 0.7) + ((gameState.endlessRunDefeats || 0) * 0.1)));
-                        const genRange = getRadarGenRange();
-                        const idDiff = genRange.max - genRange.min;
-                        const randomEnemyId = Math.floor(Math.random() * (idDiff + 1)) + genRange.min;
-                        
-                        enemyProfile = await fetchPokemonData(randomEnemyId);
-                        enemyProfile.hp = enemyProfile.hp + (endlessEnemyLevel * 3);
-                        enemyProfile.atk = enemyProfile.atk + (endlessEnemyLevel * 1.2);
-                        enemyProfile.def = enemyProfile.def + (endlessEnemyLevel * 1);
-                        enemyProfile.spAtk = enemyProfile.spAtk + (endlessEnemyLevel * 1.2);
-                        enemyProfile.spDef = enemyProfile.spDef + (endlessEnemyLevel * 1);
-                        enemyProfile.name = "Simulated " + enemyProfile.name;
-                        enemyProfile.level = endlessEnemyLevel;
-                        if (endlessEnemyLevel >= 20) enemyProfile.heldItem = "oran_berry";
-                        enemyTeam = [enemyProfile];
+                    } finally {
+                        gameState.battle.starting = false;
+                        document.getElementById('battleLoading').classList.add('hidden');
                     }
+                    // The player left (Run / tab switch) while opponents were loading
+                    if (gameState.battle.session !== session) return;
 
-                    document.getElementById('wildPokemonLoading').classList.add('hidden');
                     gameState.battle.bossPokemon = enemyProfile;
                     gameState.battle.fighterPokemon = pokemon;
                     gameState.battle.enemyTeam = enemyTeam;
@@ -6354,8 +6384,7 @@ const CAMPAIGN_ROADMAP = [
                     gameState.battle.playerTeamIndex = gameState.battle.playerTeam.findIndex(p => p.uid === pokemon.uid);
                     if (gameState.battle.playerTeamIndex === -1) gameState.battle.playerTeamIndex = 0;
 
-                    const levelMultiplier = 1 + ((pokemon.level - 1) * 0.05);
-                    const scaledHP = Math.max(1, Math.round((pokemon.hp + (pokemon.hpBonus || 0)) * levelMultiplier));
+                    const scaledHP = getBattleMaxHP(pokemon);
 
                     gameState.battle.fighterHP = scaledHP;
                     gameState.battle.fighterMaxHP = scaledHP;
@@ -6369,42 +6398,200 @@ const CAMPAIGN_ROADMAP = [
                     gameState.battle.statusMeta = { player: {}, boss: {} };
                     gameState.battle.choiceBandMove = null;
                     gameState.battle.faintedUids = new Set();
+                    gameState.battle.busy = false;
+                    gameState.battle.pendingSwap = false;
                     // Per-battle HP tracker: saves HP of benched Pokémon so they return damaged
                     gameState.battle.teamHp = {};
 
-                    document.getElementById('fighterSelector').classList.add('hidden');
                     document.getElementById('battleArenaActive').classList.remove('hidden');
-
-                    document.getElementById('bossSprite').src = enemyProfile.sprite;
-                    document.getElementById('bossName').textContent = enemyProfile.name;
-                    document.getElementById('bossLevelBadge').textContent = `${t('battle.lvl')} ${enemyProfile.level}`;
-                    document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossHP}`;
-                    document.getElementById('bossHPBar').style.width = "100%";
-
-                    document.getElementById('playerFighterSprite').src = pokemon.sprite;
-                    document.getElementById('playerFighterName').textContent = `${pokemon.isShiny ? '✨ ' : ''}${pokemon.name}`;
-                    document.getElementById('playerFighterLevelBadge').textContent = `${t('battle.lvl')} ${pokemon.level || 1}`;
-                    document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${scaledHP}`;
-                    document.getElementById('playerFighterHPBar').style.width = "100%";
-
-                    document.getElementById('playerHeldItemBadge').innerHTML = pokemon.heldItem 
-                        ? `<span class="bg-cyan-900/80 border border-cyan-700 text-cyan-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase"><i class="fas fa-briefcase"></i> ${HOLD_ITEMS_DB[pokemon.heldItem].name}</span>`
-                        : "";
-                    document.getElementById('bossHeldItemBadge').innerHTML = enemyProfile.heldItem 
-                        ? `<span class="bg-yellow-900/80 border border-yellow-700 text-yellow-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase">${HOLD_ITEMS_DB[enemyProfile.heldItem].name}</span>`
-                        : "";
+                    renderBattleHeader();
+                    renderBattleSide('boss');
+                    renderBattleSide('player');
 
                     document.getElementById('battleLog').innerHTML = `<div class="text-cyan-400">${t('battle.combatInit')}<span class="font-bold text-white">${enemyProfile.name}</span>!</div>`;
-                    document.getElementById('effectivenessIndicator').textContent = "";
+                    flashEffectiveness('');
 
                     gameState.battle.active = true;
                     renderBattleMoves(pokemon);
+
+                    // On phones the arena can start below the fold — bring it into view
+                    const arena = document.getElementById('battleArenaActive');
+                    const headerH = (document.querySelector('header') || {}).offsetHeight || 0;
+                    const top = arena.getBoundingClientRect().top;
+                    if (top < headerH || top > window.innerHeight * 0.4) {
+                        window.scrollTo({ top: Math.max(0, window.scrollY + top - headerH - 8), behavior: 'smooth' });
+                    }
+                }
+
+                // ── Battle HUD helpers ────────────────────────────────────────────
+                // One place renders each side of the field, so every code path
+                // (battle start, switching, fainting, next trainer Pokémon, endless
+                // rounds) produces the same, consistent HUD.
+                const BATTLE_TYPE_COLORS = {
+                    normal:'#a8a77a', fire:'#ee8130', water:'#6390f0', electric:'#f7d02c', grass:'#7ac74c', ice:'#96d9d6',
+                    fighting:'#c22e28', poison:'#a33ea1', ground:'#e2bf65', flying:'#a98ff3', psychic:'#f95587', bug:'#a6b91a',
+                    rock:'#b6a136', ghost:'#735797', dragon:'#6f35fc', dark:'#705746', steel:'#b7b7ce', fairy:'#d685ad'
+                };
+                const BATTLE_STATUS_TAGS = {
+                    sleep:['SLP','#a5b4fc'], para:['PAR','#facc15'], burn:['BRN','#fb923c'],
+                    poison:['PSN','#c084fc'], freeze:['FRZ','#7dd3fc'], leech:['SEED','#4ade80']
+                };
+
+                function getBattleMaxHP(pokemon) {
+                    const lvlMult = 1 + (((pokemon.level || 1) - 1) * 0.05);
+                    return Math.max(1, Math.round((pokemon.hp + (pokemon.hpBonus || 0)) * lvlMult));
+                }
+
+                function getTypeEffectiveness(moveType, defender) {
+                    let mod = 1.0;
+                    const row = TYPE_MATCHUPS[moveType];
+                    if (row && defender) {
+                        if (row[defender.type1] !== undefined) mod *= row[defender.type1];
+                        if (defender.type2 && row[defender.type2] !== undefined) mod *= row[defender.type2];
+                    }
+                    return mod;
+                }
+
+                function hpLevel(pct) { return pct > 50 ? 'high' : pct > 20 ? 'mid' : 'low'; }
+
+                function pickBossMove(boss) {
+                    const moves = boss && boss.moves && boss.moves.length ? boss.moves : ['tackle'];
+                    return moves[Math.floor(Math.random() * moves.length)];
+                }
+
+                function replaySpriteAnim(sprite, cls) {
+                    sprite.classList.remove('is-hit', 'is-fainted', 'is-entering');
+                    void sprite.offsetWidth; // restart the animation
+                    sprite.classList.add(cls);
+                    if (cls !== 'is-fainted') setTimeout(() => sprite.classList.remove(cls), 600);
+                }
+
+                function syncBattleHP() {
+                    const b = gameState.battle;
+                    [
+                        [b.fighterHP, b.fighterMaxHP, 'playerFighterHPBar', 'playerFighterHPText', 'playerFighterSprite'],
+                        [b.bossHP, b.bossMaxHP, 'bossHPBar', 'bossHPText', 'bossSprite']
+                    ].forEach(([hp, max, barId, textId, spriteId]) => {
+                        const bar = document.getElementById(barId);
+                        if (!bar) return;
+                        hp = Math.max(0, Math.round(hp || 0));
+                        max = Math.max(1, Math.round(max || 1));
+                        const pct = Math.max(0, Math.min(100, (hp / max) * 100));
+                        bar.style.width = `${pct.toFixed(1)}%`;
+                        bar.dataset.hp = hpLevel(pct);
+                        const text = document.getElementById(textId);
+                        if (text) text.textContent = `${hp}/${max}`;
+                        // Visual feedback: flinch on damage, drop on faint
+                        const sprite = document.getElementById(spriteId);
+                        const prev = bar.dataset.prevHp === '' || bar.dataset.prevHp === undefined ? NaN : Number(bar.dataset.prevHp);
+                        if (sprite) {
+                            if (hp <= 0 && prev !== 0) replaySpriteAnim(sprite, 'is-fainted');
+                            else if (hp > 0 && hp < prev) replaySpriteAnim(sprite, 'is-hit');
+                        }
+                        bar.dataset.prevHp = String(hp);
+                    });
+                    renderBattlePips();
+                }
+
+                function renderBattleSide(side) {
+                    const b = gameState.battle;
+                    const isPlayer = side === 'player';
+                    const mon = isPlayer ? b.fighterPokemon : b.bossPokemon;
+                    if (!mon) return;
+                    const id = isPlayer
+                        ? { sprite:'playerFighterSprite', name:'playerFighterName', lvl:'playerFighterLevelBadge', types:'playerTypeTags', item:'playerHeldItemBadge', bar:'playerFighterHPBar' }
+                        : { sprite:'bossSprite', name:'bossName', lvl:'bossLevelBadge', types:'bossTypeTags', item:'bossHeldItemBadge', bar:'bossHPBar' };
+                    const sprite = document.getElementById(id.sprite);
+                    sprite.src = mon.sprite;
+                    sprite.alt = mon.name;
+                    replaySpriteAnim(sprite, 'is-entering');
+                    const nameEl = document.getElementById(id.name);
+                    // The trainer is already named in the top bar, so the HUD shows just the species
+                    const stage = gameState.activeBattleStage;
+                    const shownName = !isPlayer && stage && mon.name.startsWith(`${stage.trainer}'s `) ? mon.name.slice(stage.trainer.length + 3) : mon.name;
+                    nameEl.textContent = (mon.isShiny ? '✨ ' : '') + shownName;
+                    nameEl.title = mon.name;
+                    document.getElementById(id.lvl).textContent = `${t('battle.lvl')} ${mon.level || 1}`;
+                    document.getElementById(id.types).innerHTML = [mon.type1, mon.type2].filter(Boolean)
+                        .map(tp => `<span class="hud-chip hud-chip--type" style="--type-color:${BATTLE_TYPE_COLORS[tp] || '#94a3b8'}">${tp}</span>`).join('');
+                    const held = mon.heldItem && HOLD_ITEMS_DB[mon.heldItem];
+                    document.getElementById(id.item).innerHTML = held
+                        ? `<span class="hud-chip hud-chip--item" title="${t('battle.item')}: ${held.name}">🎒 ${held.name}</span>` : '';
+                    // New Pokémon on the field: don't treat its HP as "damage" vs. the previous one
+                    document.getElementById(id.bar).dataset.prevHp = '';
+                    syncBattleHP();
+                    renderStatStagesUI();
+                }
+
+                function renderBattlePips() {
+                    const b = gameState.battle;
+                    const pip = (state) => `<span class="battle-pip${state ? ' is-' + state : ''}"></span>`;
+                    const playerEl = document.getElementById('playerTeamPips');
+                    if (playerEl) {
+                        const fainted = b.faintedUids || new Set();
+                        const team = b.playerTeam || [];
+                        const isActive = p => !!b.fighterPokemon && p.uid === b.fighterPokemon.uid;
+                        playerEl.innerHTML = team.length > 1 ? team.map(p =>
+                            pip(fainted.has(p.uid) || (isActive(p) && b.fighterHP <= 0) ? 'fainted' : isActive(p) ? 'active' : '')
+                        ).join('') : '';
+                    }
+                    const bossEl = document.getElementById('bossTeamPips');
+                    if (bossEl) {
+                        const team = b.enemyTeam || [];
+                        const idx = b.enemyTeamIndex || 0;
+                        bossEl.innerHTML = team.length > 1 ? team.map((_, i) =>
+                            pip(i < idx || (i === idx && b.bossHP <= 0) ? 'fainted' : i === idx ? 'active' : '')
+                        ).join('') : '';
+                    }
+                }
+
+                function renderBattleHeader() {
+                    const stage = gameState.activeBattleStage;
+                    const icon = document.getElementById('battleStageIcon');
+                    const title = document.getElementById('battleStageTitle');
+                    const sub = document.getElementById('battleStageSub');
+                    if (stage) {
+                        icon.textContent = stage.icon || '⚔️';
+                        title.textContent = stage.trainer;
+                        sub.textContent = [stage.name, stage.isGym && stage.badgeName ? stage.badgeName : ''].filter(Boolean).join(' · ');
+                    } else {
+                        icon.textContent = '♾️';
+                        title.textContent = t('battle.endlessTitle');
+                        sub.textContent = `${t('battle.round')} ${(gameState.endlessRunDefeats || 0) + 1}`;
+                    }
+                }
+
+                function flashEffectiveness(text, kind) {
+                    const el = document.getElementById('effectivenessIndicator');
+                    if (!el) return;
+                    el.classList.remove('is-pop');
+                    el.textContent = text || '';
+                    el.dataset.kind = kind || '';
+                    if (text) { void el.offsetWidth; el.classList.add('is-pop'); }
+                }
+
+                // Locks every battle control while a turn resolves or a fainted
+                // Pokémon is being replaced, so taps can't queue overlapping turns.
+                function setBattleBusy(state) {
+                    const b = gameState.battle;
+                    b.busy = !!state;
+                    const locked = b.busy || !!b.pendingSwap || !b.active;
+                    const arena = document.getElementById('battleArenaActive');
+                    if (arena) arena.dataset.busy = locked ? '1' : '0';
+                    document.querySelectorAll('#battleMovesGrid button, #battleSwitchRow button').forEach(btn => {
+                        btn.disabled = locked || btn.classList.contains('is-choice-blocked');
+                    });
+                    const runBtn = document.getElementById('battleRunBtn');
+                    if (runBtn) runBtn.disabled = b.busy;
+                    const turn = document.getElementById('battleTurnState');
+                    if (turn) turn.textContent = !b.active ? '' : locked ? t('battle.waiting') : t('battle.yourTurn');
                 }
 
                 function renderBattleMoves(pokemon) {
                     const grid = document.getElementById('battleMovesGrid');
                     grid.innerHTML = "";
                     const moves = pokemon.moves && pokemon.moves.length ? pokemon.moves : ["tackle", "quick-attack"];
+                    const foe = gameState.battle.bossPokemon;
 
                     // Choice Band: show which move is locked
                     const choiceLocked = pokemon.heldItem === 'choice_band' && gameState.battle.choiceBandMove;
@@ -6414,22 +6601,35 @@ const CAMPAIGN_ROADMAP = [
                         const isStatus = spec.category === 'status';
                         const isChoiceLocked = choiceLocked && move === gameState.battle.choiceBandMove;
                         const isChoiceBlocked = choiceLocked && move !== gameState.battle.choiceBandMove;
+                        const moveName = move.replace(/-/g, ' ');
                         const moveBtn = document.createElement('button');
-                        let borderCol = isStatus ? 'border-violet-800 hover:border-violet-500' : 'border-slate-800 hover:border-blue-500';
-                        if (isChoiceLocked) borderCol = 'border-amber-500 hover:border-amber-400';
-                        moveBtn.className = `py-3 px-4 bg-slate-900 ${borderCol} border rounded-xl text-xs font-bold text-slate-200 capitalize transition duration-150 flex flex-col justify-center items-center gap-0.5${isChoiceBlocked ? ' opacity-30 pointer-events-none' : ''}`;
-                        const pwrText = isStatus
-                            ? `<span class="text-[8px] text-violet-400 font-mono">${spec.type.toUpperCase()} | STATUS</span>`
-                            : `<span class="text-[8px] text-slate-500 font-mono">${spec.type.toUpperCase()} | PWR ${spec.power}</span>`;
-                        const statusIcon = isStatus ? '<span class="text-violet-500 text-[8px]">✨ </span>' : '';
-                        const lockIcon  = isChoiceLocked ? '<span class="text-[7px] text-amber-400 font-black">🔒 LOCKED</span>' : '';
+                        moveBtn.type = 'button';
+                        moveBtn.className = `move-btn${isChoiceLocked ? ' is-choice-locked' : ''}${isChoiceBlocked ? ' is-choice-blocked' : ''}`;
+                        moveBtn.style.setProperty('--type-color', BATTLE_TYPE_COLORS[spec.type] || '#94a3b8');
+
+                        // Type-matchup hint against the current opponent
+                        let effTag = '';
+                        if (!isStatus && foe) {
+                            const mod = getTypeEffectiveness(spec.type, foe);
+                            if (mod === 0) effTag = `<span class="move-eff" data-eff="immune" title="${t('battle.immune')}">0×</span>`;
+                            else if (mod > 1) effTag = `<span class="move-eff" data-eff="super" title="${t('battle.superEff')}">${mod}×</span>`;
+                            else if (mod < 1) effTag = `<span class="move-eff" data-eff="weak" title="${t('battle.notVeryEff')}">${mod === 0.25 ? '¼' : '½'}×</span>`;
+                        }
+                        const acc = Number(spec.accuracy ?? 100);
+                        const detail = isStatus ? t('battle.statusMove') : `${t('battle.pwr')} ${spec.power}${acc < 100 ? ` · ${acc}%` : ''}`;
+                        moveBtn.title = `${moveName} — ${spec.type} · ${spec.category || 'physical'} · ${detail}`;
+                        moveBtn.innerHTML = `<span class="move-name">${isChoiceLocked ? '🔒 ' : ''}${moveName}</span>`
+                            + `<span class="move-meta"><span class="move-type">${spec.type}</span><span>${detail}</span>${effTag}</span>`;
                         moveBtn.onclick = () => executeBattleTurn(move);
-                        moveBtn.innerHTML = `${statusIcon}<span class="capitalize">${move.replace(/-/g, ' ')}</span>${pwrText}${lockIcon}`;
                         grid.appendChild(moveBtn);
                     });
 
+                    const prompt = document.getElementById('battlePrompt');
+                    if (prompt) prompt.textContent = t('battle.whatWill').replace('{name}', pokemon.name);
+
                     // Render switch-out options below the move grid
                     renderSwitchOptions(pokemon);
+                    setBattleBusy(gameState.battle.busy);
                 }
 
                 // ── Stat-stage helpers ────────────────────────────────────────
@@ -6457,57 +6657,35 @@ const CAMPAIGN_ROADMAP = [
                 }
 
                 function renderStatStagesUI() {
-                    const panel = document.getElementById('statStagesPanel');
-                    if (!panel || !gameState.battle.statStages) return;
-                    const stages = gameState.battle.statStages;
-                    const sc = gameState.battle.statusConds || {};
-                    const labels = { atk:'ATK', def:'DEF', spAtk:'SpAtk', spDef:'SpDef', speed:'SPD', accuracy:'ACC' };
-                    const statusBadge = { sleep:'💤 Sleep', para:'⚡ Para', leech:'🌱 Leech', burn:'🔥 Burn', freeze:'🧊 Freeze', poison:'☠️ Poison', confuse:'😵 Confused' };
-                    const statusCol   = {
-                        sleep:  'text-indigo-400 border-indigo-800 bg-indigo-950/50',
-                        para:   'text-yellow-400 border-yellow-800 bg-yellow-950/50',
-                        leech:  'text-emerald-400 border-emerald-800 bg-emerald-950/50',
-                        burn:   'text-red-400 border-red-800 bg-red-950/50',
-                        freeze: 'text-blue-300 border-blue-800 bg-blue-950/50',
-                        poison: 'text-purple-400 border-purple-800 bg-purple-950/50',
-                        confuse:'text-orange-300 border-orange-700 bg-orange-950/50'
-                    };
-                    const renderSide = (side, elId) => {
-                        const el = document.getElementById(elId);
-                        if (!el) return false;
-                        el.innerHTML = '';
-                        let any = false;
-                        // Status condition badge — shown first and with pulse animation
-                        const cond = sc[side];
-                        if (cond) {
-                            any = true;
-                            const sCol = statusCol[cond] || 'text-slate-400 border-slate-700 bg-slate-900/50';
-                            el.innerHTML += `<span class="text-[8px] font-black px-1.5 py-0.5 rounded border animate-pulse ${sCol}">${statusBadge[cond] || cond}</span>`;
+                    const b = gameState.battle;
+                    if (!b.statStages) return;
+                    const sc = b.statusConds || {};
+                    const meta = b.statusMeta || {};
+                    const labels = { atk:'ATK', def:'DEF', spAtk:'SpA', spDef:'SpD', speed:'SPE', accuracy:'ACC' };
+                    const renderSide = (side, statusId, stagesId) => {
+                        // Status condition (SLP/PAR/BRN…) + confusion sit next to the types
+                        const statusEl = document.getElementById(statusId);
+                        if (statusEl) {
+                            let html = '';
+                            const cond = sc[side];
+                            if (cond) {
+                                const [label, col] = BATTLE_STATUS_TAGS[cond] || [String(cond).toUpperCase(), '#cbd5e1'];
+                                html += `<span class="hud-chip hud-chip--status" style="background:${col}">${label}</span>`;
+                            }
+                            if ((meta[side] || {}).confused) html += `<span class="hud-chip hud-chip--status" style="background:#fdba74">CNF</span>`;
+                            statusEl.innerHTML = html;
                         }
-                        // Show confusion badge separately (can coexist with other statuses)
-                        const confMeta = (gameState.battle.statusMeta || {})[side] || {};
-                        if (confMeta.confused) {
-                            any = true;
-                            el.innerHTML += `<span class="text-[8px] font-black px-1.5 py-0.5 rounded border animate-pulse text-orange-300 border-orange-700 bg-orange-950/50">😵 Confused</span>`;
+                        // Stat stage chips under the HP bar
+                        const stagesEl = document.getElementById(stagesId);
+                        if (stagesEl) {
+                            stagesEl.innerHTML = Object.entries(b.statStages[side] || {})
+                                .filter(([, val]) => val !== 0)
+                                .map(([stat, val]) => `<span class="hud-chip ${val > 0 ? 'hud-chip--up' : 'hud-chip--down'}">${labels[stat] || stat} ${val > 0 ? '+' : ''}${val}</span>`)
+                                .join('');
                         }
-                        // Stat stage chips
-                        Object.entries(stages[side]).forEach(([stat, val]) => {
-                            if (val === 0) return;
-                            any = true;
-                            const col = val > 0 ? 'text-green-400 border-green-800 bg-green-950/40' : 'text-red-400 border-red-900 bg-red-950/40';
-                            el.innerHTML += `<span class="text-[8px] font-black px-1.5 py-0.5 rounded border ${col}">${labels[stat]} ${val > 0 ? '+' : ''}${val}</span>`;
-                        });
-                        if (!any) el.innerHTML = '<span class="text-[8px] text-slate-600">—</span>';
-                        return any;
                     };
-                    renderSide('player', 'playerStatStages');
-                    renderSide('boss',   'bossStatStages');
-                    const confuseP = (gameState.battle.statusMeta || {}).player || {};
-                    const confuseB = (gameState.battle.statusMeta || {}).boss || {};
-                    const hasAny = sc.player || sc.boss || confuseP.confused || confuseB.confused ||
-                        Object.values(stages.player).some(v=>v!==0) ||
-                        Object.values(stages.boss).some(v=>v!==0);
-                    panel.classList.toggle('hidden', !hasAny);
+                    renderSide('player', 'playerStatusTag', 'playerStatStages');
+                    renderSide('boss',   'bossStatusTag',   'bossStatStages');
                 }
 
                 function applyStatusCond(side, cond, logBox, myName, foeName) {
@@ -6550,7 +6728,6 @@ const CAMPAIGN_ROADMAP = [
                     if (!gameState.battle.active) return;
                     const moveSpec = MOVES_DB[moveName] || { type: "normal", power: 40, category: "physical" };
                     const logBox = document.getElementById('battleLog');
-                    const effIndicator = document.getElementById('effectivenessIndicator');
                     const attackerSide = isPlayerAttacker ? 'player' : 'boss';
                     const defenderSide = isPlayerAttacker ? 'boss'   : 'player';
 
@@ -6607,13 +6784,11 @@ const CAMPAIGN_ROADMAP = [
                             logBox.innerHTML += `<div class="text-orange-400 mt-1 italic">😵 ${attacker.name} is confused and hurt itself! (−${selfDmg})</div>`;
                             if (isPlayerAttacker) {
                                 gameState.battle.fighterHP = Math.max(0, gameState.battle.fighterHP - selfDmg);
-                                document.getElementById('playerFighterHPBar').style.width = `${(gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100}%`;
-                                document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
+                                syncBattleHP();
                                 if (gameState.battle.fighterHP <= 0) { handleBattleDefeat(); return; }
                             } else {
                                 gameState.battle.bossHP = Math.max(0, gameState.battle.bossHP - selfDmg);
-                                document.getElementById('bossHPBar').style.width = `${(gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100}%`;
-                                document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossMaxHP}`;
+                                syncBattleHP();
                                 if (gameState.battle.bossHP <= 0) { handleBattleVictory(); return; }
                             }
                             logBox.scrollTop = logBox.scrollHeight;
@@ -6646,15 +6821,13 @@ const CAMPAIGN_ROADMAP = [
                         if ((eff.heals === 'full' || eff.heals === 'half') && isPlayerAttacker) {
                             const healAmt = eff.heals === 'full' ? gameState.battle.fighterMaxHP : Math.round(gameState.battle.fighterMaxHP / 2);
                             gameState.battle.fighterHP = Math.min(gameState.battle.fighterMaxHP, gameState.battle.fighterHP + healAmt);
-                            document.getElementById('playerFighterHPBar').style.width = `${(gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100}%`;
-                            document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
+                            syncBattleHP();
                             logBox.innerHTML += `<div class="text-green-400 mt-1 font-bold">💚 ${attacker.name} restored ${healAmt} HP!</div>`;
                         } else if (eff.heals === 'full' || eff.heals === 'half') {
                             // Boss healed
                             const healAmt = eff.heals === 'full' ? gameState.battle.bossMaxHP : Math.round(gameState.battle.bossMaxHP / 2);
                             gameState.battle.bossHP = Math.min(gameState.battle.bossMaxHP, gameState.battle.bossHP + healAmt);
-                            document.getElementById('bossHPBar').style.width = `${(gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100}%`;
-                            document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossMaxHP}`;
+                            syncBattleHP();
                             logBox.innerHTML += `<div class="text-emerald-400 mt-1 font-bold">💚 ${attacker.name} recovered ${healAmt} HP!</div>`;
                         } else if (eff.status) {
                             const tSide = eff.target === 'self' ? attackerSide : defenderSide;
@@ -6667,7 +6840,6 @@ const CAMPAIGN_ROADMAP = [
                             const tSide = eff.target === 'self' ? attackerSide : defenderSide;
                             applyStatStage(tSide, eff.stat, eff.stages, logBox, playerName, bossName);
                         }
-                        if (effIndicator) effIndicator.textContent = '';
                         logBox.scrollTop = logBox.scrollHeight;
                         return;
                     }
@@ -6690,11 +6862,7 @@ const CAMPAIGN_ROADMAP = [
                         return;
                     }
 
-                    let typeMod = 1.0;
-                    if (TYPE_MATCHUPS[moveSpec.type]) {
-                        if (TYPE_MATCHUPS[moveSpec.type][defender.type1] !== undefined) typeMod *= TYPE_MATCHUPS[moveSpec.type][defender.type1];
-                        if (defender.type2 && TYPE_MATCHUPS[moveSpec.type][defender.type2] !== undefined) typeMod *= TYPE_MATCHUPS[moveSpec.type][defender.type2];
-                    }
+                    const typeMod = getTypeEffectiveness(moveSpec.type, defender);
                     let stabMod = (moveSpec.type === attacker.type1 || moveSpec.type === attacker.type2) ? 1.5 : 1.0;
                     let itemMod = 1.0;
                     if (attacker.heldItem) {
@@ -6718,7 +6886,7 @@ const CAMPAIGN_ROADMAP = [
 
                     // Gen III-style damage: random 85–100%, STAB, type chart,
                     // and a 1/16 critical-hit roll (critical hits ignore attack drops).
-                    const isCritical = Math.random() < (1 / 16);
+                    const isCritical = typeMod > 0 && Math.random() < (1 / 16);
                     if (isCritical && (ss[attackerSide][moveSpec.category === 'special' ? 'spAtk' : 'atk'] || 0) < 0) {
                         attackStat = (moveSpec.category === 'special' ? (attacker.spAtk || attacker.atk || 50) : (attacker.atk || 50)) * lvlMul;
                     }
@@ -6726,35 +6894,37 @@ const CAMPAIGN_ROADMAP = [
                     let calculatedDamage = Math.round((((2 * attackerLvl / 5 + 2) * moveSpec.power * (attackStat / defenseStat)) / 50 + 2) * stabMod * typeMod * itemMod * criticalMod * (0.85 + Math.random() * 0.15));
                     if (calculatedDamage < 1 || typeMod === 0) calculatedDamage = typeMod === 0 ? 0 : 1;
 
+                    // Shared feedback for both sides: sound, floating callout, log lines
+                    if (typeMod > 1.0) playCritStrike();
+                    else if (typeMod === 0) playBeep();
+                    else playNormalHit();
+                    if (typeMod > 1.0) flashEffectiveness(t('battle.superEff'), 'super');
+                    else if (typeMod === 0) flashEffectiveness(t('battle.immune'), 'immune');
+                    else if (typeMod < 1.0) flashEffectiveness(t('battle.notVeryEff'), 'weak');
+                    else if (isCritical) flashEffectiveness(t('battle.critHit'), 'crit');
+                    else flashEffectiveness('');
+                    const usedCls = isPlayerAttacker ? 'text-blue-400' : 'text-rose-400';
+                    const usedIcon = isPlayerAttacker ? '⚔️' : '💥';
+                    logBox.innerHTML += `<div class="${usedCls} mt-1">${usedIcon} ${attacker.name} used <span class="text-white capitalize font-bold">${moveName.replace(/-/g,' ')}</span>! Dealt <span class="font-black">${calculatedDamage}</span> dmg.</div>`;
+                    if (isCritical) logBox.innerHTML += `<div class="text-orange-300 mt-0.5">${t('battle.critHit')}</div>`;
+                    if (typeMod > 1.0) logBox.innerHTML += `<div class="text-amber-300 mt-0.5">${t('battle.superEff')}</div>`;
+                    else if (typeMod === 0) logBox.innerHTML += `<div class="text-slate-400 mt-0.5">${t('battle.immune')}</div>`;
+                    else if (typeMod < 1.0) logBox.innerHTML += `<div class="text-slate-400 mt-0.5">${t('battle.notVeryEff')}</div>`;
+
                     if (isPlayerAttacker) {
                         gameState.battle.bossHP -= calculatedDamage;
                         if (gameState.battle.bossHP < 0) gameState.battle.bossHP = 0;
-
-                        if (typeMod > 1.0) { playCritStrike(); if(effIndicator) effIndicator.textContent = t('battle.superEff'); }
-                        else if (typeMod < 1.0 && typeMod > 0) { playNormalHit(); if(effIndicator) effIndicator.textContent = t('battle.notVeryEff'); }
-                        else if (typeMod === 0) { playBeep(); if(effIndicator) effIndicator.textContent = t('battle.immune'); }
-                        else { playNormalHit(); if(effIndicator) effIndicator.textContent = ''; }
-
-                        logBox.innerHTML += `<div class="text-blue-400 mt-1">⚔️ ${attacker.name} used <span class="text-white capitalize font-bold">${moveName.replace(/-/g,' ')}</span>! Dealt <span class="font-black">${calculatedDamage}</span> dmg.</div>`;
-
-                        document.getElementById('bossHPBar').style.width = `${(gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100}%`;
-                        document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossMaxHP}`;
 
                         if (defender.heldItem === "oran_berry" && !gameState.battle.bossOranUsed && gameState.battle.bossHP <= (gameState.battle.bossMaxHP * 0.3) && gameState.battle.bossHP > 0) {
                             gameState.battle.bossHP = Math.min(gameState.battle.bossMaxHP, gameState.battle.bossHP + 30);
                             gameState.battle.bossOranUsed = true;
                             logBox.innerHTML += `<div class="text-yellow-400 mt-1">🎒 Opponent used <span class="font-bold">Oran Berry</span> (+30 HP)!</div>`;
                         }
+                        syncBattleHP();
                         if (gameState.battle.bossHP <= 0) handleBattleVictory();
                     } else {
                         gameState.battle.fighterHP -= calculatedDamage;
                         if (gameState.battle.fighterHP < 0) gameState.battle.fighterHP = 0;
-
-                        playNormalHit();
-                        logBox.innerHTML += `<div class="text-rose-400 mt-1">💥 ${attacker.name} used <span class="text-white capitalize font-bold">${moveName.replace(/-/g,' ')}</span>! Dealt <span class="font-black">${calculatedDamage}</span> dmg.</div>`;
-
-                        document.getElementById('playerFighterHPBar').style.width = `${(gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100}%`;
-                        document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
 
                         if (defender.heldItem === "oran_berry" && !gameState.battle.oranUsed && gameState.battle.fighterHP <= (gameState.battle.fighterMaxHP * 0.3) && gameState.battle.fighterHP > 0) {
                             gameState.battle.fighterHP = Math.min(gameState.battle.fighterMaxHP, gameState.battle.fighterHP + 30);
@@ -6766,64 +6936,59 @@ const CAMPAIGN_ROADMAP = [
                             gameState.battle.fighterHP = Math.min(gameState.battle.fighterMaxHP, gameState.battle.fighterHP + healVal);
                             logBox.innerHTML += `<div class="text-emerald-400 mt-1">✨ Leftovers restored ${healVal} HP.</div>`;
                         }
+                        syncBattleHP();
                         if (gameState.battle.fighterHP <= 0) handleBattleDefeat();
                     }
                     logBox.scrollTop = logBox.scrollHeight;
                 }
 
                 function executeBattleTurn(moveName) {
-                    if (!gameState.battle.active) return;
-                    const fighter = gameState.battle.fighterPokemon;
-                    const boss = gameState.battle.bossPokemon;
+                    const b = gameState.battle;
+                    if (!b.active || b.busy || b.pendingSwap) return;
+                    const fighter = b.fighterPokemon;
+                    const boss = b.bossPokemon;
+                    const session = b.session;
 
                     // Choice Band: lock holder into the first move they used this battle
                     if (fighter.heldItem === 'choice_band') {
-                        if (!gameState.battle.choiceBandMove) {
-                            gameState.battle.choiceBandMove = moveName;
+                        if (!b.choiceBandMove) {
+                            b.choiceBandMove = moveName;
                         } else {
-                            moveName = gameState.battle.choiceBandMove;
+                            moveName = b.choiceBandMove;
                         }
                     }
 
-  // Priority is checked before Speed, matching the original turn order.
-  const _ss = gameState.battle.statStages || { player:{speed:0}, boss:{speed:0} };
-  const bossMoveForTurn = boss.moves[Math.floor(Math.random() * boss.moves.length)];
-  const playerPriority = Number((MOVES_DB[moveName] || {}).priority || 0);
-  const bossPriority = Number((MOVES_DB[bossMoveForTurn] || {}).priority || 0);
-  const fighterSpeed = (fighter.speed || 50) * stageMultiplier((_ss.player||{}).speed || 0);
-  const bossSpeed    = (boss.speed    || 50) * stageMultiplier((_ss.boss  ||{}).speed || 0);
-  const playerMovesFirst = playerPriority !== bossPriority ? playerPriority > bossPriority : fighterSpeed >= bossSpeed;
+                    // Priority is checked before Speed, matching the original turn order.
+                    const _ss = b.statStages || { player:{speed:0}, boss:{speed:0} };
+                    const bossMoveForTurn = pickBossMove(boss);
+                    const playerPriority = Number((MOVES_DB[moveName] || {}).priority || 0);
+                    const bossPriority = Number((MOVES_DB[bossMoveForTurn] || {}).priority || 0);
+                    const fighterSpeed = (fighter.speed || 50) * stageMultiplier((_ss.player||{}).speed || 0);
+                    const bossSpeed    = (boss.speed    || 50) * stageMultiplier((_ss.boss  ||{}).speed || 0);
+                    const playerMovesFirst = playerPriority !== bossPriority ? playerPriority > bossPriority : fighterSpeed >= bossSpeed;
 
-  if (playerMovesFirst) {
-                        disableMoveButtons(true);
-                        resolveMoveAttack(fighter, boss, moveName, true);
-                        if (gameState.battle.bossHP > 0) {
-                            setTimeout(() => {
-                                const bossMove = bossMoveForTurn;
-                                resolveMoveAttack(boss, fighter, bossMove, false);
-                                disableMoveButtons(false);
-                                // End-of-turn: burn/poison/leech after both moves
-                                if (gameState.battle.active) setTimeout(() => applyEndOfTurnEffects(), 400);
-                            }, 800);
-                        } else {
-                            disableMoveButtons(false);
-                            // Boss fainted to player's first move — still run end-of-turn (poison ticks etc.)
-                            // handleBattleVictory already called; skip to avoid double-trigger
-                        }
-                    } else {
-                        disableMoveButtons(true);
-                        const bossMove = bossMoveForTurn;
-                        resolveMoveAttack(boss, fighter, bossMove, false);
-                        
-                        if (gameState.battle.fighterHP > 0) {
-                            setTimeout(() => {
-                                resolveMoveAttack(fighter, boss, moveName, true);
-                                disableMoveButtons(false);
-                                // End-of-turn: burn/poison/leech after both moves
-                                if (gameState.battle.active) setTimeout(() => applyEndOfTurnEffects(), 400);
-                            }, 800);
-                        } else disableMoveButtons(false);
-                    }
+                    const first  = playerMovesFirst ? [fighter, boss, moveName, true] : [boss, fighter, bossMoveForTurn, false];
+                    const second = playerMovesFirst ? [boss, fighter, bossMoveForTurn, false] : [fighter, boss, moveName, true];
+                    // The second attacker only acts if both original combatants are
+                    // still on the field (a fainted Pokémon must not strike back).
+                    const bothStanding = () => gameState.battle.active && gameState.battle.session === session &&
+                        gameState.battle.fighterPokemon === fighter && gameState.battle.bossPokemon === boss &&
+                        gameState.battle.fighterHP > 0 && gameState.battle.bossHP > 0;
+                    const finishTurn = () => { if (gameState.battle.session === session) setBattleBusy(false); };
+
+                    setBattleBusy(true);
+                    resolveMoveAttack(...first);
+                    if (!bothStanding()) { finishTurn(); return; }
+                    setTimeout(() => {
+                        if (!bothStanding()) { finishTurn(); return; }
+                        resolveMoveAttack(...second);
+                        if (!gameState.battle.active || gameState.battle.session !== session) { finishTurn(); return; }
+                        // End-of-turn: burn/poison/leech after both moves
+                        setTimeout(() => {
+                            if (gameState.battle.session === session) applyEndOfTurnEffects();
+                            finishTurn();
+                        }, 400);
+                    }, 800);
                 }
 
                 function applyEndOfTurnEffects() {
@@ -6834,16 +6999,14 @@ const CAMPAIGN_ROADMAP = [
                     if (sc.player === 'burn' && gameState.battle.fighterHP > 0) {
                         const d = Math.max(1, Math.round(gameState.battle.fighterMaxHP / 16));
                         gameState.battle.fighterHP = Math.max(0, gameState.battle.fighterHP - d);
-                        document.getElementById('playerFighterHPBar').style.width = `${(gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100}%`;
-                        document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
+                        syncBattleHP();
                         if (logBox) logBox.innerHTML += `<div class="text-orange-400 mt-1 text-[10px] italic">🔥 ${gameState.battle.fighterPokemon.name} is hurt by its burn! (−${d})</div>`;
                         if (gameState.battle.fighterHP <= 0) { if (logBox) logBox.scrollTop = logBox.scrollHeight; handleBattleDefeat(); return; }
                     }
                     if (sc.boss === 'burn' && gameState.battle.bossHP > 0) {
                         const d = Math.max(1, Math.round(gameState.battle.bossMaxHP / 16));
                         gameState.battle.bossHP = Math.max(0, gameState.battle.bossHP - d);
-                        document.getElementById('bossHPBar').style.width = `${(gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100}%`;
-                        document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossMaxHP}`;
+                        syncBattleHP();
                         if (logBox) logBox.innerHTML += `<div class="text-orange-400 mt-1 text-[10px] italic">🔥 ${gameState.battle.bossPokemon.name} is hurt by its burn! (−${d})</div>`;
                         if (gameState.battle.bossHP <= 0) { if (logBox) logBox.scrollTop = logBox.scrollHeight; handleBattleVictory(); return; }
                     }
@@ -6851,16 +7014,14 @@ const CAMPAIGN_ROADMAP = [
                     if (sc.player === 'poison' && gameState.battle.fighterHP > 0) {
                         const d = Math.max(1, Math.round(gameState.battle.fighterMaxHP / 8));
                         gameState.battle.fighterHP = Math.max(0, gameState.battle.fighterHP - d);
-                        document.getElementById('playerFighterHPBar').style.width = `${(gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100}%`;
-                        document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
+                        syncBattleHP();
                         if (logBox) logBox.innerHTML += `<div class="text-purple-400 mt-1 text-[10px] italic">☠️ ${gameState.battle.fighterPokemon.name} is hurt by poison! (−${d})</div>`;
                         if (gameState.battle.fighterHP <= 0) { if (logBox) logBox.scrollTop = logBox.scrollHeight; handleBattleDefeat(); return; }
                     }
                     if (sc.boss === 'poison' && gameState.battle.bossHP > 0) {
                         const d = Math.max(1, Math.round(gameState.battle.bossMaxHP / 8));
                         gameState.battle.bossHP = Math.max(0, gameState.battle.bossHP - d);
-                        document.getElementById('bossHPBar').style.width = `${(gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100}%`;
-                        document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossMaxHP}`;
+                        syncBattleHP();
                         if (logBox) logBox.innerHTML += `<div class="text-purple-400 mt-1 text-[10px] italic">☠️ ${gameState.battle.bossPokemon.name} is hurt by poison! (−${d})</div>`;
                         if (gameState.battle.bossHP <= 0) { if (logBox) logBox.scrollTop = logBox.scrollHeight; handleBattleVictory(); return; }
                     }
@@ -6869,10 +7030,7 @@ const CAMPAIGN_ROADMAP = [
                         const d = Math.max(1, Math.round(gameState.battle.bossMaxHP / 16));
                         gameState.battle.bossHP = Math.max(0, gameState.battle.bossHP - d);
                         gameState.battle.fighterHP = Math.min(gameState.battle.fighterMaxHP, gameState.battle.fighterHP + d);
-                        document.getElementById('bossHPBar').style.width = `${(gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100}%`;
-                        document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossMaxHP}`;
-                        document.getElementById('playerFighterHPBar').style.width = `${(gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100}%`;
-                        document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
+                        syncBattleHP();
                         if (logBox) logBox.innerHTML += `<div class="text-emerald-400 mt-1 text-[10px] italic">🌱 Leech Seed drained ${d} HP from ${gameState.battle.bossPokemon.name}!</div>`;
                         if (gameState.battle.bossHP <= 0) { if (logBox) logBox.scrollTop = logBox.scrollHeight; handleBattleVictory(); return; }
                     }
@@ -6880,10 +7038,7 @@ const CAMPAIGN_ROADMAP = [
                         const d = Math.max(1, Math.round(gameState.battle.fighterMaxHP / 16));
                         gameState.battle.fighterHP = Math.max(0, gameState.battle.fighterHP - d);
                         gameState.battle.bossHP = Math.min(gameState.battle.bossMaxHP, gameState.battle.bossHP + d);
-                        document.getElementById('playerFighterHPBar').style.width = `${(gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100}%`;
-                        document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
-                        document.getElementById('bossHPBar').style.width = `${(gameState.battle.bossHP / gameState.battle.bossMaxHP) * 100}%`;
-                        document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossMaxHP}`;
+                        syncBattleHP();
                         if (logBox) logBox.innerHTML += `<div class="text-emerald-400 mt-1 text-[10px] italic">🌱 Leech Seed drained ${d} HP from ${gameState.battle.fighterPokemon.name}!</div>`;
                         if (gameState.battle.fighterHP <= 0) { if (logBox) logBox.scrollTop = logBox.scrollHeight; handleBattleDefeat(); return; }
                     }
@@ -6891,97 +7046,107 @@ const CAMPAIGN_ROADMAP = [
                 }
 
                 function disableMoveButtons(state) {
-                    const btns = document.getElementById('battleMovesGrid').getElementsByTagName('button');
-                    for (let btn of btns) {
-                        btn.disabled = state;
-                        if (state) btn.classList.add('opacity-40');
-                        else btn.classList.remove('opacity-40');
-                    }
+                    setBattleBusy(state);
                 }
 
                 // ── Switch Pokémon ─────────────────────────────────────────────────────
+                function getBenchHP(p) {
+                    const full = getBattleMaxHP(p);
+                    const saved = (gameState.battle.teamHp || {})[p.uid];
+                    return [saved !== undefined ? Math.max(0, saved) : full, full];
+                }
+
                 function renderSwitchOptions(activePokemon) {
                     const switchRow = document.getElementById('battleSwitchRow');
                     if (!switchRow) return;
                     const playerTeam = gameState.battle.playerTeam || [];
                     const fainted = gameState.battle.faintedUids || new Set();
-                    const available = playerTeam.filter(p => p && p.uid !== activePokemon.uid && !fainted.has(p.uid));
+                    const available = playerTeam.filter(p => p && p.uid !== activePokemon.uid && !fainted.has(p.uid) && getBenchHP(p)[0] > 0);
                     if (available.length === 0) { switchRow.innerHTML = ''; return; }
                     switchRow.innerHTML =
-                        `<div class="text-[9px] text-slate-500 uppercase tracking-widest font-bold w-full mt-1">${t('battle.switchCost')}</div>` +
-                        available.map(p =>
-                            `<button onclick="window.switchBattlePokemon(${p.uid})" class="flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-900 border border-slate-700 hover:border-cyan-500 text-[10px] text-slate-300 rounded-lg transition">` +
-                            `<img src="${p.sprite}" class="w-4 h-4 object-contain" style="image-rendering:pixelated">` +
-                            `${p.isShiny?'✨ ':''}${p.name} Lv${p.level||1}</button>`
-                        ).join('');
+                        `<div class="battle-switch-label">${t('battle.switchCost')}</div>` +
+                        `<div class="battle-switch-list">` +
+                        available.map(p => {
+                            const [cur, full] = getBenchHP(p);
+                            const pct = Math.round((cur / full) * 100);
+                            return `<button type="button" onclick="window.switchBattlePokemon(${p.uid})" class="switch-btn" title="${p.name} — ${cur}/${full} HP">` +
+                                `<img src="${p.sprite}" alt="" loading="lazy">` +
+                                `<span class="switch-info"><span class="switch-name">${p.isShiny ? '✨ ' : ''}${p.name} · ${t('battle.lvl')} ${p.level || 1}</span>` +
+                                `<span class="switch-hp"><span data-hp="${hpLevel(pct)}" style="width:${pct}%"></span></span></span></button>`;
+                        }).join('') +
+                        `</div>`;
                 }
 
                 window.switchBattlePokemon = function(uid) {
-                    if (!gameState.battle.active) return;
-                    const playerTeam = gameState.battle.playerTeam || [];
+                    const b = gameState.battle;
+                    if (!b.active || b.busy || b.pendingSwap) return;
+                    const playerTeam = b.playerTeam || [];
                     const newFighter = playerTeam.find(p => p && p.uid == uid);
-                    if (!newFighter) return;
+                    if (!newFighter || newFighter === b.fighterPokemon) return;
 
-                    const boss = gameState.battle.bossPokemon;
+                    const boss = b.bossPokemon;
+                    const session = b.session;
                     const logBox = document.getElementById('battleLog');
 
                     // Save current fighter's HP before switching out
-                    if (!gameState.battle.teamHp) gameState.battle.teamHp = {};
-                    const outgoing = gameState.battle.fighterPokemon;
+                    if (!b.teamHp) b.teamHp = {};
+                    const outgoing = b.fighterPokemon;
                     if (outgoing) {
-                        gameState.battle.teamHp[outgoing.uid] = gameState.battle.fighterHP;
+                        b.teamHp[outgoing.uid] = b.fighterHP;
                     }
 
-                    // Update active fighter
-                    const newIndex = playerTeam.findIndex(p => p && p.uid == uid);
-                    const lvlMult = 1 + (((newFighter.level || 1) - 1) * 0.05);
-                    const fullHP = Math.max(1, Math.round((newFighter.hp + (newFighter.hpBonus || 0)) * lvlMult));
-                    // Restore previously saved HP if this Pokémon was benched during this battle
-                    const savedHP = (gameState.battle.teamHp[newFighter.uid] !== undefined)
-                        ? gameState.battle.teamHp[newFighter.uid] : fullHP;
-                    const newHP = Math.max(0, savedHP);
-                    gameState.battle.playerTeamIndex = newIndex;
-                    gameState.battle.fighterPokemon = newFighter;
-                    gameState.battle.fighterHP = newHP;
-                    gameState.battle.fighterMaxHP = fullHP;
-                    gameState.battle.oranUsed = false;
-                    gameState.battle.choiceBandMove = null;
+                    // Update active fighter — restore previously saved HP if this
+                    // Pokémon was benched earlier in this battle
+                    const [newHP, fullHP] = getBenchHP(newFighter);
+                    b.playerTeamIndex = playerTeam.findIndex(p => p && p.uid == uid);
+                    b.fighterPokemon = newFighter;
+                    b.fighterHP = newHP;
+                    b.fighterMaxHP = fullHP;
+                    b.oranUsed = false;
+                    b.choiceBandMove = null;
                     // Incoming Pokémon has clean status & stat stages (including confusion)
-                    gameState.battle.statusConds.player = null;
-                    gameState.battle.statStages.player = { atk:0, def:0, spAtk:0, spDef:0, speed:0, accuracy:0 };
-                    if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player: {}, boss: {} };
-                    gameState.battle.statusMeta.player = { confused: false };
-                    renderStatStagesUI();
+                    b.statusConds.player = null;
+                    b.statStages.player = { atk:0, def:0, spAtk:0, spDef:0, speed:0, accuracy:0 };
+                    if (!b.statusMeta) b.statusMeta = { player: {}, boss: {} };
+                    b.statusMeta.player = { confused: false };
 
-                    const hpPct = fullHP > 0 ? (newHP / fullHP) * 100 : 0;
-                    const hpBarColor = hpPct > 50 ? 'bg-green-500' : hpPct > 20 ? 'bg-yellow-400' : 'bg-red-500';
-                    document.getElementById('playerFighterSprite').src = newFighter.sprite;
-                    document.getElementById('playerFighterName').textContent = (newFighter.isShiny ? '✨ ' : '') + newFighter.name;
-                    document.getElementById('playerFighterLevelBadge').textContent = t('battle.lvl') + ' ' + (newFighter.level || 1);
-                    document.getElementById('playerFighterHPText').textContent = newHP + '/' + fullHP;
-                    document.getElementById('playerFighterHPBar').style.width = hpPct.toFixed(1) + '%';
-                    document.getElementById('playerFighterHPBar').className = hpBarColor + ' h-full transition-all duration-300';
-                    document.getElementById('playerHeldItemBadge').innerHTML = newFighter.heldItem && HOLD_ITEMS_DB[newFighter.heldItem]
-                        ? `<span class="bg-cyan-900/80 border border-cyan-700 text-cyan-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase"><i class="fas fa-briefcase"></i> ${HOLD_ITEMS_DB[newFighter.heldItem].name}</span>`
-                        : '';
-
+                    renderBattleSide('player');
                     logBox.innerHTML += `<div class="text-amber-400 font-bold mt-2">🔄 ${t('battle.switchedTo')} <span class="text-white">${newFighter.name}</span>! ${boss.name} ${t('battle.attacksDuring')}</div>`;
                     logBox.scrollTop = logBox.scrollHeight;
 
                     // Enemy gets a free attack as the cost of switching
-                    disableMoveButtons(true);
-                    const switchRow = document.getElementById('battleSwitchRow');
-                    if (switchRow) switchRow.innerHTML = '';
+                    setBattleBusy(true);
+                    renderBattleMoves(newFighter);
                     setTimeout(() => {
-                        const bossMove = bossMoveForTurn;
-                        resolveMoveAttack(boss, newFighter, bossMove, false);
-                        disableMoveButtons(false);
-                        renderBattleMoves(newFighter);
+                        if (!gameState.battle.active || gameState.battle.session !== session || gameState.battle.bossPokemon !== boss) {
+                            if (gameState.battle.session === session) setBattleBusy(false);
+                            return;
+                        }
+                        resolveMoveAttack(boss, newFighter, pickBossMove(boss), false);
+                        setBattleBusy(false);
+                        // Refresh bench HP bars (unless the newcomer fainted and was replaced)
+                        if (gameState.battle.active && gameState.battle.fighterPokemon === newFighter) renderBattleMoves(newFighter);
                     }, 700);
+                };
+
+                // ── Run from battle ────────────────────────────────────────────────────
+                window.fleeBattle = function() {
+                    const b = gameState.battle;
+                    if (b.busy) return;
+                    initAudio();
+                    if (b.active && !window.confirm(gameState.activeBattleStage ? t('battle.runConfirmStage') : t('battle.runConfirmEndless'))) return;
+                    playConfirmSound();
+                    const wasActive = b.active;
+                    if (!gameState.activeBattleStage) gameState.endlessRunDefeats = 0;
+                    resetBattleScreen();
+                    renderRoadmap();
+                    updateUI();
+                    if (wasActive) showNotification(t('battle.fledTitle'), t('battle.fledMsg'), 'info');
                 };
 
                 // ── Endless mode: spawn the next challenger ────────────────────────────
                 async function spawnNextEndlessEnemy(fighter) {
+                    const session = gameState.battle.session;
                     const fighterLevel = fighter.level || 1;
                     const endlessEnemyLevel = Math.max(1, Math.ceil((fighterLevel - 0.7) + ((gameState.endlessRunDefeats || 0) * 0.1)));
                     const genRange = getRadarGenRange();
@@ -6991,6 +7156,8 @@ const CAMPAIGN_ROADMAP = [
                     if (logBox) { logBox.innerHTML += `<div class="text-cyan-400 font-bold mt-2">⚡ Preparing next challenger… (Round ${gameState.endlessRunDefeats + 1})</div>`; logBox.scrollTop = logBox.scrollHeight; }
                     try {
                         const newEnemy = await fetchPokemonData(randomEnemyId);
+                        // The player ran or left the arena while the next foe was loading
+                        if (gameState.battle.session !== session) return;
                         newEnemy.hp    = newEnemy.hp    + (endlessEnemyLevel * 3);
                         newEnemy.atk   = newEnemy.atk   + (endlessEnemyLevel * 1.2);
                         newEnemy.def   = newEnemy.def   + (endlessEnemyLevel * 1);
@@ -7012,16 +7179,13 @@ const CAMPAIGN_ROADMAP = [
                         if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player: {}, boss: {} };
                         gameState.battle.statusMeta.boss = {};
                         gameState.battle.choiceBandMove = null;
-                        renderStatStagesUI();
 
-                        document.getElementById('bossSprite').src     = newEnemy.sprite;
-                        document.getElementById('bossName').textContent         = newEnemy.name;
-                        document.getElementById('bossLevelBadge').textContent   = `LVL ${newEnemy.level}`;
-                        document.getElementById('bossHPText').textContent       = `${newEnemy.hp}/${newEnemy.hp}`;
-                        document.getElementById('bossHPBar').style.width        = '100%';
+                        renderBattleHeader();
+                        renderBattleSide('boss');
+                        renderBattleSide('player'); // level / moves may have changed after the last win
                         if (logBox) { logBox.innerHTML += `<div class="text-amber-400 font-bold mt-2">⚔️ ${newEnemy.name} appeared! Defeat it to keep going!</div>`; logBox.scrollTop = logBox.scrollHeight; }
-                        disableMoveButtons(false);
-                        renderBattleMoves(fighter);
+                        setBattleBusy(false);
+                        renderBattleMoves(gameState.battle.fighterPokemon || fighter);
                     } catch(e) {
                         resetBattleScreen(); renderRoadmap(); updateUI();
                     }
@@ -7532,36 +7696,40 @@ const CAMPAIGN_ROADMAP = [
                     if (team.length > 1 && currentIndex + 1 < team.length) {
                         const nextIndex = currentIndex + 1;
                         const nextEnemy = team[nextIndex];
-                        const nextLevel = nextEnemy.level || 1;
-                        const nextMaxHP = Math.max(1, Math.round(nextEnemy.hp + (nextLevel * 3)));
+                        // Stat scaling (incl. +3 HP/level) was already applied when the team was built
+                        const nextMaxHP = Math.max(1, Math.round(nextEnemy.hp));
                         gameState.battle.enemyTeamIndex = nextIndex;
                         gameState.battle.bossPokemon = nextEnemy;
                         gameState.battle.bossHP = nextMaxHP;
                         gameState.battle.bossMaxHP = nextMaxHP;
                         gameState.battle.bossOranUsed = false;
                         // Player's Pokémon HP is NOT restored when the trainer sends out the next Pokémon
-                        // New Pokémon sent out — clear boss status & stat stages, refresh display
+                        // New Pokémon sent out — clear boss status & stat stages
                         gameState.battle.statusConds.boss = null;
                         gameState.battle.statStages.boss = { atk:0, def:0, spAtk:0, spDef:0, speed:0, accuracy:0 };
                         if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player: {}, boss: {} };
                         gameState.battle.statusMeta.boss = {};
-                        document.getElementById('bossSprite').src = nextEnemy.sprite;
-                        document.getElementById('bossName').textContent = nextEnemy.name;
-                        document.getElementById('bossLevelBadge').textContent = `${t('battle.lvl')} ${nextEnemy.level}`;
-                        document.getElementById('bossHPText').textContent = `${gameState.battle.bossHP}/${gameState.battle.bossHP}`;
-                        document.getElementById('bossHPBar').style.width = "100%";
-                        document.getElementById('playerFighterHPText').textContent = `${gameState.battle.fighterHP}/${gameState.battle.fighterMaxHP}`;
-                        const _pHpPct2 = gameState.battle.fighterMaxHP > 0 ? Math.round((gameState.battle.fighterHP / gameState.battle.fighterMaxHP) * 100) : 0;
-                        document.getElementById('playerFighterHPBar').style.width = `${_pHpPct2}%`;
-                        document.getElementById('playerFighterHPBar').className = `${_pHpPct2 > 50 ? 'bg-green-500' : _pHpPct2 > 20 ? 'bg-yellow-400' : 'bg-red-500'} h-full transition-all duration-300`;
-                        renderStatStagesUI();
-                        document.getElementById('battleLog').innerHTML += `<div class="text-amber-400 font-bold mt-2">🎯 ${stage ? stage.trainer : 'Trainer'} ${t('battle.sentOut')} ${nextEnemy.name}!</div>`;
-                        document.getElementById('battleLog').scrollTop = document.getElementById('battleLog').scrollHeight;
-                        renderBattleMoves(fighter);
+                        const logBox = document.getElementById('battleLog');
+                        logBox.innerHTML += `<div class="text-emerald-400 font-bold mt-2">✔ ${team[currentIndex].name} fainted!</div>`;
+                        logBox.scrollTop = logBox.scrollHeight;
+                        // Let the faint animation play before the next Pokémon appears
+                        const session = gameState.battle.session;
+                        gameState.battle.pendingSwap = true;
+                        setBattleBusy(gameState.battle.busy);
+                        setTimeout(() => {
+                            if (gameState.battle.session !== session) return;
+                            gameState.battle.pendingSwap = false;
+                            renderBattleSide('boss');
+                            logBox.innerHTML += `<div class="text-amber-400 font-bold mt-1">🎯 ${stage ? stage.trainer : 'Trainer'} ${t('battle.sentOut')} ${nextEnemy.name}!</div>`;
+                            logBox.scrollTop = logBox.scrollHeight;
+                            renderBattleMoves(gameState.battle.fighterPokemon || fighter);
+                        }, 900);
                         return;
                     }
 
                     gameState.battle.active = false;
+                    setBattleBusy(false);
+                    flashEffectiveness(t('battle.victory'), 'super');
                     playSuccessCapture();
 
                     let rewardCoins = 40;
@@ -7678,11 +7846,15 @@ const CAMPAIGN_ROADMAP = [
                     logBox.scrollTop = logBox.scrollHeight;
 
                     saveProgress();
+                    const session = gameState.battle.session;
                     if (!stage) {
                         // Endless mode: spawn the next challenger instead of returning to the selector
-                        setTimeout(() => spawnNextEndlessEnemy(fighter), 3500);
+                        setTimeout(() => { if (gameState.battle.session === session) spawnNextEndlessEnemy(fighter); }, 3500);
                     } else {
-                        setTimeout(() => { resetBattleScreen(); renderRoadmap(); updateUI(); updateScanningRegionUI(); }, 3500);
+                        setTimeout(() => {
+                            if (gameState.battle.session !== session) return; // player already left
+                            resetBattleScreen(); renderRoadmap(); updateUI(); updateScanningRegionUI();
+                        }, 3500);
                     }
                 }
 
@@ -7701,22 +7873,24 @@ const CAMPAIGN_ROADMAP = [
                         gameState.battle.faintedUids.add(gameState.battle.fighterPokemon.uid);
                     }
 
-                    // Check for next alive team member — search the ENTIRE team, not just forward
+                    // Check for next alive team member — search the ENTIRE team, not just forward.
+                    // Benched Pokémon keep the HP they had when they were switched out.
                     const faintedSet = gameState.battle.faintedUids || new Set();
                     let nextIndex = -1;
                     for (let i = 0; i < playerTeam.length; i++) {
-                        if (playerTeam[i] && !faintedSet.has(playerTeam[i].uid)) { nextIndex = i; break; }
+                        const p = playerTeam[i];
+                        if (p && !faintedSet.has(p.uid) && p !== gameState.battle.fighterPokemon && getBenchHP(p)[0] > 0) { nextIndex = i; break; }
                     }
+                    const session = gameState.battle.session;
 
                     if (nextIndex !== -1) {
                         const nextFighter = playerTeam[nextIndex];
-                        const lvlMult = 1 + (((nextFighter.level || 1) - 1) * 0.05);
-                        const nextHP = Math.max(1, Math.round((nextFighter.hp + (nextFighter.hpBonus || 0)) * lvlMult));
+                        const [nextHP, nextMaxHP] = getBenchHP(nextFighter);
 
                         gameState.battle.playerTeamIndex = nextIndex;
                         gameState.battle.fighterPokemon = nextFighter;
                         gameState.battle.fighterHP = nextHP;
-                        gameState.battle.fighterMaxHP = nextHP;
+                        gameState.battle.fighterMaxHP = nextMaxHP;
                         gameState.battle.oranUsed = false;
                         gameState.battle.choiceBandMove = null;
                         // Incoming Pokémon arrives with clean status & stat stages
@@ -7724,30 +7898,26 @@ const CAMPAIGN_ROADMAP = [
                         gameState.battle.statStages.player = { atk:0, def:0, spAtk:0, spDef:0, speed:0, accuracy:0 };
                         if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player: {}, boss: {} };
                         gameState.battle.statusMeta.player = {};
-
-                        // Update player side UI
-                        document.getElementById('playerFighterSprite').src = nextFighter.sprite;
-                        document.getElementById('playerFighterName').textContent = (nextFighter.isShiny ? '✨ ' : '') + nextFighter.name;
-                        document.getElementById('playerFighterLevelBadge').textContent = 'LVL ' + (nextFighter.level || 1);
-                        document.getElementById('playerFighterHPText').textContent = nextHP + '/' + nextHP;
-                        document.getElementById('playerFighterHPBar').style.width = '100%';
-                        document.getElementById('playerFighterHPBar').className = 'bg-green-500 h-full transition-all duration-300';
-                        document.getElementById('playerHeldItemBadge').innerHTML = nextFighter.heldItem
-                            ? `<span class="bg-cyan-900/80 border border-cyan-700 text-cyan-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase"><i class="fas fa-briefcase"></i> ${HOLD_ITEMS_DB[nextFighter.heldItem].name}</span>`
-                            : '';
-
-                        logBox.innerHTML += `<div class="text-cyan-400 font-bold mt-1 animate-pulse">⚡ Go, <span class="text-white font-black">${nextFighter.name}</span>! (${nextIndex + 1}/${playerTeam.length})</div>`;
-                        logBox.scrollTop = logBox.scrollHeight;
-
-                        renderStatStagesUI();
-                        renderBattleMoves(nextFighter);
                         gameState.battle.active = true;
-                        disableMoveButtons(false);
+
+                        // Let the faint animation play, then send out the next partner
+                        gameState.battle.pendingSwap = true;
+                        setBattleBusy(gameState.battle.busy);
+                        setTimeout(() => {
+                            if (gameState.battle.session !== session) return;
+                            gameState.battle.pendingSwap = false;
+                            renderBattleSide('player');
+                            logBox.innerHTML += `<div class="text-cyan-400 font-bold mt-1">⚡ Go, <span class="text-white font-black">${nextFighter.name}</span>! (${nextIndex + 1}/${playerTeam.length})</div>`;
+                            logBox.scrollTop = logBox.scrollHeight;
+                            renderBattleMoves(nextFighter);
+                        }, 900);
                         return;
                     }
 
                     // All team members fainted — true defeat
                     gameState.battle.active = false;
+                    setBattleBusy(false);
+                    renderBattlePips();
                     if (!gameState.activeBattleStage) {
                         gameState.endlessRunDefeats = 0;
                     }
@@ -7755,22 +7925,26 @@ const CAMPAIGN_ROADMAP = [
                     showNotification("ALL POKÉMON FAINTED", "Your entire team was defeated! Train harder or equip better items!", "error");
                     logBox.innerHTML += `<div class="text-red-500 font-black mt-2">💀 All Pokémon fainted. Returning to base...</div>`;
                     logBox.scrollTop = logBox.scrollHeight;
-                    setTimeout(() => resetBattleScreen(), 3000);
+                    setTimeout(() => { if (gameState.battle.session === session) resetBattleScreen(); }, 3000);
                 }
 
                 function resetBattleScreen() {
                     document.getElementById('battleSelector').classList.remove('hidden');
                     document.getElementById('fighterSelector').classList.add('hidden');
                     document.getElementById('battleArenaActive').classList.add('hidden');
+                    document.getElementById('battleLoading').classList.add('hidden');
+                    // Invalidate any pending turn / next-round timers from the old battle
+                    gameState.battle.session = (gameState.battle.session || 0) + 1;
                     gameState.battle.active = false;
+                    gameState.battle.busy = false;
+                    gameState.battle.pendingSwap = false;
                     // Clear per-battle stat stages and status conditions
                     gameState.battle.statStages = { player:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0}, boss:{atk:0,def:0,spAtk:0,spDef:0,speed:0,accuracy:0} };
                     gameState.battle.statusConds = { player: null, boss: null };
                     gameState.battle.statusMeta = { player: {}, boss: {} };
                     gameState.battle.choiceBandMove = null;
                     gameState.battle.faintedUids = new Set();
-                    const panel = document.getElementById('statStagesPanel');
-                    if (panel) panel.classList.add('hidden');
+                    flashEffectiveness('');
                 }
 
                 window.cancelBattlePrep = function() {
