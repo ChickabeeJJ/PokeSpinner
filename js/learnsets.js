@@ -148,11 +148,8 @@ async function syncOwnedMovesets() {
 
 async function fetchPokemonData(id, level = 1) {
     try {
-        // Fetch base data + species names in parallel
-        const [response] = await Promise.all([
-            fetch(`https://pokeapi.co/api/v2/pokemon/${id}`),
-            _ensurePokemonNames(id),
-        ]);
+        // Names stay English in game data; the page translator (translate.js) localises them
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
         const data = await response.json();
         if (!LEARNSETS[data.id]) { LEARNSETS[data.id] = parseLearnset(data); persistDataCaches(); }
         const startMoves = getMovesForLevel(data.id, level);

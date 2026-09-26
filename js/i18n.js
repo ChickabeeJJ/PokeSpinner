@@ -1294,7 +1294,10 @@ const _pkNames = {};
 let _currentLang = 'en';
 
 function t(key) {
-    const dict = TRANSLATIONS[_currentLang] || TRANSLATIONS.en;
+    // With a language pack active (translate.js), code builds English sentences and
+    // the page translator turns each whole sentence into the chosen language.
+    const packOn = typeof I18N !== 'undefined' && I18N.pack;
+    const dict = packOn ? TRANSLATIONS.en : (TRANSLATIONS[_currentLang] || TRANSLATIONS.en);
     return dict[key] !== undefined ? dict[key] : (TRANSLATIONS.en[key] || key);
 }
 
@@ -1318,13 +1321,10 @@ async function _ensurePokemonNames(id) {
     } catch(_) {}
 }
 
-// Synchronous display name (use cached value; falls back to pokemon.name / _enName)
+// Display name. Game data always keeps the English name; when another language
+// is on, translate.js swaps it for the official localized name as it is shown.
 function getPokemonName(pokemon) {
     if (!pokemon) return '';
-    const lang = _currentLang;
-    if (lang === 'en') return pokemon.name || pokemon._enName || '';
-    const cached = _pkNames[pokemon.id];
-    if (cached && cached[lang]) return cached[lang];
     return pokemon.name || pokemon._enName || '';
 }
 
@@ -1366,69 +1366,33 @@ function _syncDynamicI18n() {
     }
 }
 
-// Switch language: update state, cache name, re-render open views
+// Switch language. Turning a language on translates the page live (translate.js);
+// switching between two languages, or back to English, reloads so every screen
+// is rebuilt cleanly. Progress is saved first.
 window.setLanguage = async function(lang) {
-    if (lang !== 'en') {
-        showNotification('🌐 Language', 'Feature temporarily disabled', 'info');
+    if (!TRANSLATIONS[lang]) return;
+    const prev = (typeof I18N !== 'undefined' && I18N.lang) || 'en';
+    if (lang === prev) return;
+    if (gameState.battle && (gameState.battle.active || gameState.battle.starting)) {
+        showNotification('🌐 Language', 'Finish your battle first, then switch languages.', 'info');
         return;
     }
-    if (!TRANSLATIONS[lang]) return;
     _currentLang = lang;
     gameState.language = lang;
-    localStorage.setItem('pokemon_radar_lang', lang);
+    try { localStorage.setItem('pokemon_radar_lang', lang); } catch (e) {}
     saveProgress();
-
-    // Pre-fetch all known Pokémon names for the new language
-    const allIds = new Set();
-    [...(gameState.pcBox || []), ...(gameState.pokedex || [])].forEach(p => allIds.add(p.id));
-    if (gameState.currentEncounter) allIds.add(gameState.currentEncounter.id);
-    await Promise.all(Array.from(allIds).map(id => _ensurePokemonNames(id)));
-
+    if (prev !== 'en' || lang === 'en') { location.reload(); return; }
     applyTranslations();
-
-    // Re-render all live dynamic views so Pokémon names refresh
-    const currentView = document.querySelector('.view-section.active')?.id || '';
-    renderPCBox();
-    renderTeamView();
-    renderPokedex();
-    // Force gym puzzle modal strings if open
-    const puzzleOverlay = document.getElementById('gymPuzzleOverlay');
-    if (puzzleOverlay && puzzleOverlay.style.display !== 'none') {
-        const hintBtn = document.querySelector('#gymPuzzleOverlay button[onclick="showHint()"]');
-        if (hintBtn) hintBtn.textContent = t('battle.hint');
-        const backBtn = document.querySelector('#gymPuzzleOverlay button[onclick="closeGymPuzzle()"]');
-        if (backBtn) backBtn.textContent = t('battle.goBack');
+    const ok = await activateLanguage(lang);
+    if (!ok) {
+        showNotification('🌐 Language', 'Could not load that language. Check your connection and try again.', 'error');
+        _currentLang = 'en'; gameState.language = 'en';
+        try { localStorage.setItem('pokemon_radar_lang', 'en'); } catch (e) {}
+        saveProgress();
+        return;
     }
-    // Re-render ALL views so no Pokémon name or label is stale after language change
-    renderRoadmap();
     updateUI();
-    // Refresh current encounter display if one is active
-    if (gameState.currentEncounter) {
-        const _eN = getPokemonName(gameState.currentEncounter);
-        const _eTxt = (gameState.currentEncounter.isShiny ? '✨ ' : '') + _eN;
-        ['wildPokemonName','wildPokemonNameBig'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.textContent = _eTxt;
-        });
-    }
-    // Refresh battle fighter / boss names if a battle is active
-    if (gameState.battle && gameState.battle.active) {
-        const _bf = gameState.battle.fighterPokemon;
-        const _bb = gameState.battle.bossPokemon;
-        if (_bf) {
-            const _pfnEl = document.getElementById('playerFighterName');
-            if (_pfnEl) _pfnEl.textContent = (_bf.isShiny ? '✨ ' : '') + getPokemonName(_bf);
-        }
-        if (_bb) {
-            const _bnEl = document.getElementById('bossName');
-            if (_bnEl) _bnEl.textContent = getPokemonName(_bb);
-        }
-        if (_bf) renderBattleMoves(_bf);
-        renderBattleHeader();
-    }
-    showNotification(
-        '🌐 Language Updated',
-        `Switched to ${document.querySelector('.lang-btn[data-lang="'+lang+'"]')?.textContent?.trim() || lang}`,
-        'info'
-    );
+    ['renderPCBox', 'renderTeamView', 'renderPokedex', 'renderRoadmap', 'renderMart'].forEach(fn => { try { if (typeof window[fn] === 'function') window[fn](); } catch (e) {} });
+    const label = document.querySelector('.lang-btn[data-lang="' + lang + '"]')?.textContent?.trim() || lang;
+    showNotification('🌐 ' + t('settings.language'), label, 'success');
 };

@@ -8,7 +8,7 @@
 // - Fonts / icon font / libraries: stale-while-revalidate.
 // Ads and Firebase traffic are never cached.
 
-const VERSION = 'v2';
+const VERSION = 'v3';
 const SHELL = `ps-shell-${VERSION}`;
 const ART = 'ps-art';
 const API = 'ps-api';
@@ -20,7 +20,7 @@ const SHELL_FILES = [
   './', 'index.html', 'manifest.webmanifest', 'css/tailwind.css', 'css/game.css', 'css/features.css', 'css/world.css',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/favicon-32.png',
   'js/data-pokemon.js', 'js/data-campaign.js', 'js/state.js', 'js/profile.js', 'js/audio.js',
-  'js/save.js', 'js/i18n.js', 'js/settings.js', 'js/ui.js', 'js/spinner.js', 'js/sprites.js',
+  'js/save.js', 'js/i18n.js', 'js/translate.js', 'js/settings.js', 'js/ui.js', 'js/spinner.js', 'js/sprites.js',
   'js/learnsets.js', 'js/adventure.js', 'js/battle.js', 'js/progression.js', 'js/collection.js',
   'js/mart.js', 'js/extras.js', 'js/data-types.js', 'js/features.js', 'js/world.js', 'js/main.js'
 ];

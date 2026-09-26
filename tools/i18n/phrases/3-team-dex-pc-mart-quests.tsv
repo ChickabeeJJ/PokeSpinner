@@ -1,0 +1,302 @@
+Your party of up to 6. The first Pokémon leads every battle — use ◀ ▶ to reorder.	最大6匹の 手持ち。先頭の ポケモンが 最初に 戦う。◀ ▶ で 並べ替え。	최대 6마리. 맨 앞의 포켓몬이 먼저 싸워요. ◀ ▶ 로 순서 변경.	Jusqu'à 6 Pokémon. Le premier mène chaque combat : ◀ ▶ pour réordonner.	Bis zu 6 Pokémon. Das erste kämpft zuerst – mit ◀ ▶ umsortieren.	Hasta 6 Pokémon. El primero abre cada combate: usa ◀ ▶ para ordenar.	Fino a 6 Pokémon. Il primo apre ogni lotta: usa ◀ ▶ per riordinare.	最多6只。第一只会率先出战，用◀ ▶调整顺序。	Até 6 Pokémon. O primeiro abre cada batalha — use ◀ ▶ para reordenar.
+{a}/6 selected	{a}/6 選択中	{a}/6 선택됨	{a}/6 choisis	{a}/6 gewählt	{a}/6 elegidos	{a}/6 scelti	已选{a}/6	{a}/6 escolhidos
+Auto-build	おまかせ編成	자동 편성	Auto-équipe	Auto-Team	Equipo automático	Squadra automatica	自动组队	Montar automático
+Pick your strongest, most varied Pokémon	強くて バランスの いい ポケモンを 自動で えらぶ	강하고 다양한 포켓몬을 자동으로 골라요	Choisit tes Pokémon les plus forts et variés	Wählt deine stärksten, vielseitigsten Pokémon	Elige tus Pokémon más fuertes y variados	Sceglie i tuoi Pokémon più forti e vari	自动挑选最强、最多样的宝可梦	Escolhe seus Pokémon mais fortes e variados
+Lead	先頭	선두	En tête	Vorne	Primero	In testa	首发	Líder
+No held item	もちもの なし	지닌 물건 없음	Aucun objet tenu	Kein Item	Sin objeto	Nessuno strumento	未携带道具	Sem item
+Held item	もちもの	지닌 물건	Objet tenu	Getragenes Item	Objeto equipado	Strumento	携带物品	Item segurado
+Add Pokémon	ポケモンを 追加	포켓몬 추가	Ajouter un Pokémon	Pokémon hinzufügen	Añadir Pokémon	Aggiungi Pokémon	添加宝可梦	Adicionar Pokémon
+Slot {n}	スロット {n}	슬롯 {n}	Emplacement {n}	Platz {n}	Hueco {n}	Slot {n}	位置{n}	Espaço {n}
+Move earlier	前へ 移動	앞으로 이동	Avancer	Nach vorne	Mover antes	Sposta prima	前移	Mover para frente
+Move later	後ろへ 移動	뒤로 이동	Reculer	Nach hinten	Mover después	Sposta dopo	后移	Mover para trás
+Remove from team	手持ちから 外す	팀에서 제외	Retirer de l'équipe	Aus dem Team nehmen	Quitar del equipo	Togli dalla squadra	移出队伍	Remover da equipe
+Swap this Pokémon	入れ替える	교체하기	Échanger ce Pokémon	Pokémon tauschen	Cambiar este Pokémon	Cambia questo Pokémon	更换这只宝可梦	Trocar este Pokémon
+Type Coverage	タイプ相性	타입 상성	Couverture de types	Typenabdeckung	Cobertura de tipos	Copertura tipi	属性覆盖	Cobertura de tipos
+Your moves hit {x} types super-effectively:	技で {x}タイプに ばつぐんを 取れる:	기술로 {x}개 타입에 효과가 굉장해요:	Tes capacités sont super efficaces contre {x} types :	Deine Attacken treffen {x} Typen sehr effektiv:	Tus movimientos son muy eficaces contra {x} tipos:	Le tue mosse sono superefficaci contro {x} tipi:	你的招式对{x}种属性效果绝佳:	Seus golpes são super eficazes contra {x} tipos:
+No shared weaknesses — nicely balanced!	共通の 弱点なし — バランス ばっちり!	공통 약점 없음 — 균형이 좋아요!	Aucune faiblesse commune — bien équilibré !	Keine gemeinsamen Schwächen – gut ausbalanciert!	Sin debilidades compartidas: ¡bien equilibrado!	Nessuna debolezza comune: ben bilanciata!	没有共同弱点 — 非常均衡!	Sem fraquezas em comum — bem equilibrado!
+Choose Pokémon #{n}	{n}匹目の ポケモンを えらぶ	{n}번째 포켓몬 선택	Choisis le Pokémon n°{n}	Wähle Pokémon Nr. {n}	Elige el Pokémon n.º {n}	Scegli il Pokémon n. {n}	选择第{n}只宝可梦	Escolha o Pokémon nº {n}
+Search your Pokémon…	ポケモンを 検索…	포켓몬 검색…	Chercher un Pokémon…	Pokémon suchen…	Buscar Pokémon…	Cerca Pokémon…	搜索宝可梦…	Buscar Pokémon…
+In team	手持ち	팀에 있음	Dans l'équipe	Im Team	En el equipo	In squadra	在队伍中	Na equipe
+Lv {n} · in team	Lv {n} · 手持ち	Lv {n} · 팀	N. {n} · dans l'équipe	Lv {n} · im Team	Nv {n} · en el equipo	Liv {n} · in squadra	Lv {n} · 在队伍中	Nv {n} · na equipe
+{p} Lv {n}	{p} Lv {n}	{p} Lv {n}	{p} N. {n}	{p} Lv {n}	{p} Nv {n}	{p} Liv {n}	{p} Lv {n}	{p} Nv {n}
+{p} — {a}/{b} HP	{p} — HP {a}/{b}	{p} — HP {a}/{b}	{p} — {a}/{b} PV	{p} — {a}/{b} KP	{p} — {a}/{b} PS	{p} — {a}/{b} PS	{p} — HP {a}/{b}	{p} — {a}/{b} PS
+Added to team!	手持ちに 加えた!	팀에 추가했어요!	Ajouté à l'équipe !	Zum Team hinzugefügt!	¡Añadido al equipo!	Aggiunto alla squadra!	已加入队伍!	Adicionado à equipe!
+{p} joined slot {n}.	{p}が スロット{n}に 入った。	{p}이(가) 슬롯 {n}에 들어갔어요.	{p} rejoint l'emplacement {n}.	{p} ist jetzt auf Platz {n}.	{p} ocupa el hueco {n}.	{p} entra nello slot {n}.	{p}加入了位置{n}。	{p} entrou no espaço {n}.
+Team built!	編成完了!	편성 완료!	Équipe prête !	Team steht!	¡Equipo listo!	Squadra pronta!	队伍组建完成!	Equipe montada!
+{n} Pokémon ready — {p} leads.	{n}匹 準備OK — 先頭は {p}。	{n}마리 준비 완료 — 선두는 {p}.	{n} Pokémon prêts — {p} en tête.	{n} Pokémon bereit – {p} führt an.	{n} Pokémon listos: {p} va primero.	{n} Pokémon pronti: {p} in testa.	{n}只宝可梦就绪 — {p}首发。	{n} Pokémon prontos — {p} lidera.
+Team is full	手持ちが いっぱい	팀이 가득 찼어요	Équipe complète	Team ist voll	Equipo completo	Squadra al completo	队伍已满	Equipe cheia
+Remove a Pokémon on the Team screen first.	先に 手持ち画面で ポケモンを 外してね。	먼저 팀 화면에서 포켓몬을 빼주세요.	Retire d'abord un Pokémon dans l'écran Équipe.	Entferne zuerst ein Pokémon im Team-Bildschirm.	Quita primero un Pokémon en la pantalla de Equipo.	Togli prima un Pokémon dalla schermata Squadra.	请先在队伍界面移除一只宝可梦。	Remova um Pokémon na tela Equipe primeiro.
+Add a Pokémon first!	先に ポケモンを 追加してね!	먼저 포켓몬을 추가하세요!	Ajoute d'abord un Pokémon !	Füge zuerst ein Pokémon hinzu!	¡Añade primero un Pokémon!	Aggiungi prima un Pokémon!	请先添加一只宝可梦!	Adicione um Pokémon primeiro!
+Choose your Lead	先頭を えらぼう	선두를 고르세요	Choisis ton meneur	Wähle dein Start-Pokémon	Elige a tu primero	Scegli chi apre	选择首发	Escolha seu líder
+{x}: best {n}×	{x}: 最大 {n}倍	{x}: 최대 {n}배	{x} : max ×{n}	{x}: max. {n}×	{x}: máx. ×{n}	{x}: max ×{n}	{x}：最高{n}倍	{x}: máx. {n}×
+Catch every species! Fill each region to claim milestone rewards.	全種類 捕まえよう! 地方ごとに 達成ごほうびが もらえる。	모든 종류를 잡아보세요! 지방마다 달성 보상이 있어요.	Attrape-les tous ! Complète chaque région pour des récompenses.	Fang alle Arten! Vervollständige Regionen für Belohnungen.	¡Atrapa todas las especies! Completa cada región para ganar premios.	Catturali tutti! Completa ogni regione per ottenere premi.	收集所有种类! 完成各地区可领取里程碑奖励。	Capture todas as espécies! Complete cada região para ganhar prêmios.
+Name or #…	名前 または 番号…	이름 또는 번호…	Nom ou n°…	Name oder Nr.…	Nombre o n.º…	Nome o n.…	名称或编号…	Nome ou nº…
+All	すべて	전체	Tous	Alle	Todos	Tutti	全部	Todos
+Caught	捕まえた	잡음	Capturés	Gefangen	Capturados	Catturati	已捕捉	Capturados
+Seen, not caught	見ただけ	본 적만 있음	Vus, non capturés	Gesehen, nicht gefangen	Vistos, sin capturar	Visti, non catturati	见过但未捕捉	Vistos, não capturados
+Missing	未発見	미발견	Manquants	Fehlend	Faltan	Mancanti	未发现	Faltando
+Shiny	色違い	색이 다른	Chromatiques	Schillernd	Variocolor	Cromatici	异色	Brilhantes
+{r} Pokédex	{r}図鑑	{r} 도감	Pokédex de {r}	{r}-Pokédex	Pokédex de {r}	Pokédex di {r}	{r}图鉴	Pokédex de {r}
+{a} caught · {b} seen · {c} total	捕まえた {a} · 見た {b} · 全{c}	잡음 {a} · 봄 {b} · 전체 {c}	{a} capturés · {b} vus · {c} au total	{a} gefangen · {b} gesehen · {c} gesamt	{a} capturados · {b} vistos · {c} en total	{a} catturati · {b} visti · {c} in totale	已捕捉{a} · 见过{b} · 共{c}	{a} capturados · {b} vistos · {c} no total
+National: {a}/{b} caught	全国: {a}/{b} 捕獲	전국: {a}/{b} 잡음	National : {a}/{b} capturés	National: {a}/{b} gefangen	Nacional: {a}/{b} capturados	Nazionale: {a}/{b} catturati	全国：已捕捉{a}/{b}	Nacional: {a}/{b} capturados
+Tap a Pokémon to see its entry.	ポケモンを タップすると 図鑑が 見られる。	포켓몬을 탭하면 도감을 볼 수 있어요.	Touche un Pokémon pour voir sa fiche.	Tippe auf ein Pokémon für seinen Eintrag.	Toca un Pokémon para ver su entrada.	Tocca un Pokémon per vedere la sua voce.	点击宝可梦查看图鉴。	Toque em um Pokémon para ver o registro.
+Not on the wheel	ルーレットに 出ない	룰렛에 나오지 않음	Absent de la roue	Nicht auf dem Rad	No sale en la ruleta	Non è sulla ruota	不在转盘上	Não aparece na roleta
+Seen	見た	봄	Vu	Gesehen	Visto	Visto	见过	Visto
+Unknown	不明	불명	Inconnu	Unbekannt	Desconocido	Sconosciuto	未知	Desconhecido
+Total	合計	합계	Total	Gesamt	Total	Totale	总计	Total
+Owned	所持	보유	Possédés	Besitz	Tienes	Posseduti	拥有	Possui
+Owned {n}	所持 {n}	보유 {n}	Possédés : {n}	Besitz: {n}	Tienes {n}	Posseduti {n}	拥有{n}	Possui {n}
+Spinner rarity	ルーレット レア度	룰렛 희귀도	Rareté sur la roue	Rad-Seltenheit	Rareza en la ruleta	Rarità sulla ruota	转盘稀有度	Raridade na roleta
+Page {a} of {b}	{a} / {b} ページ	{a} / {b} 페이지	Page {a} sur {b}	Seite {a} von {b}	Página {a} de {b}	Pagina {a} di {b}	第{a}/{b}页	Página {a} de {b}
+{r} {n}% reward!	{r} {n}% 達成ごほうび!	{r} {n}% 달성 보상!	Récompense {r} {n} % !	{r} {n}%-Belohnung!	¡Premio {r} {n} %!	Premio {r} {n}%!	{r}{n}%奖励!	Prêmio {r} {n}%!
+Legendary (1/200 special encounter)	伝説(1/200の 特別な 出会い)	전설 (1/200 특별 만남)	Légendaire (rencontre spéciale 1/200)	Legendär (Sonderbegegnung 1/200)	Legendario (encuentro especial 1/200)	Leggendario (incontro speciale 1/200)	传说(1/200特殊遭遇)	Lendário (encontro especial 1/200)
+No Pokémon match.	該当する ポケモンは いない。	해당하는 포켓몬이 없어요.	Aucun Pokémon ne correspond.	Kein Pokémon gefunden.	Ningún Pokémon coincide.	Nessun Pokémon corrisponde.	没有符合的宝可梦。	Nenhum Pokémon encontrado.
+Every Pokémon you catch is stored here. Tap one to see its summary.	捕まえた ポケモンは ここに 預けられる。タップで ようすを 見よう。	잡은 포켓몬은 여기에 보관돼요. 탭하면 정보를 볼 수 있어요.	Tous tes Pokémon capturés sont ici. Touche-en un pour son résumé.	Alle gefangenen Pokémon landen hier. Tippe für die Übersicht.	Aquí se guardan tus Pokémon. Toca uno para ver sus datos.	Qui trovi tutti i Pokémon catturati. Toccane uno per i dettagli.	捕捉的宝可梦都存放在这里。点击查看详情。	Todos os Pokémon capturados ficam aqui. Toque para ver o resumo.
+All types	すべての タイプ	모든 타입	Tous les types	Alle Typen	Todos los tipos	Tutti i tipi	所有属性	Todos os tipos
+Newest	新しい順	최신순	Plus récents	Neueste	Más recientes	Più recenti	最新	Mais recentes
+Oldest	古い順	오래된 순	Plus anciens	Älteste	Más antiguos	Meno recenti	最早	Mais antigos
+Level ↓	レベル ↓	레벨 ↓	Niveau ↓	Level ↓	Nivel ↓	Livello ↓	等级↓	Nível ↓
+Level ↑	レベル ↑	레벨 ↑	Niveau ↑	Level ↑	Nivel ↑	Livello ↑	等级↑	Nível ↑
+Dex #	図鑑番号	도감 번호	N° Pokédex	Pokédex-Nr.	N.º Pokédex	N. Pokédex	图鉴编号	Nº Pokédex
+Name A–Z	名前順	이름순	Nom A–Z	Name A–Z	Nombre A–Z	Nome A–Z	名称排序	Nome A–Z
+Shiny first	色違いを 先に	색이 다른 포켓몬 먼저	Chromatiques d'abord	Schillernde zuerst	Variocolor primero	Prima i cromatici	异色优先	Brilhantes primeiro
+Favourites first	お気に入りを 先に	즐겨찾기 먼저	Favoris d'abord	Favoriten zuerst	Favoritos primero	Prima i preferiti	收藏优先	Favoritos primeiro
+BOX {n}	ボックス {n}	박스 {n}	BOÎTE {n}	BOX {n}	CAJA {n}	BOX {n}	箱子{n}	CAIXA {n}
+{n} Pokémon · Box {a} of {b}	{n}匹 · ボックス {a}/{b}	{n}마리 · 박스 {a}/{b}	{n} Pokémon · Boîte {a} sur {b}	{n} Pokémon · Box {a} von {b}	{n} Pokémon · Caja {a} de {b}	{n} Pokémon · Box {a} di {b}	{n}只 · 箱子{a}/{b}	{n} Pokémon · Caixa {a} de {b}
+Favourite (protects from release)	お気に入り(逃がせなく なる)	즐겨찾기 (놓아주기 방지)	Favori (protège du relâchement)	Favorit (Schutz vor Freilassen)	Favorito (evita liberarlo)	Preferito (non può essere liberato)	收藏(防止放生)	Favorito (impede a soltura)
+Favourite Pokémon	お気に入りの ポケモン	즐겨찾는 포켓몬	Pokémon favori	Lieblings-Pokémon	Pokémon favorito	Pokémon preferito	收藏的宝可梦	Pokémon favorito
+Unfavourite it before releasing.	逃がす前に お気に入りを 外してね。	놓아주기 전에 즐겨찾기를 해제하세요.	Retire-le des favoris avant de le relâcher.	Entferne den Favoriten, bevor du es freilässt.	Quítalo de favoritos antes de liberarlo.	Togli il preferito prima di liberarlo.	放生前请先取消收藏。	Desfavorite antes de soltar.
+Unfavourite	お気に入り解除	즐겨찾기 해제	Retirer des favoris	Kein Favorit mehr	Quitar favorito	Togli preferito	取消收藏	Desfavoritar
+Moves	技	기술	Capacités	Attacken	Movimientos	Mosse	招式	Golpes
+Release	逃がす	놓아주기	Relâcher	Freilassen	Liberar	Libera	放生	Soltar
+Add to team	手持ちに 加える	팀에 추가	Ajouter à l'équipe	Ins Team	Añadir al equipo	Aggiungi alla squadra	加入队伍	Adicionar à equipe
+Bye-bye, {p}!	バイバイ、{p}!	잘 가, {p}!	Au revoir, {p} !	Tschüss, {p}!	¡Adiós, {p}!	Ciao ciao, {p}!	再见了，{p}!	Tchau, {p}!
+Professor Oak sent you {n} coins as thanks.	オーキド博士から お礼に {n}コイン 届いた。	오박사님이 감사의 표시로 {n}코인을 보냈어요.	Le Prof. Chen t'envoie {n} pièces pour te remercier.	Prof. Eich schickt dir {n} Münzen als Dank.	El Prof. Oak te envía {n} monedas en agradecimiento.	Il Prof. Oak ti manda {n} monete per ringraziarti.	大木博士送来了{n}金币作为谢礼。	O Prof. Carvalho enviou {n} moedas como agradecimento.
+Can't release	逃がせない	놓아줄 수 없어요	Impossible de relâcher	Freilassen nicht möglich	No puedes liberarlo	Non puoi liberarlo	无法放生	Não é possível soltar
+You need at least one Pokémon!	ポケモンが 最低 1匹 必要だよ!	포켓몬이 최소 한 마리는 필요해요!	Il te faut au moins un Pokémon !	Du brauchst mindestens ein Pokémon!	¡Necesitas al menos un Pokémon!	Ti serve almeno un Pokémon!	至少需要一只宝可梦!	Você precisa de pelo menos um Pokémon!
+No Pokémon	ポケモンが いない	포켓몬이 없어요	Aucun Pokémon	Keine Pokémon	No hay Pokémon	Nessun Pokémon	没有宝可梦	Nenhum Pokémon
+No Pokémon!	ポケモンが いない!	포켓몬이 없어요!	Aucun Pokémon !	Keine Pokémon!	¡No hay Pokémon!	Nessun Pokémon!	没有宝可梦!	Nenhum Pokémon!
+Catch some Pokémon first!	先に ポケモンを 捕まえよう!	먼저 포켓몬을 잡으세요!	Attrape d'abord des Pokémon !	Fang zuerst ein paar Pokémon!	¡Atrapa primero algunos Pokémon!	Cattura prima qualche Pokémon!	先去捕捉宝可梦吧!	Capture alguns Pokémon primeiro!
+Spin the wheel to catch Pokémon before battling.	バトルの 前に ルーレットで ポケモンを 捕まえよう。	배틀 전에 룰렛으로 포켓몬을 잡으세요.	Fais tourner la roue pour attraper des Pokémon avant de combattre.	Dreh das Rad und fang Pokémon, bevor du kämpfst.	Gira la ruleta para atrapar Pokémon antes de combatir.	Gira la ruota per catturare Pokémon prima di lottare.	对战前先转动转盘捕捉宝可梦。	Gire a roleta para capturar Pokémon antes de batalhar.
+Welcome! How may I serve you?	いらっしゃいませ! 何を お求めですか?	어서 오세요! 무엇을 도와드릴까요?	Bienvenue ! Que puis-je pour toi ?	Willkommen! Wie kann ich helfen?	¡Bienvenido! ¿En qué puedo ayudarte?	Benvenuto! Come posso aiutarti?	欢迎光临! 需要些什么?	Bem-vindo! Como posso ajudar?
+DAILY DEAL	本日の 特価	오늘의 특가	OFFRE DU JOUR	TAGESANGEBOT	OFERTA DEL DÍA	OFFERTA DEL GIORNO	每日特价	OFERTA DO DIA
+30% off today only · resets at midnight	本日 限り 30% オフ · 0時に 更新	오늘만 30% 할인 · 자정에 초기화	−30 % aujourd'hui seulement · change à minuit	Nur heute 30 % Rabatt · wechselt um Mitternacht	30 % de descuento solo hoy · cambia a medianoche	−30% solo oggi · cambia a mezzanotte	今日限定7折 · 午夜刷新	30% de desconto só hoje · muda à meia-noite
+Medicine	回復道具	회복 도구	Soins	Medizin	Medicinas	Medicine	回复道具	Remédios
+Battle Items	バトル用	배틀 도구	Objets de combat	Kampf-Items	Objetos de combate	Strumenti lotta	对战道具	Itens de batalha
+Held Items	もちもの	지닌 물건	Objets tenus	Getragene Items	Objetos equipables	Strumenti tenuti	携带物品	Itens segurados
+Evolution	進化	진화	Évolution	Entwicklung	Evolución	Evoluzione	进化	Evolução
+TMs	わざマシン	기술머신	CT	TMs	MT	MT	招式学习器	TMs
+Special	とくべつ	스페셜	Spécial	Spezial	Especial	Speciali	特别	Especial
+Kurt's Workshop	ガンテツの 工房	규토리 공방	Atelier de Fargas	Kurts Werkstatt	Taller de Cemento	Laboratorio di Franz	钢铁的工房	Oficina do Kurt
+In bag: {n}	バッグ: {n}	가방: {n}	Dans le sac : {n}	Im Beutel: {n}	En la mochila: {n}	Nello zaino: {n}	背包中：{n}	Na bolsa: {n}
+Not owned	未所持	미보유	Non possédé	Nicht im Besitz	No lo tienes	Non posseduto	未拥有	Não possui
+Not Owned	未所持	미보유	Non possédé	Nicht im Besitz	No lo tienes	Non posseduto	未拥有	Não possui
+Owned — reusable	所持 — 何度でも 使える	보유 — 반복 사용 가능	Possédée — réutilisable	Im Besitz – wiederverwendbar	La tienes: reutilizable	Posseduta — riutilizzabile	已拥有 — 可重复使用	Possui — reutilizável
+Buy 1	1個 買う	1개 구매	Acheter 1	1 kaufen	Comprar 1	Compra 1	购买1个	Comprar 1
+Thank you!	毎度 ありがとう ございます!	감사합니다!	Merci !	Danke schön!	¡Gracias!	Grazie!	谢谢惠顾!	Obrigado!
+Bought {n}× {i}.	{i}を {n}個 買った。	{i}을(를) {n}개 샀어요.	Tu as acheté {n}× {i}.	{n}× {i} gekauft.	Compraste {n}× {i}.	Hai comprato {n}× {i}.	买了{n}个{i}。	Você comprou {n}× {i}.
+Bought {n}× {i} and got {b} bonus!	{i}を {n}個 買って おまけ {b}個!	{i}을(를) {n}개 사고 보너스 {b}개!	Tu as acheté {n}× {i} et reçu {b} en bonus !	{n}× {i} gekauft und {b} gratis erhalten!	¡Compraste {n}× {i} y te regalan {b}!	Hai comprato {n}× {i} e ne ricevi {b} in omaggio!	买了{n}个{i}，还送了{b}个!	Você comprou {n}× {i} e ganhou {b} de bônus!
+Not enough coins	コインが 足りない	코인이 부족해요	Pas assez de pièces	Nicht genug Münzen	No tienes monedas suficientes	Monete insufficienti	金币不足	Moedas insuficientes
+Not Enough Coins	コインが 足りない	코인이 부족해요	Pas assez de pièces	Nicht genug Münzen	No tienes monedas suficientes	Monete insufficienti	金币不足	Moedas insuficientes
+That costs {n} coins.	{n}コイン 必要です。	{n}코인이 필요해요.	Ça coûte {n} pièces.	Das kostet {n} Münzen.	Cuesta {n} monedas.	Costa {n} monete.	需要{n}金币。	Custa {n} moedas.
+Endless simulation entry requires {n} Coins.	参加には {n}コイン 必要です。	참가하려면 {n}코인이 필요해요.	L'entrée coûte {n} pièces.	Der Eintritt kostet {n} Münzen.	La entrada cuesta {n} monedas.	L'ingresso costa {n} monete.	参加需要{n}金币。	A entrada custa {n} moedas.
+Entry Fee Paid	参加費を 払った	참가비 지불	Entrée payée	Eintritt bezahlt	Entrada pagada	Ingresso pagato	已支付入场费	Entrada paga
+-{n} Coins — good luck, trainer!	-{n}コイン — がんばって!	-{n}코인 — 행운을 빌어요!	-{n} pièces — bonne chance !	-{n} Münzen – viel Glück!	-{n} monedas: ¡suerte, entrenador!	-{n} monete — buona fortuna!	-{n}金币 — 祝你好运!	-{n} moedas — boa sorte, treinador!
+Automatically replays a chosen stage for coins and EXP, hands-free.	えらんだ ステージを 自動で くり返し、コインと 経験値を 稼ぐ。	선택한 스테이지를 자동으로 반복해 코인과 경험치를 얻어요.	Rejoue automatiquement une étape pour gagner pièces et Exp.	Spielt eine Stufe automatisch für Münzen und EP.	Repite una fase automáticamente para ganar monedas y Exp.	Ripete automaticamente una fase per monete ed Esp.	自动重复所选关卡，赚取金币和经验值。	Repete uma fase automaticamente para ganhar moedas e Exp.
+Auto Battler	オートバトル	자동 배틀	Combat auto	Auto-Kampf	Combate automático	Lotta automatica	自动对战	Batalha automática
+Select a stage and let your team fight automatically.	ステージを えらぶと 手持ちが 自動で 戦う。	스테이지를 고르면 팀이 자동으로 싸워요.	Choisis une étape et laisse ton équipe combattre seule.	Wähle eine Stufe und lass dein Team automatisch kämpfen.	Elige una fase y deja que tu equipo luche solo.	Scegli una fase e lascia lottare la tua squadra.	选择关卡，让队伍自动战斗。	Escolha uma fase e deixe sua equipe lutar sozinha.
+IDLE	待機中	대기 중	INACTIF	BEREIT	INACTIVO	INATTIVO	待机	PARADO
+Stage to Farm	くり返す ステージ	반복할 스테이지	Étape à répéter	Stufe zum Farmen	Fase a repetir	Fase da ripetere	要重复的关卡	Fase para repetir
+-- Select a stage --	-- ステージを えらぶ --	-- 스테이지 선택 --	-- Choisis une étape --	-- Stufe wählen --	-- Elige una fase --	-- Scegli una fase --	-- 选择关卡 --	-- Escolha uma fase --
+Start Auto Battle	オートバトル開始	자동 배틀 시작	Lancer le combat auto	Auto-Kampf starten	Iniciar combate automático	Avvia lotta automatica	开始自动对战	Iniciar batalha automática
+Shiny Charm	ひかるおまもり	빛나는부적	Charme Chroma	Schillerpin	Amuleto Iris	Cromamuleto	闪耀护符	Amuleto Brilhante
+Rolls for a shiny three times per encounter (1/4096 → about 1/1365), like the main games.	色違いの 抽選が 3回に なる(1/4096 → 約1/1365)。本編と 同じ!	만날 때마다 색이 다른 포켓몬 추첨이 3번 (1/4096 → 약 1/1365).	Trois tirages chromatiques par rencontre (1/4096 → environ 1/1365), comme dans les jeux.	Drei Schillerwürfe pro Begegnung (1/4096 → etwa 1/1365), wie in den Hauptspielen.	Tres tiradas variocolor por encuentro (1/4096 → aprox. 1/1365), como en los juegos.	Tre tentativi cromatici per incontro (1/4096 → circa 1/1365), come nei giochi.	每次遭遇进行三次异色判定(1/4096 → 约1/1365)，与正作相同。	Três sorteios de brilhante por encontro (1/4096 → cerca de 1/1365), como nos jogos.
+Sponsored	スポンサー	스폰서	Sponsorisé	Gesponsert	Patrocinado	Sponsorizzato	赞助	Patrocinado
+The standard ball. The wheel spins fastest. Buy 10, get 1 free!	ふつうの ボール。ルーレットが いちばん 速い。10個 買うと 1個 おまけ!	기본 볼. 룰렛이 가장 빨라요. 10개 사면 1개 덤!	La ball de base. La roue tourne vite. 10 achetées = 1 offerte !	Der Standardball. Das Rad dreht am schnellsten. 10 kaufen, 1 gratis!	La ball básica. La ruleta gira más rápido. ¡Compra 10 y llévate 1 gratis!	La Ball di base. La ruota gira più veloce. Compra 10, 1 in omaggio!	标准的球。转盘转得最快。买10送1!	A bola básica. A roleta gira mais rápido. Compre 10 e ganhe 1!
+Slower spin and more Rare wedges. Better catch rate.	ルーレットが 少し ゆっくりで レアが 増える。捕まえやすい。	룰렛이 느려지고 레어 칸이 늘어요. 포획률 상승.	Roue plus lente et plus de cases Rares. Meilleur taux.	Langsameres Rad, mehr seltene Felder. Bessere Fangrate.	Giro más lento y más casillas Raras. Mejor captura.	Ruota più lenta e più spicchi Rari. Cattura migliore.	转盘更慢，稀有格更多，捕获率更高。	Giro mais lento e mais casas Raras. Captura melhor.
+Much slower spin and many Epic wedges. High catch rate.	ルーレットが かなり ゆっくりで エピックが 多い。とても 捕まえやすい。	룰렛이 훨씬 느리고 에픽 칸이 많아요. 높은 포획률.	Roue bien plus lente, beaucoup de cases Épiques. Taux élevé.	Viel langsameres Rad, viele epische Felder. Hohe Fangrate.	Giro mucho más lento y muchas casillas Épicas. Captura alta.	Ruota molto più lenta, tanti spicchi Epici. Cattura alta.	转盘慢很多，史诗格很多，捕获率高。	Giro bem mais lento e muitas casas Épicas. Captura alta.
+The slowest spin, packed with Epic & Legendary wedges. Never fails.	いちばん ゆっくりで エピックと 伝説が いっぱい。必ず 捕まえられる。	가장 느리고 에픽과 전설 칸이 가득. 반드시 잡혀요.	La roue la plus lente, pleine de cases Épiques et Légendaires. Ne rate jamais.	Das langsamste Rad voller epischer und legendärer Felder. Fängt immer.	El giro más lento, lleno de casillas Épicas y Legendarias. Nunca falla.	La ruota più lenta, piena di spicchi Epici e Leggendari. Non fallisce mai.	最慢的转盘，满是史诗与传说格。必定捕获。	O giro mais lento, cheio de casas Épicas e Lendárias. Nunca falha.
+Restores 30 HP once during battle when health falls below 30%	HPが 30%を 切ると 1回 30 回復する	HP가 30% 미만이 되면 한 번 30 회복	Rend 30 PV une fois quand les PV passent sous 30 %	Stellt einmalig 30 KP wieder her, wenn die KP unter 30 % fallen	Recupera 30 PS una vez cuando baja del 30 %	Ripristina 30 PS una volta sotto il 30% dei PS	HP低于30%时回复30点(一次)	Recupera 30 PS uma vez quando fica abaixo de 30%
+Cures poison status condition	毒を 治す	독을 치료	Soigne le poison	Heilt Vergiftung	Cura el envenenamiento	Cura l'avvelenamento	治愈中毒	Cura envenenamento
+Cures burn status condition	やけどを 治す	화상을 치료	Soigne la brûlure	Heilt Verbrennungen	Cura las quemaduras	Cura la scottatura	治愈灼伤	Cura queimaduras
+Cures freeze status condition	こおりを 治す	얼음을 치료	Soigne le gel	Heilt Einfrieren	Cura la congelación	Cura il congelamento	治愈冰冻	Cura congelamento
+Cures sleep status condition	眠りを 治す	잠듦을 치료	Réveille le Pokémon	Weckt das Pokémon	Despierta al Pokémon	Sveglia il Pokémon	治愈睡眠	Acorda o Pokémon
+Cures paralysis status condition	まひを 治す	마비를 치료	Soigne la paralysie	Heilt Paralyse	Cura la parálisis	Cura la paralisi	治愈麻痹	Cura paralisia
+Restores all HP and cures all status conditions	HPを 全回復し 状態異常も 治す	HP를 모두 회복하고 상태 이상도 치료	Restaure tous les PV et soigne tous les statuts	Stellt alle KP wieder her und heilt alle Statusprobleme	Recupera todos los PS y cura todos los estados	Ripristina tutti i PS e cura ogni problema di stato	回复全部HP并治愈所有异常状态	Recupera todo o PS e cura todas as condições
+Fully heals a Pokemon during battle	バトル中に ポケモンを 全回復	배틀 중 포켓몬을 완전히 회복	Soigne complètement un Pokémon en combat	Heilt ein Pokémon im Kampf vollständig	Cura por completo a un Pokémon en combate	Cura completamente un Pokémon in lotta	在对战中完全回复宝可梦	Cura totalmente um Pokémon na batalha
+Evolves certain Pokemon like Eevee to Flareon	イーブイなどを 進化させる(ブースターに)	이브이 등을 진화시켜요 (부스터로)	Fait évoluer certains Pokémon (Évoli → Pyroli)	Entwickelt bestimmte Pokémon (Evoli → Flamara)	Hace evolucionar a ciertos Pokémon (Eevee → Flareon)	Fa evolvere alcuni Pokémon (Eevee → Flareon)	让特定宝可梦进化(伊布→火伊布)	Evolui certos Pokémon (Eevee → Flareon)
+Evolves certain Pokemon like Eevee to Vaporeon	イーブイなどを 進化させる(シャワーズに)	이브이 등을 진화시켜요 (샤미드로)	Fait évoluer certains Pokémon (Évoli → Aquali)	Entwickelt bestimmte Pokémon (Evoli → Aquana)	Hace evolucionar a ciertos Pokémon (Eevee → Vaporeon)	Fa evolvere alcuni Pokémon (Eevee → Vaporeon)	让特定宝可梦进化(伊布→水伊布)	Evolui certos Pokémon (Eevee → Vaporeon)
+Evolves certain Pokemon like Eevee to Jolteon	イーブイなどを 進化させる(サンダースに)	이브이 등을 진화시켜요 (쥬피썬더로)	Fait évoluer certains Pokémon (Évoli → Voltali)	Entwickelt bestimmte Pokémon (Evoli → Blitza)	Hace evolucionar a ciertos Pokémon (Eevee → Jolteon)	Fa evolvere alcuni Pokémon (Eevee → Jolteon)	让特定宝可梦进化(伊布→雷伊布)	Evolui certos Pokémon (Eevee → Jolteon)
+Evolves certain Pokemon like Oddish to Gloom	ナゾノクサなどを 進化させる	뚜벅쵸 등을 진화시켜요	Fait évoluer certains Pokémon (Mystherbe…)	Entwickelt bestimmte Pokémon (Myrapla …)	Hace evolucionar a ciertos Pokémon (Oddish…)	Fa evolvere alcuni Pokémon (Oddish…)	让特定宝可梦进化(走路草等)	Evolui certos Pokémon (Oddish…)
+Evolves certain Pokemon like Seel to Dewgong	パウワウなどを 進化させる	쥬쥬 등을 진화시켜요	Fait évoluer certains Pokémon (Otaria…)	Entwickelt bestimmte Pokémon (Jurob …)	Hace evolucionar a ciertos Pokémon (Seel…)	Fa evolvere alcuni Pokémon (Seel…)	让特定宝可梦进化(小海狮等)	Evolui certos Pokémon (Seel…)
+Evolves certain Pokemon like Kirlia to Gardevoir	キルリアなどを 進化させる	킬리아 등을 진화시켜요	Fait évoluer certains Pokémon (Kirlia…)	Entwickelt bestimmte Pokémon (Kirlia …)	Hace evolucionar a ciertos Pokémon (Kirlia…)	Fa evolvere alcuni Pokémon (Kirlia…)	让特定宝可梦进化(奇鲁莉安等)	Evolui certos Pokémon (Kirlia…)
+Evolves certain Pokemon like Lampent to Chandelure	ランプラーなどを 進化させる	램프라 등을 진화시켜요	Fait évoluer certains Pokémon (Mélancolux…)	Entwickelt bestimmte Pokémon (Laternecto …)	Hace evolucionar a ciertos Pokémon (Lampent…)	Fa evolvere alcuni Pokémon (Lampent…)	让特定宝可梦进化(灯火幽灵等)	Evolui certos Pokémon (Lampent…)
+Evolves certain Pokemon like Jigglypuff to Wigglytuff	プリンなどを 進化させる	푸린 등을 진화시켜요	Fait évoluer certains Pokémon (Rondoudou…)	Entwickelt bestimmte Pokémon (Pummeluff …)	Hace evolucionar a ciertos Pokémon (Jigglypuff…)	Fa evolvere alcuni Pokémon (Jigglypuff…)	让特定宝可梦进化(胖丁等)	Evolui certos Pokémon (Jigglypuff…)
+Evolves certain Pokemon like Togetic to Togekiss	トゲチックなどを 進化させる	토게틱 등을 진화시켜요	Fait évoluer certains Pokémon (Togetic…)	Entwickelt bestimmte Pokémon (Togetic …)	Hace evolucionar a ciertos Pokémon (Togetic…)	Fa evolvere alcuni Pokémon (Togetic…)	让特定宝可梦进化(波克基古等)	Evolui certos Pokémon (Togetic…)
+Gradually restores 1/16th of maximum HP at the end of every combat turn	毎ターン 終わりに 最大HPの 1/16を 回復	매 턴 끝에 최대 HP의 1/16 회복	Rend 1/16 des PV max à la fin de chaque tour	Stellt am Ende jeder Runde 1/16 der max. KP wieder her	Recupera 1/16 de los PS máximos al final de cada turno	Ripristina 1/16 dei PS massimi a fine turno	每回合结束时回复最大HP的1/16	Recupera 1/16 do PS máximo ao fim de cada turno
+Boosts Physical move power by 50% continuously	物理技の 威力が 1.5倍	물리 기술의 위력이 1.5배	Augmente de 50 % la puissance des capacités physiques	Erhöht die Stärke physischer Attacken um 50 %	Aumenta un 50 % la potencia de los movimientos físicos	Aumenta del 50% la potenza delle mosse fisiche	物理招式威力提高50%	Aumenta em 50% o poder dos golpes físicos
+Boosts Special move power by 25% continuously	特殊技の 威力が 1.25倍	특수 기술의 위력이 1.25배	Augmente de 25 % la puissance des capacités spéciales	Erhöht die Stärke spezieller Attacken um 25 %	Aumenta un 25 % la potencia de los movimientos especiales	Aumenta del 25% la potenza delle mosse speciali	特殊招式威力提高25%	Aumenta em 25% o poder dos golpes especiais
+Boosts Sp. Def by 50%	とくぼうが 1.5倍	특수방어가 1.5배	Augmente la Déf. Spé. de 50 %	Erhöht die Sp.-Vert. um 50 %	Aumenta un 50 % la Def. Esp.	Aumenta del 50% la Dif. Sp.	特防提高50%	Aumenta a Def. Esp. em 50%
+Holder gains 50% of battle experience	持たせた ポケモンが 経験値の 50%を もらえる	지닌 포켓몬이 경험치의 50%를 받아요	Le porteur reçoit 50 % de l'expérience des combats	Der Träger erhält 50 % der Kampferfahrung	El portador recibe el 50 % de la experiencia	Chi lo tiene riceve il 50% dell'esperienza	携带者获得对战经验值的50%	O portador ganha 50% da experiência da batalha
+Boosts critical hit ratio by 25%	急所率が 25% 上がる	급소율이 25% 올라가요	Augmente de 25 % le taux de critique	Erhöht die Volltrefferquote um 25 %	Aumenta un 25 % los golpes críticos	Aumenta del 25% i brutti colpi	会心率提高25%	Aumenta em 25% a chance de crítico
+When hit by super-effective move, raise Atk and Sp. Atk by 50%	効果ばつぐんを 受けると こうげき・とくこうが 1.5倍	효과가 굉장한 기술을 맞으면 공격과 특수공격이 1.5배	Si touché par une capacité super efficace, Atq. et Atq. Spé. +50 %	Bei sehr effektivem Treffer steigen Angr. und Sp.-Angr. um 50 %	Si recibe un golpe muy eficaz, sube un 50 % Atq. y At. Esp.	Se colpito da una mossa superefficace, Att. e Att. Sp. +50%	受到效果绝佳的招式时，攻击和特攻提高50%	Ao sofrer golpe super eficaz, Atq. e Atq. Esp. +50%
+Boosts all damage by 30% but costs 10% max HP per turn	与える ダメージが 1.3倍、毎ターン 最大HPの 10%を 失う	주는 데미지가 1.3배, 매 턴 최대 HP의 10%를 잃어요	Dégâts +30 %, mais perd 10 % des PV max par tour	Schaden +30 %, kostet aber 10 % der max. KP pro Runde	Daño +30 %, pero pierde un 10 % de los PS máx. por turno	Danni +30%, ma perde il 10% dei PS massimi a turno	伤害提高30%，但每回合损失10%最大HP	Dano +30%, mas perde 10% do PS máximo por turno
+Restores 20 HP	HPを 20 回復	HP를 20 회복	Rend 20 PV	Stellt 20 KP wieder her	Recupera 20 PS	Ripristina 20 PS	回复20点HP	Recupera 20 PS
+Restores 50 HP	HPを 50 回復	HP를 50 회복	Rend 50 PV	Stellt 50 KP wieder her	Recupera 50 PS	Ripristina 50 PS	回复50点HP	Recupera 50 PS
+Restores 100 HP	HPを 100 回復	HP를 100 회복	Rend 100 PV	Stellt 100 KP wieder her	Recupera 100 PS	Ripristina 100 PS	回复100点HP	Recupera 100 PS
+Restores all HP	HPを 全回復	HP를 모두 회복	Rend tous les PV	Stellt alle KP wieder her	Recupera todos los PS	Ripristina tutti i PS	回复全部HP	Recupera todo o PS
+Restores 10 PP to one move	技 1つの PPを 10 回復	기술 하나의 PP를 10 회복	Rend 10 PP à une capacité	Füllt 10 AP einer Attacke auf	Recupera 10 PP de un movimiento	Ripristina 10 PP a una mossa	一个招式回复10PP	Recupera 10 PP de um golpe
+Restores all PP to one move	技 1つの PPを 全回復	기술 하나의 PP를 모두 회복	Rend tous les PP à une capacité	Füllt alle AP einer Attacke auf	Recupera todos los PP de un movimiento	Ripristina tutti i PP a una mossa	一个招式回复全部PP	Recupera todos os PP de um golpe
+Restores 10 PP to all moves	すべての 技の PPを 10 回復	모든 기술의 PP를 10 회복	Rend 10 PP à toutes les capacités	Füllt 10 AP aller Attacken auf	Recupera 10 PP de todos los movimientos	Ripristina 10 PP a tutte le mosse	所有招式回复10PP	Recupera 10 PP de todos os golpes
+Restores all PP to all moves	すべての 技の PPを 全回復	모든 기술의 PP를 모두 회복	Rend tous les PP à toutes les capacités	Füllt alle AP aller Attacken auf	Recupera todos los PP de todos los movimientos	Ripristina tutti i PP a tutte le mosse	所有招式回复全部PP	Recupera todos os PP de todos os golpes
+Raises Attack by 50% until end of battle	バトル中 こうげきが 1.5倍	배틀 동안 공격이 1.5배	Attaque +50 % jusqu'à la fin du combat	Angriff +50 % bis Kampfende	Ataque +50 % hasta el final del combate	Attacco +50% fino a fine lotta	对战中攻击提高50%	Ataque +50% até o fim da batalha
+Raises Defense by 50% until end of battle	バトル中 ぼうぎょが 1.5倍	배틀 동안 방어가 1.5배	Défense +50 % jusqu'à la fin du combat	Verteidigung +50 % bis Kampfende	Defensa +50 % hasta el final del combate	Difesa +50% fino a fine lotta	对战中防御提高50%	Defesa +50% até o fim da batalha
+Raises Speed by 50% until end of battle	バトル中 すばやさが 1.5倍	배틀 동안 스피드가 1.5배	Vitesse +50 % jusqu'à la fin du combat	Initiative +50 % bis Kampfende	Velocidad +50 % hasta el final del combate	Velocità +50% fino a fine lotta	对战中速度提高50%	Velocidade +50% até o fim da batalha
+Raises Sp. Atk by 50% until end of battle	バトル中 とくこうが 1.5倍	배틀 동안 특수공격이 1.5배	Atq. Spé. +50 % jusqu'à la fin du combat	Sp.-Angr. +50 % bis Kampfende	At. Esp. +50 % hasta el final del combate	Att. Sp. +50% fino a fine lotta	对战中特攻提高50%	Atq. Esp. +50% até o fim da batalha
+Attack Boost	プラスパワー	플러스파워	Attaque +	X-Angriff	Ataque X	Attacco X	力量强化	Ataque X
+Defense Boost	ディフェンダー	디펜드업	Défense +	X-Abwehr	Defensa X	Difesa X	防御强化	Defesa X
+Speed Boost	スピーダー	스피드업	Vitesse +	X-Tempo	Velocidad X	Velocità X	速度强化	Velocidade X
+Special Boost	スペシャルアップ	스페셜업	Spécial +	X-Spezial	Especial X	Special X	特攻强化	Especial X
+Raises maximum HP	最大HPを 上げる	최대 HP를 올려요	Augmente les PV max	Erhöht die max. KP	Aumenta los PS máximos	Aumenta i PS massimi	提高最大HP	Aumenta o PS máximo
+Raises Attack stat	こうげきを 上げる	공격을 올려요	Augmente l'Attaque	Erhöht den Angriff	Aumenta el Ataque	Aumenta l'Attacco	提高攻击	Aumenta o Ataque
+Raises Defense stat	ぼうぎょを 上げる	방어를 올려요	Augmente la Défense	Erhöht die Verteidigung	Aumenta la Defensa	Aumenta la Difesa	提高防御	Aumenta a Defesa
+Raises Sp. Atk stat	とくこうを 上げる	특수공격을 올려요	Augmente l'Atq. Spé.	Erhöht den Sp.-Angr.	Aumenta el At. Esp.	Aumenta l'Att. Sp.	提高特攻	Aumenta o Atq. Esp.
+Raises Sp. Def stat	とくぼうを 上げる	특수방어를 올려요	Augmente la Déf. Spé.	Erhöht die Sp.-Vert.	Aumenta la Def. Esp.	Aumenta la Dif. Sp.	提高特防	Aumenta a Def. Esp.
+Raises Speed stat	すばやさを 上げる	스피드를 올려요	Augmente la Vitesse	Erhöht die Initiative	Aumenta la Velocidad	Aumenta la Velocità	提高速度	Aumenta a Velocidade
+Swaps a Pokemon's Ability to its alternate Ability	ポケモンの 特性を もう1つの 特性に 変える	포켓몬의 특성을 다른 특성으로 바꿔요	Change le talent d'un Pokémon	Wechselt die Fähigkeit eines Pokémon	Cambia la habilidad de un Pokémon	Cambia l'abilità di un Pokémon	将宝可梦的特性换成另一个	Troca a habilidade de um Pokémon
+Adjusts Pokemon nature to optimize stats	性格を 調整して 能力を 最適化	성격을 조정해 능력치를 최적화	Ajuste la nature pour optimiser les stats	Passt das Wesen für bessere Werte an	Ajusta la naturaleza para optimizar las estadísticas	Regola la natura per ottimizzare le statistiche	调整性格以优化能力	Ajusta a natureza para otimizar atributos
+Kurt turns Apricorns into Poké Balls and gear. Find them in the Safari Zone, from trainers and daily quests.	ガンテツが ぼんぐりから ボールや 道具を 作ってくれる。ぼんぐりは サファリゾーン・トレーナー戦・デイリークエストで 手に入る。	규토리로 볼과 도구를 만들어줘요. 규토리는 사파리존, 트레이너 배틀, 일일 퀘스트에서 얻어요.	Fargas transforme les Noigrumes en balls et objets. Trouve-les au Parc Safari, contre des dresseurs et dans les quêtes du jour.	Kurt macht aus Aprikokos Bälle und Items. Du findest sie in der Safari-Zone, bei Trainern und in Tagesaufgaben.	Cemento convierte Bonguris en balls y objetos. Consíguelos en la Zona Safari, contra entrenadores y en misiones diarias.	Franz trasforma le Ghicocche in Ball e strumenti. Le trovi nella Zona Safari, dagli allenatori e nelle missioni.	钢铁会用球果制作精灵球和道具。球果可在狩猎地带、训练家对战和每日任务中获得。	Kurt transforma Apricorns em bolas e itens. Encontre-os na Zona Safári, com treinadores e nas missões diárias.
+Pouch ×{n} · {x}	ぼんぐり袋 ×{n} · {x}	규토리 주머니 ×{n} · {x}	Sachet ×{n} · {x}	Beutel ×{n} · {x}	Saquito ×{n} · {x}	Sacchetto ×{n} · {x}	球果袋 ×{n} · {x}	Saquinho ×{n} · {x}
+Your apricorn bag is empty — visit the Safari Zone on the Adventure tab!	ぼんぐりが ない — 冒険タブの サファリゾーンへ 行こう!	규토리가 없어요 — 모험 탭의 사파리존에 가보세요!	Tu n'as aucun Noigrume — va au Parc Safari dans Aventure !	Keine Aprikokos – besuche die Safari-Zone im Abenteuer-Tab!	No tienes Bonguris: ¡visita la Zona Safari en Aventura!	Niente Ghicocche: visita la Zona Safari in Avventura!	没有球果 — 去冒险页的狩猎地带看看吧!	Sem Apricorns — visite a Zona Safári na aba Aventura!
+Craft	作る	제작	Fabriquer	Herstellen	Fabricar	Crea	制作	Criar
+Apricorn Pouch	ぼんぐり袋	규토리 주머니	Sachet de Noigrumes	Aprikoko-Beutel	Saquito de Bonguris	Sacchetto di Ghicocche	球果袋	Saquinho de Apricorns
+Inside: {x}.	中身: {x}。	내용물: {x}.	Contenu : {x}.	Inhalt: {x}.	Contiene: {x}.	Contiene: {x}.	里面有：{x}。	Conteúdo: {x}.
+Kurt: "All done!"	ガンテツ「できたぞ!」	장인: "완성이다!"	Fargas : « C'est prêt ! »	Kurt: „Fertig!“	Cemento: «¡Ya está!»	Franz: «Fatto!»	钢铁：「做好了!」	Kurt: "Prontinho!"
+You received {n}× {i}.	{i}を {n}個 もらった。	{i}을(를) {n}개 받았다.	Tu reçois {n}× {i}.	Du erhältst {n}× {i}.	Recibiste {n}× {i}.	Hai ricevuto {n}× {i}.	获得了{n}个{i}。	Você recebeu {n}× {i}.
+A pouch costs {n} coins.	袋は {n}コイン。	주머니는 {n}코인이에요.	Un sachet coûte {n} pièces.	Ein Beutel kostet {n} Münzen.	Un saquito cuesta {n} monedas.	Un sacchetto costa {n} monete.	一袋需要{n}金币。	Um saquinho custa {n} moedas.
+Apricorns	ぼんぐり	규토리	Noigrumes	Aprikokos	Bonguris	Ghicocche	球果	Apricorns
+Streak: {n} days	連続 {n}日	연속 {n}일	Série : {n} jours	Serie: {n} Tage	Racha: {n} días	Serie: {n} giorni	连续{n}天	Sequência: {n} dias
+Streak: {n} day	連続 {n}日	연속 {n}일	Série : {n} jour	Serie: {n} Tag	Racha: {n} día	Serie: {n} giorno	连续{n}天	Sequência: {n} dia
+New quests in {d}	新しい クエストまで {d}	새 퀘스트까지 {d}	Nouvelles quêtes dans {d}	Neue Aufgaben in {d}	Nuevas misiones en {d}	Nuove missioni tra {d}	距新任务还有{d}	Novas missões em {d}
+Spin the wheel {n} times	ルーレットを {n}回 回す	룰렛을 {n}번 돌리기	Fais tourner la roue {n} fois	Drehe das Rad {n}-mal	Gira la ruleta {n} veces	Gira la ruota {n} volte	转动转盘{n}次	Gire a roleta {n} vezes
+Catch {n} Pokémon	ポケモンを {n}匹 捕まえる	포켓몬 {n}마리 잡기	Attrape {n} Pokémon	Fange {n} Pokémon	Atrapa {n} Pokémon	Cattura {n} Pokémon	捕捉{n}只宝可梦	Capture {n} Pokémon
+Catch {n} {x}-type Pokémon	{x}タイプの ポケモンを {n}匹 捕まえる	{x}타입 포켓몬 {n}마리 잡기	Attrape {n} Pokémon de type {x}	Fange {n} Pokémon vom Typ {x}	Atrapa {n} Pokémon de tipo {x}	Cattura {n} Pokémon di tipo {x}	捕捉{n}只{x}属性宝可梦	Capture {n} Pokémon do tipo {x}
+Catch {n} Rare, Epic or Legendary Pokémon	レア以上の ポケモンを {n}匹 捕まえる	레어 이상 포켓몬 {n}마리 잡기	Attrape {n} Pokémon Rare, Épique ou Légendaire	Fange {n} seltene, epische oder legendäre Pokémon	Atrapa {n} Pokémon Raros, Épicos o Legendarios	Cattura {n} Pokémon Rari, Epici o Leggendari	捕捉{n}只稀有以上的宝可梦	Capture {n} Pokémon Raros, Épicos ou Lendários
+Win {n} battles	バトルに {n}回 勝つ	배틀에서 {n}번 이기기	Gagne {n} combats	Gewinne {n} Kämpfe	Gana {n} combates	Vinci {n} lotte	赢得{n}场对战	Vença {n} batalhas
+Catch {n} Pokémon in the Safari Zone	サファリゾーンで ポケモンを {n}匹 捕まえる	사파리존에서 포켓몬 {n}마리 잡기	Attrape {n} Pokémon au Parc Safari	Fange {n} Pokémon in der Safari-Zone	Atrapa {n} Pokémon en la Zona Safari	Cattura {n} Pokémon nella Zona Safari	在狩猎地带捕捉{n}只宝可梦	Capture {n} Pokémon na Zona Safári
+Craft {n} item at Kurt's Workshop	ガンテツの 工房で {n}個 作る	규토리 공방에서 {n}개 제작	Fabrique {n} objet chez Fargas	Stelle {n} Item in Kurts Werkstatt her	Fabrica {n} objeto en el taller de Cemento	Crea {n} strumento da Franz	在钢铁的工房制作{n}个道具	Crie {n} item na Oficina do Kurt
+Craft {n} items at Kurt's Workshop	ガンテツの 工房で {n}個 作る	규토리 공방에서 {n}개 제작	Fabrique {n} objets chez Fargas	Stelle {n} Items in Kurts Werkstatt her	Fabrica {n} objetos en el taller de Cemento	Crea {n} strumenti da Franz	在钢铁的工房制作{n}个道具	Crie {n} itens na Oficina do Kurt
+{x} · {y} Apricorns · {z}	{x} · ぼんぐり {y} · {z}	{x} · 규토리 {y} · {z}	{x} · {y} Noigrumes · {z}	{x} · {y} Aprikokos · {z}	{x} · {y} Bonguris · {z}	{x} · {y} Ghicocche · {z}	{x} · 球果{y} · {z}	{x} · {y} Apricorns · {z}
+Daily chest	デイリーボックス	일일 상자	Coffre du jour	Tagestruhe	Cofre diario	Scrigno giornaliero	每日宝箱	Baú diário
+Finish all three: {x} + 2 Ultra Balls · every 7-day streak adds a Master Ball	3つ クリアで {x} + ハイパーボール2個 · 7日連続で マスターボールも!	3개 모두 완료: {x} + 하이퍼볼 2개 · 7일 연속이면 마스터볼 추가	Termine les trois : {x} + 2 Hyper Balls · chaque série de 7 jours ajoute une Master Ball	Alle drei schaffen: {x} + 2 Hyperbälle · jede 7-Tage-Serie bringt einen Meisterball	Completa las tres: {x} + 2 Ultra Balls · cada racha de 7 días suma una Master Ball	Completa tutte e tre: {x} + 2 Ultra Ball · ogni serie di 7 giorni aggiunge una Master Ball	完成全部三项：{x} + 2个高级球 · 每连续7天再送大师球	Complete as três: {x} + 2 Ultra Bolas · cada sequência de 7 dias dá uma Bola Mestra
+Finish all three: {x} + 2 Ultra Balls + a Master Ball (7-day streak!)	3つ クリアで {x} + ハイパーボール2個 + マスターボール(7日連続!)	3개 모두 완료: {x} + 하이퍼볼 2개 + 마스터볼 (7일 연속!)	Termine les trois : {x} + 2 Hyper Balls + une Master Ball (série de 7 jours !)	Alle drei schaffen: {x} + 2 Hyperbälle + ein Meisterball (7-Tage-Serie!)	Completa las tres: {x} + 2 Ultra Balls + una Master Ball (¡racha de 7 días!)	Completa tutte e tre: {x} + 2 Ultra Ball + una Master Ball (serie di 7 giorni!)	完成全部三项：{x} + 2个高级球 + 大师球(连续7天!)	Complete as três: {x} + 2 Ultra Bolas + uma Bola Mestra (sequência de 7 dias!)
+Quest complete!	クエスト クリア!	퀘스트 완료!	Quête terminée !	Aufgabe erledigt!	¡Misión completada!	Missione completata!	任务完成!	Missão concluída!
+{q} — claim your reward.	{q} — ごほうびを 受け取ろう。	{q} — 보상을 받으세요.	{q} — récupère ta récompense.	{q} – hol dir deine Belohnung.	{q}: reclama tu premio.	{q}: riscuoti il premio.	{q} — 领取奖励吧。	{q} — resgate sua recompensa.
+Reward claimed!	ごほうびを 受け取った!	보상을 받았어요!	Récompense récupérée !	Belohnung abgeholt!	¡Premio reclamado!	Premio riscosso!	已领取奖励!	Recompensa resgatada!
++{n} coins and {x} Apricorns.	コイン +{n}、ぼんぐり {x}。	코인 +{n}, 규토리 {x}.	+{n} pièces et {x} Noigrumes.	+{n} Münzen und {x} Aprikokos.	+{n} monedas y {x} Bonguris.	+{n} monete e {x} Ghicocche.	+{n}金币和{x}球果。	+{n} moedas e {x} Apricorns.
+Daily chest!	デイリーボックス!	일일 상자!	Coffre du jour !	Tagestruhe!	¡Cofre diario!	Scrigno giornaliero!	每日宝箱!	Baú diário!
++300 coins, 2 Ultra Balls.	コイン +300、ハイパーボール 2個。	코인 +300, 하이퍼볼 2개.	+300 pièces, 2 Hyper Balls.	+300 Münzen, 2 Hyperbälle.	+300 monedas, 2 Ultra Balls.	+300 monete, 2 Ultra Ball.	+300金币，2个高级球。	+300 moedas, 2 Ultra Bolas.
++300 coins, 2 Ultra Balls and a Master Ball for your 7-day streak!	コイン +300、ハイパーボール 2個、7日連続の マスターボール!	코인 +300, 하이퍼볼 2개, 7일 연속 마스터볼!	+300 pièces, 2 Hyper Balls et une Master Ball pour ta série de 7 jours !	+300 Münzen, 2 Hyperbälle und ein Meisterball für deine 7-Tage-Serie!	¡+300 monedas, 2 Ultra Balls y una Master Ball por tu racha de 7 días!	+300 monete, 2 Ultra Ball e una Master Ball per la serie di 7 giorni!	+300金币、2个高级球，以及连续7天的大师球!	+300 moedas, 2 Ultra Bolas e uma Bola Mestra pela sequência de 7 dias!
+Pay {x} for {y} and roam the tall grass.	{x}で {y}を 買って 草むらを 歩こう。	{x}로 {y}을(를) 사서 풀숲을 돌아다녀요.	Paie {x} pour {y} et explore les hautes herbes.	Zahle {x} für {y} und streife durchs hohe Gras.	Paga {x} por {y} y recorre la hierba alta.	Paga {x} per {y} ed esplora l'erba alta.	支付{x}获得{y}，在草丛中探索吧。	Pague {x} por {y} e explore o mato alto.
+{n} Safari Balls	サファリボール {n}個	사파리볼 {n}개	{n} Safari Balls	{n} Safaribälle	{n} Safari Balls	{n} Safari Ball	{n}个狩猎球	{n} Safári Bolas
+No battles: throw {a} to keep a Pokémon from fleeing, or a {b} to make it easier to catch (it may run!).	バトルは なし。{a}を 投げると 逃げにくく、{b}を 投げると 捕まえやすく なる(逃げるかも!)。	배틀 없음: {a}을(를) 던지면 잘 도망가지 않고, {b}을(를) 던지면 잡기 쉬워져요 (도망갈 수도!).	Pas de combat : lance un {a} pour qu'il ne fuie pas, ou une {b} pour le capturer plus facilement (il peut fuir !).	Keine Kämpfe: Wirf {a}, damit es nicht flieht, oder einen {b}, um es leichter zu fangen (es kann fliehen!).	Sin combates: lanza {a} para que no huya, o una {b} para capturarlo más fácil (¡puede huir!).	Niente lotte: lancia {a} per non farlo fuggire, o un {b} per catturarlo più facilmente (può scappare!).	没有对战：投{a}能让它不易逃跑，投{b}能更容易捕捉(但可能逃跑!)。	Sem batalhas: jogue {a} para ele não fugir, ou uma {b} para facilitar a captura (ele pode fugir!).
+Rarer Pokémon flee more often. The weather decides who's out: {x}.	レアな ポケモンほど 逃げやすい。出てくる ポケモンは 天気しだい: {x}。	희귀한 포켓몬일수록 잘 도망가요. 나오는 포켓몬은 날씨에 달려 있어요: {x}.	Les Pokémon rares fuient plus souvent. La météo décide qui sort : {x}.	Seltene Pokémon fliehen öfter. Das Wetter bestimmt, wer unterwegs ist: {x}.	Los Pokémon raros huyen más. El tiempo decide quién sale: {x}.	I Pokémon rari fuggono più spesso. Il meteo decide chi c'è: {x}.	越稀有的宝可梦越容易逃跑。出现的宝可梦取决于天气：{x}。	Pokémon raros fogem mais. O clima decide quem aparece: {x}.
+Look out for {x} hidden in the grass.	草むらに かくれた {x}を 探そう。	풀숲에 숨은 {x}을(를) 찾아보세요.	Cherche les {x} cachés dans l'herbe.	Halte Ausschau nach {x} im Gras.	Busca {x} escondidos en la hierba.	Cerca le {x} nascoste nell'erba.	留意草丛中藏着的{x}。	Procure {x} escondidos no mato.
+Bait	エサ	먹이	Appât	Köder	Cebo	Esca	饵料	Isca
+Rock	石	돌	Pierre	Stein	Piedra	Sasso	石头	Pedra
+Ball	ボール	볼	Ball	Ball	Ball	Ball	球	Bola
+Run	にげる	도망	Fuite	Flucht	Huir	Fuga	逃走	Fugir
+Enter the Safari Zone	サファリゾーンに 入る	사파리존 입장	Entrer dans le Parc Safari	Safari-Zone betreten	Entrar en la Zona Safari	Entra nella Zona Safari	进入狩猎地带	Entrar na Zona Safári
+Caught {n}	捕獲 {n}	잡음 {n}	Capturés : {n}	Gefangen: {n}	Capturados: {n}	Catturati: {n}	已捕捉{n}	Capturados: {n}
+Walking through the tall grass…	草むらを 歩いている…	풀숲을 걷는 중…	Tu avances dans les hautes herbes…	Du streifst durchs hohe Gras…	Caminando por la hierba alta…	Cammini nell'erba alta…	在草丛中行走…	Andando pelo mato alto…
+A wild ✨shiny✨ {p} appeared!	あっ! 野生の ✨色違い✨の {p}が 飛び出してきた!	앗! 야생의 ✨색이 다른✨ {p}이(가) 튀어나왔다!	Un {p} ✨chromatique✨ sauvage apparaît !	Ein wildes ✨schillerndes✨ {p} erscheint!	¡Un {p} ✨variocolor✨ salvaje apareció!	Un {p} ✨cromatico✨ selvatico è apparso!	野生的✨异色✨{p}跳出来了!	Um {p} ✨brilhante✨ selvagem apareceu!
+What will you do?	どうする?	무엇을 할까?	Que vas-tu faire ?	Was wirst du tun?	¿Qué vas a hacer?	Cosa farai?	要怎么做?	O que você vai fazer?
+Keep exploring the grass.	草むらを 探し続けよう。	계속 풀숲을 탐험해요.	Continue d'explorer les herbes.	Durchsuche weiter das Gras.	Sigue explorando la hierba.	Continua a esplorare l'erba.	继续在草丛中探索吧。	Continue explorando o mato.
+The Safari Game is over!	サファリゲーム 終了!	사파리 게임 종료!	La partie de Safari est terminée !	Das Safari-Spiel ist vorbei!	¡Se acabó el juego Safari!	Il gioco Safari è finito!	狩猎游戏结束了!	O jogo Safári acabou!
+Walk on	先へ 進む	계속 걷기	Avancer	Weitergehen	Seguir	Prosegui	继续前进	Seguir em frente
+Leave	出る	나가기	Partir	Verlassen	Salir	Esci	离开	Sair
+Leave the Safari Zone	サファリゾーンを 出る	사파리존에서 나가기	Quitter le Parc Safari	Safari-Zone verlassen	Salir de la Zona Safari	Esci dalla Zona Safari	离开狩猎地带	Sair da Zona Safári
+No catches this time.	今回は 捕まえられなかった。	이번엔 아무것도 잡지 못했어요.	Aucune capture cette fois.	Diesmal nichts gefangen.	Esta vez no atrapaste nada.	Nessuna cattura stavolta.	这次什么都没抓到。	Nenhuma captura desta vez.
+Got away safely from {p}.	{p}から うまく 逃げ切れた。	{p}에게서 무사히 도망쳤다.	Tu as fui {p} sans problème.	Du bist {p} sicher entkommen.	Escapaste sin problemas de {p}.	Sei fuggito da {p}.	成功从{p}身边逃走了。	Você fugiu de {p} com segurança.
+You threw some bait. {p} is eating!	エサを 投げた。{p}は 食べている!	먹이를 던졌다. {p}은(는) 먹고 있다!	Tu lances un appât. {p} mange !	Du wirfst einen Köder. {p} frisst!	Lanzaste cebo. ¡{p} está comiendo!	Hai lanciato un'esca. {p} sta mangiando!	扔出了饵料。{p}正在吃!	Você jogou isca. {p} está comendo!
+You threw a rock. {p} is angry!	石を 投げた。{p}は 怒っている!	돌을 던졌다. {p}은(는) 화가 났다!	Tu lances une pierre. {p} est en colère !	Du wirfst einen Stein. {p} ist wütend!	Lanzaste una piedra. ¡{p} está enfadado!	Hai lanciato un sasso. {p} è arrabbiato!	扔出了石头。{p}生气了!	Você jogou uma pedra. {p} está bravo!
+{p} finished eating.	{p}は 食べ終わった。	{p}은(는) 다 먹었다.	{p} a fini de manger.	{p} hat aufgefressen.	{p} terminó de comer.	{p} ha finito di mangiare.	{p}吃完了。	{p} terminou de comer.
+{p} calmed down.	{p}は 落ち着いた。	{p}은(는) 진정했다.	{p} s'est calmé.	{p} hat sich beruhigt.	{p} se calmó.	{p} si è calmato.	{p}冷静下来了。	{p} se acalmou.
+{p} ran away!	{p}は 逃げ出した!	{p}은(는) 도망쳤다!	{p} s'enfuit !	{p} ist geflohen!	¡{p} huyó!	{p} è fuggito!	{p}逃走了!	{p} fugiu!
+Oh no! It broke free!	ああっ! ボールから 出てしまった!	앗! 볼에서 나와버렸다!	Oh non ! Il s'est libéré !	Oh nein! Es hat sich befreit!	¡Oh, no! ¡Se ha escapado!	Oh no! Si è liberato!	糟糕! 从球里出来了!	Ah não! Escapou!
+Aww! It appeared to be caught!	ああ! 捕まえたと 思ったのに!	아! 잡은 줄 알았는데!	Mince ! Il était presque attrapé !	Mist! Fast hätte es geklappt!	¡Vaya! ¡Parecía que lo tenías!	Oh! Sembrava catturato!	哎呀! 还以为抓到了!	Ah! Parecia que tinha pegado!
+Aargh! Almost had it!	おしい! もう 少しで 捕まえられたのに!	아깝다! 조금만 더였는데!	Argh ! Presque !	Argh! Beinahe!	¡Argh! ¡Casi lo tenías!	Argh! C'eri quasi!	可恶! 就差一点点!	Argh! Quase!
+You are out of Safari Balls!	サファリボールが なくなった!	사파리볼이 다 떨어졌다!	Tu n'as plus de Safari Balls !	Du hast keine Safaribälle mehr!	¡Te quedaste sin Safari Balls!	Hai finito le Safari Ball!	狩猎球用完了!	Suas Safári Bolas acabaram!
+Eating	食事中	먹는 중	Mange	Frisst	Comiendo	Mangia	正在吃	Comendo
+Angry	怒り	화남	En colère	Wütend	Enfadado	Arrabbiato	生气	Bravo
+Safari Game over	サファリゲーム 終了	사파리 게임 종료	Fin du Safari	Safari-Spiel vorbei	Fin del juego Safari	Fine del Safari	狩猎游戏结束	Fim do Safári
+You caught {n} Pokémon! They're in your PC.	ポケモンを {n}匹 捕まえた! ボックスに 送られた。	포켓몬 {n}마리를 잡았다! PC에 보냈어요.	Tu as attrapé {n} Pokémon ! Ils sont dans ton PC.	Du hast {n} Pokémon gefangen! Sie sind in deiner PC-Box.	¡Atrapaste {n} Pokémon! Están en tu PC.	Hai catturato {n} Pokémon! Sono nel tuo PC.	捕捉了{n}只宝可梦! 已送到电脑箱子。	Você capturou {n} Pokémon! Eles estão no seu PC.
+The Safari Zone costs {n} coins.	サファリゾーンは {n}コイン。	사파리존은 {n}코인이에요.	Le Parc Safari coûte {n} pièces.	Die Safari-Zone kostet {n} Münzen.	La Zona Safari cuesta {n} monedas.	La Zona Safari costa {n} monete.	狩猎地带需要{n}金币。	A Zona Safári custa {n} moedas.
+The grass is quiet… try again.	草むらは 静かだ… もう一度 試そう。	풀숲이 조용하다… 다시 시도해요.	Les herbes sont calmes… réessaie.	Das Gras ist ruhig … versuch es nochmal.	La hierba está tranquila… inténtalo otra vez.	L'erba è tranquilla… riprova.	草丛很安静…再试一次吧。	O mato está quieto… tente de novo.
+Trainer Profile	トレーナー プロフィール	트레이너 프로필	Profil de dresseur	Trainerprofil	Perfil de entrenador	Profilo allenatore	训练家资料	Perfil do treinador
+Trainer Card	トレーナーカード	트레이너 카드	Carte de dresseur	Trainerpass	Ficha de entrenador	Scheda allenatore	训练家卡	Cartão de treinador
+Trainer Name	トレーナー名	트레이너 이름	Nom du dresseur	Trainername	Nombre de entrenador	Nome allenatore	训练家名称	Nome do treinador
+Trainer Lvl	トレーナーLv	트레이너 Lv	Niv. dresseur	Trainer-Lv	Nv. entrenador	Liv. allenatore	训练家等级	Nv. treinador
+Enter your trainer name...	トレーナー名を 入力…	트레이너 이름 입력…	Entre ton nom de dresseur…	Gib deinen Trainernamen ein…	Escribe tu nombre de entrenador…	Inserisci il nome allenatore…	输入训练家名称…	Digite seu nome de treinador…
+Backup or restore your progress	進行状況を バックアップ・復元	진행 상황 백업 또는 복원	Sauvegarde ou restaure ta progression	Fortschritt sichern oder wiederherstellen	Guarda o restaura tu progreso	Salva o ripristina i progressi	备份或恢复游戏进度	Faça backup ou restaure seu progresso
+Local save transfer	セーブの 引っ越し	세이브 이전	Transfert de sauvegarde	Spielstand übertragen	Transferir partida	Trasferisci salvataggio	存档转移	Transferir progresso
+Export Current Save	今の セーブを 書き出す	현재 세이브 내보내기	Exporter la sauvegarde	Spielstand exportieren	Exportar partida	Esporta salvataggio	导出当前存档	Exportar progresso
+Import Backup	バックアップを 読み込む	백업 불러오기	Importer une sauvegarde	Sicherung importieren	Importar copia	Importa backup	导入备份	Importar backup
+Copy Export Code	コードを コピー	코드 복사	Copier le code	Code kopieren	Copiar código	Copia codice	复制导出代码	Copiar código
+Paste your exported backup code here...	書き出した コードを ここに 貼り付け…	내보낸 백업 코드를 여기에 붙여넣으세요…	Colle ton code de sauvegarde ici…	Füge hier deinen Sicherungscode ein…	Pega aquí tu código de copia…	Incolla qui il codice di backup…	在此粘贴导出的备份代码…	Cole aqui seu código de backup…
+Use Export to generate an encrypted backup code for your current progress. Paste that code back here later and click Import to restore it.	「書き出す」で 暗号化した バックアップコードを 作成。あとで ここに 貼り付けて「読み込む」で 復元できる。	내보내기로 현재 진행 상황의 암호화된 백업 코드를 만들어요. 나중에 여기 붙여넣고 불러오기를 누르면 복원돼요.	Utilise Exporter pour créer un code chiffré de ta progression. Colle-le ici plus tard et clique sur Importer pour la restaurer.	Mit „Exportieren“ erzeugst du einen verschlüsselten Code. Füge ihn später hier ein und klicke auf „Importieren“.	Usa Exportar para crear un código cifrado de tu progreso. Pégalo aquí más tarde y pulsa Importar para restaurarlo.	Usa Esporta per creare un codice cifrato dei progressi. Incollalo qui e premi Importa per ripristinarli.	使用"导出"生成加密的进度备份代码。之后粘贴到这里并点击"导入"即可恢复。	Use Exportar para gerar um código criptografado do progresso. Depois cole aqui e clique em Importar para restaurar.
+Export ready	書き出し 完了	내보내기 완료	Export prêt	Export bereit	Exportación lista	Esportazione pronta	导出完成	Exportação pronta
+A fresh encrypted backup code was generated for your current save.	今の セーブの 暗号化コードを 作成した。	현재 세이브의 암호화 코드를 만들었어요.	Un nouveau code chiffré a été créé pour ta sauvegarde.	Ein neuer verschlüsselter Code für deinen Spielstand wurde erstellt.	Se generó un nuevo código cifrado de tu partida.	È stato creato un nuovo codice cifrato del salvataggio.	已为当前存档生成新的加密代码。	Um novo código criptografado foi gerado para seu progresso.
+Backup copied	コピーした	복사 완료	Code copié	Kopiert	Copia realizada	Copiato	已复制	Copiado
+Your encrypted save code is ready to paste elsewhere.	暗号化コードを 貼り付けられる。	암호화 코드를 붙여넣을 수 있어요.	Ton code est prêt à être collé ailleurs.	Dein Code kann jetzt eingefügt werden.	Tu código está listo para pegarse en otro sitio.	Il codice è pronto da incollare altrove.	加密代码可以粘贴到其他地方了。	Seu código está pronto para colar em outro lugar.
+Data imported	読み込み 完了	불러오기 완료	Données importées	Daten importiert	Datos importados	Dati importati	导入完成	Dados importados
+Progress restored from your backup code!	バックアップから 復元した!	백업 코드로 진행 상황을 복원했어요!	Progression restaurée depuis ton code !	Fortschritt aus deinem Code wiederhergestellt!	¡Progreso restaurado desde tu código!	Progressi ripristinati dal codice!	已从备份代码恢复进度!	Progresso restaurado pelo código!
+Nothing to import	読み込む ものが ない	불러올 내용이 없어요	Rien à importer	Nichts zu importieren	Nada que importar	Niente da importare	没有可导入的内容	Nada para importar
+Paste a saved backup code first.	先に バックアップコードを 貼り付けてね。	먼저 백업 코드를 붙여넣으세요.	Colle d'abord un code de sauvegarde.	Füge zuerst einen Sicherungscode ein.	Pega primero un código de copia.	Incolla prima un codice di backup.	请先粘贴备份代码。	Cole um código de backup primeiro.
+Data Cleared	データを 消去した	데이터 삭제 완료	Données effacées	Daten gelöscht	Datos borrados	Dati cancellati	数据已清除	Dados apagados
+All progress has been reset	すべての 進行状況を リセットした	모든 진행 상황이 초기화됐어요	Toute la progression a été réinitialisée	Der gesamte Fortschritt wurde zurückgesetzt	Se ha reiniciado todo el progreso	Tutti i progressi sono stati azzerati	所有进度已重置	Todo o progresso foi reiniciado
+Choose Your Starter Pokémon!	最初の ポケモンを えらぼう!	첫 포켓몬을 고르세요!	Choisis ton Pokémon de départ !	Wähle dein Starter-Pokémon!	¡Elige tu Pokémon inicial!	Scegli il tuo Pokémon iniziale!	选择你的御三家宝可梦!	Escolha seu Pokémon inicial!
+Select your first partner — they'll join your team at Level 5. All generations available!	最初の パートナーを えらぼう — レベル5で 仲間に なる。全世代から えらべる!	첫 파트너를 고르세요 — 레벨 5로 팀에 합류해요. 모든 세대에서 고를 수 있어요!	Choisis ton premier partenaire : il rejoint ton équipe au N. 5. Toutes les générations !	Wähle deinen ersten Partner – er kommt auf Lv. 5 ins Team. Alle Generationen!	Elige a tu primer compañero: se une con Nv. 5. ¡Todas las generaciones!	Scegli il tuo primo partner: si unisce al Liv. 5. Tutte le generazioni!	选择你的第一个伙伴 — 它会以5级加入队伍。所有世代均可选择!	Escolha seu primeiro parceiro — ele entra no nível 5. Todas as gerações!
+Partner Chosen!	パートナー 決定!	파트너 결정!	Partenaire choisi !	Partner gewählt!	¡Compañero elegido!	Partner scelto!	伙伴已决定!	Parceiro escolhido!
+{p} joined your team at Lv 5!	{p}が レベル5で 仲間に なった!	{p}이(가) 레벨 5로 팀에 합류했다!	{p} rejoint ton équipe au N. 5 !	{p} ist deinem Team auf Lv. 5 beigetreten!	¡{p} se unió a tu equipo con Nv. 5!	{p} si è unito alla squadra al Liv. 5!	{p}以5级加入了队伍!	{p} entrou na sua equipe no Nv. 5!
+New Move Available!	新しい 技を 覚えられる!	새 기술을 배울 수 있어요!	Nouvelle capacité disponible !	Neue Attacke verfügbar!	¡Nuevo movimiento disponible!	Nuova mossa disponibile!	可以学习新招式!	Novo golpe disponível!
+Choose a move to replace:	忘れさせる 技を えらんでね:	잊게 할 기술을 고르세요:	Choisis la capacité à oublier :	Wähle die Attacke zum Vergessen:	Elige el movimiento a olvidar:	Scegli la mossa da dimenticare:	选择要遗忘的招式:	Escolha o golpe a esquecer:
+Skip (Add to Bank)	やめる(控えに 入れる)	건너뛰기 (보관함에 추가)	Passer (garder en réserve)	Überspringen (aufheben)	Omitir (guardar)	Salta (tieni in riserva)	跳过(存入备用)	Pular (guardar)
+Replace a Move	技を 入れ替える	기술 교체	Remplacer une capacité	Attacke ersetzen	Reemplazar movimiento	Sostituisci mossa	替换招式	Substituir golpe
+{p} replaced {a} with {b}!	{p}は {a}を 忘れて {b}を 覚えた!	{p}은(는) {a}을(를) 잊고 {b}을(를) 배웠다!	{p} oublie {a} et apprend {b} !	{p} vergisst {a} und erlernt {b}!	¡{p} olvidó {a} y aprendió {b}!	{p} dimentica {a} e impara {b}!	{p}忘记了{a}，学会了{b}!	{p} esqueceu {a} e aprendeu {b}!
+Move Learned!	技を 覚えた!	기술을 배웠다!	Capacité apprise !	Attacke erlernt!	¡Movimiento aprendido!	Mossa imparata!	学会了招式!	Golpe aprendido!
+Move Taught	技を 教えた	기술을 가르쳤다	Capacité enseignée	Attacke gelehrt	Movimiento enseñado	Mossa insegnata	已教授招式	Golpe ensinado
+Already Known	もう 覚えている	이미 알고 있어요	Déjà connue	Bereits bekannt	Ya lo conoce	Già conosciuta	已经学会了	Já conhece
+{p} already knows {m}.	{p}は もう {m}を 覚えている。	{p}은(는) 이미 {m}을(를) 알고 있다.	{p} connaît déjà {m}.	{p} beherrscht {m} bereits.	{p} ya conoce {m}.	{p} conosce già {m}.	{p}已经学会了{m}。	{p} já conhece {m}.
+Incompatible	覚えられない	배울 수 없어요	Incompatible	Nicht kompatibel	Incompatible	Incompatibile	无法学习	Incompatível
+{p} cannot learn {m}.	{p}は {m}を 覚えられない。	{p}은(는) {m}을(를) 배울 수 없다.	{p} ne peut pas apprendre {m}.	{p} kann {m} nicht erlernen.	{p} no puede aprender {m}.	{p} non può imparare {m}.	{p}无法学会{m}。	{p} não pode aprender {m}.
+TM Taught!	わざマシンを 使った!	기술머신을 사용했다!	CT utilisée !	TM eingesetzt!	¡MT usada!	MT usata!	使用了招式学习器!	TM usada!
+{p} learned {m}! (TM reusable)	{p}は {m}を 覚えた!(わざマシンは 何度でも 使える)	{p}은(는) {m}을(를) 배웠다! (기술머신 재사용 가능)	{p} apprend {m} ! (CT réutilisable)	{p} erlernt {m}! (TM wiederverwendbar)	¡{p} aprendió {m}! (MT reutilizable)	{p} impara {m}! (MT riutilizzabile)	{p}学会了{m}! (招式学习器可重复使用)	{p} aprendeu {m}! (TM reutilizável)
+TM{n} Acquired!	わざマシン{n}を 手に入れた!	기술머신{n}을(를) 얻었다!	CT{n} obtenue !	TM{n} erhalten!	¡MT{n} conseguida!	MT{n} ottenuta!	获得了招式学习器{n}!	TM{n} obtida!
+{m} can now be taught in your PC — unlimited uses!	ボックスで {m}を 何度でも 教えられる!	PC에서 {m}을(를) 무제한으로 가르칠 수 있어요!	{m} peut être enseignée depuis ton PC, sans limite !	{m} kann jetzt im PC beliebig oft gelehrt werden!	¡Ya puedes enseñar {m} desde tu PC sin límite!	Ora puoi insegnare {m} dal PC senza limiti!	现在可以在电脑中无限次教授{m}!	{m} agora pode ser ensinado no PC — usos ilimitados!
+Already Owned	もう 持っている	이미 보유 중	Déjà possédé	Bereits im Besitz	Ya lo tienes	Già posseduto	已经拥有	Já possui
+Consumed	使った	사용했다	Utilisé	Verbraucht	Usado	Usato	已使用	Usado
+{i} was used on {p}.	{p}に {i}を 使った。	{p}에게 {i}을(를) 사용했다.	{i} est utilisé sur {p}.	{i} wurde bei {p} eingesetzt.	Usaste {i} en {p}.	Hai usato {i} su {p}.	对{p}使用了{i}。	{i} foi usado em {p}.
+{p} healed with {i}.	{p}は {i}で 回復した。	{p}은(는) {i}(으)로 회복했다.	{p} est soigné avec {i}.	{p} wurde mit {i} geheilt.	{p} se curó con {i}.	{p} si cura con {i}.	{p}使用{i}回复了。	{p} foi curado com {i}.
+{p} was fully restored with {i}.	{p}は {i}で 全回復した。	{p}은(는) {i}(으)로 완전히 회복했다.	{p} est entièrement soigné avec {i}.	{p} wurde mit {i} vollständig geheilt.	{p} se recuperó por completo con {i}.	{p} si cura completamente con {i}.	{p}使用{i}完全回复了。	{p} foi totalmente restaurado com {i}.
+Evolved	進化した	진화했다	Évolué	Entwickelt	Evolucionado	Evoluto	已进化	Evoluiu
+{p} evolved with {i}.	{p}は {i}で 進化した。	{p}은(는) {i}(으)로 진화했다.	{p} évolue grâce à {i}.	{p} hat sich mit {i} entwickelt.	{p} evolucionó con {i}.	{p} si è evoluto con {i}.	{p}使用{i}进化了。	{p} evoluiu com {i}.
+No Evolution	進化しない	진화하지 않아요	Pas d'évolution	Keine Entwicklung	Sin evolución	Nessuna evoluzione	无法进化	Sem evolução
+{p} cannot evolve with {i}.	{p}は {i}では 進化しない。	{p}은(는) {i}(으)로 진화할 수 없다.	{p} ne peut pas évoluer avec {i}.	{p} kann sich mit {i} nicht entwickeln.	{p} no puede evolucionar con {i}.	{p} non può evolversi con {i}.	{p}无法使用{i}进化。	{p} não pode evoluir com {i}.
+Hold Item Updated	もちものを 変えた	지닌 물건 변경	Objet tenu modifié	Item geändert	Objeto cambiado	Strumento aggiornato	已更换携带物品	Item atualizado
+Updated {p}'s hold item.	{p}の もちものを 変えた。	{p}의 지닌 물건을 바꿨다.	L'objet de {p} est modifié.	Das Item von {p} wurde geändert.	Se cambió el objeto de {p}.	Strumento di {p} aggiornato.	已更换{p}的携带物品。	O item de {p} foi atualizado.
+Battle Item	バトル用 道具	배틀 도구	Objet de combat	Kampf-Item	Objeto de combate	Strumento lotta	对战道具	Item de batalha
+{i} can be used during battle from the BAG menu.	{i}は バトル中に バッグから 使える。	{i}은(는) 배틀 중 가방에서 사용할 수 있어요.	{i} s'utilise en combat depuis le SAC.	{i} kann im Kampf über den BEUTEL genutzt werden.	{i} se usa en combate desde la MOCHILA.	{i} si usa in lotta dallo ZAINO.	{i}可以在对战中从背包使用。	{i} pode ser usado na batalha pela BOLSA.
+No Item	道具が ない	도구가 없어요	Aucun objet	Kein Item	Sin objeto	Nessuno strumento	没有道具	Sem item
+You do not own {i}.	{i}を 持っていない。	{i}을(를) 가지고 있지 않아요.	Tu ne possèdes pas {i}.	Du besitzt kein {i}.	No tienes {i}.	Non possiedi {i}.	你没有{i}。	Você não tem {i}.
+Evolution	進化	진화	Évolution	Entwicklung	Evolución	Evoluzione	进化	Evolução
+{r} UNLOCKED!	{r}地方が 解放された!	{r}지방 해금!	{r} DÉBLOQUÉ !	{r} FREIGESCHALTET!	¡{r} DESBLOQUEADO!	{r} SBLOCCATO!	{r}地区已解锁!	{r} LIBERADO!
+Theme Changed	テーマを 変えた	테마 변경	Thème changé	Thema geändert	Tema cambiado	Tema cambiato	主题已更换	Tema alterado
+Applied {x} theme	{x}テーマに した	{x} 테마 적용	Thème {x} appliqué	Thema {x} aktiviert	Tema {x} aplicado	Tema {x} applicato	已应用{x}主题	Tema {x} aplicado
+Shiny odds tripled to about 1/1365. Good luck, trainer!	色違いの 確率が 約1/1365に! がんばって!	색이 다른 포켓몬 확률이 약 1/1365로! 행운을 빌어요!	Chances de chromatique triplées (environ 1/1365). Bonne chance !	Schillerchance verdreifacht (etwa 1/1365). Viel Glück!	¡Probabilidad variocolor triplicada (aprox. 1/1365)! ¡Suerte!	Probabilità cromatica triplicata (circa 1/1365). Buona fortuna!	异色概率提升三倍，约1/1365。祝你好运!	Chance de brilhante triplicada (cerca de 1/1365). Boa sorte!
+{p} became paralyzed!	{p}は まひして 技が 出にくく なった!	{p}은(는) 마비되었다!	{p} est paralysé !	{p} wurde paralysiert!	¡{p} quedó paralizado!	{p} è paralizzato!	{p}麻痹了!	{p} ficou paralisado!
+{p} was seeded!	{p}に 種を 植え付けた!	{p}에게 씨앗을 심었다!	{p} est infecté !	{p} wurde bepflanzt!	¡{p} fue infectado!	{p} è stato infettato!	{p}被种下了种子!	{p} foi semeado!
+Switched to {p}!	{p}に 交代した!	{p}(으)로 교체했다!	{p} entre en jeu !	{p} wurde eingewechselt!	¡Cambiaste a {p}!	Hai mandato in campo {p}!	换上了{p}!	Trocou para {p}!
+{p} attacks during the switch!	{p}は 交代中に 攻撃してきた!	{p}은(는) 교체 중에 공격해 왔다!	{p} attaque pendant le changement !	{p} greift während des Wechsels an!	¡{p} ataca durante el cambio!	{p} attacca durante il cambio!	{p}在交换时发动了攻击!	{p} ataca durante a troca!
+Endless Simulation	エンドレス バトル	무한 배틀	Combat sans fin	Endloser Kampf	Combate infinito	Lotta infinita	无尽对战	Batalha sem fim
+{p}'s {s} won't go any higher!	{p}の {s}は もう 上がらない!	{p}의 {s}은(는) 더 이상 올라가지 않는다!	{s} de {p} ne peut plus augmenter !	{s} von {p} kann nicht weiter steigen!	¡{s} de {p} no puede subir más!	{s} di {p} non può aumentare ancora!	{p}的{s}已经无法再提高了!	{s} de {p} não pode aumentar mais!

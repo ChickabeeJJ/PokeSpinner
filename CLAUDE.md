@@ -17,6 +17,15 @@ site, no bundler — open `index.html` or serve the folder.
     Other systems hook in through `gameEvent(name, data)` / `onGameEvent(fn)`
     (defined in `state.js`): events `spin`, `catch`, `battleWin`, `craft`.
   - `data-types.js` — species ids by type (generated from PokéAPI).
+  - `world.js` — the animated background (time-of-day sky, weather, flyers).
+  - `translate.js` — live translation: code and markup stay in English and the
+    page is translated as it renders, using `js/lang/<code>.js` packs (official
+    PokéAPI names + UI phrases). Build packs with `python3 tools/i18n/build.py`;
+    add/modify phrases in `tools/i18n/phrases/*.tsv` (en + 8 languages, `{x}`
+    placeholders, `{n}` = number). Keep new UI text as whole English sentences
+    so they can be matched. Keep game data (Pokémon names) in English.
+- Full-screen overlays must live directly under `<body>` (panels use
+  backdrop-filter, which traps `position: fixed`); `battle.js` hoists them.
 - `sw.js` + `manifest.webmanifest` + `icons/` — offline play and install.
   Add any new game file to `SHELL_FILES` in `sw.js`.
 

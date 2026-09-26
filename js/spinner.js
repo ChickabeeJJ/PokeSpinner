@@ -137,7 +137,7 @@ function drawWheel() {
         ctx.fillStyle = '#ffffff';
         ctx.shadowColor = 'rgba(0,0,0,.6)'; ctx.shadowBlur = 4;
         ctx.font = `700 ${Math.round(W * 0.036)}px 'Silkscreen', 'Space Grotesk', sans-serif`;
-        ctx.fillText(label, dir * (faceR - 16), -1);
+        ctx.fillText(typeof trLabel === 'function' ? trLabel(label) : label, dir * (faceR - 16), -1);
         ctx.font = `${Math.round(W * 0.03)}px sans-serif`;
         ctx.fillStyle = sector.rarity === 'Legendary' ? '#fff7cc' : 'rgba(255,255,255,.85)';
         ctx.textAlign = 'center';

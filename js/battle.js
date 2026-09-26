@@ -2,6 +2,13 @@
 // Classic script: top-level declarations are shared with the other js/ files,
 // which index.html loads in order.
 
+// Full-screen overlays (the battle screen, the team picker…) live directly under
+// <body>: panel ancestors with backdrop-filter/transform would otherwise trap position:fixed.
+(function hoistOverlays() {
+    const overlays = [document.getElementById('battleScreen'), ...document.querySelectorAll('.view-panel .fixed.inset-0')];
+    overlays.forEach(el => { if (el && el.parentElement !== document.body) document.body.appendChild(el); });
+})();
+
 function launchStagePrep(stage) {
     // Check for unsolved gym puzzle
     if (stage.gymPuzzle && stage.isGym) {
@@ -587,9 +594,9 @@ function applyStatStage(side, stat, delta, logBox, atkName, defName) {
         logBox.innerHTML += `<div class="text-slate-500 mt-1 italic text-[10px]">${ownerName}'s ${stat} ${delta > 0 ? t('battle.wontHigher') : t('battle.wontLower')}</div>`;
     } else {
         const sharply = Math.abs(change) >= 2 ? ' sharply' : '';
-        const dir = change > 0 ? '⬆ rose' : '⬇ fell';
+        const dir = change > 0 ? 'rose' : 'fell';
         const col = change > 0 ? 'text-green-400' : 'text-red-400';
-        logBox.innerHTML += `<div class="${col} mt-1 font-bold">${ownerName}'s ${stat}${sharply} ${dir}!</div>`;
+        logBox.innerHTML += `<div class="${col} mt-1 font-bold">${change > 0 ? '⬆' : '⬇'} ${ownerName}'s ${stat}${sharply} ${dir}!</div>`;
         setTimeout(() => playStatFx(side, change > 0), 250);
     }
     renderStatStagesUI();
@@ -665,9 +672,10 @@ function applyStatusCond(side, cond, logBox, myName, foeName, silentIfImmune) {
         if (!gameState.battle.statusMeta) gameState.battle.statusMeta = { player: {}, boss: {} };
         gameState.battle.statusMeta[side] = { sleepTurns: -1 }; // -1 so first increment lands at 0
     }
-    const msgs = { sleep:`💤 fell asleep!`, para:`⚡ became paralyzed!`, leech:`🌱 was seeded!`, burn:`🔥 was burned!`, poison:`☠️ was poisoned!`, freeze:`🧊 was frozen solid!` };
+    const msgs = { sleep:'fell asleep!', para:'became paralyzed!', leech:'was seeded!', burn:'was burned!', poison:'was poisoned!', freeze:'was frozen solid!' };
+    const icons = { sleep:'💤', para:'⚡', leech:'🌱', burn:'🔥', poison:'☠️', freeze:'🧊' };
     const cols = { sleep:'text-indigo-400', para:'text-yellow-400', leech:'text-emerald-400', burn:'text-orange-400', poison:'text-purple-400', freeze:'text-blue-300' };
-    logBox.innerHTML += `<div class="${cols[cond]||'text-slate-400'} mt-1 font-bold">${ownerName} ${msgs[cond]||cond}</div>`;
+    logBox.innerHTML += `<div class="${cols[cond]||'text-slate-400'} mt-1 font-bold">${icons[cond] || ''} ${ownerName} ${msgs[cond]||cond}</div>`;
     if (cond === 'para')  applyStatStage(side, 'speed', -2, logBox, myName, foeName);
     if (cond === 'burn')  applyStatStage(side, 'atk',   -1, logBox, myName, foeName);
     // Always refresh the stat/status panel so Sleep, Freeze, Poison, Leech all appear

@@ -67,6 +67,8 @@ function loadSavedProgress() {
         if (!normalized.balls) return false;           // sanity check
         Object.assign(gameState, normalized);
         assignPokemonUids();
+        // Older saves could hold a translated name: keep the English one in data
+        [...(gameState.pcBox || []), ...(gameState.pokedex || [])].forEach(p => { if (p && p._enName && /[^\x00-\x7F]/.test(p.name || '')) p.name = p._enName; });
         // Pixel sprites everywhere (and real shiny sprites instead of a colour filter)
         (gameState.pcBox || []).forEach(normalizeOwnedSprite);
         (gameState.pokedex || []).forEach(normalizeOwnedSprite);

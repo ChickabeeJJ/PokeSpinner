@@ -101,7 +101,7 @@ function grantApricorns(n) {
     const bag = apricornBag();
     const got = {};
     for (let i = 0; i < n; i++) { const c = APRICORNS[Math.floor(Math.random() * APRICORNS.length)]; bag[c]++; got[c] = (got[c] || 0) + 1; }
-    return Object.entries(got).map(([c, k]) => `${k}× ${capWord(c)}`).join(', ');
+    return Object.entries(got).map(([c, k]) => `${k}× ${capWord(c)} Apricorn`).join(', ');
 }
 const apricornImg = (c, cls = '') => `<img class="${cls}" src="${ITEM_ART(c + '-apricorn')}" alt="${capWord(c)} Apricorn" title="${capWord(c)} Apricorn">`;
 
@@ -246,7 +246,7 @@ onGameEvent((name, data) => {
         const n = stage && (stage.isGym || stage.isElite4 || stage.isChampion) ? 3 : 1;
         const got = grantApricorns(n);
         const log = document.getElementById('battleLog');
-        if (log) { log.innerHTML += `<div class="text-amber-300 mt-1">🍎 Found ${got} Apricorn${n > 1 ? 's' : ''}!</div>`; log.scrollTop = log.scrollHeight; }
+        if (log) { log.innerHTML += `<div class="text-amber-300 mt-1">🍎 Found ${got}!</div>`; log.scrollTop = log.scrollHeight; }
     }
     if (name === 'craft') bumpQuest('craft');
 });
@@ -295,7 +295,7 @@ window.claimQuest = function(i) {
     addCoins(q.reward.coins);
     const got = grantApricorns(q.reward.apricorns);
     playConfirmSound();
-    showNotification('Reward claimed!', `+${formatNum(q.reward.coins)} coins and ${got} Apricorns.`, 'success');
+    showNotification('Reward claimed!', `+${formatNum(q.reward.coins)} coins and ${got}.`, 'success');
     saveProgress(); updateUI(); renderQuests(); renderQuestBadge();
 };
 window.claimQuestChest = function() {
@@ -357,7 +357,7 @@ async function safariNewEncounter() {
     s.current = { pokemon: p, shiny, status: null, turns: 0 };
     markSeen(p.id, p.name);
     let msg = `A wild ${shiny ? '✨shiny✨ ' : ''}${p.name} appeared!`;
-    if (Math.random() < 0.25) msg += ` You found a ${grantApricorns(1).replace('1× ', '')} Apricorn in the grass!`;
+    if (Math.random() < 0.25) msg += ` You found a ${grantApricorns(1).replace('1× ', '')} in the grass!`;
     safariBusy = false;
     playConfirmSound();
     renderSafari(msg);
