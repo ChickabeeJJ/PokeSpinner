@@ -591,16 +591,14 @@
                 gap: .25rem clamp(.5rem, 2vw, 1.5rem);
                 padding: clamp(.6rem, 2.4vw, 1.25rem);
                 min-height: clamp(250px, 62vw, 400px);
+                /* Battle background art, with a light shade for HUD legibility.
+                   The gradient underneath shows while the image loads or if it fails. */
                 background:
-                    radial-gradient(120% 60% at 75% 38%, rgba(56, 189, 248, .16), transparent 60%),
-                    radial-gradient(120% 70% at 25% 95%, rgba(34, 197, 94, .18), transparent 60%),
+                    linear-gradient(180deg, rgba(8, 20, 35, .08), rgba(8, 20, 35, .28)),
+                    url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-AQ1Qxv6GT2e08UaMiqlLp9zqaMVCgG.png') center / cover no-repeat,
                     linear-gradient(180deg, #13244a 0%, #1b3560 42%, #1e4d4a 58%, #173d33 100%);
                 isolation: isolate;
                 overflow: hidden;
-            }
-            .battle-field::before { /* horizon line */
-                content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; z-index: -1;
-                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .18), transparent);
             }
             .battle-hud--foe    { grid-column: 1; grid-row: 1; align-self: start;  justify-self: start; }
             .battle-mon--foe    { grid-column: 2; grid-row: 1; }
