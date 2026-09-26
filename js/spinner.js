@@ -244,7 +244,7 @@ window.selectBall = function(ballType) {
     if (gameState.wheel.spinning) return;
     initAudio();
     if (gameState.balls[ballType] <= 0) {
-        showNotification("No Supplies", `Purchase additional ${ballType} cores from Mart!`, 'error');
+        showNotification('None left', `You have no ${BALL_SHOP[ballType] ? BALL_SHOP[ballType].name + 's' : 'balls of that kind'} — buy some at the Poké Mart.`, 'error');
         return;
     }
     playConfirmSound();
@@ -311,11 +311,22 @@ window.triggerSpin = function() {
     initAudio();
     if (gameState.wheel.spinning || gameState.wheel.stopping) return;
     
-    const selected = gameState.selectedBall;
-    if (gameState.balls[selected] <= 0) {
-        showNotification(t('scanner.outOfStock'), t('scanner.noStockMsg'), 'error');
-        return;
+    // Out of the selected ball: switch to the cheapest ball still in the bag
+    if ((gameState.balls[gameState.selectedBall] || 0) <= 0) {
+        const next = ['poke', 'great', 'ultra', 'master'].find(b => (gameState.balls[b] || 0) > 0);
+        if (!next) {
+            if (gameState.coins >= 10) {
+                showNotification('Out of Poké Balls', 'Opening the Poké Mart — Poké Balls cost 10 coins.', 'info');
+                setTimeout(() => { switchView('shop'); if (typeof setMartTab === 'function') setMartTab('balls'); }, 700);
+            } else {
+                showNotification('Out of Poké Balls', 'Win battles on the Adventure map to earn coins, then buy more at the Poké Mart.', 'error');
+            }
+            return;
+        }
+        gameState.selectedBall = next;
+        buildWheelSectors(); drawWheel(); updateTargetRarityObjective();
     }
+    const selected = gameState.selectedBall;
 
     gameState.balls[selected] -= 1;
     updateUI();

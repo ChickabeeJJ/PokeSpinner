@@ -1004,7 +1004,9 @@ body:not(.light-mode):not(.grey-mode) [class*="glow-"] { box-shadow: none !impor
 #spinBtn, #stopBtn, #catchBtn { font-family: var(--font-game) !important; font-weight: 400 !important; letter-spacing: .04em !important; font-size: 1.35rem !important; border: 3px solid var(--ink) !important; border-radius: 18px !important; text-shadow: 0 2px 0 var(--ink); }
 #spinBtn:not(:disabled) { background: linear-gradient(#78e862, #3cbd31) !important; color: #fff !important; box-shadow: 0 6px 0 var(--ink), inset 0 -6px 0 rgba(0, 0, 0, .15), inset 0 3px 0 rgba(255, 255, 255, .45) !important; }
 #spinBtn:disabled { background: #4a3a6e !important; color: rgba(255, 255, 255, .45) !important; box-shadow: 0 4px 0 var(--ink) !important; }
-#stopBtn.lock-lit { background: linear-gradient(#ffe06a, #ffae22) !important; color: #fff !important; box-shadow: 0 6px 0 var(--ink), inset 0 -6px 0 rgba(0, 0, 0, .15) !important; animation: lockBounce .6s ease-in-out infinite !important; }
+#stopBtn.lock-lit { background: linear-gradient(#ffe06a, #ffae22) !important; color: #fff !important; box-shadow: 0 6px 0 var(--ink), inset 0 -6px 0 rgba(0, 0, 0, .15) !important; animation: lockGlow 1s ease-in-out infinite !important; }
+/* The lit LOCK button glows instead of bouncing, so it stays an easy, steady tap target */
+@keyframes lockGlow { 50% { filter: brightness(1.15) drop-shadow(0 0 10px rgba(255, 214, 80, .85)); } }
 #stopBtn:disabled { background: #4a3a6e !important; color: rgba(255, 255, 255, .45) !important; box-shadow: 0 4px 0 var(--ink) !important; }
 @keyframes lockBounce { 50% { transform: translateY(-3px); } }
 #catchBtn:not(:disabled) { background: linear-gradient(#ff8088, #ec3b4a) !important; color: #fff !important; box-shadow: 0 6px 0 var(--ink), inset 0 -6px 0 rgba(0, 0, 0, .15) !important; }
@@ -1412,4 +1414,13 @@ body.reduce-motion .battle-screen::before, body.reduce-motion .battle-screen::af
 }
 @media (max-height: 560px) and (min-width: 640px) {
     .battle-screen > .battle-arena .battle-field { --sprite-scale: 1.5; }
+}
+
+/* Long BAG / POKéMON lists scroll inside the menu instead of pushing the battle off-screen */
+.battle-screen #battleMenuBag, .battle-screen #battleMenuParty { max-height: min(40dvh, 300px); overflow-y: auto; overscroll-behavior: contain; padding-right: 2px; }
+@media (max-width: 639px) { .battle-screen #battleMenuBag, .battle-screen #battleMenuParty { max-height: 34dvh; } }
+@media (min-width: 640px) {
+    .battle-screen #battleMenuBag, .battle-screen #battleMenuParty { max-height: min(30dvh, 260px); }
+    .battle-screen > .battle-arena:has(#battleMenuBag:not(.hidden)) .battle-field,
+    .battle-screen > .battle-arena:has(#battleMenuParty:not(.hidden)) .battle-field { height: clamp(180px, calc(100dvh - 430px), 460px); }
 }

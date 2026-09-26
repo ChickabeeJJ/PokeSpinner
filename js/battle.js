@@ -213,7 +213,7 @@ async function selectFighterAndBegin(pokemon) {
     renderBattleSide('boss');
     renderBattleSide('player');
 
-    document.getElementById('battleLog').innerHTML = `<div class="text-cyan-400">${t('battle.combatInit')}<span class="font-bold text-white">${enemyProfile.name}</span>!</div>`;
+    document.getElementById('battleLog').innerHTML = `<div class="text-cyan-400">The battle against <span class="font-bold text-white">${enemyProfile.name}</span> begins!</div>`;
     flashEffectiveness('');
 
     gameState.battle.active = true;
@@ -592,6 +592,7 @@ function applyStatStage(side, stat, delta, logBox, atkName, defName) {
     stages[stat] = Math.max(-6, Math.min(6, prev + delta));
     const change = stages[stat] - prev;
     const ownerName = side === 'player' ? atkName : defName;
+    stat = { atk: 'Attack', def: 'Defense', spAtk: 'Sp. Atk', spDef: 'Sp. Def', speed: 'Speed', accuracy: 'accuracy' }[stat] || stat;
     if (change === 0) {
         logBox.innerHTML += `<div class="text-slate-500 mt-1 italic text-[10px]">${ownerName}'s ${stat} ${delta > 0 ? t('battle.wontHigher') : t('battle.wontLower')}</div>`;
     } else {
