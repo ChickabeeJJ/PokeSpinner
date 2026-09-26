@@ -164,5 +164,5 @@ window.openStagePreview = function(stageId) {
 window.closeStagePreview = function() { const m = document.getElementById('stagePreview'); m.classList.add('hidden'); m.classList.remove('flex'); };
 window.launchStagePrepById = function(stageId) {
     const st = CAMPAIGN_ROADMAP.find(x => x.stageId === stageId);
-    if (st && stageState(st) !== 'locked') launchStagePrep(st);
+    if (st && stageState(st) !== 'locked') { closeStagePreview(); launchStagePrep(st); }
 };

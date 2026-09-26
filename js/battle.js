@@ -210,13 +210,9 @@ async function selectFighterAndBegin(pokemon) {
     gameState.battle.active = true;
     renderBattleMoves(pokemon);
 
-    // On phones the arena can start below the fold — bring it into view
-    const arena = document.getElementById('battleArenaActive');
-    const headerH = (document.querySelector('header') || {}).offsetHeight || 0;
-    const top = arena.getBoundingClientRect().top;
-    if (top < headerH || top > window.innerHeight * 0.4) {
-        window.scrollTo({ top: Math.max(0, window.scrollY + top - headerH - 8), behavior: 'smooth' });
-    }
+    // The battle opens full-screen (.battle-screen); start at the top of it
+    const screen = document.getElementById('battleScreen');
+    if (screen) screen.scrollTop = 0;
 }
 
 // ── Battle HUD helpers ────────────────────────────────────────────

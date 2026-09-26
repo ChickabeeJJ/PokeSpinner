@@ -93,7 +93,7 @@
         <!-- Profile / Settings buttons are in the header to avoid overlap -->
 
         <!-- CUSTOM NOTIFICATION MODAL -->
-        <div id="customToast" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 bg-slate-900/95 border-2 border-slate-850 px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 transition-all duration-300 opacity-0 translate-y-[-50px] pointer-events-none max-w-md w-[90%]">
+        <div id="customToast" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-[95] bg-slate-900/95 border-2 border-slate-850 px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 transition-all duration-300 opacity-0 translate-y-[-50px] pointer-events-none max-w-md w-[90%]">
             <div id="toastIconContainer" class="p-3 rounded-xl bg-blue-500/20 text-blue-400">
                 <i id="toastIcon" class="fas fa-info-circle text-xl"></i>
             </div>
@@ -589,91 +589,94 @@
                         </div>
                     </div>
 
-                    <!-- Shown while opponents are being prepared -->
-                    <div id="battleLoading" class="battle-loading hidden" role="status" aria-live="polite">
-                        <div class="spinner"></div>
-                        <span id="battleLoadingText">Preparing battle…</span>
-                    </div>
-
-                    <!-- BATTLE SCREEN (layout & styling: .battle-* rules in <style>) -->
-                    <div id="battleArenaActive" class="battle-arena hidden" data-busy="0">
-                        <div class="battle-topbar">
-                            <div class="battle-stage">
-                                <span id="battleStageIcon" class="battle-stage-icon" aria-hidden="true">⚔️</span>
-                                <div class="battle-stage-text">
-                                    <div id="battleStageTitle" class="battle-stage-title">Battle</div>
-                                    <div id="battleStageSub" class="battle-stage-sub"></div>
-                                </div>
-                            </div>
-                            <div id="bossTeamPips" class="battle-pips" title="Opponent's party"></div>
+                    <!-- Battle screen: opens full-screen over the game (see .battle-screen in game.css) -->
+                    <div id="battleScreen" class="battle-screen">
+                        <!-- Shown while opponents are being prepared -->
+                        <div id="battleLoading" class="battle-loading hidden" role="status" aria-live="polite">
+                            <div class="spinner"></div>
+                            <span id="battleLoadingText">Preparing battle…</span>
                         </div>
 
-                        <div class="battle-field" id="battleField">
-                            <!-- Opponent status -->
-                            <div class="battle-hud battle-hud--foe">
-                                <div class="hud-row">
-                                    <span id="bossName" class="hud-name">Opponent</span>
-                                    <span id="bossLevelBadge" class="hud-level">Lv. 5</span>
+                        <!-- BATTLE SCREEN (layout & styling: .battle-* rules in <style>) -->
+                        <div id="battleArenaActive" class="battle-arena hidden" data-busy="0">
+                            <div class="battle-topbar">
+                                <div class="battle-stage">
+                                    <span id="battleStageIcon" class="battle-stage-icon" aria-hidden="true">⚔️</span>
+                                    <div class="battle-stage-text">
+                                        <div id="battleStageTitle" class="battle-stage-title">Battle</div>
+                                        <div id="battleStageSub" class="battle-stage-sub"></div>
+                                    </div>
                                 </div>
-                                <div class="hud-tags"><span id="bossTypeTags" class="contents"></span><span id="bossStatusTag" class="contents"></span><span id="bossHeldItemBadge" class="contents"></span></div>
-                                <div class="hud-hp">
-                                    <span class="hud-hp-label">HP</span>
-                                    <div class="hud-hp-track"><div id="bossHPBar" class="hud-hp-fill" style="width: 100%;"></div></div>
-                                </div>
-                                <div class="hud-foot"><span id="bossHPText" class="hud-hp-text">300/300</span></div>
-                                <div id="bossStatStages" class="hud-stats"></div>
-                            </div>
-                            <div class="battle-mon battle-mon--foe">
-                                <div class="battle-platform"></div>
-                                <img id="bossSprite" class="battle-sprite" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Opponent Pokémon" draggable="false" onerror="_spriteFallback(this)">
+                                <div id="bossTeamPips" class="battle-pips" title="Opponent's party"></div>
                             </div>
 
-                            <!-- Player side (seen from behind, like the main games) -->
-                            <div class="battle-mon battle-mon--player">
-                                <div class="battle-platform"></div>
-                                <img id="playerFighterSprite" class="battle-sprite" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Your Pokémon" draggable="false" onerror="_spriteFallback(this)">
-                            </div>
-                            <div class="battle-hud battle-hud--player">
-                                <div class="hud-row">
-                                    <span id="playerFighterName" class="hud-name">Partner</span>
-                                    <span id="playerFighterLevelBadge" class="hud-level">Lv. 1</span>
+                            <div class="battle-field" id="battleField">
+                                <!-- Opponent status -->
+                                <div class="battle-hud battle-hud--foe">
+                                    <div class="hud-row">
+                                        <span id="bossName" class="hud-name">Opponent</span>
+                                        <span id="bossLevelBadge" class="hud-level">Lv. 5</span>
+                                    </div>
+                                    <div class="hud-tags"><span id="bossTypeTags" class="contents"></span><span id="bossStatusTag" class="contents"></span><span id="bossHeldItemBadge" class="contents"></span></div>
+                                    <div class="hud-hp">
+                                        <span class="hud-hp-label">HP</span>
+                                        <div class="hud-hp-track"><div id="bossHPBar" class="hud-hp-fill" style="width: 100%;"></div></div>
+                                    </div>
+                                    <div class="hud-foot"><span id="bossHPText" class="hud-hp-text">300/300</span></div>
+                                    <div id="bossStatStages" class="hud-stats"></div>
                                 </div>
-                                <div class="hud-tags"><span id="playerTypeTags" class="contents"></span><span id="playerStatusTag" class="contents"></span><span id="playerHeldItemBadge" class="contents"></span></div>
-                                <div class="hud-hp">
-                                    <span class="hud-hp-label">HP</span>
-                                    <div class="hud-hp-track"><div id="playerFighterHPBar" class="hud-hp-fill" style="width: 100%;"></div></div>
+                                <div class="battle-mon battle-mon--foe">
+                                    <div class="battle-platform"></div>
+                                    <img id="bossSprite" class="battle-sprite" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Opponent Pokémon" draggable="false" onerror="_spriteFallback(this)">
                                 </div>
-                                <div class="hud-foot">
-                                    <div id="playerTeamPips" class="battle-pips" title="Your party"></div>
-                                    <span id="playerFighterHPText" class="hud-hp-text">200/200</span>
+
+                                <!-- Player side (seen from behind, like the main games) -->
+                                <div class="battle-mon battle-mon--player">
+                                    <div class="battle-platform"></div>
+                                    <img id="playerFighterSprite" class="battle-sprite" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Your Pokémon" draggable="false" onerror="_spriteFallback(this)">
                                 </div>
-                                <div class="hud-exp"><span class="hud-exp-label">EXP</span><div class="hud-exp-track"><div id="playerExpBar" class="hud-exp-fill"></div></div></div>
-                                <div id="playerStatStages" class="hud-stats"></div>
+                                <div class="battle-hud battle-hud--player">
+                                    <div class="hud-row">
+                                        <span id="playerFighterName" class="hud-name">Partner</span>
+                                        <span id="playerFighterLevelBadge" class="hud-level">Lv. 1</span>
+                                    </div>
+                                    <div class="hud-tags"><span id="playerTypeTags" class="contents"></span><span id="playerStatusTag" class="contents"></span><span id="playerHeldItemBadge" class="contents"></span></div>
+                                    <div class="hud-hp">
+                                        <span class="hud-hp-label">HP</span>
+                                        <div class="hud-hp-track"><div id="playerFighterHPBar" class="hud-hp-fill" style="width: 100%;"></div></div>
+                                    </div>
+                                    <div class="hud-foot">
+                                        <div id="playerTeamPips" class="battle-pips" title="Your party"></div>
+                                        <span id="playerFighterHPText" class="hud-hp-text">200/200</span>
+                                    </div>
+                                    <div class="hud-exp"><span class="hud-exp-label">EXP</span><div class="hud-exp-track"><div id="playerExpBar" class="hud-exp-fill"></div></div></div>
+                                    <div id="playerStatStages" class="hud-stats"></div>
+                                </div>
+
+                                <div id="battleFx" class="battle-fx" aria-hidden="true"></div>
+                                <div id="effectivenessIndicator" class="battle-callout" aria-live="polite"></div>
                             </div>
 
-                            <div id="battleFx" class="battle-fx" aria-hidden="true"></div>
-                            <div id="effectivenessIndicator" class="battle-callout" aria-live="polite"></div>
-                        </div>
-
-                        <div class="battle-console">
-                            <div id="battleLog" class="battle-log" aria-live="polite">
-                                <div>Battle stage configured. Ready to strike first based on speed.</div>
-                            </div>
-                            <div class="battle-commands">
-                                <div class="battle-commands-head">
-                                    <span id="battlePrompt" class="battle-prompt">What will your Pokémon do?</span>
-                                    <button type="button" id="battleBackBtn" class="battle-back-btn hidden" onclick="setBattleMenu('main')">◀ Back</button>
+                            <div class="battle-console">
+                                <div id="battleLog" class="battle-log" aria-live="polite">
+                                    <div>Battle stage configured. Ready to strike first based on speed.</div>
                                 </div>
-                                <!-- Main command menu -->
-                                <div id="battleMenuMain" class="battle-panel battle-menu">
-                                    <button type="button" class="menu-btn menu-btn--fight" onclick="setBattleMenu('fight')"><span class="menu-ico">⚔</span>FIGHT</button>
-                                    <button type="button" class="menu-btn menu-btn--bag" onclick="setBattleMenu('bag')"><span class="menu-ico">🎒</span>BAG</button>
-                                    <button type="button" class="menu-btn menu-btn--party" onclick="setBattleMenu('party')"><span class="menu-ico">◓</span>POKÉMON</button>
-                                    <button type="button" id="battleRunBtn" class="menu-btn menu-btn--run" onclick="fleeBattle()"><span class="menu-ico">»</span>RUN</button>
+                                <div class="battle-commands">
+                                    <div class="battle-commands-head">
+                                        <span id="battlePrompt" class="battle-prompt">What will your Pokémon do?</span>
+                                        <button type="button" id="battleBackBtn" class="battle-back-btn hidden" onclick="setBattleMenu('main')">◀ Back</button>
+                                    </div>
+                                    <!-- Main command menu -->
+                                    <div id="battleMenuMain" class="battle-panel battle-menu">
+                                        <button type="button" class="menu-btn menu-btn--fight" onclick="setBattleMenu('fight')"><span class="menu-ico">⚔</span>FIGHT</button>
+                                        <button type="button" class="menu-btn menu-btn--bag" onclick="setBattleMenu('bag')"><span class="menu-ico">🎒</span>BAG</button>
+                                        <button type="button" class="menu-btn menu-btn--party" onclick="setBattleMenu('party')"><span class="menu-ico">◓</span>POKÉMON</button>
+                                        <button type="button" id="battleRunBtn" class="menu-btn menu-btn--run" onclick="fleeBattle()"><span class="menu-ico">»</span>RUN</button>
+                                    </div>
+                                    <div id="battleMenuFight" class="battle-panel hidden"><div id="battleMovesGrid" class="battle-moves"></div></div>
+                                    <div id="battleMenuParty" class="battle-panel hidden"><div id="battleSwitchRow" class="battle-switch"></div></div>
+                                    <div id="battleMenuBag" class="battle-panel hidden"><div id="battleBagList" class="battle-switch"></div></div>
                                 </div>
-                                <div id="battleMenuFight" class="battle-panel hidden"><div id="battleMovesGrid" class="battle-moves"></div></div>
-                                <div id="battleMenuParty" class="battle-panel hidden"><div id="battleSwitchRow" class="battle-switch"></div></div>
-                                <div id="battleMenuBag" class="battle-panel hidden"><div id="battleBagList" class="battle-switch"></div></div>
                             </div>
                         </div>
                     </div>

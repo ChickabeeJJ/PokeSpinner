@@ -1334,7 +1334,6 @@ body.light-mode .mobile-nav-btn.is-active { color: var(--theme-c1) !important; }
     input, select, textarea { font-size: 16px !important; }
     #customToast { top: calc(.75rem + env(safe-area-inset-top)); padding: .75rem 1rem; }
     /* Give the battle screen the full width while fighting */
-    #view-battle:has(> #battleArenaActive:not(.hidden)) { padding: .5rem !important; }
     /* Spinner fits on one phone screen: wheel, balls and SPIN visible without scrolling */
     .game-title { flex-direction: row; justify-content: center; gap: .45rem; }
     .game-title .t1, .game-title .t2 { font-size: 2.1rem; }
@@ -1352,3 +1351,35 @@ body.light-mode .mobile-nav-btn.is-active { color: var(--theme-c1) !important; }
 @media (max-width: 639px) and (max-height: 760px) {
     #view-roulette .relative.w-64.h-64 { width: 232px; height: 232px; }
 }
+
+/* ===================================================================
+   BATTLE SCREEN — battles open full-screen over the game (with the
+   classic black-bars intro) instead of appearing lower down the page.
+   =================================================================== */
+.battle-screen { display: contents; }
+.battle-screen:has(> :not(.hidden)) {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: fixed; inset: 0; z-index: 88; overflow-y: auto; overscroll-behavior: contain;
+    padding: calc(12px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom));
+    background: radial-gradient(ellipse at 50% 30%, rgba(74, 58, 120, .92), rgba(20, 10, 40, .97) 70%);
+    backdrop-filter: blur(6px);
+}
+.battle-screen:has(> :not(.hidden))::before, .battle-screen:has(> :not(.hidden))::after {
+    content: ''; position: fixed; left: 0; right: 0; height: 50%; z-index: 5; background: #0b0616; pointer-events: none;
+    animation: battleBarsOpen .7s cubic-bezier(.7, 0, .3, 1) .15s both;
+}
+.battle-screen:has(> :not(.hidden))::before { top: 0; transform-origin: top; }
+.battle-screen:has(> :not(.hidden))::after { bottom: 0; transform-origin: bottom; }
+@keyframes battleBarsOpen { from { transform: scaleY(1); } to { transform: scaleY(0); } }
+.battle-screen > .battle-arena { width: 100%; max-width: 1000px; margin: auto; animation: battleZoomIn .45s cubic-bezier(.2, .9, .3, 1.1) .35s both; }
+.battle-screen > .battle-loading { margin: auto; color: #fff; }
+@keyframes battleZoomIn { from { transform: scale(.94); opacity: 0; } to { transform: none; opacity: 1; } }
+body:has(#battleScreen > :not(.hidden)) { overflow: hidden; }
+body:has(#battleScreen > :not(.hidden)) .mobile-tabbar { display: none; }
+@media (max-width: 639px) {
+    .battle-screen:has(> :not(.hidden)) { padding: 0; justify-content: flex-start; }
+    .battle-screen > .battle-arena { min-height: 100%; border-radius: 0 !important; border-left: 0 !important; border-right: 0 !important; box-shadow: none !important; }
+    .battle-screen > .battle-arena .battle-topbar { padding-top: calc(.5rem + env(safe-area-inset-top)); }
+    .battle-screen > .battle-arena .battle-field { flex: 1 1 auto; }
+}
+body.reduce-motion .battle-screen::before, body.reduce-motion .battle-screen::after { display: none; }
