@@ -602,6 +602,7 @@ function handleBattleVictory() {
 
     addCoins(rewardCoins);
     addXP(Math.round(rewardCoins / 2));
+    gameEvent('battleWin', { stage, endless: !stage });
 
     // ── Exp. Share — only the Pokémon holding exp_share gets 50 % XP ──
     if (gameState.team && gameState.pcBox) {

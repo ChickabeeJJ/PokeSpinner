@@ -72,6 +72,8 @@ window.onload = function() {
                 }
                 updateProfileBtn();
                 buildWheelSectors();
+                // Daily quests / weather (features.js) for the loaded save
+                ensureQuests(); renderQuestBadge(); renderWeatherChip();
                 drawWheel();
                 updateUI();
                 updateTargetRarityObjective();

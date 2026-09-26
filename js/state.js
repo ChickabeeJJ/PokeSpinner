@@ -2,6 +2,13 @@
 // Classic script: top-level declarations are shared with the other js/ files,
 // which index.html loads in order.
 
+// Tiny event bus so optional systems (quests, apricorns…) can react to play
+const GAME_LISTENERS = [];
+function onGameEvent(fn) { GAME_LISTENERS.push(fn); }
+function gameEvent(name, data) {
+    for (const fn of GAME_LISTENERS) { try { fn(name, data || {}); } catch (e) { console.error('gameEvent', name, e); } }
+}
+
 let gameState = {
     coins: 100,
     xp: 0,

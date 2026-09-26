@@ -440,6 +440,7 @@ function renderBattleHeader() {
         title.textContent = t('battle.endlessTitle');
         sub.textContent = `${t('battle.round')} ${(gameState.endlessRunDefeats || 0) + 1}`;
     }
+    if (typeof applyBattleWeather === 'function') applyBattleWeather();
 }
 
 function flashEffectiveness(text, kind) {
@@ -882,7 +883,9 @@ function resolveMoveAttack(attacker, defender, moveName, isPlayerAttacker) {
         attackStat = (moveSpec.category === 'special' ? (attacker.spAtk || attacker.atk || 50) : (attacker.atk || 50)) * lvlMul;
     }
     const criticalMod = isCritical ? 2 : 1;
-    let calculatedDamage = Math.round((((2 * attackerLvl / 5 + 2) * moveSpec.power * (attackStat / defenseStat)) / 50 + 2) * stabMod * typeMod * itemMod * criticalMod * (0.85 + Math.random() * 0.15));
+    // Weather (features.js): Sun/Rain boost Fire/Water ×1.5 and weaken the other ×0.5; other weathers ×1.2 for boosted types
+    const weatherMod = typeof weatherDamageMod === 'function' ? weatherDamageMod(moveSpec.type) : 1;
+    let calculatedDamage = Math.round((((2 * attackerLvl / 5 + 2) * moveSpec.power * (attackStat / defenseStat)) / 50 + 2) * stabMod * typeMod * itemMod * criticalMod * weatherMod * (0.85 + Math.random() * 0.15));
     if (calculatedDamage < 1 || typeMod === 0) calculatedDamage = typeMod === 0 ? 0 : 1;
     // Multi-hit moves (e.g. Double Kick, Bullet Seed): 2–5 hits use the games' odds
     const sec = moveSpec.secondary || {};

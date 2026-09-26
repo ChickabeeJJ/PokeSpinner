@@ -32,6 +32,7 @@
         <!-- Tailwind utilities, pre-built (npm run build:css), then the game theme -->
         <link rel="stylesheet" href="css/tailwind.css">
         <link rel="stylesheet" href="css/game.css">
+        <link rel="stylesheet" href="css/features.css">
     </head>
     <body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white">
         <div class="scanlines"></div>
@@ -383,6 +384,22 @@
         </div>
 
         <!-- HOW TO PLAY -->
+        <!-- Daily quests -->
+        <div id="questModal" class="fixed inset-0 z-[85] bg-black/70 hidden items-center justify-center p-4" onclick="if(event.target===this)closeQuests()">
+            <div class="g-modal w-full max-w-md">
+                <div class="g-modal-head"><h3>Daily Quests</h3><button type="button" class="square-btn sm" onclick="closeQuests()" aria-label="Close">✕</button></div>
+                <div id="questBody"></div>
+            </div>
+        </div>
+
+        <!-- Safari Zone -->
+        <div id="safariModal" class="fixed inset-0 z-[85] bg-black/70 hidden items-center justify-center p-3" onclick="if(event.target===this)closeSafari()">
+            <div class="g-modal safari-modal w-full max-w-md">
+                <div class="g-modal-head"><h3>🌿 Safari Zone</h3><button type="button" class="square-btn sm" onclick="closeSafari()" aria-label="Close">✕</button></div>
+                <div id="safariBody"></div>
+            </div>
+        </div>
+
         <div id="helpModal" class="fixed inset-0 z-[85] bg-black/70 hidden items-center justify-center p-4" onclick="if(event.target===this)closeHelpModal()">
             <div class="g-modal w-full max-w-md">
                 <div class="g-modal-head"><h3>How to Play</h3><button type="button" class="square-btn sm" onclick="closeHelpModal()" aria-label="Close">✕</button></div>
@@ -392,6 +409,9 @@
                     <li>Build your <b>Team</b> of up to 6 and check its type coverage.</li>
                     <li>Beat trainers, gym leaders, rivals and villains on the <b>Adventure</b> map to earn coins, badges and new regions.</li>
                     <li>Fill the <b>Pokédex</b> to claim milestone rewards, and stock up at the <b>Poké Mart</b> (look for the Daily Deal!).</li>
+                    <li>Check the <b>weather</b> under the title: it changes every 3 hours, brings out certain types and powers up their moves.</li>
+                    <li>Finish the <b>Daily Quests</b> (map button, top right) for coins, Apricorns and a daily chest.</li>
+                    <li>Visit the <b>Safari Zone</b> from Adventure, and turn Apricorns into balls and gear at <b>Kurt's Workshop</b> in the Mart.</li>
                     <li>Shiny Pokémon appear at full odds, 1/4096. Good luck!</li>
                 </ol>
             </div>
@@ -418,6 +438,7 @@
                         <div class="hud-ball" title="Ultra Balls"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/ultra-ball.png" alt=""><span id="miniCount-ultra">0</span></div>
                         <div class="hud-ball" title="Master Balls"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png" alt=""><span id="miniCount-master">0</span></div>
                     </div>
+                    <button id="questBtn" type="button" class="square-btn quest-btn" onclick="openQuests()" title="Daily quests" aria-label="Daily quests"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/town-map.png" alt=""><span id="questBadge" class="quest-badge hidden">0</span></button>
                     <button type="button" class="square-btn" onclick="openHelpModal()" title="How to play" aria-label="How to play">?</button>
                     <button id="settingsToggleBtn" type="button" class="square-btn" onclick="openSettingsModal()" title="Settings" aria-label="Settings">⚙</button>
                 </div>
@@ -453,6 +474,7 @@
                             <div class="flex items-center justify-center gap-2 mt-2">
                                 <span id="regionBadge" class="text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full">KANTO · GEN 1</span>
                             </div>
+                            <button id="weatherChip" type="button" class="weather-chip" onclick="showWeatherInfo()" aria-label="Current weather"></button>
 
                         </div>
 
@@ -546,7 +568,10 @@
                                 <h2 class="heading-font text-3xl">Adventure</h2>
                                 <p class="g-sub">Travel each region, beat its trainers and Gym Leaders, and become Champion!</p>
                             </div>
-                            <button type="button" class="g-btn purple" onclick="startUnlimitedMatch()" title="Endless battles against scaled opponents (50 coins entry)">♾️ Battle Tower <span class="g-chip">50 🪙</span></button>
+                            <div class="adv-actions">
+                                <button type="button" class="g-btn green" onclick="openSafari()" title="Catch Pokémon with Safari Balls, bait and rocks (500 coins entry)">🌿 Safari Zone <span class="g-chip">500 🪙</span></button>
+                                <button type="button" class="g-btn purple" onclick="startUnlimitedMatch()" title="Endless battles against scaled opponents (50 coins entry)">♾️ Battle Tower <span class="g-chip">50 🪙</span></button>
+                            </div>
                         </div>
                         <div id="advRegionTabs" class="g-tabs adv-tabs"></div>
                         <div id="advRegionInfo" class="adv-info g-card"></div>
@@ -892,6 +917,8 @@
         <script src="js/collection.js"></script>
         <script src="js/mart.js"></script>
         <script src="js/extras.js"></script>
+        <script src="js/data-types.js"></script>
+        <script src="js/features.js"></script>
         <script src="js/main.js"></script>
     
         <!-- ══════════════════════════════════════════════════════════════

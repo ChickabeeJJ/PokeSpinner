@@ -303,7 +303,8 @@ function getWedgePokemonId(rarity) {
     // Filter starters to 30% of their normal appearance rate
     const filtered = pool.filter(id => !STARTER_IDS_FREQ.has(id) || Math.random() < 0.30);
     const finalPool = filtered.length > 0 ? filtered : pool;
-    return finalPool[Math.floor(Math.random() * finalPool.length)];
+    // Weather (features.js) makes boosted types three times as likely
+    return typeof pickWeatherWeighted === 'function' ? pickWeatherWeighted(finalPool) : finalPool[Math.floor(Math.random() * finalPool.length)];
 }
 
 window.triggerSpin = function() {
@@ -320,6 +321,7 @@ window.triggerSpin = function() {
     updateUI();
     saveProgress();
     playConfirmSound();
+    gameEvent('spin', { ball: selected });
     
     document.getElementById('spinBtn').disabled = true;
     document.getElementById('spinBtn').className = "flex-1 py-4 px-6 bg-slate-900 text-slate-600 font-black uppercase rounded-2xl cursor-not-allowed transition duration-150 tracking-wider border border-slate-800";
@@ -791,6 +793,7 @@ function finishCatchAttempt(pokemon, isCaptured, wasShiny, catchPhrase) {
 
         addCoins(coinGain);
         addXP(coinGain / 2);
+        gameEvent('catch', { pokemon: caughtPokemon, rarity: pokemon.rarity, shiny: wasShiny });
 
         // New species for the Pokédex pay a discovery bonus
         const newSpecies = !gameState.pokedex.some(p => p.id === pokemon.id && p !== caughtPokemon);

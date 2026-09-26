@@ -1,0 +1,93 @@
+/* PokeSpinner — weather, daily quests, Safari Zone and Kurt's Workshop (js/features.js). */
+
+/* ── Weather chip under the spinner title ── */
+.weather-chip { display: inline-flex; align-items: center; gap: .3rem; margin-top: .45rem; padding: .2rem .6rem .2rem .35rem; border-radius: 999px; background: var(--cream); color: var(--ink); border: 3px solid var(--ink); box-shadow: 0 3px 0 var(--ink); font: .85rem/1 var(--font-game); max-width: 100%; white-space: nowrap; transition: transform .1s; }
+.weather-chip:hover { transform: translateY(-1px); }
+.weather-chip:empty { display: none; }
+.weather-chip .wx-ico { font-size: 1.05rem; }
+.weather-chip .type-chip { font-size: .58rem; padding: 0 .3rem; }
+@media (max-width: 380px) { .weather-chip .type-chip:nth-of-type(n+3) { display: none; } }
+
+/* ── Weather on the battle field ── */
+.battle-field[data-wx]::after { content: ''; position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.battle-field[data-wx="rain"]::after { background: repeating-linear-gradient(105deg, transparent 0 14px, rgba(200, 225, 255, .45) 14px 15px, transparent 15px 30px) 0 0 / 60px 60px, linear-gradient(rgba(40, 60, 110, .18), rgba(40, 60, 110, .18)); animation: wxRain .45s linear infinite; }
+.battle-field[data-wx="snow"]::after { background-image: radial-gradient(2.5px 2.5px at 20% 30%, #fff 50%, transparent 51%), radial-gradient(2px 2px at 70% 10%, #fff 50%, transparent 51%), radial-gradient(3px 3px at 45% 70%, #fff 50%, transparent 51%), radial-gradient(2px 2px at 85% 55%, #fff 50%, transparent 51%); background-size: 120px 120px; background-color: rgba(220, 235, 255, .12); animation: wxSnow 3s linear infinite; }
+.battle-field[data-wx="fog"]::after { background: radial-gradient(ellipse at 30% 60%, rgba(235, 235, 245, .45), transparent 60%), radial-gradient(ellipse at 75% 35%, rgba(235, 235, 245, .4), transparent 55%); animation: wxFog 9s ease-in-out infinite alternate; }
+.battle-field[data-wx="sunny"]::after { background: radial-gradient(circle at 92% -8%, rgba(255, 236, 150, .6), rgba(255, 200, 80, .15) 35%, transparent 60%); }
+.battle-field[data-wx="windy"]::after { background: repeating-linear-gradient(175deg, transparent 0 40px, rgba(255, 255, 255, .22) 40px 42px, transparent 42px 90px) 0 0 / 240px 90px; animation: wxWind 1.2s linear infinite; }
+.battle-field[data-wx="cloudy"]::after { background: linear-gradient(rgba(60, 60, 80, .16), rgba(60, 60, 80, .06)); }
+@keyframes wxRain { to { background-position: -16px 60px, 0 0; } }
+@keyframes wxSnow { to { background-position: 30px 120px, -20px 120px, 10px 120px, -30px 120px; } }
+@keyframes wxFog { to { transform: translateX(6%); } }
+@keyframes wxWind { to { background-position: -240px 0; } }
+
+/* ── Header quest button ── */
+.quest-btn { position: relative; }
+.quest-btn img { width: 26px; height: 26px; image-rendering: pixelated; }
+.quest-badge.hidden { display: none; }
+.quest-badge { position: absolute; top: -8px; right: -8px; min-width: 20px; height: 20px; padding: 0 5px; display: grid; place-items: center; border-radius: 999px; background: var(--g-red); color: #fff; border: 2px solid var(--ink); font: 800 .7rem/1 var(--font-ui); animation: lockBounce .9s ease-in-out infinite; }
+
+/* ── Daily quests ── */
+.quest-meta { display: flex; justify-content: space-between; align-items: center; gap: .5rem; margin-bottom: .7rem; flex-wrap: wrap; }
+.quest-card, .quest-chest { display: flex; align-items: center; gap: .65rem; padding: .6rem .7rem; margin-bottom: .55rem; border-radius: 16px; background: var(--p4); border: 3px solid var(--ink); box-shadow: 0 3px 0 var(--ink); }
+.quest-card.is-done { background: #4c6b3a; }
+.quest-card.is-claimed, .quest-chest.is-claimed { opacity: .6; }
+.quest-ico { flex: none; width: 36px; height: 36px; image-rendering: pixelated; }
+.quest-text { font: 1rem/1.15 var(--font-game); }
+.quest-bar { margin: .3rem 0 .2rem; }
+.quest-reward { font: 700 .7rem var(--font-ui); color: #d8ccf2; }
+.quest-chest-ico { flex: none; font-size: 1.8rem; width: 36px; text-align: center; }
+.quest-chest.is-ready { background: linear-gradient(180deg, #ffd84a, #f0b429); color: var(--ink); }
+.quest-chest.is-ready .quest-reward { color: var(--ink); }
+
+/* ── Adventure header actions ── */
+.adv-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+/* ── Safari Zone ── */
+.safari-modal { max-height: 94dvh; overflow-y: auto; }
+.safari-intro { text-align: center; display: grid; gap: .8rem; }
+.safari-intro p { font-weight: 700; }
+.safari-intro .help-steps { text-align: left; }
+.safari-intro-ball { width: 64px; height: 64px; margin: 0 auto; image-rendering: pixelated; animation: floatBall 3s ease-in-out infinite; }
+.safari-hud { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: .6rem; }
+.safari-hud img { width: 18px; height: 18px; image-rendering: pixelated; }
+.safari-scene { position: relative; height: 220px; border-radius: 18px; border: 3px solid var(--ink); overflow: hidden; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 22px;
+    background: url('https://raw.githubusercontent.com/smogon/pokemon-showdown-client/master/play.pokemonshowdown.com/fx/bg-meadow.png') center 70% / cover no-repeat, linear-gradient(#8fd3f4, #7cc56b); }
+.safari-scene::before { content: ''; position: absolute; left: 50%; bottom: 14px; width: 150px; height: 30px; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(closest-side, rgba(20, 12, 40, .32), transparent); }
+.safari-sprite { position: relative; max-height: 150px; max-width: 70%; image-rendering: pixelated; transform: scale(1.5); transform-origin: 50% 100%; animation: battleIdle 2.6s ease-in-out infinite; transition: transform .35s, opacity .35s, filter .35s; }
+.safari-sprite.is-absorbed { transform: scale(.1); opacity: 0; filter: brightness(3); }
+.safari-empty { font-size: 3rem; align-self: center; animation: floatBall 2.5s ease-in-out infinite; }
+.safari-nameplate { position: absolute; top: 8px; left: 8px; right: 8px; display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; padding: .3rem .55rem; border-radius: 12px; background: var(--cream); color: var(--ink); border: 3px solid var(--ink); font: 700 .8rem var(--font-ui); z-index: 2; }
+.safari-nameplate b { font: 1rem var(--font-game); font-weight: 400; }
+.safari-status { margin-left: auto; padding: 0 .45rem; border-radius: 999px; border: 2px solid var(--ink); font: 800 .7rem/1.5 var(--font-ui); }
+.safari-status.is-eating { background: #bbf7d0; }
+.safari-status.is-angry { background: #fecaca; }
+.safari-msg { min-height: 3.2rem; margin: .7rem 0; padding: .55rem .75rem; border-radius: 14px; background: #fff; color: var(--ink); border: 3px solid var(--ink); font: 700 .88rem/1.35 var(--font-ui); }
+.safari-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+.safari-actions .g-btn { min-height: 48px; }
+.safari-caught { display: flex; flex-wrap: wrap; gap: .3rem; justify-content: center; margin-bottom: .7rem; }
+.safari-caught img { width: 56px; height: 56px; image-rendering: pixelated; background: var(--p4); border: 2px solid var(--ink); border-radius: 12px; }
+.safari-ball { position: absolute; z-index: 4; width: 34px; height: 34px; left: -40px; bottom: 30px; image-rendering: pixelated; }
+.safari-ball.is-thrown { animation: safariThrow .65s cubic-bezier(.3, .7, .5, 1) forwards, safariShake .7s ease-in-out .65s var(--shakes, 0); }
+.safari-ball.is-caught { filter: brightness(.7) drop-shadow(0 0 6px #fff); }
+.safari-ball.is-burst { animation: safariBurst .4s ease-out forwards; }
+@keyframes safariThrow { 0% { left: -40px; bottom: 30px; transform: rotate(0); } 55% { bottom: 150px; } 100% { left: calc(50% - 17px); bottom: 40px; transform: rotate(720deg); } }
+@keyframes safariShake { 0%, 100% { left: calc(50% - 17px); bottom: 40px; transform: rotate(0); } 25% { transform: rotate(-22deg); } 75% { transform: rotate(22deg); } }
+@keyframes safariBurst { from { left: calc(50% - 17px); bottom: 40px; transform: scale(1); opacity: 1; } to { left: calc(50% - 17px); bottom: 40px; transform: scale(1.8); opacity: 0; } }
+
+/* ── Kurt's Workshop (Mart tab) ── */
+.mart-grid.is-workshop { display: block; }
+.ws-bag { margin-bottom: 1rem; padding: .8rem; }
+.ws-bag-head { display: flex; justify-content: space-between; align-items: flex-start; gap: .6rem; flex-wrap: wrap; margin-bottom: .6rem; }
+.ws-apricorns { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .35rem; }
+.ws-apricorn { display: flex; flex-direction: column; align-items: center; padding: .25rem 0; border-radius: 12px; background: var(--cream); border: 2px solid var(--ink); color: var(--ink); }
+.ws-apricorn img { width: 32px; height: 32px; image-rendering: pixelated; }
+.ws-apricorn b { font: .95rem/1 var(--font-game); font-weight: 400; }
+.ws-apricorn.is-empty { opacity: .45; }
+.ws-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: .9rem; }
+@media (max-width: 520px) { .ws-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; } }
+.ws-card.can-craft { box-shadow: 0 5px 0 var(--ink), 0 0 0 3px var(--g-green); }
+.ws-cost { display: flex; flex-wrap: wrap; justify-content: center; gap: .25rem; }
+.ws-need { display: inline-flex; align-items: center; gap: 1px; padding: 0 .3rem 0 .1rem; border-radius: 999px; background: #fde2e2; border: 2px solid var(--ink); font: 800 .68rem/1.6 var(--font-ui); color: var(--ink); }
+.ws-need.ok { background: #d1fadf; }
+.ws-need img { width: 20px; height: 20px; image-rendering: pixelated; }

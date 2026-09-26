@@ -27,6 +27,7 @@ const MART_TABS = [
     { id: 'held', label: 'Held Items', icon: 'leftovers' },
     { id: 'evolution', label: 'Evolution', icon: 'fire-stone' },
     { id: 'tms', label: 'TMs', icon: 'tm-normal' },
+    { id: 'workshop', label: "Kurt's Workshop", icon: 'red-apricorn' },
     { id: 'special', label: 'Special', icon: 'shiny-charm' }
 ];
 const MEDICINE = ['potion','super_potion','hyper_potion','max_potion','full_restore','full_heal','antidote','burn_heal','ice_heal','awakening','paralyze_heal','ether','max_ether','elixir','max_elixir'];
@@ -93,6 +94,9 @@ function renderMart() {
             </div>
         </div>`;
     }).join('');
+    // Kurt's Workshop (features.js): craft balls and held items from Apricorns
+    grid.classList.toggle('is-workshop', martUI.tab === 'workshop');
+    if (martUI.tab === 'workshop' && typeof workshopHtml === 'function') grid.innerHTML = workshopHtml();
 }
 window.setMartTab = function(tab) { playBeep(); martUI.tab = tab; renderMart(); };
 window.setMartQty = function(key, delta) {
