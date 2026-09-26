@@ -17,7 +17,7 @@ function loadLanguagePack(code) {
     if (code === 'en' || LANG_PACKS[code]) return Promise.resolve(LANG_PACKS[code] || null);
     return new Promise(resolve => {
         const s = document.createElement('script');
-        s.src = `js/lang/${code}.js`;
+        s.src = `js/lang/${code}.js?v=5`;
         s.onload = () => resolve(LANG_PACKS[code] || null);
         s.onerror = () => resolve(null);
         document.head.appendChild(s);

@@ -8,7 +8,7 @@
 // - Fonts / icon font / libraries: stale-while-revalidate.
 // Ads and Firebase traffic are never cached.
 
-const VERSION = 'v3';
+const VERSION = 'v4';
 const SHELL = `ps-shell-${VERSION}`;
 const ART = 'ps-art';
 const API = 'ps-api';

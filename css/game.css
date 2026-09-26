@@ -1383,3 +1383,33 @@ body:has(#battleScreen > :not(.hidden)) .mobile-tabbar { display: none; }
     .battle-screen > .battle-arena .battle-field { flex: 1 1 auto; }
 }
 body.reduce-motion .battle-screen::before, body.reduce-motion .battle-screen::after { display: none; }
+
+/* Chips inside outlined buttons: no inherited text-shadow (it doubled the numbers) */
+.g-btn .g-chip, .g-tab .g-chip { text-shadow: none; }
+
+/* "Buy me a coffee" links are hidden for now — delete this rule to show them again */
+[data-coffee] { display: none !important; }
+.set-support { grid-template-columns: minmax(0, 1fr) !important; }
+
+/* Adventure header: Safari Zone + Battle Tower side by side, full width on phones */
+@media (max-width: 639px) {
+    .adv-head { flex-direction: column; align-items: stretch; gap: .6rem; }
+    .adv-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+    .adv-actions .g-btn { flex-direction: column; gap: .2rem; padding: .5rem .3rem; font-size: .95rem; white-space: normal; text-align: center; line-height: 1.05; }
+}
+
+/* Battle screen always fits the window: the field takes what the HUD, log and menu leave */
+.battle-screen > .battle-arena { max-height: calc(100dvh - 24px); overflow: hidden; }
+.battle-screen > .battle-arena .battle-field { min-height: 0; height: clamp(200px, calc(100dvh - 330px), 440px); flex: 0 0 auto; }
+@media (min-width: 640px) {
+    .battle-screen > .battle-arena .battle-field { height: clamp(220px, calc(100dvh - 290px), 460px); }
+}
+@media (max-width: 639px) {
+    .battle-screen > .battle-arena { max-height: none; height: 100dvh; min-height: 0; }
+    .battle-screen > .battle-arena .battle-field { flex: 1 1 auto; height: auto; min-height: 180px; }
+    .battle-screen > .battle-arena .battle-log { flex: none; }
+    .battle-screen > .battle-arena .battle-commands { flex: none; padding-bottom: max(.5rem, env(safe-area-inset-bottom)); }
+}
+@media (max-height: 560px) and (min-width: 640px) {
+    .battle-screen > .battle-arena .battle-field { --sprite-scale: 1.5; }
+}

@@ -4,10 +4,11 @@
 
 // Full-screen overlays (the battle screen, the team picker…) live directly under
 // <body>: panel ancestors with backdrop-filter/transform would otherwise trap position:fixed.
-(function hoistOverlays() {
+function hoistOverlays() {
     const overlays = [document.getElementById('battleScreen'), ...document.querySelectorAll('.view-panel .fixed.inset-0')];
     overlays.forEach(el => { if (el && el.parentElement !== document.body) document.body.appendChild(el); });
-})();
+}
+hoistOverlays();
 
 function launchStagePrep(stage) {
     // Check for unsolved gym puzzle
@@ -98,6 +99,7 @@ function renderFighterSelectionGrid() {
 async function selectFighterAndBegin(pokemon) {
     // Ignore double taps while opponents are still being fetched
     if (gameState.battle.starting) return;
+    hoistOverlays();
     playConfirmSound();
     const stage = gameState.activeBattleStage;
     // 50-coin fee only for endless simulation (no active stage)

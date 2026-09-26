@@ -76,9 +76,9 @@ body.light-mode .wb-hills { background: radial-gradient(120% 90% at 20% 100%, rg
 /* Let the living world show through the panels a little (default dark theme) */
 body:not(.light-mode):not(.grey-mode) { background-image: none !important; background-color: #231a4d !important; }
 body:not(.light-mode):not(.grey-mode) .view-panel:not(#view-roulette),
-body:not(.light-mode):not(.grey-mode) #view-roulette > div { background: linear-gradient(180deg, rgba(74, 58, 120, .66), rgba(50, 34, 88, .74)) !important; -webkit-backdrop-filter: blur(10px) saturate(1.2); backdrop-filter: blur(10px) saturate(1.2); }
+body:not(.light-mode):not(.grey-mode) #view-roulette > div { background: linear-gradient(180deg, rgba(74, 58, 120, .8), rgba(50, 34, 88, .86)) !important; }
 body:not(.light-mode):not(.grey-mode) .game-header { background: rgba(28, 18, 51, .72); }
-body.light-mode .view-panel:not(#view-roulette), body.light-mode #view-roulette > div { background-color: rgba(255, 255, 255, .78) !important; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+body.light-mode .view-panel:not(#view-roulette), body.light-mode #view-roulette > div { background-color: rgba(255, 255, 255, .88) !important; }
 body.light-mode, body.light-mode main { background-color: transparent !important; }
 
 /* Calm version for Reduce motion */
