@@ -98,3 +98,54 @@ window.addEventListener('beforeunload', function() { saveProgress(); });
 // Expose light mode control
 window.toggleDarkLight = window.toggleDarkLight;
 window.applyLightDarkMode = applyLightDarkMode;
+
+// ── Offline play + install as an app ─────────────────────────────
+// The service worker caches the game, sprites and PokéAPI data (see sw.js).
+// It only runs over http(s), not when index.html is opened from disk.
+let deferredInstallPrompt = null;
+const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+function refreshInstallButton() {
+    const btn = document.getElementById('settingsInstallBtn');
+    const hint = document.getElementById('settingsInstallHint');
+    if (!btn) return;
+    const canPrompt = !!deferredInstallPrompt;
+    const iosManual = isIOS() && !isStandalone();
+    btn.classList.toggle('hidden', isStandalone() || !(canPrompt || iosManual));
+    if (hint) hint.textContent = canPrompt ? 'Play full-screen and offline' : 'Tap Share, then "Add to Home Screen"';
+}
+
+window.installApp = async function() {
+    if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        const choice = await deferredInstallPrompt.userChoice.catch(() => null);
+        deferredInstallPrompt = null;
+        if (choice && choice.outcome === 'accepted') showNotification('Installed!', 'Pokémon Spinner is on your home screen.', 'success');
+        refreshInstallButton();
+    } else if (isIOS()) {
+        showNotification('Add to Home Screen', 'In Safari, tap the Share button, then "Add to Home Screen".', 'info');
+    }
+};
+
+window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    refreshInstallButton();
+});
+window.addEventListener('appinstalled', () => { deferredInstallPrompt = null; refreshInstallButton(); });
+
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+    // Registered straight away: the page's load event can be held up by ads
+    {
+        const firstInstall = !navigator.serviceWorker.controller;
+        navigator.serviceWorker.register('sw.js').then(reg => {
+            if (!firstInstall) return;
+            const worker = reg.installing || reg.waiting;
+            if (worker) worker.addEventListener('statechange', () => {
+                if (worker.state === 'activated') showNotification('Ready offline', 'The game will now load even without a connection.', 'success');
+            });
+        }).catch(() => {});
+    }
+}
+refreshInstallButton();

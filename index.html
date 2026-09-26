@@ -9,6 +9,10 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta name="google-adsense-account" content="ca-pub-4850555217888083">
         <title>Pokémon Spinner: Elite Edition</title>
+        <link rel="manifest" href="manifest.webmanifest">
+        <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+        <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+        <meta name="apple-mobile-web-app-title" content="PokéSpinner">
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&family=Tiny5&family=Silkscreen:wght@400;700&family=Lilita+One&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
         <!-- Font Awesome for Icons -->
@@ -214,6 +218,11 @@
                             <span class="set-row-ico">🔊</span>
                             <span class="set-row-text"><b data-i18n="settings.sound">Sound</b><small id="settingsSoundText" data-i18n="settings.soundOn">Sound On</small></span>
                             <span class="set-switch" aria-hidden="true"><span></span></span>
+                        </button>
+                        <button type="button" id="settingsInstallBtn" class="set-row hidden" onclick="installApp()">
+                            <span class="set-row-ico">📲</span>
+                            <span class="set-row-text"><b>Install app</b><small id="settingsInstallHint">Play full-screen and offline</small></span>
+                            <span class="g-chip">Install</span>
                         </button>
                         <button type="button" id="settingsMotionBtn" class="set-row" onclick="toggleReduceMotion()" role="switch" aria-checked="false">
                             <span class="set-row-ico">✨</span>
