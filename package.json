@@ -1,0 +1,12 @@
+{
+  "name": "pokespinner",
+  "private": true,
+  "description": "Pokémon Spinner — spin, catch and battle in the browser.",
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.js -i src/tailwind.css -o css/tailwind.css --minify",
+    "watch:css": "tailwindcss -c tailwind.config.js -i src/tailwind.css -o css/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}

@@ -9,8 +9,6 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta name="google-adsense-account" content="ca-pub-4850555217888083">
         <title>Pokémon Spinner: Elite Edition</title>
-        <!-- Tailwind CSS -->
-        <script src="https://cdn.tailwindcss.com"></script>
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&family=Tiny5&family=Silkscreen:wght@400;700&family=Lilita+One&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
         <!-- Font Awesome for Icons -->
@@ -27,6 +25,8 @@
         <!-- Crypto-JS for encryption -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.0/crypto-js.min.js"></script>
 
+        <!-- Tailwind utilities, pre-built (npm run build:css), then the game theme -->
+        <link rel="stylesheet" href="css/tailwind.css">
         <link rel="stylesheet" href="css/game.css">
     </head>
     <body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white">

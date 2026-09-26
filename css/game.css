@@ -1346,7 +1346,7 @@ body.light-mode .mobile-nav-btn.is-active { color: var(--theme-c1) !important; }
     #view-roulette .ball-selector-btn .ball-name { order: 3; width: 100%; text-align: center; font-size: .72rem; line-height: 1.1; }
     #spinBtn, #stopBtn { padding-top: .8rem !important; padding-bottom: .8rem !important; }
     /* Section headers: title only, the blurb takes too much room on a phone */
-    .view-head .g-sub { display: none; }
+    .view-head .g-sub, .adv-head .g-sub { display: none; }
     .view-head { margin-bottom: .7rem; }
 }
 @media (max-width: 639px) and (max-height: 760px) {
