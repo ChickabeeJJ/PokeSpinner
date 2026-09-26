@@ -16,11 +16,9 @@ window.onload = function() {
     const loadingText = document.getElementById('loadingText');
     
     const loadingSteps = [
-        { progress: 20, text: 'Initializing quantum radar...' },
-        { progress: 40, text: 'Calibrating frequency sensors...' },
-        { progress: 60, text: 'Loading Pokémon database...' },
-        { progress: 80, text: 'Testing encryption systems...' },
-        { progress: 100, text: 'System ready!' }
+        { progress: 35, text: 'Loading Pokémon data...' },
+        { progress: 70, text: 'Preparing the wheel...' },
+        { progress: 100, text: 'Ready!' }
     ];
     
     let currentStep = 0;
@@ -34,8 +32,9 @@ window.onload = function() {
         } else {
             clearInterval(loadingInterval);
             
-            // Final initialization
-            setTimeout(() => {
+            // Final initialization (after the portal SDK is ready, so cloud saves load)
+            const bootTimeout = new Promise(r => setTimeout(r, 4000));
+            Promise.race([Portal.ready, bootTimeout]).then(() => {
                 // Test CryptoJS
                 const cryptoTest = testCryptoJS();
                 if (!cryptoTest) {
@@ -84,18 +83,20 @@ window.onload = function() {
                   renderTMShop();
                 
                 // Hide loading screen with fade out
-                loadingScreen.style.transition = 'opacity 0.5s ease-out';
+                loadingScreen.style.transition = 'opacity 0.35s ease-out';
                 loadingScreen.style.opacity = '0';
                 setTimeout(() => {
                     loadingScreen.style.display = 'none';
-                }, 500);
-            }, 500);
+                    Portal.loadingStop();
+                    Portal.gameplayStart();
+                }, 350);
+            });
         }
-    }, 400);
+    }, 180);
 };
 
 // Save on page unload/close (belt-and-suspenders)
-window.addEventListener('beforeunload', function() { saveProgress(); });
+window.addEventListener('beforeunload', function() { if (!window.__skipSaveOnUnload) saveProgress(); });
 
 // Expose light mode control
 window.toggleDarkLight = window.toggleDarkLight;
@@ -137,7 +138,7 @@ window.addEventListener('beforeinstallprompt', e => {
 });
 window.addEventListener('appinstalled', () => { deferredInstallPrompt = null; refreshInstallButton(); });
 
-if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol) && !Portal.isCrazyGames) {
     // Registered straight away: the page's load event can be held up by ads
     {
         const firstInstall = !navigator.serviceWorker.controller;

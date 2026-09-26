@@ -1424,3 +1424,10 @@ body.reduce-motion .battle-screen::before, body.reduce-motion .battle-screen::af
     .battle-screen > .battle-arena:has(#battleMenuBag:not(.hidden)) .battle-field,
     .battle-screen > .battle-arena:has(#battleMenuParty:not(.hidden)) .battle-field { height: clamp(180px, calc(100dvh - 430px), 460px); }
 }
+
+/* ── Portal builds (CrazyGames): no external links, third-party ads or install prompts ── */
+html[data-platform="crazygames"] [data-web-only],
+html[data-platform="crazygames"] a[target="_blank"] { display: none !important; }
+html[data-platform="crazygames"], html[data-platform="crazygames"] body { overscroll-behavior: none; }
+/* Rewarded-ad offers only exist where the portal serves ads */
+html:not([data-platform="crazygames"]) [data-portal-only] { display: none !important; }

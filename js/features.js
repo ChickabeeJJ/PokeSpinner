@@ -232,6 +232,8 @@ function bumpQuest(kind, amount = 1, filter) {
 }
 
 onGameEvent((name, data) => {
+    if (name === 'catch' && (data.shiny || (data.pokemon && data.pokemon.isShiny) || data.rarity === 'Legendary')) Portal.happytime();
+    if (name === 'battleWin' && data.stage && (data.stage.isGym || data.stage.isChampion)) Portal.happytime();
     if (name === 'spin') bumpQuest('spin');
     if (name === 'catch') {
         const p = data.pokemon || {};
@@ -521,9 +523,11 @@ window.leaveSafari = function() {
     const s = gameState.safari;
     if (s && (s.balls > 0) && !confirm(`Leave with ${s.balls} Safari Balls left? They can't be used outside.`)) return;
     if (s && s.caught.length) showNotification('Safari Game over', `You caught ${s.caught.length} Pokémon! They're in your PC.`, 'success');
+    const hadTrip = !!s;
     gameState.safari = null;
     saveProgress(); updateUI();
     window.closeSafari(true);
+    if (hadTrip) Portal.midgameAd();
 };
 window.closeSafari = function() {
     const m = document.getElementById('safariModal'); m.classList.add('hidden'); m.classList.remove('flex');
@@ -533,3 +537,26 @@ window.closeSafari = function() {
 renderWeatherChip();
 ensureQuests();
 renderQuestBadge();
+
+// ==========================================
+// REWARDED AD (portals only): watch an ad for free Poké Balls
+// ==========================================
+const REWARD_BALLS = 5;
+window.offerRewardedBalls = function() {
+    if (!Portal.canRewarded()) { switchView('shop'); setMartTab('balls'); return; }
+    const m = document.getElementById('rewardModal'); m.classList.remove('hidden'); m.classList.add('flex');
+};
+window.closeRewardModal = function() { const m = document.getElementById('rewardModal'); m.classList.add('hidden'); m.classList.remove('flex'); };
+window.watchRewardedBalls = async function() {
+    closeRewardModal();
+    const ok = await Portal.rewardedAd();
+    if (ok) {
+        gameState.balls.poke = (gameState.balls.poke || 0) + REWARD_BALLS;
+        playSuccessCapture();
+        showNotification('Thanks for watching!', `+${REWARD_BALLS} Poké Balls.`, 'success');
+        saveProgress(); updateUI();
+        if (typeof renderMart === 'function') renderMart();
+    } else {
+        showNotification('No ad right now', 'Please try again in a little while.', 'info');
+    }
+};

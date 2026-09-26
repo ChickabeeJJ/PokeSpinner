@@ -42,11 +42,11 @@ function saveProgressLocal() {
         state._savedAt   = Date.now();
         const json = JSON.stringify(state);
         // Primary: plain JSON (most reliable)
-        localStorage.setItem(SAVE_KEY + '_json', json);
+        Portal.storage.setItem(SAVE_KEY + '_json', json);
         // Secondary: btoa-encoded (light obfuscation, still recoverable without CryptoJS)
-        try { localStorage.setItem(SAVE_KEY + '_b64', btoa(unescape(encodeURIComponent(json)))); } catch(e) {}
+        try { Portal.storage.setItem(SAVE_KEY + '_b64', btoa(unescape(encodeURIComponent(json)))); } catch(e) {}
         // Mark timestamp so we can detect stale data
-        localStorage.setItem(SAVE_KEY + '_ts', state._savedAt.toString());
+        Portal.storage.setItem(SAVE_KEY + '_ts', state._savedAt.toString());
     } catch (err) {
         console.error('[SAVE] saveProgressLocal failed:', err);
     }
@@ -86,7 +86,7 @@ function loadSavedProgress() {
 
     // Slot 1 — plain JSON
     try {
-        const raw = localStorage.getItem(SAVE_KEY + '_json');
+        const raw = Portal.storage.getItem(SAVE_KEY + '_json');
         if (raw) {
             const parsed = JSON.parse(raw);
             if (applyParsed(parsed)) return;
@@ -95,13 +95,13 @@ function loadSavedProgress() {
 
     // Slot 2 — btoa-encoded
     try {
-        const b64 = localStorage.getItem(SAVE_KEY + '_b64');
+        const b64 = Portal.storage.getItem(SAVE_KEY + '_b64');
         if (b64) {
             const json = decodeURIComponent(escape(atob(b64)));
             const parsed = JSON.parse(json);
             if (applyParsed(parsed)) {
                 // Migrate to plain JSON slot so we don't rely on btoa next time
-                try { localStorage.setItem(SAVE_KEY + '_json', json); } catch(e) {}
+                try { Portal.storage.setItem(SAVE_KEY + '_json', json); } catch(e) {}
                 return;
             }
         }
@@ -109,14 +109,14 @@ function loadSavedProgress() {
 
     // Slot 3 — legacy AES encrypted slot (backward compat)
     try {
-        const raw = localStorage.getItem(SAVE_KEY);
+        const raw = Portal.storage.getItem(SAVE_KEY);
         if (raw && typeof CryptoJS !== 'undefined') {
             const decrypted = CryptoJS.AES.decrypt(raw, 'pokemon-radar-secret-key-2024').toString(CryptoJS.enc.Utf8);
             if (decrypted && decrypted.length > 2) {
                 const parsed = JSON.parse(decrypted);
                 if (applyParsed(parsed)) {
                     // Migrate to plain JSON slot
-                    try { localStorage.setItem(SAVE_KEY + '_json', JSON.stringify(normalizeSaveState(parsed))); } catch(e) {}
+                    try { Portal.storage.setItem(SAVE_KEY + '_json', JSON.stringify(normalizeSaveState(parsed))); } catch(e) {}
                     return;
                 }
             }
@@ -125,7 +125,7 @@ function loadSavedProgress() {
 
     // Slot 4 — old _fallback plain JSON key
     try {
-        const raw = localStorage.getItem(SAVE_KEY + '_fallback');
+        const raw = Portal.storage.getItem(SAVE_KEY + '_fallback');
         if (raw) {
             const parsed = JSON.parse(raw);
             applyParsed(parsed);
