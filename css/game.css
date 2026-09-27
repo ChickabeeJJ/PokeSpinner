@@ -1389,9 +1389,6 @@ body.reduce-motion .battle-screen::before, body.reduce-motion .battle-screen::af
 /* Chips inside outlined buttons: no inherited text-shadow (it doubled the numbers) */
 .g-btn .g-chip, .g-tab .g-chip { text-shadow: none; }
 
-/* "Buy me a coffee" links are hidden for now — delete this rule to show them again */
-[data-coffee] { display: none !important; }
-.set-support { grid-template-columns: minmax(0, 1fr) !important; }
 
 /* Adventure header: Safari Zone + Battle Tower side by side, full width on phones */
 @media (max-width: 639px) {
@@ -1429,5 +1426,3 @@ body.reduce-motion .battle-screen::before, body.reduce-motion .battle-screen::af
 html[data-platform="crazygames"] [data-web-only],
 html[data-platform="crazygames"] a[target="_blank"] { display: none !important; }
 html[data-platform="crazygames"], html[data-platform="crazygames"] body { overscroll-behavior: none; }
-/* Rewarded-ad offers only exist where the portal serves ads */
-html:not([data-platform="crazygames"]) [data-portal-only] { display: none !important; }

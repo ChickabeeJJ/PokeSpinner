@@ -315,7 +315,6 @@ window.triggerSpin = function() {
     if ((gameState.balls[gameState.selectedBall] || 0) <= 0) {
         const next = ['poke', 'great', 'ultra', 'master'].find(b => (gameState.balls[b] || 0) > 0);
         if (!next) {
-            if (Portal.canRewarded()) { offerRewardedBalls(); return; }
             if (gameState.coins >= 10) {
                 showNotification('Out of Poké Balls', 'Opening the Poké Mart — Poké Balls cost 10 coins.', 'info');
                 setTimeout(() => { switchView('shop'); if (typeof setMartTab === 'function') setMartTab('balls'); }, 700);

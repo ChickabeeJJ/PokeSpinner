@@ -1,8 +1,7 @@
-// PokeSpinner — Platform layer (web vs. CrazyGames).
+// PokeSpinner — Platform layer (web vs. CrazyGames). Non-commercial fan project: no ads anywhere.
 // Loaded first, in <head>. On CrazyGames the game uses the CrazyGames SDK v3 for
-// loading/gameplay events, ads (midgame + rewarded) and cloud saves, and turns
-// off everything portals don't allow (third-party ads, external links, the
-// service worker / install prompt). Everywhere else nothing changes.
+// loading/gameplay events and cloud saves, and hides external links, the service
+// worker and the install prompt there. Everywhere else nothing changes.
 // Force CrazyGames mode locally with ?platform=crazygames.
 
 (function () {
@@ -43,11 +42,6 @@
             .then(() => { try { Portal.sdk && Portal.sdk.game.loadingStart(); } catch (e) {} });
     } else {
         Portal.ready = Promise.resolve();
-        // Web build only: Google AdSense (third-party ads are not allowed on portals)
-        const ads = document.createElement('script');
-        ads.async = true; ads.crossOrigin = 'anonymous';
-        ads.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4850555217888083';
-        document.head.appendChild(ads);
     }
 
     // ── Game events ───────────────────────────────────────────
@@ -64,43 +58,7 @@
     };
     Portal.happytime = function () { try { Portal.sdk && Portal.sdk.game.happytime(); } catch (e) {} };
 
-    // ── Ads (CrazyGames only). Audio is muted and gameplay paused while an ad runs.
-    function beginAd() {
-        Portal.adPlaying = true;
-        Portal._wasPlaying = Portal._gameplay;
-        Portal.gameplayStop();
-        try { if (typeof audioCtx !== 'undefined' && audioCtx && audioCtx.state === 'running') audioCtx.suspend(); } catch (e) {}
-        document.documentElement.classList.add('ad-playing');
-    }
-    function endAd() {
-        Portal.adPlaying = false;
-        document.documentElement.classList.remove('ad-playing');
-        try { if (typeof audioCtx !== 'undefined' && audioCtx && audioCtx.state === 'suspended' && !audioMuted) audioCtx.resume(); } catch (e) {}
-        if (Portal._wasPlaying) Portal.gameplayStart();
-    }
-    function requestAd(type) {
-        return new Promise(resolve => {
-            if (!Portal.sdk || !Portal.sdk.ad) return resolve(false);
-            let started = false;
-            try {
-                Portal.sdk.ad.requestAd(type, {
-                    adStarted: () => { started = true; beginAd(); },
-                    adFinished: () => { if (started) endAd(); resolve(true); },
-                    adError: () => { if (started) endAd(); resolve(false); },
-                });
-            } catch (e) { resolve(false); }
-        });
-    }
-    // Natural breaks only (after a battle / Safari trip), at most every few minutes
-    Portal.midgameAd = function () {
-        if (!Portal.sdk) return Promise.resolve(false);
-        const now = Date.now();
-        if (now - Portal._lastMidgame < Portal.MIDGAME_COOLDOWN_MS) return Promise.resolve(false);
-        Portal._lastMidgame = now;
-        return requestAd('midgame');
-    };
-    Portal.canRewarded = function () { return !!Portal.sdk; };
-    Portal.rewardedAd = function () { return requestAd('rewarded'); };
+    // No ads: this is a non-commercial fan project.
 
     // ── Storage: CrazyGames data module (synced to the player's account) or localStorage
     Portal.storage = {

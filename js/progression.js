@@ -741,8 +741,6 @@ function handleBattleDefeat() {
 }
 
 function resetBattleScreen() {
-    // A battle just ended: natural break for a portal midgame ad (rate-limited in platform.js)
-    if (window.__battleHappened) { window.__battleHappened = false; Portal.midgameAd(); }
     document.getElementById('battleSelector').classList.remove('hidden');
     document.getElementById('fighterSelector').classList.add('hidden');
     document.getElementById('battleArenaActive').classList.add('hidden');

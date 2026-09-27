@@ -26,13 +26,11 @@ site, no bundler — open `index.html` or serve the folder.
     so they can be matched. Keep game data (Pokémon names) in English.
 - Full-screen overlays must live directly under `<body>` (panels use
   backdrop-filter, which traps `position: fixed`); `battle.js` hoists them.
+- Non-commercial fan project: **no ads or monetisation** anywhere (no AdSense,
+  no portal ads). The "Buy me a coffee" links (`data-coffee`) stay visible.
 - `platform.js` (first script, in `<head>`) — web vs. CrazyGames. On CrazyGames
-  (their domain, `?platform=crazygames`, or the packaged build) it loads SDK v3:
-  loading/gameplay events, midgame ads at natural breaks (after a battle or a
-  Safari trip, 3-min cooldown), rewarded ads (5 free Poké Balls), `happytime`,
-  and saves via `Portal.storage` (SDK data module + localStorage). Web-only
-  things are marked `data-web-only` / hidden external links; AdSense is only
-  injected on the web build. Package for upload: `bash tools/build-crazygames.sh`.
+  it loads SDK v3 for loading/gameplay events, `happytime` and saves via
+  `Portal.storage`; it never requests ads. `tools/build-crazygames.sh` packages it.
 - `sw.js` + `manifest.webmanifest` + `icons/` — offline play and install.
   Add any new game file to `SHELL_FILES` in `sw.js`.
 
