@@ -17,7 +17,7 @@ function initAudio() {
 }
 
 function playSynthSound(freq, type, duration, gainStart) {
-    if (audioMuted || (window.Portal && Portal.adPlaying)) return;
+    if (audioMuted || (window.Portal && (Portal.adPlaying || Portal.paused))) return;
     try {
         initAudio();
         const osc = audioCtx.createOscillator();

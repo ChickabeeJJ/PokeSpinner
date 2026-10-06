@@ -70,7 +70,8 @@ function renderMart() {
             <div class="min-w-0 flex-1"><div class="g-font text-lg truncate">${di.name}</div><div class="g-sub">30% off today only · resets at midnight</div></div>
             <div class="text-right"><div class="mart-old">🪙 ${formatNum(di.cost)}</div><div class="mart-price">🪙 ${formatNum(martPrice(deal))}</div></div>
             <button type="button" class="g-btn green sm" onclick="martBuy('${deal}')">Buy</button>
-        </div>`;
+        </div>
+        <button type="button" data-portal-only class="g-btn blue w-full mt-3" onclick="offerRewardedBalls()">🎬 Watch an ad for 5 free Poké Balls</button>`;
     const special = document.getElementById('martSpecial');
     if (special) special.classList.toggle('hidden', martUI.tab !== 'special');
     grid.classList.toggle('hidden', martUI.tab === 'special');

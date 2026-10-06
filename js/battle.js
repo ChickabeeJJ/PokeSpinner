@@ -217,6 +217,7 @@ async function selectFighterAndBegin(pokemon) {
     flashEffectiveness('');
 
     gameState.battle.active = true;
+    window.__battleHappened = true;
     renderBattleMoves(pokemon);
 
     // The battle opens full-screen (.battle-screen); start at the top of it

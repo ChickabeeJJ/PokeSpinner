@@ -527,7 +527,7 @@ window.leaveSafari = function() {
     gameState.safari = null;
     saveProgress(); updateUI();
     window.closeSafari(true);
-
+    if (hadTrip) Portal.midgameAd();
 };
 window.closeSafari = function() {
     const m = document.getElementById('safariModal'); m.classList.add('hidden'); m.classList.remove('flex');
@@ -537,3 +537,26 @@ window.closeSafari = function() {
 renderWeatherChip();
 ensureQuests();
 renderQuestBadge();
+
+// ==========================================
+// REWARDED AD (portals only): watch an ad for free Poké Balls
+// ==========================================
+const REWARD_BALLS = 5;
+window.offerRewardedBalls = function() {
+    if (!Portal.canRewarded()) { switchView('shop'); setMartTab('balls'); return; }
+    const m = document.getElementById('rewardModal'); m.classList.remove('hidden'); m.classList.add('flex');
+};
+window.closeRewardModal = function() { const m = document.getElementById('rewardModal'); m.classList.add('hidden'); m.classList.remove('flex'); };
+window.watchRewardedBalls = async function() {
+    closeRewardModal();
+    const ok = await Portal.rewardedAd();
+    if (ok) {
+        gameState.balls.poke = (gameState.balls.poke || 0) + REWARD_BALLS;
+        playSuccessCapture();
+        showNotification('Thanks for watching!', `+${REWARD_BALLS} Poké Balls.`, 'success');
+        saveProgress(); updateUI();
+        if (typeof renderMart === 'function') renderMart();
+    } else {
+        showNotification('No ad right now', 'Please try again in a little while.', 'info');
+    }
+};

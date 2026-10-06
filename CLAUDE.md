@@ -26,11 +26,15 @@ site, no bundler — open `index.html` or serve the folder.
     so they can be matched. Keep game data (Pokémon names) in English.
 - Full-screen overlays must live directly under `<body>` (panels use
   backdrop-filter, which traps `position: fixed`); `battle.js` hoists them.
-- Non-commercial fan project: **no ads or monetisation** anywhere (no AdSense,
-  no portal ads). The "Buy me a coffee" links (`data-coffee`) stay visible.
-- `platform.js` (first script, in `<head>`) — web vs. CrazyGames. On CrazyGames
-  it loads SDK v3 for loading/gameplay events, `happytime` and saves via
-  `Portal.storage`; it never requests ads. `tools/build-crazygames.sh` packages it.
+- **Portal branch** (see the top of this file for which portal). `js/platform.js`
+  is the shared portal core; `js/sdk-adapter.js` plugs in this portal's SDK via
+  `Portal.use({...})`. The game only calls `Portal.*`: loading/gameplay events,
+  `midgameAd()` at natural breaks (after a battle or a Safari trip, cooldown),
+  `rewardedAd()` (5 free Poké Balls when out of balls / in the Mart),
+  pause+mute during ads and when the tab is hidden, and `Portal.storage`
+  (localStorage, mirrored to the portal's cloud save where it has one).
+  External links and `data-web-only` parts are hidden in portal builds.
+  Package with `bash tools/build-portal.sh` → `dist/pokespinner-<portal>.zip`.
 - `sw.js` + `manifest.webmanifest` + `icons/` — offline play and install.
   Add any new game file to `SHELL_FILES` in `sw.js`.
 
@@ -39,7 +43,10 @@ site, no bundler — open `index.html` or serve the folder.
   `npm run build:css`, and commit `css/tailwind.css`.
 
 ## Workflow
-- The owner wants every change committed **and pushed to `main`** (fast-forward
-  from the working branch), always, without asking.
+- Branches: `main` is the ad-free fan version (no SDKs, no ads). Each portal has
+  its own branch with ads: `crazygames`, `yandex`, `playhop`, `poki`,
+  `gamemonetize`. **Never merge a portal branch into `main`.** Commit and push
+  portal work to that portal's branch; game fixes go to `main` and are then
+  merged into each portal branch.
 - Extra scripts/files are welcome when they make the game better; keep the site
   runnable by opening `index.html`.

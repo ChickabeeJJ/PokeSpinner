@@ -138,7 +138,7 @@ window.addEventListener('beforeinstallprompt', e => {
 });
 window.addEventListener('appinstalled', () => { deferredInstallPrompt = null; refreshInstallButton(); });
 
-if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol) && !Portal.isCrazyGames) {
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol) && !Portal.isPortal) {
     // Registered straight away: the page's load event can be held up by ads
     {
         const firstInstall = !navigator.serviceWorker.controller;

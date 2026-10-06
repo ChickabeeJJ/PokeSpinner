@@ -17,17 +17,18 @@
         <!-- Font Awesome for Icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         
-        <!-- Platform layer (js/platform.js): portal SDK events and saves; no ads -->
-        <script src="js/platform.js?v=8"></script>
+        <!-- Platform layer: js/platform.js (shared core) + js/sdk-adapter.js (this branch's portal SDK) -->
+        <script src="js/platform.js?v=9"></script>
+        <script src="js/sdk-adapter.js?v=9"></script>
 
         <!-- Crypto-JS for encryption -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.0/crypto-js.min.js"></script>
 
         <!-- Tailwind utilities, pre-built (npm run build:css), then the game theme -->
-        <link rel="stylesheet" href="css/tailwind.css?v=8">
-        <link rel="stylesheet" href="css/game.css?v=8">
-        <link rel="stylesheet" href="css/features.css?v=8">
-        <link rel="stylesheet" href="css/world.css?v=8">
+        <link rel="stylesheet" href="css/tailwind.css?v=9">
+        <link rel="stylesheet" href="css/game.css?v=9">
+        <link rel="stylesheet" href="css/features.css?v=9">
+        <link rel="stylesheet" href="css/world.css?v=9">
     </head>
     <body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white">
         <div class="scanlines"></div>
@@ -392,6 +393,19 @@
             <div class="g-modal safari-modal w-full max-w-md">
                 <div class="g-modal-head"><h3>🌿 Safari Zone</h3><button type="button" class="square-btn sm" onclick="closeSafari()" aria-label="Close">✕</button></div>
                 <div id="safariBody"></div>
+            </div>
+        </div>
+
+        <!-- Rewarded ad offer (portal builds) -->
+        <div id="rewardModal" class="fixed inset-0 z-[96] bg-black/70 hidden items-center justify-center p-4" onclick="if(event.target===this)closeRewardModal()">
+            <div class="g-modal w-full max-w-sm text-center">
+                <div class="g-modal-head"><h3>Free Poké Balls</h3><button type="button" class="square-btn sm" onclick="closeRewardModal()" aria-label="Close">✕</button></div>
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/dream-world/poke-ball.png" alt="" class="mx-auto w-16 h-16 mb-2">
+                <p class="font-bold mb-4">Watch a short ad to get 5 Poké Balls.</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <button type="button" class="g-btn ghost" onclick="closeRewardModal()">No thanks</button>
+                    <button type="button" class="g-btn green" onclick="watchRewardedBalls()">🎬 Watch</button>
+                </div>
             </div>
         </div>
 
@@ -888,29 +902,29 @@
 
         <!-- SECURED LOGIC SYSTEM -->
         <!-- Game code: see js/. Order matters (later files use earlier ones). -->
-        <script src="js/data-pokemon.js?v=8"></script>
-        <script src="js/data-campaign.js?v=8"></script>
-        <script src="js/state.js?v=8"></script>
-        <script src="js/profile.js?v=8"></script>
-        <script src="js/audio.js?v=8"></script>
-        <script src="js/save.js?v=8"></script>
-        <script src="js/i18n.js?v=8"></script>
-        <script src="js/translate.js?v=8"></script>
-        <script src="js/settings.js?v=8"></script>
-        <script src="js/ui.js?v=8"></script>
-        <script src="js/spinner.js?v=8"></script>
-        <script src="js/sprites.js?v=8"></script>
-        <script src="js/learnsets.js?v=8"></script>
-        <script src="js/adventure.js?v=8"></script>
-        <script src="js/battle.js?v=8"></script>
-        <script src="js/progression.js?v=8"></script>
-        <script src="js/collection.js?v=8"></script>
-        <script src="js/mart.js?v=8"></script>
-        <script src="js/extras.js?v=8"></script>
-        <script src="js/data-types.js?v=8"></script>
-        <script src="js/features.js?v=8"></script>
-        <script src="js/world.js?v=8"></script>
-        <script src="js/main.js?v=8"></script>
+        <script src="js/data-pokemon.js?v=9"></script>
+        <script src="js/data-campaign.js?v=9"></script>
+        <script src="js/state.js?v=9"></script>
+        <script src="js/profile.js?v=9"></script>
+        <script src="js/audio.js?v=9"></script>
+        <script src="js/save.js?v=9"></script>
+        <script src="js/i18n.js?v=9"></script>
+        <script src="js/translate.js?v=9"></script>
+        <script src="js/settings.js?v=9"></script>
+        <script src="js/ui.js?v=9"></script>
+        <script src="js/spinner.js?v=9"></script>
+        <script src="js/sprites.js?v=9"></script>
+        <script src="js/learnsets.js?v=9"></script>
+        <script src="js/adventure.js?v=9"></script>
+        <script src="js/battle.js?v=9"></script>
+        <script src="js/progression.js?v=9"></script>
+        <script src="js/collection.js?v=9"></script>
+        <script src="js/mart.js?v=9"></script>
+        <script src="js/extras.js?v=9"></script>
+        <script src="js/data-types.js?v=9"></script>
+        <script src="js/features.js?v=9"></script>
+        <script src="js/world.js?v=9"></script>
+        <script src="js/main.js?v=9"></script>
     
         <!-- ══════════════════════════════════════════════════════════════
               GYM PUZZLE MODAL

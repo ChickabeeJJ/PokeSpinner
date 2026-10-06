@@ -1423,6 +1423,11 @@ body.reduce-motion .battle-screen::before, body.reduce-motion .battle-screen::af
 }
 
 /* ── Portal builds (CrazyGames): no external links, third-party ads or install prompts ── */
-html[data-platform="crazygames"] [data-web-only],
-html[data-platform="crazygames"] a[target="_blank"] { display: none !important; }
-html[data-platform="crazygames"], html[data-platform="crazygames"] body { overscroll-behavior: none; }
+html[data-portal] [data-web-only],
+html[data-portal] a[target="_blank"] { display: none !important; }
+html[data-portal], html[data-portal] body { overscroll-behavior: none; }
+/* Portal builds: no accidental text selection / long-press menus while playing */
+html[data-portal] body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+html[data-portal] input, html[data-portal] textarea { -webkit-user-select: text; user-select: text; }
+/* Rewarded-ad offers only where the portal SDK can serve them */
+html:not([data-rewarded]) [data-portal-only] { display: none !important; }
