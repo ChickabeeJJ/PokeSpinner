@@ -1,4 +1,7 @@
-# PokeSpinner
+# PokeSpinner — poki branch
+
+> Portal build for **Poki (Poki SDK v2)**. Ads and the portal SDK are on here; `main` stays ad-free.
+> Push work for this portal to the `poki` branch, never to `main`.
 
 Browser Pokémon game: spin a wheel to find wild Pokémon, catch them, battle
 trainers on an Adventure map, run Safari Zone trips and daily quests. Static
