@@ -41,5 +41,9 @@ site, no bundler — open `index.html` or serve the folder.
 ## Workflow
 - The owner wants every change committed **and pushed to `main`** (fast-forward
   from the working branch), always, without asking.
+- Portal builds with ads live on their own branches: `crazygames`, `yandex`,
+  `playhop`, `poki`, `gamemonetize` (shared core `js/platform.js` + per-portal
+  `js/sdk-adapter.js`; package with `bash tools/build-portal.sh`). **Never merge
+  them into `main`.** Game fixes made on `main` should be merged into each of them.
 - Extra scripts/files are welcome when they make the game better; keep the site
   runnable by opening `index.html`.
